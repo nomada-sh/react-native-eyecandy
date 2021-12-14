@@ -19,7 +19,7 @@ export type BottomSheetHandle = {
 
 const BottomSheet = React.forwardRef<BottomSheetHandle, BottomSheetProps>(
   ({ children, customStyles = {}, style, visible, ...props }, ref?) => {
-    const { palette } = useTheme();
+    const { dark, palette } = useTheme();
 
     const bottomSheetRef = React.useRef<RBSheet>(null);
 
@@ -36,6 +36,14 @@ const BottomSheet = React.forwardRef<BottomSheetHandle, BottomSheetProps>(
     return (
       <RBSheet
         customStyles={{
+          wrapper: [
+            {
+              backgroundColor: dark
+                ? 'rgba(0, 0, 0, 0.75)'
+                : 'rgba(0, 0, 0, 0.5)',
+            },
+            customStyles.wrapper,
+          ],
           container: [
             {
               backgroundColor: palette.background.container,
