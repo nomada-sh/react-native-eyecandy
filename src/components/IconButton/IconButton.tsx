@@ -1,4 +1,5 @@
 import React, { useMemo, FC, ReactNode } from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
 
 import BaseButton, { BaseButtonProps } from '../BaseButton';
 import { useTheme } from '../../hooks';
@@ -6,6 +7,7 @@ import { useTheme } from '../../hooks';
 interface IconProps {
   size: number;
   stroke?: string;
+  style?: StyleProp<ViewStyle>;
 }
 
 export interface IconButtonProps extends BaseButtonProps {
@@ -24,6 +26,7 @@ function IconButton({
   iconColor: iconColorProp,
   variant = 'rounded',
   inverse,
+  disabled,
   ...props
 }: IconButtonProps) {
   const { foreground, background } = useTheme().components.button[color];
@@ -36,10 +39,19 @@ function IconButton({
       ? background
       : foreground;
 
-    return Icon ? <Icon size={iconSize} stroke={iconColor} /> : null;
+    return Icon ? (
+      <Icon
+        size={iconSize}
+        stroke={iconColor}
+        style={{
+          opacity: disabled ? 0.5 : 1,
+        }}
+      />
+    ) : null;
   }, [
     Icon,
     background,
+    disabled,
     foreground,
     iconColorProp,
     iconSizeProp,
@@ -60,6 +72,7 @@ function IconButton({
       inverse={inverse}
       height={size}
       variant={variant}
+      disabled={disabled}
       {...props}
     >
       {icon}

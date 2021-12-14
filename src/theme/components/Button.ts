@@ -3,8 +3,8 @@ import type { ThemeButton, ThemeVariables } from '../typings';
 export default function ({ dark, palette }: ThemeVariables): ThemeButton {
   return {
     default: {
-      background: dark ? palette.grey[800] : palette.primary[100],
-      foreground: dark ? palette.primary[100] : palette.grey[800],
+      background: palette.grey[dark ? 800 : 50],
+      foreground: palette.grey[dark ? 50 : 800],
     },
     primary: {
       background: palette.primary['500'],

@@ -24,7 +24,17 @@ export default function Components() {
   return (
     <View>
       <Button text="Button" />
+      <Button text="Button Disabled" disabled />
+      <Button color="primary" text="Button" />
+      <Button color="primary" text="Button Disabled" disabled />
       <LinkButton icon={icons.Mail} text="LinkButton" />
+      <LinkButton icon={icons.Mail} text="LinkButton" disabled />
+      <LinkButton
+        icon={icons.Mail}
+        text="LinkButton"
+        disabled
+        color="primary"
+      />
       <TextInput
         startIcon={icons.User}
         endIcon={icons.Camera}
@@ -60,6 +70,12 @@ export default function Components() {
         {Object.keys(icons).map(key => {
           const Icon = icons[key as keyof typeof icons];
           return <IconButton key={key} icon={Icon} />;
+        })}
+      </View>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+        {Object.keys(icons).map(key => {
+          const Icon = icons[key as keyof typeof icons];
+          return <IconButton key={key} icon={Icon} disabled />;
         })}
       </View>
       <View style={{ flexDirection: 'row' }}>

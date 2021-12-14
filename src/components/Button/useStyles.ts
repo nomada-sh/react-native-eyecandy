@@ -7,9 +7,11 @@ import type { ButtonColors } from '../../theme';
 export default function useStyles({
   color = 'default',
   inverse = false,
+  disabled,
 }: {
   color?: ButtonColors;
   inverse?: boolean;
+  disabled?: boolean | null;
 }) {
   const theme = useTheme();
   const { background, foreground } = theme.components.button[color];
@@ -19,8 +21,9 @@ export default function useStyles({
       StyleSheet.create({
         text: {
           color: inverse ? background : foreground,
+          opacity: disabled ? 0.5 : 1,
         },
       }),
-    [inverse, background, foreground],
+    [inverse, background, foreground, disabled],
   );
 }

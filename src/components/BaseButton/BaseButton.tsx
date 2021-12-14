@@ -1,16 +1,14 @@
-import React from 'react';
-import { useCallback, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import {
   Pressable,
   PressableProps,
-  PressableStateCallbackType,
   StyleProp,
   View,
   ViewStyle,
 } from 'react-native';
 
+import { usePressableStyles } from '../../hooks';
 import type { ButtonColors } from '../../theme';
-
 import useStyles from './useStyles';
 
 export interface BaseButtonProps extends PressableProps {
@@ -50,26 +48,16 @@ function BaseButton({
   variant,
   height,
   fullwidth = true,
+  disabled,
   ...props
 }: BaseButtonProps) {
-  const styles = useStyles({ color, inverse, variant, height });
+  const styles = useStyles({ color, inverse, variant, height, disabled });
 
-  const getButtonStyle = useCallback(
-    (styleProps: PressableStateCallbackType) => {
-      const buttonStyles: [StyleProp<ViewStyle>] = [styles.button];
-
-      if (typeof buttonStyle === 'function')
-        buttonStyles.push(buttonStyle(styleProps));
-      else buttonStyles.push(buttonStyle);
-
-      if (typeof customStyles.button === 'function')
-        buttonStyles.push(customStyles.button(styleProps));
-      else if (customStyles.button) buttonStyles.push(customStyles.button);
-
-      return buttonStyles;
-    },
-    [styles.button, customStyles, buttonStyle],
-  );
+  const getButtonStyle = usePressableStyles([
+    styles.button,
+    buttonStyle,
+    customStyles.button,
+  ]);
 
   return (
     <View
@@ -87,10 +75,12 @@ function BaseButton({
         android_ripple={{
           color: styles.ripple.color,
         }}
+        disabled={disabled}
         {...props}
       >
         {children}
       </Pressable>
+      {disabled ? <View style={styles.disabled} /> : null}
     </View>
   );
 }
