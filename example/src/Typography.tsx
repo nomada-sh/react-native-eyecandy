@@ -1,3 +1,4 @@
+import React from 'react';
 import * as typography from '@nomada-sh/react-native-eyecandy/typography';
 import { View } from 'react-native';
 

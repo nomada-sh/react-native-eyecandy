@@ -1,3 +1,4 @@
+import React from 'react';
 import * as icons from '@nomada-sh/react-native-eyecandy/icons';
 import { View } from 'react-native';
 
