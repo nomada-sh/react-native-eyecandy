@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { StyleSheet } from 'react-native';
 
 import SwipeButtonBase, {
   Props as SwipeButtonBaseProps,
@@ -7,13 +8,13 @@ import SwipeButtonBase, {
 import Color from 'color';
 
 import { useTheme } from '../../hooks';
-import { StyleSheet } from 'react-native';
 
 export interface SwipeButtonProps extends SwipeButtonBaseProps {}
 
 function SwipeButton({
   titleStyles,
   containerStyles,
+  title = '',
   ...props
 }: SwipeButtonProps) {
   const { typography, components } = useTheme();
@@ -31,7 +32,7 @@ function SwipeButton({
 
   return (
     <SwipeButtonBase
-      title=""
+      title={title}
       containerStyles={StyleSheet.flatten([
         {
           borderWidth: 0,
