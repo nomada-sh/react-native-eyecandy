@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { Alert, View } from 'react-native';
+
 import {
   Button,
   BottomSheetSwipeConfirmation,
 } from '@nomada-sh/react-native-eyecandy';
-import { Alert, View } from 'react-native';
 
 export default function DisableCompanyBottomSheet() {
   const [visible, setVisible] = useState(false);
@@ -11,7 +12,7 @@ export default function DisableCompanyBottomSheet() {
   return (
     <View>
       <Button
-        text="Disable Company"
+        text={`Disable Company ${visible}`}
         onPress={() => {
           setVisible(true);
         }}
@@ -19,7 +20,10 @@ export default function DisableCompanyBottomSheet() {
       <BottomSheetSwipeConfirmation
         swipeTitle="Desliza para confirmar"
         title="¿Estás seguro de que quieres deshabilitar esta empresa?"
-        onCancel={() => setVisible(false)}
+        onCancel={() => {
+          setVisible(false);
+          return false;
+        }}
         onConfirm={() => {
           Alert.alert('Empresa deshabilitada');
           setVisible(false);

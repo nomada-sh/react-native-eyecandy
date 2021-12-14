@@ -34,9 +34,6 @@ export default function App() {
         }}
       >
         <DisableCompanyBottomSheet />
-        <BottomSheet closeOnDragDown ref={bottomSheetRef}>
-          <Body>BottomSheet</Body>
-        </BottomSheet>
         <Switch value={dark} onValueChange={() => setDark(!dark)} />
       </View>
       <ScrollView

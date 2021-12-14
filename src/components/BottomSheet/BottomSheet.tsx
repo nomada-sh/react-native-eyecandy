@@ -1,31 +1,42 @@
-import React, { useEffect, useImperativeHandle } from 'react';
-import type { StyleProp, ViewStyle } from 'react-native';
+import React, { useEffect, useImperativeHandle, useRef } from 'react';
+import { StyleProp, ViewStyle, LogBox } from 'react-native';
 
 import RBSheet, { RBSheetProps } from 'react-native-raw-bottom-sheet';
+import BS from './BS';
 
 import { useTheme } from '../../hooks';
 
-export interface BottomSheetProps extends RBSheetProps {
+LogBox.ignoreAllLogs(true);
+
+export interface BottomSheetProps extends Omit<RBSheetProps, 'onClose'> {
   ref?: React.Ref<RBSheet>;
   children?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   visible?: boolean;
+  onClose?: () => boolean;
 }
 
 export type BottomSheetHandle = {
   open: () => void;
-  close: () => void;
+  close: () => boolean;
 };
 
 const BottomSheet = React.forwardRef<BottomSheetHandle, BottomSheetProps>(
-  ({ children, customStyles = {}, style, visible, ...props }, ref?) => {
+  (
+    { children, customStyles = {}, style, visible, onClose, onOpen, ...props },
+    ref?,
+  ) => {
     const { dark, palette } = useTheme();
 
     const bottomSheetRef = React.useRef<RBSheet>(null);
+    const [open, setOpen] = React.useState(!!visible);
 
     useImperativeHandle(ref, () => ({
       open: () => bottomSheetRef.current?.open(),
-      close: () => bottomSheetRef.current?.close(),
+      close: () => {
+        bottomSheetRef.current?.close();
+        return true;
+      },
     }));
 
     useEffect(() => {
@@ -33,8 +44,21 @@ const BottomSheet = React.forwardRef<BottomSheetHandle, BottomSheetProps>(
       else bottomSheetRef.current?.close();
     }, [visible]);
 
+    /*
+    useEffect(() => {
+      if (visible) setOpen(true);
+      else setOpen(false);
+    }, [visible]);
+
+    useEffect(() => {
+      console.log('open', open);
+      if (open) bottomSheetRef.current?.open();
+      else bottomSheetRef.current?.close();
+    }, [open]);
+    */
+
     return (
-      <RBSheet
+      <BS
         customStyles={{
           wrapper: [
             {
@@ -65,11 +89,18 @@ const BottomSheet = React.forwardRef<BottomSheetHandle, BottomSheetProps>(
           ],
         }}
         closeOnDragDown
+        onOpen={() => {
+          onOpen?.();
+        }}
+        onClose={() => {
+          const shouldClose = onClose ? onClose() : true;
+          //if (!shouldClose) bottomSheetRef.current?.open();
+        }}
         {...props}
         ref={bottomSheetRef}
       >
         {children}
-      </RBSheet>
+      </BS>
     );
   },
 );
