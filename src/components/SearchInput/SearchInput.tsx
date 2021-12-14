@@ -50,6 +50,7 @@ function SearchInput({
       />
       {shouldRenderCancelButton ? (
         <Button
+          fullwidth={false}
           color="primary"
           inverse
           text={cancelButtonText}

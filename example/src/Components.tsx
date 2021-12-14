@@ -19,6 +19,8 @@ import {
 import { View } from 'react-native';
 
 export default function Components() {
+  const [value, setValue] = React.useState('');
+
   return (
     <View>
       <Button text="Button" />
@@ -34,7 +36,12 @@ export default function Components() {
         secureTextEntry
         showSecureTextEntryToggle
       />
-      <SearchInput placeholder="Search" />
+      <SearchInput
+        placeholder="Search"
+        value={value}
+        onChangeText={setValue}
+        onPressCancel={() => setValue('')}
+      />
       <CodeInput length={4} onFinish={() => {}} />
       <Select
         icon={icons.User}
