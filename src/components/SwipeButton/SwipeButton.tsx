@@ -8,12 +8,18 @@ import SwipeButtonBase, {
 import Color from 'color';
 
 import { useTheme } from '../../hooks';
+import { ChevronRight } from '../../icons';
 
-export interface SwipeButtonProps extends SwipeButtonBaseProps {}
+// TODO: Fix thumbIconComponent type.
+export interface SwipeButtonProps
+  extends Omit<SwipeButtonBaseProps, 'thumbIconComponent'> {}
+
+const ThumbIcon = () => <ChevronRight stroke="white" size={40} />;
 
 function SwipeButton({
   titleStyles,
   containerStyles,
+  thumbIconStyles,
   title = '',
   ...props
 }: SwipeButtonProps) {
@@ -26,7 +32,7 @@ function SwipeButton({
   );
 
   const thumbColor = useMemo(
-    () => Color(colors.background).darken(0.5).string(),
+    () => Color(colors.background).darken(0.4).string(),
     [colors.background],
   );
 
@@ -48,6 +54,14 @@ function SwipeButton({
         },
         titleStyles,
       ])}
+      thumbIconStyles={StyleSheet.flatten([
+        {
+          borderWidth: 0,
+        },
+        thumbIconStyles,
+      ])}
+      // @ts-ignore
+      thumbIconComponent={ThumbIcon}
       railBackgroundColor={colors.background}
       railFillBackgroundColor={fillColor}
       railFillBorderColor={fillColor}
