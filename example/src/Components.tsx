@@ -78,11 +78,7 @@ export default function Components() {
           }}
         />
       </View>
-      <Menu
-        style={{
-          padding: 20,
-        }}
-      >
+      <Menu>
         <MenuItem icon={icons.Crown} text="MenuItem" separator />
         <MenuItem icon={icons.Camera} text="MenuItem" separator />
         <MenuItem icon={icons.Edit} text="MenuItem" />

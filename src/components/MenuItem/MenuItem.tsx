@@ -7,6 +7,8 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import Color from 'color';
+
 import IconButton, { IconButtonProps } from '../IconButton';
 import { ChevronRight } from '../../icons';
 import { useTheme } from '../../hooks';
@@ -33,8 +35,23 @@ function MenuItem({
 }: MenuItemProps) {
   const { palette } = useTheme();
 
+  const rippleColor = Color(palette.background.container).isDark()
+    ? 'rgba(255, 255, 255, 0.1)'
+    : 'rgba(0, 0, 0, 0.1)';
+
   return (
-    <Pressable style={[styles.container, style]}>
+    <Pressable
+      android_ripple={{
+        color: rippleColor,
+      }}
+      style={[
+        {
+          backgroundColor: palette.background.container,
+        },
+        styles.container,
+        style,
+      ]}
+    >
       <View style={styles.content}>
         {icon && (
           <IconButton
@@ -75,7 +92,9 @@ function MenuItem({
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingHorizontal: 20,
+  },
   content: {
     flexDirection: 'row',
     alignItems: 'center',
