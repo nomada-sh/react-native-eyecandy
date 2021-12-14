@@ -10,6 +10,9 @@ export type { LinkButtonProps } from './LinkButton';
 export { default as IconButton } from './IconButton';
 export type { IconButtonProps } from './IconButton';
 
+export { default as SwipeButton } from './SwipeButton';
+export type { SwipeButtonProps as SliderButtonProps } from './SwipeButton';
+
 export { default as Switch } from './Switch';
 export type { SwitchProps } from './Switch';
 

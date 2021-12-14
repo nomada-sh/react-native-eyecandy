@@ -15,6 +15,7 @@ import Components from './Components';
 import Form from './Form';
 import Icons from './Icons';
 import Typography from './Typography';
+import DisableCompanyBottomSheet from './features/DisableCompanyBottomSheet';
 
 export default function App() {
   const [dark, setDark] = useState(false);
@@ -32,6 +33,7 @@ export default function App() {
           backgroundColor,
         }}
       >
+        <DisableCompanyBottomSheet />
         <BottomSheet closeOnDragDown ref={bottomSheetRef}>
           <Body>BottomSheet</Body>
         </BottomSheet>
