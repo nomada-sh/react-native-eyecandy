@@ -55,3 +55,6 @@ export type { SelectProps, Item as SelectItem } from './Select';
 
 export { default as BottomSheet } from './BottomSheet';
 export type { BottomSheetProps, BottomSheetHandle } from './BottomSheet';
+
+export { default as BottomSheetSwipeConfirmation } from './BottomSheetSwipeConfirmation';
+export type { BottomSheetSwipeConfirmationProps } from './BottomSheetSwipeConfirmation';
