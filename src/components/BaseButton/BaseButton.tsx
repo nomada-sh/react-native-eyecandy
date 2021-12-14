@@ -1,5 +1,6 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import {
+  ActivityIndicator,
   Pressable,
   PressableProps,
   StyleProp,
@@ -36,6 +37,7 @@ export interface BaseButtonProps extends PressableProps {
   variant?: 'default' | 'outlined' | 'rounded' | 'transparent-rounded';
   height?: number;
   fullwidth?: boolean;
+  loading?: boolean;
 }
 
 function BaseButton({
@@ -44,14 +46,22 @@ function BaseButton({
   buttonStyle,
   inverse,
   color,
-  styles: customStyles = {},
   variant,
   height,
-  fullwidth = true,
+  fullwidth,
   disabled,
+  loading,
+  styles: customStyles = {},
   ...props
 }: BaseButtonProps) {
-  const styles = useStyles({ color, inverse, variant, height, disabled });
+  const styles = useStyles({
+    color,
+    inverse,
+    variant,
+    height,
+    disabled,
+    fullwidth,
+  });
 
   const getButtonStyle = usePressableStyles([
     styles.button,
@@ -59,17 +69,15 @@ function BaseButton({
     customStyles.button,
   ]);
 
+  const content = useMemo(() => {
+    if (loading)
+      return <ActivityIndicator size="large" color={styles.loading.color} />;
+
+    return children;
+  }, [children, loading, styles.loading.color]);
+
   return (
-    <View
-      style={[
-        {
-          width: fullwidth ? '100%' : undefined,
-        },
-        styles.container,
-        style,
-        customStyles.container,
-      ]}
-    >
+    <View style={[styles.container, style, customStyles.container]}>
       <Pressable
         style={getButtonStyle}
         android_ripple={{
@@ -78,7 +86,7 @@ function BaseButton({
         disabled={disabled}
         {...props}
       >
-        {children}
+        {content}
       </Pressable>
       {disabled ? <View style={styles.disabled} /> : null}
     </View>

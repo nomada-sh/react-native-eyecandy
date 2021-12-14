@@ -27,6 +27,8 @@ export default function Components() {
       <Button text="Button Disabled" disabled />
       <Button color="primary" text="Button" />
       <Button color="primary" text="Button Disabled" disabled />
+      <Button loading text="Button" />
+      <Button color="primary" loading text="Button" />
       <LinkButton icon={icons.Mail} text="LinkButton" />
       <LinkButton icon={icons.Mail} text="LinkButton" disabled />
       <LinkButton

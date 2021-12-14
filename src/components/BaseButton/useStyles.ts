@@ -15,12 +15,14 @@ export default function useStyles({
   variant = 'default',
   height = 56,
   disabled,
+  fullwidth = true,
 }: {
   color?: ButtonColors;
   inverse?: boolean;
   variant?: 'default' | 'outlined' | 'rounded' | 'transparent-rounded';
   height?: number;
   disabled?: boolean | null;
+  fullwidth?: boolean;
 }) {
   const theme = useTheme();
   const { background, foreground } = theme.components.button[color];
@@ -52,6 +54,7 @@ export default function useStyles({
           height,
           borderRadius,
           overflow: 'hidden',
+          width: fullwidth ? '100%' : undefined,
         },
         button: {
           flex: 1,
@@ -70,7 +73,18 @@ export default function useStyles({
           right: 0,
           bottom: 0,
         },
+        loading: {
+          color: inverse ? background : foreground,
+        },
       }),
-    [height, borderRadius, backgroundColor, rippleColor],
+    [
+      height,
+      borderRadius,
+      backgroundColor,
+      rippleColor,
+      inverse,
+      background,
+      foreground,
+    ],
   );
 }
