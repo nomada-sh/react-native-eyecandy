@@ -2,8 +2,8 @@ import {
   EyeCandy,
   DefaultTheme,
   DarkTheme,
+  Switch,
 } from '@nomada-sh/react-native-eyecandy';
-import { Switch } from '@nomada-sh/react-native-eyecandy/components';
 import React, { useMemo, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import Components from './Components';

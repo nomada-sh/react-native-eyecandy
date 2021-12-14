@@ -1,5 +1,5 @@
 import React from 'react';
-import * as icons from '@nomada-sh/react-native-eyecandy/icons';
+import { Icons as icons } from '@nomada-sh/react-native-eyecandy';
 import { View } from 'react-native';
 
 export default function Icons() {

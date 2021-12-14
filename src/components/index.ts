@@ -13,8 +13,8 @@ export type { IconButtonProps } from './IconButton';
 export { default as Switch } from './Switch';
 export type { SwitchProps } from './Switch';
 
-export { default as Check } from './Check';
-export type { CheckProps } from './Check';
+export { default as RadioButton } from './RadioButton';
+export type { RadioButtonProps as CheckProps } from './RadioButton';
 
 export { default as TextInput } from './TextInput';
 export type { TextInputProps } from './TextInput';

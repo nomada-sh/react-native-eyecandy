@@ -30,6 +30,8 @@ plugins.push([
   },
 ]);
 
+plugins.push('@babel/plugin-proposal-export-namespace-from');
+
 module.exports = {
   presets,
   plugins,

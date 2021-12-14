@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { Button, TextInput, TextInputProps } from '..';
+import Button from '../Button';
+import TextInput, { TextInputProps } from '../TextInput';
 import { Search, Filter } from '../../icons';
 
 export interface SearchInputProps

@@ -16,7 +16,8 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 
-import { Avatar, AvatarProps, IconButton } from '..';
+import Avatar, { AvatarProps } from '../Avatar';
+import IconButton from '../IconButton';
 import { Camera } from '../../icons';
 import { useTheme } from '../../hooks';
 import { ActionSheet } from '../../utils';

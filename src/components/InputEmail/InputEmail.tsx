@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, TextInputProps } from '..';
+import TextInput, { TextInputProps } from '../TextInput';
 import { Mail } from '../../icons';
 
 function InputEmail(props: TextInputProps) {

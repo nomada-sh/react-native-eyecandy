@@ -4,8 +4,8 @@ import {
   InputEmail,
   InputName,
   InputPassword,
-} from '@nomada-sh/react-native-eyecandy/components';
-import { useForm } from '@nomada-sh/react-native-eyecandy';
+  useForm,
+} from '@nomada-sh/react-native-eyecandy';
 
 export default function Form() {
   const { register } = useForm({

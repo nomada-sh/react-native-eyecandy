@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
-import { BaseButton, BaseButtonProps } from '..';
+import BaseButton, { BaseButtonProps } from '../BaseButton';
 import { usePressableStyles } from '../../hooks';
 import { ChevronRight } from '../../icons';
 import { Body } from '../../typography';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BaseButton, BaseButtonProps } from '..';
+import BaseButton, { BaseButtonProps } from '../BaseButton';
 import { Body } from '../../typography';
 
 import useStyles from './useStyles';

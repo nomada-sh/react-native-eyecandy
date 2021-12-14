@@ -1,5 +1,5 @@
 import React from 'react';
-import * as typography from '@nomada-sh/react-native-eyecandy/typography';
+import { Typography as typography } from '@nomada-sh/react-native-eyecandy';
 import { View } from 'react-native';
 
 export default function Typography() {

@@ -9,10 +9,10 @@ import {
 
 import Color from 'color';
 
-import { Check as CheckIcon } from '../../icons';
+import { Check } from '../../icons';
 import { useTheme } from '../../hooks';
 
-export interface CheckProps {
+export interface RadioButtonProps {
   value?: boolean;
   onValueChange?: (checked: boolean) => void;
   style?: StyleProp<ViewStyle>;
@@ -21,7 +21,12 @@ export interface CheckProps {
   label?: string;
 }
 
-function Check({ value = false, size = 32, style, onValueChange }: CheckProps) {
+function RadioButton({
+  value = false,
+  size = 32,
+  style,
+  onValueChange,
+}: RadioButtonProps) {
   const { palette, dark } = useTheme();
 
   const frontSize = size - 10;
@@ -54,7 +59,7 @@ function Check({ value = false, size = 32, style, onValueChange }: CheckProps) {
             styles.iconContainer,
           ]}
         >
-          {value ? <CheckIcon stroke="white" size={15} /> : null}
+          {value ? <Check stroke="white" size={15} /> : null}
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -72,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Check;
+export default RadioButton;

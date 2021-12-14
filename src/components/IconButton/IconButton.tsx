@@ -1,6 +1,6 @@
 import React, { useMemo, FC, ReactNode } from 'react';
 
-import { BaseButtonProps, BaseButton } from '..';
+import BaseButton, { BaseButtonProps } from '../BaseButton';
 import { useTheme } from '../../hooks';
 
 interface IconProps {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Button,
-  Check,
+  RadioButton,
   IconButton,
   LinkButton,
   TextInput,
@@ -13,11 +13,10 @@ import {
   Menu,
   MenuItem,
   Card,
-} from '@nomada-sh/react-native-eyecandy/components';
-import { Body } from '@nomada-sh/react-native-eyecandy/typography';
+  Body,
+  Icons as icons,
+} from '@nomada-sh/react-native-eyecandy';
 import { View } from 'react-native';
-
-import * as icons from '@nomada-sh/react-native-eyecandy/icons';
 
 export default function Components() {
   return (
@@ -57,8 +56,8 @@ export default function Components() {
         })}
       </View>
       <View style={{ flexDirection: 'row' }}>
-        <Check value={true} />
-        <Check value={false} />
+        <RadioButton value={true} />
+        <RadioButton value={false} />
       </View>
       <View style={{ flexDirection: 'row' }}>
         <Avatar

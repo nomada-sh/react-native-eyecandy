@@ -4,8 +4,10 @@ export * from './theme';
 export * from './utils';
 export * from './components';
 export * from './typography';
+export * from './icons';
 
 export * as Icons from './icons';
+export * as Typography from './typography';
 
 /*
 import { NativeModules, Platform } from 'react-native';

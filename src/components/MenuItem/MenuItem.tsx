@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { IconButton, IconButtonProps } from '..';
+import IconButton, { IconButtonProps } from '../IconButton';
 import { ChevronRight } from '../../icons';
 import { useTheme } from '../../hooks';
 import { Body } from '../../typography';
