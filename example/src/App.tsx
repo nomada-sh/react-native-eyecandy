@@ -3,6 +3,10 @@ import {
   DefaultTheme,
   DarkTheme,
   Switch,
+  Button,
+  BottomSheet,
+  BottomSheetHandle,
+  Body,
 } from '@nomada-sh/react-native-eyecandy';
 import React, { useMemo, useState } from 'react';
 import { ScrollView, View } from 'react-native';
@@ -19,6 +23,8 @@ export default function App() {
 
   const backgroundColor = theme.palette.background.container;
 
+  const bottomSheetRef = React.useRef<BottomSheetHandle>(null);
+
   return (
     <EyeCandy theme={theme}>
       <View
@@ -26,6 +32,9 @@ export default function App() {
           backgroundColor,
         }}
       >
+        <BottomSheet closeOnDragDown ref={bottomSheetRef}>
+          <Body>BottomSheet</Body>
+        </BottomSheet>
         <Switch value={dark} onValueChange={() => setDark(!dark)} />
       </View>
       <ScrollView
@@ -35,6 +44,12 @@ export default function App() {
         keyboardShouldPersistTaps="always"
       >
         <Icons />
+        <Button
+          text="BottomSheet"
+          onPress={() => {
+            bottomSheetRef.current?.open();
+          }}
+        />
         <Components />
         <Typography />
         <Form />

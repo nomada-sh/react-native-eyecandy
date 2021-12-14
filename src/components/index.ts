@@ -49,3 +49,6 @@ export type { MenuItemProps } from './MenuItem';
 
 export { default as Select } from './Select';
 export type { SelectProps, Item as SelectItem } from './Select';
+
+export { default as BottomSheet } from './BottomSheet';
+export type { BottomSheetProps, BottomSheetHandle } from './BottomSheet';
