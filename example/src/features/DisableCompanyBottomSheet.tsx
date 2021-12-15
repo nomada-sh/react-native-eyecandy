@@ -20,10 +20,7 @@ export default function DisableCompanyBottomSheet() {
       <BottomSheetSwipeConfirmation
         swipeTitle="Desliza para confirmar"
         title="¿Estás seguro de que quieres deshabilitar esta empresa?"
-        onCancel={() => {
-          setVisible(false);
-          return false;
-        }}
+        onClose={() => setVisible(false)}
         onConfirm={() => {
           Alert.alert('Empresa deshabilitada');
           setVisible(false);

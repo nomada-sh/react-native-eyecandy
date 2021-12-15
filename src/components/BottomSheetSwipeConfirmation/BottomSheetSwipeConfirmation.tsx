@@ -4,19 +4,16 @@ import BottomSheet, { BottomSheetProps } from '../BottomSheet';
 import SwipeButton from '../SwipeButton';
 import { Body } from '../../typography';
 
-export interface BottomSheetSwipeConfirmationProps
-  extends Omit<BottomSheetProps, 'onClose'> {
+export interface BottomSheetSwipeConfirmationProps extends BottomSheetProps {
   title: string;
   swipeTitle?: string;
   onConfirm?: () => void;
-  onCancel?: BottomSheetProps['onClose'];
 }
 
 function BottomSheetSwipeConfirmation({
   title,
   swipeTitle,
   style,
-  onCancel,
   onConfirm,
   ...props
 }: BottomSheetSwipeConfirmationProps) {
@@ -28,9 +25,6 @@ function BottomSheetSwipeConfirmation({
         },
         style,
       ]}
-      height={170}
-      onClose={onCancel}
-      closeOnPressMask={false}
       {...props}
     >
       <Body
@@ -47,5 +41,11 @@ function BottomSheetSwipeConfirmation({
     </BottomSheet>
   );
 }
+
+BottomSheetSwipeConfirmation.defaultProps = {
+  ...BottomSheet.defaultProps,
+  height: 170,
+  closeOnPressMask: false,
+};
 
 export default BottomSheetSwipeConfirmation;
