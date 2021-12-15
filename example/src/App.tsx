@@ -4,9 +4,7 @@ import {
   DarkTheme,
   Switch,
   Button,
-  BottomSheet,
   BottomSheetHandle,
-  Body,
 } from '@nomada-sh/react-native-eyecandy';
 import React, { useMemo, useState } from 'react';
 import { ScrollView, View } from 'react-native';
@@ -40,7 +38,7 @@ export default function App() {
         style={{
           backgroundColor,
         }}
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps="handled"
       >
         <Icons />
         <Button

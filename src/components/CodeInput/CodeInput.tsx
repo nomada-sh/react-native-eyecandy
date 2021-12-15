@@ -68,6 +68,18 @@ function CodeInput({
     }
   }, [code, dimissKeyboardOnFinish, finished, focused, onFinish]);
 
+  useEffect(() => {
+    if (!focused) return;
+
+    const subscription = Keyboard.addListener('keyboardDidHide', () => {
+      inputRef.current?.blur();
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [focused]);
+
   return (
     <View style={[styles.container, style]}>
       {cells}
@@ -92,11 +104,13 @@ function CodeInput({
         style={{
           position: 'absolute',
           width: 0,
-          height: 0,
+          height: '100%',
+          top: 0,
           bottom: 0,
           left: 0,
           right: 0,
           borderWidth: 0,
+          backgroundColor: 'transparent',
         }}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
