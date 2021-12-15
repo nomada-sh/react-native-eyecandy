@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React Native Eye Candy",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
