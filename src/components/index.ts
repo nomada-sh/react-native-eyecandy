@@ -58,3 +58,6 @@ export type { BottomSheetProps, BottomSheetHandle } from './BottomSheet';
 
 export { default as BottomSheetSwipeConfirmation } from './BottomSheetSwipeConfirmation';
 export type { BottomSheetSwipeConfirmationProps } from './BottomSheetSwipeConfirmation';
+
+export { default as DatePicker } from './DatePicker';
+export type { DatePickerProps } from './DatePicker';
