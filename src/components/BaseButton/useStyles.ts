@@ -4,10 +4,8 @@ import { StyleSheet } from 'react-native';
 import Color from 'color';
 
 import { useTheme } from '../../hooks';
+import { getRippleColor } from '../../utils';
 import type { ButtonColors } from '../../theme';
-
-const DARK_RIPPLE_COLOR = 'rgba(255, 255, 255, 0.1)',
-  LIGHT_RIPPLE_COLOR = 'rgba(0, 0, 0, 0.1)';
 
 export default function useStyles({
   color = 'default',
@@ -33,9 +31,7 @@ export default function useStyles({
 
       let backgroundColor = Color(inverse ? foreground : background).rgb();
 
-      const rippleColor = backgroundColor.isDark()
-        ? DARK_RIPPLE_COLOR
-        : LIGHT_RIPPLE_COLOR;
+      const rippleColor = getRippleColor(backgroundColor);
 
       if (/^transparent(-[a-z]+)?/.test(variant))
         backgroundColor = backgroundColor.alpha(0);
@@ -67,7 +63,7 @@ export default function useStyles({
           alignItems: 'center',
         },
         ripple: {
-          color: rippleColor,
+          color: rippleColor.string(),
         },
         disabled: {
           backgroundColor: disabled ? disabledColor.string() : undefined,
