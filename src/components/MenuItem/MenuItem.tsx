@@ -55,11 +55,12 @@ function MenuItem({
             buttonStyle={{
               backgroundColor: iconBackgroundColor,
             }}
-            disabled
             icon={icon}
             iconColor={iconColor}
             size={40}
             iconSize={22}
+            disabled
+            hideDisabledOverlay
           />
         )}
         <Body

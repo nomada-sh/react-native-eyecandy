@@ -38,6 +38,7 @@ export interface BaseButtonProps extends PressableProps {
   height?: number;
   fullwidth?: boolean;
   loading?: boolean;
+  hideDisabledOverlay?: boolean;
 }
 
 function BaseButton({
@@ -52,6 +53,7 @@ function BaseButton({
   disabled: disabledProp,
   loading,
   styles: customStyles = {},
+  hideDisabledOverlay,
   ...props
 }: BaseButtonProps) {
   const disabled = useMemo(
@@ -86,7 +88,9 @@ function BaseButton({
       >
         {children}
       </Pressable>
-      {disabled ? <View style={styles.disabled} /> : null}
+      {disabled && !hideDisabledOverlay ? (
+        <View style={styles.disabled} />
+      ) : null}
       {loading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={styles.loading.color} />

@@ -33,10 +33,10 @@ export default function useStyles({
 
       const rippleColor = getRippleColor(backgroundColor);
 
+      let disabledColor = backgroundColor.fade(0.4);
+
       if (/^transparent(-[a-z]+)?/.test(variant))
         backgroundColor = backgroundColor.alpha(0);
-
-      let disabledColor = backgroundColor.fade(0.4);
 
       return {
         borderRadius,
