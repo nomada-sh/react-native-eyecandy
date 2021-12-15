@@ -15,7 +15,7 @@ function Card({ style, ...props }: CardProps) {
     <View
       style={[
         {
-          backgroundColor: dark ? palette.grey[800] : palette.grey[50],
+          backgroundColor: palette.grey[dark ? 800 : 100],
           padding: 16,
           borderRadius: 16,
           overflow: 'hidden',
