@@ -31,6 +31,7 @@ export default function Components() {
       <Button color="primary" loading text="Button" />
       <LinkButton icon={icons.Mail} text="LinkButton" />
       <LinkButton icon={icons.Mail} text="LinkButton" disabled />
+      <LinkButton icon={icons.Mail} text="LinkButton" loading />
       <LinkButton
         icon={icons.Mail}
         text="LinkButton"

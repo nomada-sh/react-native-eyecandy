@@ -19,7 +19,6 @@ function LinkButton({
   text,
   icon,
   buttonStyle,
-  disabled,
   color = 'default',
   ...props
 }: LinkButtonProps) {
@@ -31,26 +30,16 @@ function LinkButton({
   const buttonStyles = usePressableStyles([styles.button, buttonStyle]);
 
   const textStyle = {
-    opacity: disabled ? 0.5 : 1,
     color: colors.foreground,
   };
 
   return (
-    <BaseButton
-      color={color}
-      buttonStyle={buttonStyles}
-      disabled={disabled}
-      {...props}
-    >
+    <BaseButton color={color} buttonStyle={buttonStyles} {...props}>
       {Icon ? (
-        <Icon
-          style={[textStyle, styles.icon]}
-          size={20}
-          stroke={textStyle.color}
-        />
+        <Icon style={styles.icon} size={20} stroke={textStyle.color} />
       ) : null}
       <Body style={[textStyle, styles.text]}>{text}</Body>
-      <ChevronRight style={textStyle} color="grey" size={20} />
+      <ChevronRight color="grey" size={20} />
     </BaseButton>
   );
 }

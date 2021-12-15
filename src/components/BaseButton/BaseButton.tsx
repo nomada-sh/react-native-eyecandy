@@ -49,11 +49,16 @@ function BaseButton({
   variant,
   height,
   fullwidth,
-  disabled,
+  disabled: disabledProp,
   loading,
   styles: customStyles = {},
   ...props
 }: BaseButtonProps) {
+  const disabled = useMemo(
+    () => disabledProp || loading,
+    [disabledProp, loading],
+  );
+
   const styles = useStyles({
     color,
     inverse,
@@ -69,13 +74,6 @@ function BaseButton({
     customStyles.button,
   ]);
 
-  const content = useMemo(() => {
-    if (loading)
-      return <ActivityIndicator size="large" color={styles.loading.color} />;
-
-    return children;
-  }, [children, loading, styles.loading.color]);
-
   return (
     <View style={[styles.container, style, customStyles.container]}>
       <Pressable
@@ -86,9 +84,14 @@ function BaseButton({
         disabled={disabled}
         {...props}
       >
-        {content}
+        {children}
       </Pressable>
       {disabled ? <View style={styles.disabled} /> : null}
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={styles.loading.color} />
+        </View>
+      ) : null}
     </View>
   );
 }

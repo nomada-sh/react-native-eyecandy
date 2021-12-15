@@ -8,11 +8,11 @@ export interface ButtonProps extends Omit<BaseButtonProps, 'children'> {
   text: string;
 }
 
-function Button({ text, color, inverse, disabled, ...props }: ButtonProps) {
-  const styles = useStyles({ color, inverse, disabled });
+function Button({ text, color, inverse, ...props }: ButtonProps) {
+  const styles = useStyles({ color, inverse });
 
   return (
-    <BaseButton color={color} inverse={inverse} disabled={disabled} {...props}>
+    <BaseButton color={color} inverse={inverse} {...props}>
       <Body weight="bold" size="large" style={styles.text}>
         {text}
       </Body>

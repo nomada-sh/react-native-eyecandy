@@ -24,28 +24,31 @@ export default function useStyles({
   disabled?: boolean | null;
   fullwidth?: boolean;
 }) {
-  const theme = useTheme();
-  const { background, foreground } = theme.components.button[color];
+  const { components } = useTheme();
+  const { background, foreground } = components.button[color];
 
-  const borderRadius = /([a-z]+-)?rounded$/.test(variant) ? height / 2 : 12;
+  const { borderRadius, backgroundColor, rippleColor, disabledColor } =
+    useMemo(() => {
+      const borderRadius = /([a-z]+-)?rounded$/.test(variant) ? height / 2 : 12;
 
-  let backgroundColor = useMemo(
-    () => Color(inverse ? foreground : background).rgb(),
-    [background, foreground, inverse],
-  );
+      let backgroundColor = Color(inverse ? foreground : background).rgb();
 
-  const rippleColor = useMemo(
-    () => (backgroundColor.isDark() ? DARK_RIPPLE_COLOR : LIGHT_RIPPLE_COLOR),
-    [backgroundColor],
-  );
+      const rippleColor = backgroundColor.isDark()
+        ? DARK_RIPPLE_COLOR
+        : LIGHT_RIPPLE_COLOR;
 
-  if (/^transparent(-[a-z]+)?/.test(variant))
-    backgroundColor = backgroundColor.alpha(0);
+      if (/^transparent(-[a-z]+)?/.test(variant))
+        backgroundColor = backgroundColor.alpha(0);
 
-  if (disabled)
-    backgroundColor = backgroundColor.isDark()
-      ? backgroundColor.alpha(0.8)
-      : backgroundColor.darken(0.1).alpha(0.8);
+      let disabledColor = backgroundColor.fade(0.4);
+
+      return {
+        borderRadius,
+        backgroundColor,
+        rippleColor,
+        disabledColor,
+      };
+    }, [background, foreground, height, inverse, variant]);
 
   return useMemo(
     () =>
@@ -67,11 +70,20 @@ export default function useStyles({
           color: rippleColor,
         },
         disabled: {
+          backgroundColor: disabled ? disabledColor.string() : undefined,
           position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
+        },
+        loadingContainer: {
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          justifyContent: 'center',
         },
         loading: {
           color: inverse ? background : foreground,
@@ -80,8 +92,11 @@ export default function useStyles({
     [
       height,
       borderRadius,
+      fullwidth,
       backgroundColor,
       rippleColor,
+      disabled,
+      disabledColor,
       inverse,
       background,
       foreground,
