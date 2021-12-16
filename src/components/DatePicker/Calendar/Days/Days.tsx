@@ -7,13 +7,20 @@ import Day from '../Day';
 
 export interface DaysProps {
   data?: Array<false | CalendarDate>;
-  onDayPress: (value: CalendarDate) => void;
+  onDayPress?: (value: CalendarDate) => void;
+  testMonth?: number;
+  testYear?: number;
 }
 
-function Days({ data = [], onDayPress }: DaysProps) {
+function Days({ data = [], onDayPress, testMonth, testYear }: DaysProps) {
+  /*
   useEffect(() => {
-    console.log('Days: rerender');
-  }, [data, onDayPress]);
+    console.log('DAYS: Rendered', `${testMonth}/${testYear}`);
+    return () => {
+      console.log('DAYS: Unmounted', `${testMonth}/${testYear}`);
+    };
+  }, [data, onDayPress, testMonth, testYear]);
+  */
 
   return (
     <View style={styles.container}>

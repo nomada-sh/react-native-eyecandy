@@ -6,7 +6,7 @@ import Select from '../Select';
 
 export interface DatePickerProps {}
 
-const months = [9, 10, 11];
+const months = new Array(1000).fill(0).map((_, index) => index);
 
 function DatePicker({}: DatePickerProps) {
   const [lang, setLang] = React.useState<'es' | 'en' | null>('en');
@@ -26,6 +26,10 @@ function DatePicker({}: DatePickerProps) {
     [lang],
   );
 
+  const onViewableItemsChanged = useCallback((info: any) => {
+    console.log(info.viewableItems);
+  }, []);
+
   return (
     <View>
       <Select
@@ -43,6 +47,12 @@ function DatePicker({}: DatePickerProps) {
         ]}
       />
       <FlatList
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 50,
+        }}
+        onViewableItemsChanged={onViewableItemsChanged}
+        pagingEnabled
+        initialScrollIndex={100}
         getItemLayout={(data, index) => ({
           length: Dimensions.get('window').width,
           offset: Dimensions.get('window').width * index,

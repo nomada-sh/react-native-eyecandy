@@ -5,9 +5,11 @@ import { Body } from '../../../../typography';
 
 export interface HeaderProps {
   lang?: 'en' | 'es' | null | false;
+  testMonth?: number;
+  testYear?: number;
 }
 
-function Header({ lang }: HeaderProps) {
+function Header({ lang, testMonth, testYear }: HeaderProps) {
   const names = useMemo(() => {
     switch (lang) {
       case 'es':
@@ -17,9 +19,15 @@ function Header({ lang }: HeaderProps) {
     }
   }, [lang]);
 
+  /*
   useEffect(() => {
-    console.log('Header: rerender');
-  }, [names]);
+    console.log('HEADER: Rendered', `${testMonth}/${testYear}`);
+
+    return () => {
+      console.log('HEADER: Unmounted', `${testMonth}/${testYear}`);
+    };
+  }, [names, testMonth, testYear]);
+  */
 
   return (
     <View style={styles.container}>
