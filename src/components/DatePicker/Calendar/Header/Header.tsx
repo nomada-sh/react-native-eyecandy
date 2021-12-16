@@ -1,15 +1,18 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Body } from '../../../../typography';
 
 export interface HeaderProps {
   lang?: 'en' | 'es' | null | false;
-  testMonth?: number;
-  testYear?: number;
+  month?: number;
+  year?: number;
 }
 
-function Header({ lang, testMonth, testYear }: HeaderProps) {
+function Header({ lang, month, year }: HeaderProps) {
+  const count = useRef(1);
+  console.log('HEADER', `${month}/${year},`, 'RENDER COUNT:', count.current++);
+
   const names = useMemo(() => {
     switch (lang) {
       case 'es':
@@ -18,16 +21,6 @@ function Header({ lang, testMonth, testYear }: HeaderProps) {
         return ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
     }
   }, [lang]);
-
-  /*
-  useEffect(() => {
-    console.log('HEADER: Rendered', `${testMonth}/${testYear}`);
-
-    return () => {
-      console.log('HEADER: Unmounted', `${testMonth}/${testYear}`);
-    };
-  }, [names, testMonth, testYear]);
-  */
 
   return (
     <View style={styles.container}>

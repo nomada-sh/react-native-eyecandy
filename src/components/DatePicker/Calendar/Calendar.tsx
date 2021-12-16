@@ -1,77 +1,51 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Dimensions, StyleProp, View, ViewStyle } from 'react-native';
 
 import { useUpdateEffect } from 'react-use';
-import { Calendar as CalendarBase, CalendarDate } from 'calendar-base';
+import type { Calendar as CalendarUtils, CalendarDate } from 'calendar-base';
+
+import { Body } from '../../../typography';
 
 import Days from './Days';
 import Header from './Header';
-import mountTest from '../mountTest';
 
 export interface CalendarProps {
-  year?: number;
-  month?: number;
+  year: number;
+  month: number;
   lang?: 'en' | 'es' | null | false;
   style?: StyleProp<ViewStyle>;
+  selectedDate?: CalendarDate;
+  onDayPress?: (value: CalendarDate) => void;
+  days: (false | CalendarDate)[];
+  getCalendar: (year: number, month: number) => (false | CalendarDate)[];
 }
 
 function Calendar({
   lang,
-  year: initialYear,
-  month: initialMonth,
+  year,
+  month,
   style,
+  selectedDate,
+  onDayPress,
+  getCalendar,
 }: CalendarProps) {
-  const calendar = useMemo(() => new CalendarBase(), []);
-  const now = useMemo(() => new Date(), []);
+  const count = useRef(1);
 
-  const [year, setYear] = useState(initialYear || now.getFullYear());
-  const [month, setMonth] = useState(initialMonth || now.getMonth());
-
-  const actualMonth = useMemo(
-    () => new Date(year, month).getMonth(),
-    [year, month],
-  );
-
-  const actualYear = useMemo(
-    () => new Date(year, month).getFullYear(),
-    [year, month],
-  );
-
-  const calendarMonth = useMemo(
-    () => calendar.getCalendar(year, month),
-    [calendar, year, month],
-  );
-
-  const onDayPress = useCallback((value: CalendarDate) => {
-    console.log(value);
-  }, []);
-
-  useUpdateEffect(() => {
-    if (initialYear !== undefined) setYear(initialYear);
-    if (initialMonth !== undefined) setMonth(initialMonth);
-  }, [initialMonth, initialYear]);
-
-  useEffect(() => {
-    const monthStr =
-      actualMonth.toString().length === 1 ? `0${actualMonth}` : actualMonth;
-    const key = `${actualYear}/${monthStr}`;
-
-    mountTest[key] = true;
-
-    const ordered = Object.keys(mountTest)
-      .sort()
-      .reduce((obj, key) => {
-        obj[key] = mountTest[key];
-        return obj;
-      }, {} as any);
-
-    console.log(JSON.stringify(ordered, null, 2));
-
-    return () => {
-      delete mountTest[key];
-      //mountTest[key] = false;
-    };
-  }, [actualMonth, actualYear]);
+  const days = useMemo(() => {
+    console.log(
+      'CALENDAR CREATING DAYS',
+      `${month}/${year},`,
+      'CREATION COUNT:',
+      count.current++,
+    );
+    return getCalendar(year, month);
+  }, [getCalendar, year, month]);
 
   return (
     <View
@@ -82,8 +56,19 @@ function Calendar({
         style,
       ]}
     >
-      <Header lang={lang} />
-      <Days data={calendarMonth} onDayPress={onDayPress} />
+      <View>
+        <Body>
+          {year}/{month}
+        </Body>
+      </View>
+      <Header lang={lang} month={month} year={year} />
+      <Days
+        data={days}
+        onDayPress={onDayPress}
+        selectedDate={selectedDate}
+        month={month}
+        year={year}
+      />
     </View>
   );
 }
