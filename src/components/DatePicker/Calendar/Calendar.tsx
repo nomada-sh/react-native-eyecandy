@@ -65,7 +65,7 @@ function Calendar({
   const startXRef = useRef(-width);
   const translateX = useRef(new Animated.Value(startXRef.current)).current;
 
-  const [index, setIndex] = useState(0);
+  const indexRef = useRef(0);
 
   const handleGoToNextMonth = useCallback(() => {
     onGoToNextMonth();
@@ -74,6 +74,24 @@ function Calendar({
   const handleGoToPrevMonth = useCallback(() => {
     onGoToPrevMonth();
   }, [onGoToPrevMonth]);
+
+  const handlePressToday = useCallback(() => {
+    if (indexRef.current === 0) return;
+
+    onPressToday();
+
+    if (animateOnPressToday) {
+      translateX.setValue(indexRef.current > 0 ? -width * 2 : 0);
+
+      Animated.timing(translateX, {
+        toValue: -width,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+
+    indexRef.current = 0;
+  }, [animateOnPressToday, onPressToday, translateX, width]);
 
   const getDirectionAndDistance = useCallback(
     (dx: number) => {
@@ -114,20 +132,19 @@ function Calendar({
 
           Animated.timing(translateX, {
             toValue: startXRef.current,
-            useNativeDriver: false,
+            useNativeDriver: true,
             duration: 300,
           }).start(() => {
             startXRef.current = -width;
             translateX.setValue(startXRef.current);
+            indexRef.current -= direction;
 
             direction < 0 ? handleGoToNextMonth() : handleGoToPrevMonth();
-
-            //setIndex(prev => prev - direction);
           });
         } else {
           Animated.timing(translateX, {
             toValue: startXRef.current,
-            useNativeDriver: false,
+            useNativeDriver: true,
             duration: 300,
           }).start();
         }
@@ -145,7 +162,7 @@ function Calendar({
             date={date}
             onPressYear={onPressYear}
             onPressMonth={onPressMonth}
-            onPressToday={onPressToday}
+            onPressToday={handlePressToday}
           />
           <Header lang={lang} month={month} year={year} />
           <Days
@@ -158,7 +175,14 @@ function Calendar({
         </View>
       );
     },
-    [lang, onDayPress, onPressMonth, onPressToday, onPressYear, selectedDate],
+    [
+      handlePressToday,
+      lang,
+      onDayPress,
+      onPressMonth,
+      onPressYear,
+      selectedDate,
+    ],
   );
 
   const months = useMemo(() => {
