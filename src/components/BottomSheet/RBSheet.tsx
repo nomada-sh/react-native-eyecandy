@@ -41,6 +41,7 @@ export interface RBSheetProps {
     draggableIcon?: StyleProp<ViewStyle>;
   };
   children?: React.ReactNode;
+  grantThreshold?: number;
 }
 
 export interface RBSheetState {

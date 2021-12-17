@@ -76,9 +76,9 @@ function Calendar({
   }, [onGoToPrevMonth]);
 
   const handlePressToday = useCallback(() => {
-    if (indexRef.current === 0) return;
-
     onPressToday();
+
+    if (indexRef.current === 0) return;
 
     if (animateOnPressToday) {
       translateX.setValue(indexRef.current > 0 ? -width * 2 : 0);

@@ -1,13 +1,16 @@
+import React, { useMemo, useState } from 'react';
+import { ScrollView, View } from 'react-native';
+
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 import {
   EyeCandy,
   DefaultTheme,
   DarkTheme,
   Switch,
 } from '@nomada-sh/react-native-eyecandy';
-import React, { useMemo, useState } from 'react';
-import { ScrollView, View } from 'react-native';
-import Components from './Components';
 
+import Components from './Components';
 import Form from './Form';
 import Icons from './Icons';
 import Typography from './Typography';
@@ -23,26 +26,28 @@ export default function App() {
 
   return (
     <EyeCandy theme={theme}>
-      <View
-        style={{
-          backgroundColor,
-        }}
-      >
-        <DisableCompanyBottomSheet />
-        <Switch value={dark} onValueChange={() => setDark(!dark)} />
-      </View>
-      <ScrollView
-        style={{
-          backgroundColor,
-        }}
-        keyboardShouldPersistTaps="handled"
-      >
-        <DatePickerFeature />
-        <Icons />
-        <Components />
-        <Typography />
-        <Form />
-      </ScrollView>
+      <GestureHandlerRootView>
+        <View
+          style={{
+            backgroundColor,
+          }}
+        >
+          <DisableCompanyBottomSheet />
+          <Switch value={dark} onValueChange={() => setDark(!dark)} />
+        </View>
+        <ScrollView
+          style={{
+            backgroundColor,
+          }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <DatePickerFeature />
+          <Icons />
+          <Components />
+          <Typography />
+          <Form />
+        </ScrollView>
+      </GestureHandlerRootView>
     </EyeCandy>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
-import type { StyleProp, ViewStyle } from 'react-native';
+import { Platform, StyleProp, ViewStyle } from 'react-native';
 
 import RBSheet, { RBSheetProps } from './RBSheet';
 
@@ -73,8 +73,19 @@ const BottomSheet = React.forwardRef<BottomSheetHandle, BottomSheetProps>(
 );
 
 BottomSheet.defaultProps = {
-  ...RBSheet.defaultProps,
   closeOnDragDown: true,
+  animationType: 'none',
+  height: 260,
+  minClosingHeight: 0,
+  openDuration: 300,
+  closeDuration: 200,
+  dragFromTopOnly: false,
+  closeOnPressMask: true,
+  closeOnPressBack: true,
+  keyboardAvoidingViewEnabled: Platform.OS === 'ios',
+  customStyles: {},
+  onClose: () => {},
+  onOpen: () => {},
 };
 
 export default BottomSheet;

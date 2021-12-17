@@ -12,7 +12,9 @@
     "@react-native-picker/picker": "^2.2.1",
     "react": "^17.0.2",
     "react-native": "^0.66.4",
+    "react-native-gesture-handler": "^2.1.0",
     "react-native-image-picker": "^4.6.0",
+    "react-native-reanimated": "^2.3.1",
     "react-native-svg": "^12.1.1"
   },
   "devDependencies": {

@@ -1,18 +1,31 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Dimensions, View } from 'react-native';
 
+import { CalendarDate, Calendar as calendarBase } from 'calendar-base';
+
 import Calendar from './Calendar';
-import { CalendarDate, Calendar as CalendarUtils } from 'calendar-base';
+import BottomSheet from './BottomSheet';
+import Button from '../Button';
 
 export interface DatePickerProps {
   date: Date;
   onDateChange?: (date: Date) => void;
   locale: string;
+  onPress?: () => void;
+  calendarVisible?: boolean;
+  onCloseCalendar?: () => void;
 }
 
-function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
+function DatePicker({
+  date,
+  onDateChange,
+  locale,
+  calendarVisible,
+  onCloseCalendar,
+  onPress,
+}: DatePickerProps) {
   const width = useRef(Dimensions.get('window').width).current;
-  const calendar = useMemo(() => new CalendarUtils(), []);
+  const calendar = useMemo(() => new calendarBase(), []);
 
   const selectedDate = useMemo((): CalendarDate => {
     return {
@@ -70,26 +83,24 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
     setCurrentMonth(prev => prev - 1);
   }, []);
 
-  const content = useMemo(() => {
+  const contentCalendar = useMemo(() => {
     return (
-      <View>
-        <Calendar
-          width={width}
-          getCalendar={getCalendar}
-          days={days}
-          onDayPress={onDayPress}
-          selectedDate={selectedDate}
-          locale={locale}
-          month={currentMonth}
-          year={currentYear}
-          onGoToNextMonth={onGoToNextMonth}
-          onGoToPrevMonth={onGoToPrevMonth}
-          onPressToday={onPressToday}
-          onPressMonth={onPressMonth}
-          onPressYear={onPressYear}
-          animateOnPressToday
-        />
-      </View>
+      <Calendar
+        width={width}
+        getCalendar={getCalendar}
+        days={days}
+        onDayPress={onDayPress}
+        selectedDate={selectedDate}
+        locale={locale}
+        month={currentMonth}
+        year={currentYear}
+        onGoToNextMonth={onGoToNextMonth}
+        onGoToPrevMonth={onGoToPrevMonth}
+        onPressToday={onPressToday}
+        onPressMonth={onPressMonth}
+        onPressYear={onPressYear}
+        animateOnPressToday
+      />
     );
   }, [
     currentMonth,
@@ -107,7 +118,14 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
     width,
   ]);
 
-  return <View>{content}</View>;
+  return (
+    <View>
+      <Button onPress={onPress} text="DatePicker" />
+      <BottomSheet visible={calendarVisible} onClose={onCloseCalendar}>
+        {contentCalendar}
+      </BottomSheet>
+    </View>
+  );
 }
 
 DatePicker.defaultProps = {

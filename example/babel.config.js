@@ -23,6 +23,8 @@ plugins.push([
   },
 ]);
 
+plugins.push('react-native-reanimated/plugin');
+
 plugins.push([
   '@babel/plugin-transform-react-jsx',
   {

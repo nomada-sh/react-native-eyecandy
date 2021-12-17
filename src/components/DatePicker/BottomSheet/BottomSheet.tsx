@@ -1,16 +1,29 @@
-import { View } from 'react-native';
+import React from 'react';
+
+import BottomSheetBase from '../../BottomSheet';
+import { Body } from '../../../typography';
 
 export interface BottomSheetProps {
+  visible?: boolean;
+  onClose?: () => void;
   children?: React.ReactNode;
 }
 
-function BottomSheet({
-  children
-}: BottomSheetProps) {
+function BottomSheet({ visible, onClose, children }: BottomSheetProps) {
   return (
-    <View>
+    <BottomSheetBase
+      customStyles={{
+        container: {
+          padding: 0,
+        },
+      }}
+      visible={visible}
+      onClose={onClose}
+      height={380}
+      closeOnDragDown={false}
+    >
       {children}
-    </View>
+    </BottomSheetBase>
   );
 }
 
