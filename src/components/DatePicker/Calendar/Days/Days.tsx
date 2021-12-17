@@ -11,11 +11,20 @@ export interface DaysProps {
   selectedDate?: CalendarDate;
   year: number;
   month: number;
+  debug?: boolean;
 }
 
-function Days({ data = [], onDayPress, selectedDate, month, year }: DaysProps) {
+function Days({
+  debug,
+  data = [],
+  onDayPress,
+  selectedDate,
+  month,
+  year,
+}: DaysProps) {
   const count = useRef(1);
-  console.log('DAYS', `${month}/${year},`, 'RENDER COUNT:', count.current++);
+  debug &&
+    console.log('DAYS', `${month}/${year},`, 'RENDER COUNT:', count.current++);
 
   const isDateSelected = useCallback(
     (value: CalendarDate) => {
@@ -37,7 +46,6 @@ function Days({ data = [], onDayPress, selectedDate, month, year }: DaysProps) {
         const selected = day ? isDateSelected(day) : false;
         return (
           <Day
-            debug
             onPress={onDayPress}
             key={index}
             value={day}
@@ -53,9 +61,13 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    height: 40 * 6,
   },
 });
 
+export default React.memo(Days);
+
+/*
 export default React.memo(Days, (prev, next) => {
   let equal =
     prev.data === next.data &&
@@ -86,3 +98,4 @@ export default React.memo(Days, (prev, next) => {
 
   return true;
 });
+*/

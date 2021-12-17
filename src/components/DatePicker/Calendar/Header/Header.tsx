@@ -7,18 +7,25 @@ export interface HeaderProps {
   lang?: 'en' | 'es' | null | false;
   month?: number;
   year?: number;
+  debug?: boolean;
 }
 
-function Header({ lang, month, year }: HeaderProps) {
+function Header({ debug, lang, month, year }: HeaderProps) {
   const count = useRef(1);
-  console.log('HEADER', `${month}/${year},`, 'RENDER COUNT:', count.current++);
+  debug &&
+    console.log(
+      'HEADER',
+      `${month}/${year},`,
+      'RENDER COUNT:',
+      count.current++,
+    );
 
   const names = useMemo(() => {
     switch (lang) {
       case 'es':
-        return ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+        return 'DLMMJVS'.split('');
       default:
-        return ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+        return 'SMTWTFS'.split('');
     }
   }, [lang]);
 

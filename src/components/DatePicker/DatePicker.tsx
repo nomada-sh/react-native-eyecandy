@@ -1,58 +1,41 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { FlatList, View, Dimensions, ListRenderItem } from 'react-native';
+import { View } from 'react-native';
 
 import Calendar from './Calendar';
-import Select from '../Select';
 import { CalendarDate, Calendar as CalendarUtils } from 'calendar-base';
 
 export interface DatePickerProps {
-  year?: number;
-  month?: number;
+  date?: Date;
 }
 
-function DatePicker({ year = 2021, month = 0 }: DatePickerProps) {
+function DatePicker({ date = new Date() }: DatePickerProps) {
   const calendar = useMemo(() => new CalendarUtils(), []);
 
-  type Item = {
-    year: number;
-    month: number;
-  };
+  const { year, month, day } = useMemo(() => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
 
-  type ListItem = ListRenderItem<Item>;
+    return {
+      year,
+      month,
+      day,
+    };
+  }, [date]);
 
-  const months = useMemo(() => {
-    const months: Array<Item> = [];
-
-    for (let i = 0; i < 1000; i++) {
-      const date = new Date(year, month + i);
-      months.push({
-        year: date.getFullYear(),
-        month: date.getMonth(),
-      });
-    }
-
-    return months;
-  }, [month, year]);
-
-  const now = useMemo(() => new Date(), []);
+  const [currentMonth, setCurrentMonth] = useState(month);
+  const [currentYear, setCurrentYear] = useState(year);
 
   const [lang, setLang] = React.useState<'es' | 'en' | null>('en');
-  const [selectedDate, setSelectedDate] = useState<CalendarDate | undefined>();
-
-  /*
-  const [year, setYear] = useState(now.getFullYear());
-  const [month, setMonth] = useState(now.getMonth());
-  */
-
-  const actualDate = useMemo(() => new Date(year, month), [month, year]);
-
-  const actualMonth = useMemo(() => actualDate.getMonth(), [actualDate]);
-
-  const actualYear = useMemo(() => actualDate.getFullYear(), [actualDate]);
+  const [selectedDate, setSelectedDate] = useState<CalendarDate>({
+    year: currentYear,
+    month: currentMonth,
+    day,
+  });
 
   const days = useMemo(
-    () => calendar.getCalendar(year, month),
-    [calendar, year, month],
+    () => calendar.getCalendar(currentYear, currentMonth),
+    [calendar, currentMonth, currentYear],
   );
 
   const getCalendar = useCallback(
@@ -66,43 +49,44 @@ function DatePicker({ year = 2021, month = 0 }: DatePickerProps) {
     setSelectedDate(value);
   }, []);
 
-  /*
-  useUpdateEffect(() => {
-    if (initialYear !== undefined) setYear(initialYear);
-    if (initialMonth !== undefined) setMonth(initialMonth);
-  }, [initialMonth, initialYear]);
-  */
-
-  const renderItem = useCallback<ListItem>(
-    ({ item: { month, year }, index }) => {
-      return (
-        <Calendar
-          getCalendar={getCalendar}
-          days={days}
-          onDayPress={onDayPress}
-          selectedDate={selectedDate}
-          lang={lang}
-          month={month}
-          year={year}
-        />
-      );
-    },
-    [days, getCalendar, lang, onDayPress, selectedDate],
-  );
-
-  /*
-  const onViewableItemsChanged = useCallback((info: any) => {
-    const index = info.viewableItems[0].index;
-    console.log(index);
-  }, []);
-  */
-
-  const keyExtractor = useCallback((item: any) => {
-    return `${item.year}-${item.month}`;
+  const onGoToNextMonth = useCallback(() => {
+    setCurrentMonth(prev => prev + 1);
   }, []);
 
-  return (
-    <View>
+  const onGoToPrevMonth = useCallback(() => {
+    setCurrentMonth(prev => prev - 1);
+  }, []);
+
+  const content = useMemo(() => {
+    return (
+      <Calendar
+        getCalendar={getCalendar}
+        days={days}
+        onDayPress={onDayPress}
+        selectedDate={selectedDate}
+        lang={lang}
+        month={currentMonth}
+        year={currentYear}
+        onGoToNextMonth={onGoToNextMonth}
+        onGoToPrevMonth={onGoToPrevMonth}
+      />
+    );
+  }, [
+    currentMonth,
+    currentYear,
+    days,
+    getCalendar,
+    lang,
+    onDayPress,
+    onGoToNextMonth,
+    onGoToPrevMonth,
+    selectedDate,
+  ]);
+
+  return <View>{content}</View>;
+}
+
+/*
       <Select
         value={lang}
         onValueChange={value => setLang(value as typeof lang)}
@@ -117,26 +101,6 @@ function DatePicker({ year = 2021, month = 0 }: DatePickerProps) {
           },
         ]}
       />
-      <FlatList
-        data={months}
-        viewabilityConfig={{
-          itemVisiblePercentThreshold: 50,
-        }}
-        pagingEnabled
-        /*
-        getItemLayout={(data, index) => ({
-          length: Dimensions.get('window').width,
-          offset: Dimensions.get('window').width * index,
-          index,
-        })}
-        keyExtractor={item => item.toString()}
-        */
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        renderItem={renderItem}
-      />
-    </View>
-  );
-}
+      */
 
 export default DatePicker;

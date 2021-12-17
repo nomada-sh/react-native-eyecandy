@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import type { CalendarDate } from 'calendar-base';
@@ -14,7 +14,24 @@ export interface DayProps {
 }
 
 function Day({ value, onPress, selected, debug }: DayProps) {
-  const { palette } = useTheme();
+  const { palette, dark } = useTheme();
+
+  const today = useMemo(() => {
+    if (!value) return false;
+
+    const now = new Date();
+
+    return (
+      value.year === now.getFullYear() &&
+      value.month === now.getMonth() &&
+      value.day === now.getDate()
+    );
+  }, [value]);
+
+  const selectedColor = useMemo(
+    () => palette.grey[dark ? 800 : 200],
+    [dark, palette.grey],
+  );
   const rippleColor = useRippleColor(palette.background.container);
 
   const count = useRef(1);
@@ -30,7 +47,12 @@ function Day({ value, onPress, selected, debug }: DayProps) {
   return (
     <View style={styles.container}>
       <Pressable
-        style={[value !== false ? styles.pressable : styles.pressableHidden]}
+        style={[
+          value !== false ? styles.pressable : styles.pressableHidden,
+          {
+            backgroundColor: selected ? selectedColor : 'transparent',
+          },
+        ]}
         disabled={value === false}
         onPress={() => {
           if (value !== false && onPress) onPress(value);
@@ -41,7 +63,11 @@ function Day({ value, onPress, selected, debug }: DayProps) {
           radius: 20,
         }}
       >
-        <Body weight={selected ? 'bold' : 'normal'} style={styles.text}>
+        <Body
+          color={selected || today ? 'primary' : 'default'}
+          weight={selected ? 'bold' : 'normal'}
+          style={styles.text}
+        >
           {value !== false ? value.day : '00'}
         </Body>
       </Pressable>
@@ -56,7 +82,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   pressable: {
-    backgroundColor: 'transparent',
     width: 40,
     height: 40,
     borderRadius: 20,
