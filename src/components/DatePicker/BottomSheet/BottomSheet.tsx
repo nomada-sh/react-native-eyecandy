@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BottomSheetBase from '../../BottomSheet';
+import BottomSheetBase from '../../BottomSheetV2';
 import { Body } from '../../../typography';
 
 export interface BottomSheetProps {
@@ -11,17 +11,7 @@ export interface BottomSheetProps {
 
 function BottomSheet({ visible, onClose, children }: BottomSheetProps) {
   return (
-    <BottomSheetBase
-      customStyles={{
-        container: {
-          padding: 0,
-        },
-      }}
-      visible={visible}
-      onClose={onClose}
-      height={380}
-      closeOnDragDown={false}
-    >
+    <BottomSheetBase height={350} visible={visible} onClose={onClose}>
       {children}
     </BottomSheetBase>
   );
