@@ -43,12 +43,9 @@ function Calendar({
   selectedDate,
   onDayPress,
   getCalendar,
-  debug,
   onGoToNextMonth,
   onGoToPrevMonth,
 }: CalendarProps) {
-  const count = useRef(1);
-
   const prev = useMemo(() => {
     return getCalendar(year, month - 1);
   }, [month, year, getCalendar]);
@@ -58,15 +55,8 @@ function Calendar({
   }, [month, year, getCalendar]);
 
   const current = useMemo(() => {
-    debug &&
-      console.log(
-        'CALENDAR CREATING DAYS',
-        `${month}/${year},`,
-        'CREATION COUNT:',
-        count.current++,
-      );
     return getCalendar(year, month);
-  }, [debug, month, year, getCalendar]);
+  }, [month, year, getCalendar]);
 
   const width = useRef(Dimensions.get('window').width).current;
   const startXRef = useRef(-width);
@@ -103,14 +93,14 @@ function Calendar({
             useNativeDriver: false,
             duration: 300,
           }).start(() => {
+            startXRef.current = -width;
+            translateX.setValue(startXRef.current);
+
             direction < 0
               ? onGoToNextMonth && onGoToNextMonth()
               : onGoToPrevMonth && onGoToPrevMonth();
 
             setIndex(prev => prev - direction);
-
-            startXRef.current = -width;
-            translateX.setValue(startXRef.current);
           });
         } else {
           Animated.timing(translateX, {
