@@ -1,13 +1,6 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Animated,
-  Dimensions,
   PanResponder,
   StyleProp,
   View,
@@ -16,10 +9,9 @@ import {
 
 import type { CalendarDate } from 'calendar-base';
 
-import { Body } from '../../../typography';
-
 import Days from './Days';
 import Header from './Header';
+import Actions from './Actions';
 
 const GRANT_THRESHOLD = 20;
 
@@ -33,9 +25,13 @@ export interface CalendarProps {
   days: (false | CalendarDate)[];
   getCalendar: (year: number, month: number) => (false | CalendarDate)[];
   debug?: boolean;
-  onGoToNextMonth?: () => void;
-  onGoToPrevMonth?: () => void;
+  onGoToNextMonth: () => void;
+  onGoToPrevMonth: () => void;
   width: number;
+  onPressYear: () => void;
+  onPressMonth: () => void;
+  onPressToday: () => void;
+  animateOnPressToday?: boolean;
 }
 
 function Calendar({
@@ -49,6 +45,10 @@ function Calendar({
   onGoToNextMonth,
   onGoToPrevMonth,
   width,
+  onPressMonth,
+  onPressYear,
+  onPressToday,
+  animateOnPressToday,
 }: CalendarProps) {
   const prev = useMemo(() => {
     return getCalendar(year, month - 1);
@@ -66,6 +66,14 @@ function Calendar({
   const translateX = useRef(new Animated.Value(startXRef.current)).current;
 
   const [index, setIndex] = useState(0);
+
+  const handleGoToNextMonth = useCallback(() => {
+    onGoToNextMonth();
+  }, [onGoToNextMonth]);
+
+  const handleGoToPrevMonth = useCallback(() => {
+    onGoToPrevMonth();
+  }, [onGoToPrevMonth]);
 
   const getDirectionAndDistance = useCallback(
     (dx: number) => {
@@ -112,11 +120,9 @@ function Calendar({
             startXRef.current = -width;
             translateX.setValue(startXRef.current);
 
-            direction < 0
-              ? onGoToNextMonth && onGoToNextMonth()
-              : onGoToPrevMonth && onGoToPrevMonth();
+            direction < 0 ? handleGoToNextMonth() : handleGoToPrevMonth();
 
-            setIndex(prev => prev - direction);
+            //setIndex(prev => prev - direction);
           });
         } else {
           Animated.timing(translateX, {
@@ -135,11 +141,12 @@ function Calendar({
 
       return (
         <View key={`${year}-${month}`}>
-          <View>
-            <Body>
-              {date.getFullYear()}/{date.getMonth() + 1}
-            </Body>
-          </View>
+          <Actions
+            date={date}
+            onPressYear={onPressYear}
+            onPressMonth={onPressMonth}
+            onPressToday={onPressToday}
+          />
           <Header lang={lang} month={month} year={year} />
           <Days
             data={data}
@@ -151,7 +158,7 @@ function Calendar({
         </View>
       );
     },
-    [lang, onDayPress, selectedDate],
+    [lang, onDayPress, onPressMonth, onPressToday, onPressYear, selectedDate],
   );
 
   const months = useMemo(() => {

@@ -50,6 +50,18 @@ function DatePicker({ date: initialDate }: DatePickerProps) {
     setSelectedDate(value);
   }, []);
 
+  const onPressToday = useCallback(() => {
+    setDate(new Date());
+  }, []);
+
+  const onPressMonth = useCallback(() => {
+    console.log('onPressMonth');
+  }, []);
+
+  const onPressYear = useCallback(() => {
+    console.log('onPressYear');
+  }, []);
+
   const onGoToNextMonth = useCallback(() => {
     setCurrentMonth(prev => prev + 1);
   }, []);
@@ -77,12 +89,6 @@ function DatePicker({ date: initialDate }: DatePickerProps) {
             setDate(new Date());
           }}
         />
-        <Button
-          text="1700/01/01"
-          onPress={() => {
-            setDate(new Date(1700, 0, 1));
-          }}
-        />
         <Calendar
           width={width}
           getCalendar={getCalendar}
@@ -94,6 +100,10 @@ function DatePicker({ date: initialDate }: DatePickerProps) {
           year={currentYear}
           onGoToNextMonth={onGoToNextMonth}
           onGoToPrevMonth={onGoToPrevMonth}
+          onPressToday={onPressToday}
+          onPressMonth={onPressMonth}
+          onPressYear={onPressYear}
+          animateOnPressToday
         />
       </View>
     );
@@ -106,6 +116,9 @@ function DatePicker({ date: initialDate }: DatePickerProps) {
     onDayPress,
     onGoToNextMonth,
     onGoToPrevMonth,
+    onPressMonth,
+    onPressToday,
+    onPressYear,
     selectedDate,
     width,
   ]);
@@ -147,4 +160,4 @@ DatePicker.defaultProps = {
       />
       */
 
-export default DatePicker;
+export default React.memo(DatePicker);

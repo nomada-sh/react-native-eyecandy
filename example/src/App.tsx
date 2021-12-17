@@ -3,8 +3,6 @@ import {
   DefaultTheme,
   DarkTheme,
   Switch,
-  Button,
-  BottomSheetHandle,
 } from '@nomada-sh/react-native-eyecandy';
 import React, { useMemo, useState } from 'react';
 import { ScrollView, View } from 'react-native';
@@ -23,8 +21,6 @@ export default function App() {
 
   const backgroundColor = theme.palette.background.container;
 
-  const bottomSheetRef = React.useRef<BottomSheetHandle>(null);
-
   return (
     <EyeCandy theme={theme}>
       <View
@@ -32,7 +28,6 @@ export default function App() {
           backgroundColor,
         }}
       >
-        <DatePickerFeature />
         <DisableCompanyBottomSheet />
         <Switch value={dark} onValueChange={() => setDark(!dark)} />
       </View>
@@ -42,13 +37,8 @@ export default function App() {
         }}
         keyboardShouldPersistTaps="handled"
       >
+        <DatePickerFeature />
         <Icons />
-        <Button
-          text="BottomSheet"
-          onPress={() => {
-            bottomSheetRef.current?.open();
-          }}
-        />
         <Components />
         <Typography />
         <Form />
