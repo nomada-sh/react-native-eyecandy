@@ -20,7 +20,7 @@ function Actions({
 }: ActionsProps) {
   const format = useCallback(
     (date: Date, options?: Intl.DateTimeFormatOptions) => {
-      return new Intl.DateTimeFormat(locale, options).format(date);
+      return new Intl.DateTimeFormat([locale, 'en-US'], options).format(date);
     },
     [locale],
   );

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import {
   Animated,
   PanResponder,
@@ -18,7 +18,7 @@ const GRANT_THRESHOLD = 20;
 export interface CalendarProps {
   year: number;
   month: number;
-  lang?: 'en' | 'es' | null | false;
+  locale?: string;
   style?: StyleProp<ViewStyle>;
   selectedDate?: CalendarDate;
   onDayPress?: (value: CalendarDate) => void;
@@ -35,7 +35,7 @@ export interface CalendarProps {
 }
 
 function Calendar({
-  lang,
+  locale,
   year,
   month,
   style,
@@ -83,10 +83,10 @@ function Calendar({
     if (animateOnPressToday) {
       translateX.setValue(indexRef.current > 0 ? -width * 2 : 0);
 
-      Animated.timing(translateX, {
+      Animated.spring(translateX, {
         toValue: -width,
-        duration: 300,
         useNativeDriver: true,
+        friction: 6,
       }).start();
     }
 
@@ -163,8 +163,9 @@ function Calendar({
             onPressYear={onPressYear}
             onPressMonth={onPressMonth}
             onPressToday={handlePressToday}
+            locale={locale}
           />
-          <Header lang={lang} month={month} year={year} />
+          <Header locale={locale} month={month} year={year} />
           <Days
             data={data}
             onDayPress={onDayPress}
@@ -177,7 +178,7 @@ function Calendar({
     },
     [
       handlePressToday,
-      lang,
+      locale,
       onDayPress,
       onPressMonth,
       onPressYear,
@@ -192,30 +193,6 @@ function Calendar({
       renderMonth(year, month + 1, next),
     ];
   }, [current, next, prev, renderMonth, year, month]);
-
-  /*
-  useEffect(() => {
-    console.log(index);
-  }, [index]);
-  */
-
-  /*
-  useEffect(() => {
-    console.group('CALENDAR MOUNT');
-    console.log('CALENDAR MOUNT', year, month);
-    console.log('CALENDAR MOUNT', year, month + 1);
-    console.log('CALENDAR MOUNT', year, month + 2);
-    console.groupEnd();
-
-    return () => {
-      console.group('CALENDAR UNMOUNT');
-      console.log('CALENDAR UNMOUNT', year, month);
-      console.log('CALENDAR UNMOUNT', year, month + 1);
-      console.log('CALENDAR UNMOUNT', year, month + 2);
-      console.groupEnd();
-    };
-  }, [year, month]);
-  */
 
   return (
     <Animated.View

@@ -1,22 +1,20 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Dimensions, View } from 'react-native';
 
-import Button from '../Button';
 import Calendar from './Calendar';
 import { CalendarDate, Calendar as CalendarUtils } from 'calendar-base';
-import { useUpdateEffect } from 'react-use';
 
 export interface DatePickerProps {
   date: Date;
+  onDateChange?: (date: Date) => void;
+  locale: string;
 }
 
-function DatePicker({ date: initialDate }: DatePickerProps) {
+function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
   const width = useRef(Dimensions.get('window').width).current;
   const calendar = useMemo(() => new CalendarUtils(), []);
 
-  const [date, setDate] = useState(initialDate);
-
-  const { year, month, day } = useMemo(() => {
+  const selectedDate = useMemo((): CalendarDate => {
     return {
       year: date.getFullYear(),
       month: date.getMonth(),
@@ -24,15 +22,10 @@ function DatePicker({ date: initialDate }: DatePickerProps) {
     };
   }, [date]);
 
+  const { year, month } = selectedDate;
+
   const [currentYear, setCurrentYear] = useState(year);
   const [currentMonth, setCurrentMonth] = useState(month);
-
-  const [lang, setLang] = React.useState<'es' | 'en' | null>('en');
-  const [selectedDate, setSelectedDate] = useState<CalendarDate>({
-    year,
-    month,
-    day,
-  });
 
   const days = useMemo(
     () => calendar.getCalendar(currentYear, currentMonth),
@@ -46,13 +39,20 @@ function DatePicker({ date: initialDate }: DatePickerProps) {
     [calendar],
   );
 
-  const onDayPress = useCallback((value: CalendarDate) => {
-    setSelectedDate(value);
-  }, []);
+  const onDayPress = useCallback(
+    (value: CalendarDate) => {
+      onDateChange?.(new Date(value.year, value.month, value.day));
+    },
+    [onDateChange],
+  );
 
   const onPressToday = useCallback(() => {
-    setDate(new Date());
-  }, []);
+    const now = new Date();
+
+    onDateChange?.(now);
+    setCurrentYear(now.getFullYear());
+    setCurrentMonth(now.getMonth());
+  }, [onDateChange]);
 
   const onPressMonth = useCallback(() => {
     console.log('onPressMonth');
@@ -70,32 +70,16 @@ function DatePicker({ date: initialDate }: DatePickerProps) {
     setCurrentMonth(prev => prev - 1);
   }, []);
 
-  useUpdateEffect(() => {
-    setCurrentYear(date.getFullYear());
-    setCurrentMonth(date.getMonth());
-    setSelectedDate({
-      year: date.getFullYear(),
-      month: date.getMonth(),
-      day: date.getDate(),
-    });
-  }, [date]);
-
   const content = useMemo(() => {
     return (
       <View>
-        <Button
-          text="Today"
-          onPress={() => {
-            setDate(new Date());
-          }}
-        />
         <Calendar
           width={width}
           getCalendar={getCalendar}
           days={days}
           onDayPress={onDayPress}
           selectedDate={selectedDate}
-          lang={lang}
+          locale={locale}
           month={currentMonth}
           year={currentYear}
           onGoToNextMonth={onGoToNextMonth}
@@ -112,7 +96,7 @@ function DatePicker({ date: initialDate }: DatePickerProps) {
     currentYear,
     days,
     getCalendar,
-    lang,
+    locale,
     onDayPress,
     onGoToNextMonth,
     onGoToPrevMonth,
@@ -123,41 +107,12 @@ function DatePicker({ date: initialDate }: DatePickerProps) {
     width,
   ]);
 
-  useUpdateEffect(() => {
-    if (!initialDate) return;
-
-    if (
-      initialDate.getFullYear() === date.getFullYear() &&
-      initialDate.getMonth() === date.getMonth() &&
-      initialDate.getDate() === date.getDate()
-    )
-      return;
-
-    setDate(initialDate);
-  }, [initialDate, setDate]);
-
   return <View>{content}</View>;
 }
 
 DatePicker.defaultProps = {
   date: new Date(),
+  locale: 'en-US',
 };
-
-/*
-      <Select
-        value={lang}
-        onValueChange={value => setLang(value as typeof lang)}
-        items={[
-          {
-            label: 'English',
-            value: 'en',
-          },
-          {
-            label: 'Spanish',
-            value: 'es',
-          },
-        ]}
-      />
-      */
 
 export default React.memo(DatePicker);

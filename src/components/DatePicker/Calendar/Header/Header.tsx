@@ -4,13 +4,16 @@ import { StyleSheet, View } from 'react-native';
 import { Body } from '../../../../typography';
 
 export interface HeaderProps {
-  lang?: 'en' | 'es' | null | false;
+  locale?: string;
   month?: number;
   year?: number;
   debug?: boolean;
 }
 
-function Header({ debug, lang, month, year }: HeaderProps) {
+const EN_NAMES = 'SMTWTFS'.split('');
+const ES_NAMES = 'DLMMJVS'.split('');
+
+function Header({ debug, locale, month, year }: HeaderProps) {
   const count = useRef(1);
   debug &&
     console.log(
@@ -21,13 +24,14 @@ function Header({ debug, lang, month, year }: HeaderProps) {
     );
 
   const names = useMemo(() => {
-    switch (lang) {
-      case 'es':
-        return 'DLMMJVS'.split('');
-      default:
-        return 'SMTWTFS'.split('');
+    if (locale) {
+      if (/^es(-[A-Za-z]{2})?$/.test(locale)) return ES_NAMES;
+
+      if (/^en(-[A-Za-z]{2})?$/.test(locale)) return EN_NAMES;
     }
-  }, [lang]);
+
+    return EN_NAMES;
+  }, [locale]);
 
   return (
     <View style={styles.container}>
