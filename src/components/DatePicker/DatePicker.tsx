@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { View } from 'react-native';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Dimensions, View } from 'react-native';
 
 import Button from '../Button';
 import Calendar from './Calendar';
@@ -7,10 +7,11 @@ import { CalendarDate, Calendar as CalendarUtils } from 'calendar-base';
 import { useUpdateEffect } from 'react-use';
 
 export interface DatePickerProps {
-  date?: Date;
+  date: Date;
 }
 
-function DatePicker({ date: initialDate = new Date() }: DatePickerProps) {
+function DatePicker({ date: initialDate }: DatePickerProps) {
+  const width = useRef(Dimensions.get('window').width).current;
   const calendar = useMemo(() => new CalendarUtils(), []);
 
   const [date, setDate] = useState(initialDate);
@@ -76,7 +77,14 @@ function DatePicker({ date: initialDate = new Date() }: DatePickerProps) {
             setDate(new Date());
           }}
         />
+        <Button
+          text="1700/01/01"
+          onPress={() => {
+            setDate(new Date(1700, 0, 1));
+          }}
+        />
         <Calendar
+          width={width}
           getCalendar={getCalendar}
           days={days}
           onDayPress={onDayPress}
@@ -99,10 +107,28 @@ function DatePicker({ date: initialDate = new Date() }: DatePickerProps) {
     onGoToNextMonth,
     onGoToPrevMonth,
     selectedDate,
+    width,
   ]);
+
+  useUpdateEffect(() => {
+    if (!initialDate) return;
+
+    if (
+      initialDate.getFullYear() === date.getFullYear() &&
+      initialDate.getMonth() === date.getMonth() &&
+      initialDate.getDate() === date.getDate()
+    )
+      return;
+
+    setDate(initialDate);
+  }, [initialDate, setDate]);
 
   return <View>{content}</View>;
 }
+
+DatePicker.defaultProps = {
+  date: new Date(),
+};
 
 /*
       <Select

@@ -14,7 +14,7 @@ import Form from './Form';
 import Icons from './Icons';
 import Typography from './Typography';
 import DisableCompanyBottomSheet from './features/DisableCompanyFeature';
-import DatePicking from './features/DatePickerFeature';
+import DatePickerFeature from './features/DatePickerFeature';
 
 export default function App() {
   const [dark, setDark] = useState(false);
@@ -32,7 +32,7 @@ export default function App() {
           backgroundColor,
         }}
       >
-        <DatePicking />
+        <DatePickerFeature />
         <DisableCompanyBottomSheet />
         <Switch value={dark} onValueChange={() => setDark(!dark)} />
       </View>

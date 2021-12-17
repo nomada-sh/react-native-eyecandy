@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 import { DatePicker } from '@nomada-sh/react-native-eyecandy';
 
-export default function DatePicking() {
+export default function DatePickerFeature() {
   return (
     <View>
       <DatePicker />
