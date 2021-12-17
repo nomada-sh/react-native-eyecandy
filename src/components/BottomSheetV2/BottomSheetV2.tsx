@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   Modal,
   StyleSheet,
-  Text,
   View,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -12,9 +11,6 @@ import Animated, {
   withSpring,
   useAnimatedStyle,
   useAnimatedGestureHandler,
-  FadeInDown,
-  SlideInDown,
-  SlideInUp,
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
@@ -23,9 +19,11 @@ import {
   gestureHandlerRootHOC,
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
-  TouchableOpacity,
 } from 'react-native-gesture-handler';
+
 import { useUpdateEffect } from 'react-use';
+
+import { useTheme } from '../../hooks';
 
 type Context = {
   startY: number;
@@ -39,15 +37,22 @@ export interface ContentProps {
 }
 
 function Content({ children, height, onClose, closeRequested }: ContentProps) {
-  const y = useSharedValue(0);
+  const { palette } = useTheme();
+  const y = useSharedValue(height);
 
-  const close = () => {
+  const open = useCallback(() => {
+    'worklet';
+
+    y.value = withSpring(0, { damping: 12 });
+  }, [y]);
+
+  const close = useCallback(() => {
     'worklet';
 
     y.value = withTiming(height, { duration: 300 }, () => {
       onClose && runOnJS(onClose)();
     });
-  };
+  }, [height, onClose, y]);
 
   const gestureHandler = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -72,32 +77,16 @@ function Content({ children, height, onClose, closeRequested }: ContentProps) {
     return {
       transform: [{ translateY: y.value }],
       height: height * 2,
-      backgroundColor: 'white',
+      backgroundColor: palette.background.content,
       borderTopLeftRadius: 32,
       borderTopRightRadius: 32,
       paddingTop: 10,
     };
   });
 
-  const entering = () => {
-    'worklet';
-
-    const animations = {
-      transform: [
-        {
-          translateY: withSpring(0, {
-            damping: 15,
-          }),
-        },
-      ],
-    };
-
-    const initialValues = {
-      transform: [{ translateY: height }],
-    };
-
-    return { initialValues, animations };
-  };
+  useEffect(() => {
+    open();
+  }, [open]);
 
   useUpdateEffect(() => {
     if (closeRequested) close();
@@ -105,9 +94,7 @@ function Content({ children, height, onClose, closeRequested }: ContentProps) {
 
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
-      <Animated.View style={animatedStyle} entering={entering}>
-        {children}
-      </Animated.View>
+      <Animated.View style={animatedStyle}>{children}</Animated.View>
     </PanGestureHandler>
   );
 }
@@ -129,13 +116,17 @@ function BottomSheetV2({
 }: BottomSheetV2Props) {
   const [closeRequested, setCloseRequested] = useState(false);
 
+  const onRequestClose = useCallback(() => {
+    setCloseRequested(true);
+  }, []);
+
   return (
     <Modal
       animationType="fade"
       visible={visible}
       statusBarTranslucent
       transparent
-      onRequestClose={() => setCloseRequested(true)}
+      onRequestClose={onRequestClose}
     >
       <View
         style={[
@@ -145,7 +136,7 @@ function BottomSheetV2({
           },
         ]}
       >
-        <TouchableWithoutFeedback onPress={onClose}>
+        <TouchableWithoutFeedback onPress={onRequestClose}>
           <View style={styles.mask} />
         </TouchableWithoutFeedback>
         <WrappedContent
