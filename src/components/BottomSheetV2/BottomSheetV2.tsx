@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Modal,
   StyleSheet,
@@ -13,7 +13,6 @@ import Animated, {
   useAnimatedGestureHandler,
   withTiming,
   runOnJS,
-  runOnUI,
   useCode,
   call,
 } from 'react-native-reanimated';
@@ -27,7 +26,6 @@ import {
 import { useUpdateEffect } from 'react-use';
 
 import { useTheme } from '../../hooks';
-import Switch from '../Switch';
 
 type Context = {
   startY: number;
@@ -59,6 +57,7 @@ function Content({
     'worklet';
 
     open.value = true;
+
     y.value = withSpring(0, { damping: 12 }, () => {
       onOpen && runOnJS(onOpen)();
     });
@@ -68,6 +67,7 @@ function Content({
     'worklet';
 
     open.value = false;
+
     y.value = withTiming(height, { duration: 300 }, () => {
       onClose && runOnJS(onClose)();
     });
@@ -86,9 +86,9 @@ function Content({
     onEnd: event => {
       if (height / 3 - event.translationY < 0) {
         onDismiss && runOnJS(onDismiss)();
-      } else {
-        y.value = withSpring(0);
       }
+
+      y.value = withSpring(0);
     },
   });
 
@@ -124,34 +124,33 @@ function Content({
 
 const WrappedContent = gestureHandlerRootHOC(Content);
 
-export interface BottomSheetV2Props {
+export interface BottomSheetProps {
   children?: React.ReactNode;
   visible?: boolean;
   height: number;
   onClose?: () => void;
 }
 
-function BottomSheetV2({
-  children,
-  visible,
-  height,
-  onClose,
-}: BottomSheetV2Props) {
-  const [contentVisible, setContentVisible] = useState<boolean | undefined>(
-    true,
+function BottomSheet({ children, visible, height, onClose }: BottomSheetProps) {
+  const [modalVisible, setModalVisible] = useState<boolean | undefined>(
+    visible,
   );
 
+  const handleClose = useCallback(() => {
+    setModalVisible(false);
+  }, []);
+
   useUpdateEffect(() => {
-    setContentVisible(visible);
+    if (visible) setModalVisible(visible);
   }, [visible]);
 
   return (
     <Modal
       animationType="fade"
-      visible={visible}
+      visible={modalVisible}
       statusBarTranslucent
       transparent
-      onRequestClose={() => setContentVisible(false)}
+      onRequestClose={onClose}
     >
       <View
         style={[
@@ -161,7 +160,7 @@ function BottomSheetV2({
           },
         ]}
       >
-        <TouchableWithoutFeedback onPress={() => setContentVisible(false)}>
+        <TouchableWithoutFeedback onPress={onClose}>
           <View style={styles.mask} />
         </TouchableWithoutFeedback>
         <View
@@ -169,12 +168,11 @@ function BottomSheetV2({
             height,
           }}
         >
-          <Switch value={contentVisible} onValueChange={setContentVisible} />
           <WrappedContent
             height={height}
-            visible={contentVisible}
-            onDismiss={() => setContentVisible(false)}
-            onClose={onClose}
+            visible={visible}
+            onDismiss={onClose}
+            onClose={handleClose}
           >
             {children}
           </WrappedContent>
@@ -195,4 +193,4 @@ const styles = StyleSheet.create({
   content: {},
 });
 
-export default BottomSheetV2;
+export default BottomSheet;
