@@ -11,21 +11,19 @@ export interface DatePickerProps {
   date: Date;
   onDateChange?: (date: Date) => void;
   locale: string;
-  onPress?: () => void;
-  calendarVisible?: boolean;
   onCloseCalendar?: () => void;
 }
 
-function DatePicker({
-  date,
-  onDateChange,
-  locale,
-  calendarVisible,
-  onCloseCalendar,
-  onPress,
-}: DatePickerProps) {
+function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
   const width = useRef(Dimensions.get('window').width).current;
   const calendar = useMemo(() => new calendarBase(), []);
+
+  const [calendarVisible, setCalendarVisible] = React.useState(false);
+  const onCloseCalendar = useCallback(() => setCalendarVisible(false), []);
+
+  const onPress = useCallback(() => {
+    setCalendarVisible(true);
+  }, []);
 
   const selectedDate = useMemo((): CalendarDate => {
     return {

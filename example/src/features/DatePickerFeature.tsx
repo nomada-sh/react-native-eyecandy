@@ -5,7 +5,6 @@ import { DatePicker, Body, Select } from '@nomada-sh/react-native-eyecandy';
 
 export default function DatePickerFeature() {
   const [date, setDate] = React.useState(new Date());
-  const [visible, setVisible] = React.useState(false);
   const [locale, setLocale] = React.useState('en');
 
   return (
@@ -28,14 +27,7 @@ export default function DatePickerFeature() {
           },
         ]}
       />
-      <DatePicker
-        date={date}
-        onDateChange={setDate}
-        calendarVisible={visible}
-        onCloseCalendar={() => setVisible(false)}
-        onPress={() => setVisible(true)}
-        locale={locale}
-      />
+      <DatePicker date={date} onDateChange={setDate} locale={locale} />
       <Body align="center" weight="bold">
         {Intl.DateTimeFormat('en-US', {
           month: 'long',
