@@ -125,7 +125,13 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
         onClose={onCloseCalendar}
       >
         {contentCalendar}
-        <Button text="Done" onPress={onCloseCalendar} />
+        <View
+          style={{
+            padding: 10,
+          }}
+        >
+          <Button color="primary" text="Done" onPress={onCloseCalendar} />
+        </View>
       </BottomSheet>
     </View>
   );
