@@ -5,7 +5,7 @@ import { DatePicker, Body, Select } from '@nomada-sh/react-native-eyecandy';
 
 export default function DatePickerFeature() {
   const [date, setDate] = React.useState(new Date());
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = React.useState(true);
   const [locale, setLocale] = React.useState('en');
 
   return (

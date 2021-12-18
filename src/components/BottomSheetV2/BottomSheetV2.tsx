@@ -13,6 +13,9 @@ import Animated, {
   useAnimatedGestureHandler,
   withTiming,
   runOnJS,
+  runOnUI,
+  useCode,
+  call,
 } from 'react-native-reanimated';
 
 import {
@@ -100,13 +103,17 @@ function Content({
     };
   });
 
-  useEffect(() => {
-    if (visible && !open.value) {
-      doOpenAnimation();
-    } else if (!visible && open.value) {
-      doCloseAnimation();
-    }
-  }, [doCloseAnimation, doOpenAnimation, open.value, visible]);
+  useCode(
+    () =>
+      call([], () => {
+        if (visible && !open.value) {
+          doOpenAnimation();
+        } else if (!visible && open.value) {
+          doCloseAnimation();
+        }
+      }),
+    [visible, open],
+  );
 
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
