@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   Modal,
   StyleSheet,
@@ -27,6 +27,8 @@ import { useUpdateEffect } from 'react-use';
 
 import { useTheme } from '../../hooks';
 
+const HANDLE_HEIGHT = 40;
+
 type Context = {
   startY: number;
 };
@@ -42,16 +44,17 @@ export interface ContentProps {
 
 function Content({
   children,
-  height,
+  height: initialHeight,
   visible,
   onDismiss,
   onClose,
   onOpen,
 }: ContentProps) {
+  const height = useSharedValue(initialHeight);
   const open = useSharedValue(false);
 
   const { palette } = useTheme();
-  const y = useSharedValue(height);
+  const y = useSharedValue(height.value);
 
   const doOpenAnimation = useCallback(() => {
     'worklet';
@@ -68,7 +71,7 @@ function Content({
 
     open.value = false;
 
-    y.value = withTiming(height, { duration: 300 }, () => {
+    y.value = withTiming(height.value, { duration: 300 }, () => {
       onClose && runOnJS(onClose)();
     });
   }, [height, onClose, open, y]);
@@ -84,7 +87,7 @@ function Content({
       y.value = ctx.startY + event.translationY;
     },
     onEnd: event => {
-      if (height / 3 - event.translationY < 0) {
+      if (height.value / 3 - event.translationY < 0) {
         onDismiss && runOnJS(onDismiss)();
       }
 
@@ -95,11 +98,11 @@ function Content({
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: y.value }],
-      height: height * 2,
+      height: height.value * 2,
       backgroundColor: palette.background.content,
       borderTopLeftRadius: 32,
       borderTopRightRadius: 32,
-      paddingTop: 10,
+      overflow: 'hidden',
     };
   });
 
@@ -117,7 +120,26 @@ function Content({
 
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
-      <Animated.View style={animatedStyle}>{children}</Animated.View>
+      <Animated.View style={animatedStyle}>
+        <View
+          style={{
+            height: HANDLE_HEIGHT,
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <View
+            style={[
+              styles.handle,
+              {
+                backgroundColor: palette.divider,
+              },
+            ]}
+          />
+        </View>
+        {children}
+      </Animated.View>
     </PanGestureHandler>
   );
 }
@@ -131,7 +153,13 @@ export interface BottomSheetProps {
   onClose?: () => void;
 }
 
-function BottomSheet({ children, visible, height, onClose }: BottomSheetProps) {
+function BottomSheet({
+  children,
+  visible,
+  height: initialHeight,
+  onClose,
+}: BottomSheetProps) {
+  const height = useMemo(() => initialHeight + HANDLE_HEIGHT, [initialHeight]);
   const [modalVisible, setModalVisible] = useState<boolean | undefined>(
     visible,
   );
@@ -190,7 +218,11 @@ const styles = StyleSheet.create({
   mask: {
     flex: 1,
   },
-  content: {},
+  handle: {
+    height: 6,
+    width: 64,
+    borderRadius: 3,
+  },
 });
 
 export default BottomSheet;
