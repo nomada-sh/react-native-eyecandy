@@ -32,27 +32,28 @@ type Context = {
 export interface ContentProps {
   children?: React.ReactNode;
   height: number;
-  onClose?: () => void;
-  closeRequested?: boolean;
+  onFinishClose?: () => void;
+  close?: boolean;
+  visible?: boolean;
 }
 
-function Content({ children, height, onClose, closeRequested }: ContentProps) {
+function Content({ children, height, onFinishClose, close }: ContentProps) {
   const { palette } = useTheme();
   const y = useSharedValue(height);
 
-  const open = useCallback(() => {
+  const doOpenAnimation = useCallback(() => {
     'worklet';
 
     y.value = withSpring(0, { damping: 12 });
   }, [y]);
 
-  const close = useCallback(() => {
+  const doCloseAnimation = useCallback(() => {
     'worklet';
 
     y.value = withTiming(height, { duration: 300 }, () => {
-      onClose && runOnJS(onClose)();
+      onFinishClose && runOnJS(onFinishClose)();
     });
-  }, [height, onClose, y]);
+  }, [height, onFinishClose, y]);
 
   const gestureHandler = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -66,7 +67,7 @@ function Content({ children, height, onClose, closeRequested }: ContentProps) {
     },
     onEnd: event => {
       if (height / 3 - event.translationY < 0) {
-        close();
+        doCloseAnimation();
       } else {
         y.value = withSpring(0);
       }
@@ -85,12 +86,12 @@ function Content({ children, height, onClose, closeRequested }: ContentProps) {
   });
 
   useEffect(() => {
-    open();
-  }, [open]);
+    doOpenAnimation();
+  }, [doOpenAnimation]);
 
   useUpdateEffect(() => {
-    if (closeRequested) close();
-  }, [closeRequested]);
+    if (close) doCloseAnimation();
+  }, [close]);
 
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
@@ -114,11 +115,24 @@ function BottomSheetV2({
   height,
   onClose,
 }: BottomSheetV2Props) {
-  const [closeRequested, setCloseRequested] = useState(false);
+  const [contentVisible, setContentVisible] = useState(visible);
+  const [close, setClose] = useState(false);
 
-  const onRequestClose = useCallback(() => {
-    setCloseRequested(true);
+  const startClosing = useCallback(() => {
+    setClose(true);
   }, []);
+
+  const onFinishClose = useCallback(() => {
+    setClose(false);
+    setContentVisible(false);
+    onClose?.();
+  }, [onClose]);
+
+  /*
+  useUpdateEffect(() => {
+    if (!visible) startClosing();
+  }, [visible]);
+  */
 
   return (
     <Modal
@@ -126,7 +140,7 @@ function BottomSheetV2({
       visible={visible}
       statusBarTranslucent
       transparent
-      onRequestClose={onRequestClose}
+      onRequestClose={startClosing}
     >
       <View
         style={[
@@ -136,19 +150,23 @@ function BottomSheetV2({
           },
         ]}
       >
-        <TouchableWithoutFeedback onPress={onRequestClose}>
+        <TouchableWithoutFeedback onPress={startClosing}>
           <View style={styles.mask} />
         </TouchableWithoutFeedback>
-        <WrappedContent
-          onClose={() => {
-            setCloseRequested(false);
-            onClose?.();
+        <View
+          style={{
+            height,
           }}
-          height={height}
-          closeRequested={closeRequested}
         >
-          {children}
-        </WrappedContent>
+          <WrappedContent
+            onFinishClose={onFinishClose}
+            height={height}
+            close={close}
+            visible={contentVisible}
+          >
+            {children}
+          </WrappedContent>
+        </View>
       </View>
     </Modal>
   );

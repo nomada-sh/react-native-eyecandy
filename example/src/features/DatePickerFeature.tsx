@@ -1,15 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import {
-  DatePicker,
-  Body,
-  BottomSheet,
-} from '@nomada-sh/react-native-eyecandy';
+import { DatePicker, Body, Select } from '@nomada-sh/react-native-eyecandy';
 
 export default function DatePickerFeature() {
   const [date, setDate] = React.useState(new Date());
   const [visible, setVisible] = React.useState(false);
+  const [locale, setLocale] = React.useState('en');
 
   return (
     <View
@@ -17,27 +14,9 @@ export default function DatePickerFeature() {
         marginBottom: 20,
       }}
     >
-      <DatePicker
-        date={date}
-        onDateChange={setDate}
-        calendarVisible={visible}
-        onCloseCalendar={() => setVisible(false)}
-        onPress={() => setVisible(true)}
-      />
-      <Body align="center" weight="bold">
-        {Intl.DateTimeFormat('en-US', {
-          month: 'long',
-          year: 'numeric',
-          day: 'numeric',
-        }).format(date)}
-      </Body>
-    </View>
-  );
-}
-/*
       <Select
-        value={lang}
-        onValueChange={value => setLang(value as typeof lang)}
+        value={locale}
+        onValueChange={value => value && setLocale(value)}
         items={[
           {
             label: 'English',
@@ -49,4 +28,21 @@ export default function DatePickerFeature() {
           },
         ]}
       />
-      */
+      <DatePicker
+        date={date}
+        onDateChange={setDate}
+        calendarVisible={visible}
+        onCloseCalendar={() => setVisible(false)}
+        onPress={() => setVisible(true)}
+        locale={locale}
+      />
+      <Body align="center" weight="bold">
+        {Intl.DateTimeFormat('en-US', {
+          month: 'long',
+          year: 'numeric',
+          day: 'numeric',
+        }).format(date)}
+      </Body>
+    </View>
+  );
+}

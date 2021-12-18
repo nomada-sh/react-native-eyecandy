@@ -11,7 +11,7 @@ export interface BottomSheetProps {
 
 function BottomSheet({ visible, onClose, children }: BottomSheetProps) {
   return (
-    <BottomSheetBase height={350} visible={visible} onClose={onClose}>
+    <BottomSheetBase height={800} visible={visible} onClose={onClose}>
       {children}
     </BottomSheetBase>
   );

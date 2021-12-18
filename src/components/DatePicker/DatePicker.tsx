@@ -4,7 +4,7 @@ import { Dimensions, View } from 'react-native';
 import { CalendarDate, Calendar as calendarBase } from 'calendar-base';
 
 import Calendar from './Calendar';
-import BottomSheet from './BottomSheet';
+import BottomSheet from '../BottomSheetV2';
 import Button from '../Button';
 
 export interface DatePickerProps {
@@ -121,8 +121,13 @@ function DatePicker({
   return (
     <View>
       <Button onPress={onPress} text="DatePicker" />
-      <BottomSheet visible={calendarVisible} onClose={onCloseCalendar}>
+      <BottomSheet
+        height={410}
+        visible={calendarVisible}
+        onClose={onCloseCalendar}
+      >
         {contentCalendar}
+        <Button text="Done" onPress={onCloseCalendar} />
       </BottomSheet>
     </View>
   );
