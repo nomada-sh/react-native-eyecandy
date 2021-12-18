@@ -24,6 +24,7 @@ import {
 import { useUpdateEffect } from 'react-use';
 
 import { useTheme } from '../../hooks';
+import Switch from '../Switch';
 
 type Context = {
   startY: number;
@@ -32,28 +33,42 @@ type Context = {
 export interface ContentProps {
   children?: React.ReactNode;
   height: number;
-  onFinishClose?: () => void;
-  close?: boolean;
   visible?: boolean;
+  onDismiss?: () => void;
+  onClose?: () => void;
+  onOpen?: () => void;
 }
 
-function Content({ children, height, onFinishClose, close }: ContentProps) {
+function Content({
+  children,
+  height,
+  visible,
+  onDismiss,
+  onClose,
+  onOpen,
+}: ContentProps) {
+  const open = useSharedValue(false);
+
   const { palette } = useTheme();
   const y = useSharedValue(height);
 
   const doOpenAnimation = useCallback(() => {
     'worklet';
 
-    y.value = withSpring(0, { damping: 12 });
-  }, [y]);
+    open.value = true;
+    y.value = withSpring(0, { damping: 12 }, () => {
+      onOpen && runOnJS(onOpen)();
+    });
+  }, [onOpen, open, y]);
 
   const doCloseAnimation = useCallback(() => {
     'worklet';
 
+    open.value = false;
     y.value = withTiming(height, { duration: 300 }, () => {
-      onFinishClose && runOnJS(onFinishClose)();
+      onClose && runOnJS(onClose)();
     });
-  }, [height, onFinishClose, y]);
+  }, [height, onClose, open, y]);
 
   const gestureHandler = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -67,7 +82,7 @@ function Content({ children, height, onFinishClose, close }: ContentProps) {
     },
     onEnd: event => {
       if (height / 3 - event.translationY < 0) {
-        doCloseAnimation();
+        onDismiss && runOnJS(onDismiss)();
       } else {
         y.value = withSpring(0);
       }
@@ -86,12 +101,12 @@ function Content({ children, height, onFinishClose, close }: ContentProps) {
   });
 
   useEffect(() => {
-    doOpenAnimation();
-  }, [doOpenAnimation]);
-
-  useUpdateEffect(() => {
-    if (close) doCloseAnimation();
-  }, [close]);
+    if (visible && !open.value) {
+      doOpenAnimation();
+    } else if (!visible && open.value) {
+      doCloseAnimation();
+    }
+  }, [doCloseAnimation, doOpenAnimation, open.value, visible]);
 
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
@@ -115,24 +130,13 @@ function BottomSheetV2({
   height,
   onClose,
 }: BottomSheetV2Props) {
-  const [contentVisible, setContentVisible] = useState(visible);
-  const [close, setClose] = useState(false);
+  const [contentVisible, setContentVisible] = useState<boolean | undefined>(
+    true,
+  );
 
-  const startClosing = useCallback(() => {
-    setClose(true);
-  }, []);
-
-  const onFinishClose = useCallback(() => {
-    setClose(false);
-    setContentVisible(false);
-    onClose?.();
-  }, [onClose]);
-
-  /*
   useUpdateEffect(() => {
-    if (!visible) startClosing();
+    setContentVisible(visible);
   }, [visible]);
-  */
 
   return (
     <Modal
@@ -140,7 +144,7 @@ function BottomSheetV2({
       visible={visible}
       statusBarTranslucent
       transparent
-      onRequestClose={startClosing}
+      onRequestClose={() => setContentVisible(false)}
     >
       <View
         style={[
@@ -150,7 +154,7 @@ function BottomSheetV2({
           },
         ]}
       >
-        <TouchableWithoutFeedback onPress={startClosing}>
+        <TouchableWithoutFeedback onPress={() => setContentVisible(false)}>
           <View style={styles.mask} />
         </TouchableWithoutFeedback>
         <View
@@ -158,11 +162,12 @@ function BottomSheetV2({
             height,
           }}
         >
+          <Switch value={contentVisible} onValueChange={setContentVisible} />
           <WrappedContent
-            onFinishClose={onFinishClose}
             height={height}
-            close={close}
             visible={contentVisible}
+            onDismiss={() => setContentVisible(false)}
+            onClose={onClose}
           >
             {children}
           </WrappedContent>
