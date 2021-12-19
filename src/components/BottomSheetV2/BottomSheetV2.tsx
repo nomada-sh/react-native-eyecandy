@@ -139,6 +139,12 @@ function Content({
           />
         </View>
         {children}
+        <View
+          style={{
+            width: '100%',
+            height: height.value,
+          }}
+        />
       </Animated.View>
     </PanGestureHandler>
   );
