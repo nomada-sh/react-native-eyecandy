@@ -89,8 +89,7 @@ function Month({
   const date = useMemo(() => new Date(year, month), [month, year]);
 
   const style = useAnimatedStyle(() => {
-    const newX = x.value + index * width;
-    console.log(newX);
+    const newX = loopNumber(x.value, 0, width * 3) + index * width;
 
     let translateX = newX - width * 4;
     if (newX >= 0 && newX <= width * 3) translateX = newX - width;
@@ -157,9 +156,7 @@ function Calendar({
   onPressToday,
   animateOnPressToday,
 }: CalendarProps) {
-  const x = useSharedValue(100);
-  const translationX = useSharedValue(0);
-  const w = useDerivedValue(() => width, [width]);
+  const x = useSharedValue(0);
 
   const prev = useMemo(() => {
     return getCalendar(year, month - 1);
@@ -198,7 +195,8 @@ function Calendar({
     onActive: (e, ctx) => {
       //x.value = Math.max(0, ctx.startX + e.translationX) % (w.value * 4);
       //x.value = loopNumber(ctx.startX + e.translationX, 0, w.value * 4);
-      x.value = loopNumber(ctx.startX + e.translationX, 0, 100 * 3);
+      //x.value = loopNumber(ctx.startX + e.translationX, 0, 100 * 3);
+      x.value = ctx.startX + e.translationX;
       /*
       let newX = 0;
       if (x.value >= 0 && x.value <= w.value * 2) newX += x.value - w.value;
@@ -209,6 +207,14 @@ function Calendar({
     onEnd: (e, ctx) => {
       const threshold = width / 3;
       const direction = e.translationX > 0 ? 1 : -1;
+
+      const exact = Math.round(ctx.startX / width) * width;
+
+      if (Math.abs(e.translationX) > threshold) {
+        x.value = withTiming(exact + direction * width, { duration: 300 });
+      } else {
+        x.value = withTiming(exact, { duration: 300 });
+      }
 
       // if (Math.abs(e.translationX) >= threshold) {
       //   x.value = (ctx.startX + direction * width) % (width * 4);
@@ -240,12 +246,6 @@ function Calendar({
     },
   });
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: translationX.value }],
-    };
-  });
-
   const renderMonth = useCallback(
     (year: number, month: number, data: (CalendarDate | false)[]) => {
       const date = new Date(year, month);
@@ -257,7 +257,6 @@ function Calendar({
               width,
               backgroundColor: month % 2 === 0 ? 'red' : 'yellow',
             },
-            animatedStyle,
           ]}
           key={`${year}-${month}`}
         >
@@ -280,7 +279,6 @@ function Calendar({
       );
     },
     [
-      animatedStyle,
       handlePressToday,
       locale,
       onDayPress,
@@ -324,11 +322,10 @@ function Calendar({
           width,
           flexDirection: 'row',
           flex: 1,
-          marginStart: 100,
         }}
       >
         <Month
-          width={100}
+          width={width}
           locale={locale}
           year={year}
           month={month}
@@ -338,7 +335,7 @@ function Calendar({
           size={3}
         />
         <Month
-          width={100}
+          width={width}
           locale={locale}
           year={year}
           month={month + 1}
@@ -348,7 +345,7 @@ function Calendar({
           size={3}
         />
         <Month
-          width={100}
+          width={width}
           locale={locale}
           year={year}
           month={month - 1}
@@ -356,39 +353,6 @@ function Calendar({
           index={2}
           x={x}
           size={3}
-        />
-        <View
-          style={{
-            position: 'absolute',
-            width: 100,
-            top: 0,
-            left: 0,
-            bottom: 0,
-            borderWidth: 1,
-            borderColor: 'red',
-          }}
-        />
-        <View
-          style={{
-            position: 'absolute',
-            width: 100,
-            top: 0,
-            left: 100,
-            bottom: 0,
-            borderWidth: 1,
-            borderColor: 'black',
-          }}
-        />
-        <View
-          style={{
-            position: 'absolute',
-            width: 200,
-            top: 0,
-            left: 100,
-            bottom: 0,
-            borderWidth: 1,
-            borderColor: 'black',
-          }}
         />
       </Animated.View>
     </PanGestureHandler>
