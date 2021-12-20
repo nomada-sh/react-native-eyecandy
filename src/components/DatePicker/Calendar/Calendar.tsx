@@ -75,13 +75,25 @@ function Month({
     [getCalendar, year, month],
   );
 
+  const color = useMemo(() => {
+    switch (index) {
+      case 0:
+        return 'yellow';
+      case 1:
+        return 'green';
+      case 2:
+        return 'blue';
+    }
+  }, [index]);
+
   const date = useMemo(() => new Date(year, month), [month, year]);
 
   const style = useAnimatedStyle(() => {
-    const newX = loopNumber(x.value + width * index, 0, width * 4);
+    const newX = x.value + index * width;
+    console.log(newX);
 
-    let translateX = newX - width * 3;
-    if (newX >= 0 && newX <= width * 2) translateX = newX - width;
+    let translateX = newX - width * 4;
+    if (newX >= 0 && newX <= width * 3) translateX = newX - width;
 
     return {
       transform: [{ translateX }],
@@ -93,7 +105,7 @@ function Month({
       style={[
         {
           width,
-          backgroundColor: month % 2 === 0 ? 'red' : 'yellow',
+          backgroundColor: color,
           position: 'absolute',
         },
         style,
@@ -145,7 +157,7 @@ function Calendar({
   onPressToday,
   animateOnPressToday,
 }: CalendarProps) {
-  const x = useSharedValue(width);
+  const x = useSharedValue(100);
   const translationX = useSharedValue(0);
   const w = useDerivedValue(() => width, [width]);
 
@@ -186,7 +198,7 @@ function Calendar({
     onActive: (e, ctx) => {
       //x.value = Math.max(0, ctx.startX + e.translationX) % (w.value * 4);
       //x.value = loopNumber(ctx.startX + e.translationX, 0, w.value * 4);
-      x.value = ctx.startX + e.translationX;
+      x.value = loopNumber(ctx.startX + e.translationX, 0, 100 * 3);
       /*
       let newX = 0;
       if (x.value >= 0 && x.value <= w.value * 2) newX += x.value - w.value;
@@ -312,30 +324,31 @@ function Calendar({
           width,
           flexDirection: 'row',
           flex: 1,
+          marginStart: 100,
         }}
       >
         <Month
-          width={width}
+          width={100}
           locale={locale}
           year={year}
-          month={month + 1}
+          month={month}
           getCalendar={getCalendar}
           index={0}
           x={x}
           size={3}
         />
         <Month
-          width={width}
+          width={100}
           locale={locale}
           year={year}
-          month={month}
+          month={month + 1}
           getCalendar={getCalendar}
           index={1}
           x={x}
           size={3}
         />
         <Month
-          width={width}
+          width={100}
           locale={locale}
           year={year}
           month={month - 1}
@@ -343,6 +356,39 @@ function Calendar({
           index={2}
           x={x}
           size={3}
+        />
+        <View
+          style={{
+            position: 'absolute',
+            width: 100,
+            top: 0,
+            left: 0,
+            bottom: 0,
+            borderWidth: 1,
+            borderColor: 'red',
+          }}
+        />
+        <View
+          style={{
+            position: 'absolute',
+            width: 100,
+            top: 0,
+            left: 100,
+            bottom: 0,
+            borderWidth: 1,
+            borderColor: 'black',
+          }}
+        />
+        <View
+          style={{
+            position: 'absolute',
+            width: 200,
+            top: 0,
+            left: 100,
+            bottom: 0,
+            borderWidth: 1,
+            borderColor: 'black',
+          }}
         />
       </Animated.View>
     </PanGestureHandler>
