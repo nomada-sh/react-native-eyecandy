@@ -21,10 +21,18 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
   const [calendarVisible, setCalendarVisible] = React.useState(false);
   const onCloseCalendar = useCallback(() => setCalendarVisible(false), []);
 
+  const getCalendar = useCallback(
+    (year: number, month: number) => {
+      return calendar.getCalendar(year, month);
+    },
+    [calendar],
+  );
+
   const onPress = useCallback(() => {
     setCalendarVisible(true);
   }, []);
 
+  /*
   const selectedDate = useMemo((): CalendarDate => {
     return {
       year: date.getFullYear(),
@@ -34,29 +42,23 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
   }, [date]);
 
   const { year, month } = selectedDate;
+  */
 
   /*
   const [currentYear, setCurrentYear] = useState(year);
   const [currentMonth, setCurrentMonth] = useState(month);
   */
 
-  const getCalendar = useCallback(
-    (year: number, month: number) => {
-      return calendar.getCalendar(year, month);
-    },
-    [calendar],
-  );
+  // const onDayPress = useCallback(
+  //   (value: CalendarDate) => {
+  //     onDateChange?.(new Date(value.year, value.month, value.day));
+  //   },
+  //   [onDateChange],
+  // );
 
-  const onDayPress = useCallback(
-    (value: CalendarDate) => {
-      onDateChange?.(new Date(value.year, value.month, value.day));
-    },
-    [onDateChange],
-  );
-
-  const onPressToday = useCallback(() => {
-    onDateChange?.(new Date());
-  }, [onDateChange]);
+  // const onPressToday = useCallback(() => {
+  //   onDateChange?.(new Date());
+  // }, [onDateChange]);
 
   /*
   const onPressToday = useCallback(() => {
@@ -89,24 +91,12 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
       <Calendar
         width={width}
         getCalendar={getCalendar}
-        onPressDay={onDayPress}
-        onPressToday={onPressToday}
-        selectedDate={selectedDate}
         locale={locale}
-        month={month}
-        year={year}
+        date={date}
+        onDateChange={onDateChange}
       />
     );
-  }, [
-    getCalendar,
-    locale,
-    month,
-    onDayPress,
-    onPressToday,
-    selectedDate,
-    width,
-    year,
-  ]);
+  }, [date, getCalendar, locale, onDateChange, width]);
 
   return (
     <View>

@@ -12,6 +12,7 @@ import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
+  withSpring,
   withTiming,
 } from 'react-native-reanimated';
 
@@ -23,12 +24,10 @@ import {
 import loop from '../loop';
 
 export interface CalendarProps {
-  year: number;
-  month: number;
   width: number;
+  date: Date;
   locale?: string;
   style?: StyleProp<ViewStyle>;
-  selectedDate?: CalendarDate;
   getCalendar: (year: number, month: number) => (false | CalendarDate)[];
   debug?: boolean;
   onPressDay?: (value: CalendarDate) => void;
@@ -36,6 +35,7 @@ export interface CalendarProps {
   onPressMonth?: () => void;
   onPressToday?: () => void;
   animateOnPressToday?: boolean;
+  onDateChange?: (date: Date) => void;
 }
 
 function Month({
@@ -43,7 +43,7 @@ function Month({
   year,
   getCalendar,
   locale,
-  selectedDate,
+  selectedDate: selectedDateProp,
   width,
   index,
   onPressDay,
@@ -56,6 +56,15 @@ function Month({
   const days = useMemo(
     () => getCalendar(year, month),
     [getCalendar, year, month],
+  );
+
+  const selectedDate = useMemo(
+    () => ({
+      year: selectedDateProp.getFullYear(),
+      month: selectedDateProp.getMonth(),
+      day: selectedDateProp.getDate(),
+    }),
+    [selectedDateProp],
   );
 
   const date = useMemo(() => new Date(year, month), [month, year]);
@@ -115,39 +124,33 @@ type Context = {
 
 function Calendar({
   locale,
-  year,
-  month,
+  date,
+  onDateChange,
   style,
-  selectedDate,
-  onPressDay,
   getCalendar,
   width,
-  onPressMonth,
-  onPressYear,
-  onPressToday,
-  animateOnPressToday,
 }: CalendarProps) {
-  const [months, setMonths] = useState([
-    {
-      year,
-      month: month - 1,
-    },
-    {
-      year,
-      month,
-    },
-    {
-      year,
-      month: month + 1,
-    },
-  ]);
+  const createMonths = useCallback((date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
 
-  const x = useSharedValue(0);
-  const index = useSharedValue(1);
+    return [
+      {
+        year,
+        month: month - 1,
+      },
+      {
+        year,
+        month,
+      },
+      {
+        year,
+        month: month + 1,
+      },
+    ];
+  }, []);
 
-  const handlePressToday = useCallback(() => {
-    onPressToday?.();
-  }, [onPressToday]);
+  const [months, setMonths] = useState(createMonths(date));
 
   const onChange = useCallback(
     (index: number, nextIndex: number, prevIndex: number) => {
@@ -169,6 +172,40 @@ function Calendar({
     [months],
   );
 
+  const onPressDay = useCallback(
+    (value: CalendarDate) => {
+      onDateChange?.(new Date(value.year, value.month, value.day));
+    },
+    [onDateChange],
+  );
+
+  const x = useSharedValue(0);
+  const index = useSharedValue(1);
+
+  const onPressToday = useCallback(() => {
+    onDateChange?.(new Date());
+
+    const current = months[index.value];
+
+    const from = new Date(current.year, current.month, 1);
+    const to = new Date();
+
+    const same =
+      to.getFullYear() === from.getFullYear() &&
+      to.getMonth() === from.getMonth();
+
+    const direction = same ? 0 : to < from ? -1 : 1;
+
+    if (direction === 0) return;
+
+    setMonths(createMonths(to));
+
+    index.value = 1;
+    x.value = withTiming(0, {
+      duration: 200,
+    });
+  }, [createMonths, index, months, onDateChange, x]);
+
   const gestureHandler = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     Context
@@ -186,14 +223,14 @@ function Calendar({
       const exact = Math.round(ctx.startX / width) * width;
 
       if (Math.abs(e.translationX) > threshold) {
+        index.value = loop(index.value - direction, 0, 3);
+        const next = loop(index.value + 1, 0, 3);
+        const prev = loop(index.value - 1, 0, 3);
+
         x.value = withTiming(
           exact + direction * width,
           { duration: 300 },
           () => {
-            index.value = loop(index.value - direction, 0, 3);
-            const next = loop(index.value + 1, 0, 3);
-            const prev = loop(index.value - 1, 0, 3);
-
             runOnJS(onChange)(index.value, next, prev);
           },
         );
@@ -209,8 +246,8 @@ function Calendar({
         <Month
           key={`${year}-${month}`}
           onPressDay={onPressDay}
-          onPressToday={handlePressToday}
-          selectedDate={selectedDate}
+          onPressToday={onPressToday}
+          selectedDate={date}
           month={month}
           year={year}
           getCalendar={getCalendar}
@@ -222,16 +259,7 @@ function Calendar({
         />
       );
     });
-  }, [
-    getCalendar,
-    handlePressToday,
-    locale,
-    months,
-    onPressDay,
-    selectedDate,
-    width,
-    x,
-  ]);
+  }, [months, onPressDay, onPressToday, date, getCalendar, width, locale, x]);
 
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
