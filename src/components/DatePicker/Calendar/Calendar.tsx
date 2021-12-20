@@ -11,9 +11,11 @@ import Animated, {
   call,
   runOnJS,
   useAnimatedGestureHandler,
+  useAnimatedProps,
   useAnimatedReaction,
   useAnimatedStyle,
   useCode,
+  useDerivedValue,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
@@ -44,9 +46,88 @@ export interface CalendarProps {
   animateOnPressToday?: boolean;
 }
 
+function loopNumber(value: number, min: number, max: number): number {
+  'worklet';
+  if (value >= 0) {
+    return value % max;
+  } else {
+    return loopNumber(max + value, min, max);
+  }
+}
+
+function Month({
+  month,
+  year,
+  getCalendar,
+  locale,
+  onDayPress,
+  selectedDate,
+  width,
+  index,
+  onPressYear,
+  onPressMonth,
+  onPressToday,
+  x,
+  size,
+}: any) {
+  const days = useMemo(
+    () => getCalendar(year, month),
+    [getCalendar, year, month],
+  );
+
+  const date = useMemo(() => new Date(year, month), [month, year]);
+
+  const style = useAnimatedStyle(() => {
+    const newX = loopNumber(x.value + width * index, 0, width * 4);
+
+    let translateX = newX - width * 3;
+    if (newX >= 0 && newX <= width * 2) translateX = newX - width;
+
+    return {
+      transform: [{ translateX }],
+    };
+  });
+
+  return (
+    <Animated.View
+      style={[
+        {
+          width,
+          backgroundColor: month % 2 === 0 ? 'red' : 'yellow',
+          position: 'absolute',
+        },
+        style,
+      ]}
+      key={`${year}-${month}`}
+    >
+      <Actions
+        date={date}
+        onPressYear={onPressYear}
+        onPressMonth={onPressMonth}
+        onPressToday={onPressToday}
+        locale={locale}
+      />
+      <Header locale={locale} month={month} year={year} />
+      <Days
+        data={days}
+        onDayPress={onDayPress}
+        selectedDate={selectedDate}
+        month={month}
+        year={year}
+      />
+    </Animated.View>
+  );
+}
+
 type Context = {
   startX: number;
+  translateX: number;
 };
+
+function clamp(value: number, min: number, max: number) {
+  'worklet';
+  return Math.min(Math.max(value, min), max);
+}
 
 function Calendar({
   locale,
@@ -64,7 +145,9 @@ function Calendar({
   onPressToday,
   animateOnPressToday,
 }: CalendarProps) {
-  const x = useSharedValue(-width);
+  const x = useSharedValue(width);
+  const translationX = useSharedValue(0);
+  const w = useDerivedValue(() => width, [width]);
 
   const prev = useMemo(() => {
     return getCalendar(year, month - 1);
@@ -98,36 +181,57 @@ function Calendar({
   >({
     onStart: (_, ctx) => {
       ctx.startX = x.value;
+      //ctx.translateX = translationX.value;
     },
     onActive: (e, ctx) => {
+      //x.value = Math.max(0, ctx.startX + e.translationX) % (w.value * 4);
+      //x.value = loopNumber(ctx.startX + e.translationX, 0, w.value * 4);
       x.value = ctx.startX + e.translationX;
+      /*
+      let newX = 0;
+      if (x.value >= 0 && x.value <= w.value * 2) newX += x.value - w.value;
+      else newX += x.value - w.value * 3;
+      translationX.value = newX;
+      */
     },
     onEnd: (e, ctx) => {
       const threshold = width / 3;
       const direction = e.translationX > 0 ? 1 : -1;
 
-      if (Math.abs(e.translationX) >= threshold) {
-        const newX = ctx.startX + width * direction;
-        x.value = withTiming(newX, { duration: 300 }, () => {
-          /*
-          direction < 0
-            ? runOnJS(onGoToNextMonth)()
-            : runOnJS(onGoToPrevMonth)();
-            */
-        });
+      // if (Math.abs(e.translationX) >= threshold) {
+      //   x.value = (ctx.startX + direction * width) % (width * 4);
+      //   let newX = 0;
+      //   if (x.value >= 0 && x.value <= width * 2) newX = x.value - width;
+      //   else newX = x.value - width * 3;
+      //   translationX.value = withTiming(newX, { duration: 300 });
+      //   // const newX = ctx.startX + width * direction;
+      //   // translationX.value = withTiming(newX, { duration: 300 }, () => {
+      //   //   /*
+      //   //   direction < 0
+      //   //     ? runOnJS(onGoToNextMonth)()
+      //   //     : runOnJS(onGoToPrevMonth)();
+      //   //     */
+      //   // });
 
-        /*
-        offset.value -= direction;
+      //   // /*
+      //   // offset.value -= direction;
 
-        if (index.value === 0 && direction > 0) return;
-        if (index.value === months.length - 1 && direction < 0) return;
+      //   // if (index.value === 0 && direction > 0) return;
+      //   // if (index.value === months.length - 1 && direction < 0) return;
 
-        index.value -= direction;
-        */
-      } else {
-        x.value = withTiming(ctx.startX, { duration: 300 });
-      }
+      //   // index.value -= direction;
+      //   // */
+      // } else {
+      //   x.value = ctx.startX;
+      //   translationX.value = withTiming(0, { duration: 300 });
+      // }
     },
+  });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translationX.value }],
+    };
   });
 
   const renderMonth = useCallback(
@@ -135,11 +239,14 @@ function Calendar({
       const date = new Date(year, month);
 
       return (
-        <View
-          style={{
-            width,
-            backgroundColor: month % 2 === 0 ? 'red' : 'yellow',
-          }}
+        <Animated.View
+          style={[
+            {
+              width,
+              backgroundColor: month % 2 === 0 ? 'red' : 'yellow',
+            },
+            animatedStyle,
+          ]}
           key={`${year}-${month}`}
         >
           <Actions
@@ -157,10 +264,11 @@ function Calendar({
             month={month}
             year={year}
           />
-        </View>
+        </Animated.View>
       );
     },
     [
+      animatedStyle,
       handlePressToday,
       locale,
       onDayPress,
@@ -180,12 +288,6 @@ function Calendar({
       renderMonth(year, month + 1, next),
     ];
   }, [renderMonth, year, month, prev, current, next]);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: x.value }],
-    };
-  });
 
   /*
   useCode(
@@ -208,19 +310,40 @@ function Calendar({
       <Animated.View
         style={{
           width,
+          flexDirection: 'row',
+          flex: 1,
         }}
       >
-        <Animated.View
-          style={[
-            {
-              flexDirection: 'row',
-            },
-            animatedStyle,
-            style,
-          ]}
-        >
-          {months}
-        </Animated.View>
+        <Month
+          width={width}
+          locale={locale}
+          year={year}
+          month={month + 1}
+          getCalendar={getCalendar}
+          index={0}
+          x={x}
+          size={3}
+        />
+        <Month
+          width={width}
+          locale={locale}
+          year={year}
+          month={month}
+          getCalendar={getCalendar}
+          index={1}
+          x={x}
+          size={3}
+        />
+        <Month
+          width={width}
+          locale={locale}
+          year={year}
+          month={month - 1}
+          getCalendar={getCalendar}
+          index={2}
+          x={x}
+          size={3}
+        />
       </Animated.View>
     </PanGestureHandler>
   );
