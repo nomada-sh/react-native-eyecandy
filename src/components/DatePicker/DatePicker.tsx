@@ -8,9 +8,9 @@ import BottomSheet from '../BottomSheetV2';
 import Button from '../Button';
 
 export interface DatePickerProps {
-  date: Date;
+  date: Date; // = new Date();
+  locale: string; // = 'en-US';
   onDateChange?: (date: Date) => void;
-  locale: string;
   onCloseCalendar?: () => void;
 }
 
@@ -35,13 +35,10 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
 
   const { year, month } = selectedDate;
 
+  /*
   const [currentYear, setCurrentYear] = useState(year);
   const [currentMonth, setCurrentMonth] = useState(month);
-
-  const days = useMemo(
-    () => calendar.getCalendar(currentYear, currentMonth),
-    [calendar, currentMonth, currentYear],
-  );
+  */
 
   const getCalendar = useCallback(
     (year: number, month: number) => {
@@ -57,6 +54,11 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
     [onDateChange],
   );
 
+  const onPressToday = useCallback(() => {
+    onDateChange?.(new Date());
+  }, [onDateChange]);
+
+  /*
   const onPressToday = useCallback(() => {
     const now = new Date();
 
@@ -80,40 +82,30 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
   const onGoToPrevMonth = useCallback(() => {
     setCurrentMonth(prev => prev - 1);
   }, []);
+  */
 
   const contentCalendar = useMemo(() => {
     return (
       <Calendar
         width={width}
         getCalendar={getCalendar}
-        days={days}
-        onDayPress={onDayPress}
+        onPressDay={onDayPress}
+        onPressToday={onPressToday}
         selectedDate={selectedDate}
         locale={locale}
-        month={currentMonth}
-        year={currentYear}
-        onGoToNextMonth={onGoToNextMonth}
-        onGoToPrevMonth={onGoToPrevMonth}
-        onPressToday={onPressToday}
-        onPressMonth={onPressMonth}
-        onPressYear={onPressYear}
-        animateOnPressToday
+        month={month}
+        year={year}
       />
     );
   }, [
-    currentMonth,
-    currentYear,
-    days,
     getCalendar,
     locale,
+    month,
     onDayPress,
-    onGoToNextMonth,
-    onGoToPrevMonth,
-    onPressMonth,
     onPressToday,
-    onPressYear,
     selectedDate,
     width,
+    year,
   ]);
 
   return (

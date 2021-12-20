@@ -1,11 +1,5 @@
-import React, {
-  useCallback,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
 
 import type { CalendarDate } from 'calendar-base';
 
@@ -14,14 +8,9 @@ import Header from './Header';
 import Actions from './Actions';
 
 import Animated, {
-  call,
   runOnJS,
   useAnimatedGestureHandler,
-  useAnimatedProps,
-  useAnimatedReaction,
   useAnimatedStyle,
-  useCode,
-  useDerivedValue,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
@@ -36,19 +25,16 @@ import loop from '../loop';
 export interface CalendarProps {
   year: number;
   month: number;
+  width: number;
   locale?: string;
   style?: StyleProp<ViewStyle>;
   selectedDate?: CalendarDate;
-  onDayPress?: (value: CalendarDate) => void;
-  days: (false | CalendarDate)[];
   getCalendar: (year: number, month: number) => (false | CalendarDate)[];
   debug?: boolean;
-  onGoToNextMonth: () => void;
-  onGoToPrevMonth: () => void;
-  width: number;
-  onPressYear: () => void;
-  onPressMonth: () => void;
-  onPressToday: () => void;
+  onPressDay?: (value: CalendarDate) => void;
+  onPressYear?: () => void;
+  onPressMonth?: () => void;
+  onPressToday?: () => void;
   animateOnPressToday?: boolean;
 }
 
@@ -66,24 +52,11 @@ function Month({
   onPressToday,
   x,
   size,
-  onChange,
 }: any) {
   const days = useMemo(
     () => getCalendar(year, month),
     [getCalendar, year, month],
   );
-
-  const color = useMemo(() => {
-    return undefined;
-    // switch (index) {
-    //   case 0:
-    //     return 'red';
-    //   case 1:
-    //     return 'green';
-    //   case 2:
-    //     return 'blue';
-    // }
-  }, []);
 
   const date = useMemo(() => new Date(year, month), [month, year]);
 
@@ -111,7 +84,6 @@ function Month({
       style={[
         {
           width,
-          backgroundColor: color,
           position: 'absolute',
         },
         style,
@@ -147,10 +119,8 @@ function Calendar({
   month,
   style,
   selectedDate,
-  onDayPress,
+  onPressDay,
   getCalendar,
-  onGoToNextMonth,
-  onGoToPrevMonth,
   width,
   onPressMonth,
   onPressYear,
@@ -176,7 +146,7 @@ function Calendar({
   const index = useSharedValue(1);
 
   const handlePressToday = useCallback(() => {
-    onPressToday();
+    onPressToday?.();
   }, [onPressToday]);
 
   const onChange = useCallback(
@@ -238,7 +208,7 @@ function Calendar({
       return (
         <Month
           key={`${year}-${month}`}
-          onPressDay={onDayPress}
+          onPressDay={onPressDay}
           onPressToday={handlePressToday}
           selectedDate={selectedDate}
           month={month}
@@ -248,7 +218,7 @@ function Calendar({
           locale={locale}
           index={index}
           x={x}
-          size={3}
+          size={months.length}
         />
       );
     });
@@ -257,7 +227,7 @@ function Calendar({
     handlePressToday,
     locale,
     months,
-    onDayPress,
+    onPressDay,
     selectedDate,
     width,
     x,
