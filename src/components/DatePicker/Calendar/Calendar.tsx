@@ -70,18 +70,18 @@ function Month({
   const date = useMemo(() => new Date(year, month), [month, year]);
 
   const style = useAnimatedStyle(() => {
-    function a(value: number, min: number, max: number): number {
+    function loop(value: number, min: number, max: number): number {
       'worklet';
       if (value >= 0) {
         return value % max;
       } else {
-        return a(max + value, min, max);
+        return loop(max + value, min, max);
       }
     }
-    const newX = a(x.value, 0, width * 3) + index * width;
+    const newX = loop(x.value, 0, width * size) + index * width;
 
-    let translateX = newX - width * 4;
-    if (newX >= 0 && newX <= width * 3) translateX = newX - width;
+    let translateX = newX - width * (size + 1);
+    if (newX >= 0 && newX <= width * size) translateX = newX - width;
 
     return {
       transform: [{ translateX }],
@@ -126,7 +126,6 @@ function Calendar({
   locale,
   date,
   onDateChange,
-  style,
   getCalendar,
   width,
 }: CalendarProps) {
@@ -135,6 +134,10 @@ function Calendar({
     const month = date.getMonth();
 
     return [
+      {
+        year,
+        month: month - 2,
+      },
       {
         year,
         month: month - 1,
@@ -146,6 +149,10 @@ function Calendar({
       {
         year,
         month: month + 1,
+      },
+      {
+        year,
+        month: month + 2,
       },
     ];
   }, []);
@@ -160,11 +167,11 @@ function Calendar({
 
       newMonths[nextIndex] = {
         year: current.year,
-        month: current.month + 1,
+        month: current.month + 2,
       };
       newMonths[prevIndex] = {
         year: current.year,
-        month: current.month - 1,
+        month: current.month - 2,
       };
 
       setMonths(newMonths);
@@ -179,8 +186,8 @@ function Calendar({
     [onDateChange],
   );
 
-  const x = useSharedValue(0);
-  const index = useSharedValue(1);
+  const x = useSharedValue(-width);
+  const index = useSharedValue(2);
 
   const onPressToday = useCallback(() => {
     onDateChange?.(new Date());
@@ -194,17 +201,13 @@ function Calendar({
       to.getFullYear() === from.getFullYear() &&
       to.getMonth() === from.getMonth();
 
-    const direction = same ? 0 : to < from ? -1 : 1;
-
-    if (direction === 0) return;
+    if (same) return;
 
     setMonths(createMonths(to));
 
-    index.value = 1;
-    x.value = withTiming(0, {
-      duration: 200,
-    });
-  }, [createMonths, index, months, onDateChange, x]);
+    index.value = 2;
+    x.value = withSpring(-width);
+  }, [createMonths, index, months, onDateChange, width, x]);
 
   const gestureHandler = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -219,21 +222,15 @@ function Calendar({
     onEnd: (e, ctx) => {
       const threshold = width / 3;
       const direction = e.translationX > 0 ? 1 : -1;
-
       const exact = Math.round(ctx.startX / width) * width;
-
       if (Math.abs(e.translationX) > threshold) {
-        index.value = loop(index.value - direction, 0, 3);
-        const next = loop(index.value + 1, 0, 3);
-        const prev = loop(index.value - 1, 0, 3);
+        index.value = loop(index.value - direction, 0, months.length);
+        const next = loop(index.value + 2, 0, months.length);
+        const prev = loop(index.value - 2, 0, months.length);
 
-        x.value = withTiming(
-          exact + direction * width,
-          { duration: 300 },
-          () => {
-            runOnJS(onChange)(index.value, next, prev);
-          },
-        );
+        runOnJS(onChange)(index.value, next, prev);
+
+        x.value = withTiming(exact + direction * width, { duration: 300 });
       } else {
         x.value = withTiming(exact, { duration: 300 });
       }

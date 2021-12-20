@@ -1,8 +1,7 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { Dimensions, View } from 'react-native';
 
-import { CalendarDate, Calendar as calendarBase } from 'calendar-base';
-
+import { Calendar as calendarBase } from 'calendar-base';
 import Calendar from './Calendar';
 import BottomSheet from '../BottomSheetV2';
 import Button from '../Button';
@@ -32,60 +31,6 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
     setCalendarVisible(true);
   }, []);
 
-  /*
-  const selectedDate = useMemo((): CalendarDate => {
-    return {
-      year: date.getFullYear(),
-      month: date.getMonth(),
-      day: date.getDate(),
-    };
-  }, [date]);
-
-  const { year, month } = selectedDate;
-  */
-
-  /*
-  const [currentYear, setCurrentYear] = useState(year);
-  const [currentMonth, setCurrentMonth] = useState(month);
-  */
-
-  // const onDayPress = useCallback(
-  //   (value: CalendarDate) => {
-  //     onDateChange?.(new Date(value.year, value.month, value.day));
-  //   },
-  //   [onDateChange],
-  // );
-
-  // const onPressToday = useCallback(() => {
-  //   onDateChange?.(new Date());
-  // }, [onDateChange]);
-
-  /*
-  const onPressToday = useCallback(() => {
-    const now = new Date();
-
-    onDateChange?.(now);
-    setCurrentYear(now.getFullYear());
-    setCurrentMonth(now.getMonth());
-  }, [onDateChange]);
-
-  const onPressMonth = useCallback(() => {
-    console.log('onPressMonth');
-  }, []);
-
-  const onPressYear = useCallback(() => {
-    console.log('onPressYear');
-  }, []);
-
-  const onGoToNextMonth = useCallback(() => {
-    setCurrentMonth(prev => prev + 1);
-  }, []);
-
-  const onGoToPrevMonth = useCallback(() => {
-    setCurrentMonth(prev => prev - 1);
-  }, []);
-  */
-
   const contentCalendar = useMemo(() => {
     return (
       <Calendar
@@ -98,9 +43,19 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
     );
   }, [date, getCalendar, locale, onDateChange, width]);
 
+  const formattedDate = useMemo(
+    () =>
+      Intl.DateTimeFormat(locale, {
+        month: 'long',
+        year: 'numeric',
+        day: 'numeric',
+      }).format(date),
+    [date, locale],
+  );
+
   return (
     <View>
-      <Button onPress={onPress} text="DatePicker" />
+      <Button onPress={onPress} text={formattedDate} />
       <BottomSheet
         height={410}
         visible={calendarVisible}

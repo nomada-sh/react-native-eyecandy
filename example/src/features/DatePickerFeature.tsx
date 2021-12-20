@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { DatePicker, Body, Select } from '@nomada-sh/react-native-eyecandy';
+import { DatePicker, Select } from '@nomada-sh/react-native-eyecandy';
 
 export default function DatePickerFeature() {
   const [date, setDate] = React.useState(new Date());
@@ -28,13 +28,6 @@ export default function DatePickerFeature() {
         ]}
       />
       <DatePicker date={date} onDateChange={setDate} locale={locale} />
-      <Body align="center" weight="bold">
-        {Intl.DateTimeFormat('en-US', {
-          month: 'long',
-          year: 'numeric',
-          day: 'numeric',
-        }).format(date)}
-      </Body>
     </View>
   );
 }
