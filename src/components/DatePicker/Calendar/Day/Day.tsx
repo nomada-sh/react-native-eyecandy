@@ -28,11 +28,21 @@ function Day({ value, onPress, selected, debug }: DayProps) {
     );
   }, [value]);
 
-  const selectedColor = useMemo(
-    () => palette.grey[dark ? 800 : 200],
-    [dark, palette.grey],
+  const rippleColor = useRippleColor(
+    selected ? palette.primary[500] : palette.background.container,
   );
-  const rippleColor = useRippleColor(palette.background.container);
+
+  const backgroundColor = useMemo(() => {
+    if (selected) return palette.primary[500];
+    if (today) return palette.grey[dark ? 800 : 200];
+    return 'transparent';
+  }, [dark, palette.grey, palette.primary, selected, today]);
+
+  const textColor = useMemo(() => {
+    if (selected) return 'white';
+    if (today) return palette.primary[500];
+    return undefined;
+  }, [palette.primary, selected, today]);
 
   const count = useRef(1);
   value &&
@@ -50,7 +60,7 @@ function Day({ value, onPress, selected, debug }: DayProps) {
         style={[
           value !== false ? styles.pressable : styles.pressableHidden,
           {
-            backgroundColor: selected ? selectedColor : 'transparent',
+            backgroundColor: backgroundColor,
           },
         ]}
         disabled={value === false}
@@ -64,9 +74,11 @@ function Day({ value, onPress, selected, debug }: DayProps) {
         }}
       >
         <Body
-          color={selected || today ? 'primary' : 'default'}
+          color="default"
           weight={selected ? 'bold' : 'normal'}
-          style={styles.text}
+          style={{
+            color: textColor,
+          }}
         >
           {value !== false ? value.day : '00'}
         </Body>
@@ -91,7 +103,6 @@ const styles = StyleSheet.create({
   pressableHidden: {
     opacity: 0,
   },
-  text: {},
 });
 
 export default React.memo(Day);
