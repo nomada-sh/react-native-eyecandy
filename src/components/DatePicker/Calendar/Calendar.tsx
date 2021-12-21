@@ -16,9 +16,8 @@ import {
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
 
-import loop from '../loop';
-
 import Month from './Month';
+import wrap from '../wrap';
 
 export interface CalendarProps {
   width: number;
@@ -147,9 +146,9 @@ function Calendar({
       const direction = e.translationX > 0 ? 1 : -1;
       const exact = Math.round(ctx.startX / width) * width;
       if (Math.abs(e.translationX) > threshold) {
-        index.value = loop(index.value - direction, 0, months.length);
-        const next = loop(index.value + 2, 0, months.length);
-        const prev = loop(index.value - 2, 0, months.length);
+        index.value = wrap(months.length, index.value - direction);
+        const next = wrap(months.length, index.value + 2);
+        const prev = wrap(months.length, index.value - 2);
 
         runOnJS(onChange)(index.value, next, prev);
 

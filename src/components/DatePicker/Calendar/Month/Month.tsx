@@ -10,6 +10,7 @@ import type { CalendarDate } from 'calendar-base';
 import Header from '../Header';
 import Actions from '../Actions';
 import Days from '../Days';
+import wrap from '../../wrap';
 
 export interface MonthProps {
   month: number;
@@ -59,16 +60,7 @@ function Month({
   const date = useMemo(() => new Date(year, month), [month, year]);
 
   const style = useAnimatedStyle(() => {
-    function loop(value: number, min: number, max: number): number {
-      'worklet';
-      if (value >= 0) {
-        return value % max;
-      } else {
-        return loop(max + value, min, max);
-      }
-    }
-
-    const newX = loop(x.value, 0, width * size) + index * width;
+    const newX = wrap(width * size, x.value) + index * width;
 
     let translateX = newX - width * (size + 1);
     if (newX >= 0 && newX <= width * size) translateX = newX - width;

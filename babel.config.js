@@ -4,7 +4,7 @@ const plugins = [];
 presets.push('module:metro-react-native-babel-preset');
 
 plugins.push([
-  'module-resolver',
+  'babel-plugin-module-resolver',
   {
     root: ['.'],
     extensions: ['.tsx', '.ts', '.js', '.json'],
