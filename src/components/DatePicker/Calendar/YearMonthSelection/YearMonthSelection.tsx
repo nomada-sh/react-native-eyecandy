@@ -8,8 +8,8 @@ import { Body } from '../../../../typography';
 
 export interface YearMonthSelectionProps {
   step?: 'year' | 'month';
-  onPressYear?: (year: number) => void;
-  onPressMonth?: (month: number) => void;
+  onPressYear?: (date: Date) => void;
+  onPressMonth?: (date: Date) => void;
   locale: string;
   date: Date;
 }
@@ -48,8 +48,12 @@ function YearMonthSelection({
   );
 
   const years = useMemo(() => {
-    const years = [];
-    for (let i = year - YEARS; i <= year + YEARS; i++) years.push(i);
+    const years: number[][] = [];
+    for (let i = year - YEARS; i <= year + YEARS; i += 4) {
+      const group: number[] = [];
+      for (let j = 0; j < 4; j++) group.push(i + j);
+      years.push(group);
+    }
     return years;
   }, [year]);
 
@@ -70,7 +74,37 @@ function YearMonthSelection({
     return months;
   }, [formatMonth]);
 
-  if (step === 'year') return <Body>{year}</Body>;
+  if (step === 'year')
+    return (
+      <View style={styles.container}>
+        <FlatList
+          contentContainerStyle={[
+            styles.flatlist,
+            {
+              paddingTop: 0,
+            },
+          ]}
+          data={years}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={({ item }) => {
+            return (
+              <View style={{ flexDirection: 'row' }}>
+                {item.map(y => (
+                  <View key={y} style={styles.year}>
+                    <Button
+                      onPress={() => onPressYear?.(new Date(y, month))}
+                      color={y === year ? 'primary' : 'default'}
+                      text={y.toString()}
+                    />
+                  </View>
+                ))}
+              </View>
+            );
+          }}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+    );
 
   if (step === 'month')
     return (
@@ -88,9 +122,9 @@ function YearMonthSelection({
             return (
               <View style={{ flexDirection: 'row' }}>
                 {item.map(({ month: m, name }) => (
-                  <View key={name} style={styles.buttonContainer}>
+                  <View key={name} style={styles.month}>
                     <Button
-                      onPress={() => onPressMonth?.(m)}
+                      onPress={() => onPressMonth?.(new Date(year, m))}
                       color={m === month ? 'primary' : 'default'}
                       text={name}
                     />
@@ -118,9 +152,13 @@ const styles = StyleSheet.create({
   flatlist: {
     padding: 10,
   },
-  buttonContainer: {
+  month: {
     padding: 6,
     width: '33%',
+  },
+  year: {
+    padding: 6,
+    width: '25%',
   },
   titleContainer: {
     padding: 16,

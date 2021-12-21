@@ -52,6 +52,7 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
         onGoToYears={onGoToYears}
         onGoToMonths={onGoToMonths}
         yearMonthSelectionStep={yearMonthSelectionStep}
+        setYearMonthSelectionStep={setYearMonthSelectionStep}
       />
     );
   }, [

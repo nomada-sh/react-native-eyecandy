@@ -31,6 +31,7 @@ export interface CalendarProps {
   onGoToMonths: () => void;
   onDateChange?: (date: Date) => void;
   yearMonthSelectionStep?: 'year' | 'month';
+  setYearMonthSelectionStep?: (step: 'year' | 'month' | undefined) => void;
 }
 
 type Context = {
@@ -45,6 +46,7 @@ function Calendar({
   onGoToYears,
   onGoToMonths,
   yearMonthSelectionStep,
+  setYearMonthSelectionStep,
 }: CalendarProps) {
   const calendar = useMemo(() => new CalendarBase(), []);
 
@@ -120,6 +122,19 @@ function Calendar({
     return new Date(current.year, current.month, 1);
   }, [index.value, months]);
 
+  const goToDate = useCallback(
+    (date: Date, animated?: boolean) => {
+      // TODO: Improve this
+      setMonths(createMonths(date));
+
+      index.value = 2;
+      // if (animated) x.value = withSpring(-width);
+      // else x.value = -width;
+      x.value = -width;
+    },
+    [createMonths, index, width, x],
+  );
+
   const onPressToday = useCallback(() => {
     onDateChange?.(new Date());
 
@@ -134,13 +149,8 @@ function Calendar({
 
     if (same) return;
 
-    // TODO: Improve this
-
-    setMonths(createMonths(to));
-
-    index.value = 2;
-    x.value = withSpring(-width);
-  }, [createMonths, index, months, onDateChange, width, x]);
+    goToDate(to, true);
+  }, [goToDate, index.value, months, onDateChange]);
 
   const gestureHandler = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -206,9 +216,21 @@ function Calendar({
     x,
   ]);
 
-  const onPressYear = useCallback(() => {}, []);
+  const onPressYear = useCallback(
+    (date: Date) => {
+      goToDate(date, true);
+      setYearMonthSelectionStep?.('month');
+    },
+    [goToDate, setYearMonthSelectionStep],
+  );
 
-  const onPressMonth = useCallback(() => {}, []);
+  const onPressMonth = useCallback(
+    (date: Date) => {
+      goToDate(date);
+      setYearMonthSelectionStep?.(undefined);
+    },
+    [goToDate, setYearMonthSelectionStep],
+  );
 
   if (yearMonthSelectionStep)
     return (
