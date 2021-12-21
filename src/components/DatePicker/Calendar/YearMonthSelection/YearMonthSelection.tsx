@@ -150,7 +150,7 @@ function YearMonthSelection({
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          <Body onPress={goToYears} size="large" color="primary" weight="bold">
+          <Body onPress={goToYears} size="xlarge" color="primary" weight="bold">
             {year}
           </Body>
         </View>

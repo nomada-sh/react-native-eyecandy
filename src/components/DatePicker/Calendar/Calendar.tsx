@@ -32,6 +32,7 @@ export interface CalendarProps {
   onDateChange?: (date: Date) => void;
   yearMonthSelectionStep?: 'year' | 'month';
   setYearMonthSelectionStep?: (step: 'year' | 'month' | undefined) => void;
+  todayText?: string;
 }
 
 type Context = {
@@ -47,6 +48,7 @@ function Calendar({
   onGoToMonths,
   yearMonthSelectionStep,
   setYearMonthSelectionStep,
+  todayText,
 }: CalendarProps) {
   const calendar = useMemo(() => new CalendarBase(), []);
 
@@ -200,6 +202,7 @@ function Calendar({
           index={index}
           x={x}
           size={months.length}
+          todayText={todayText}
         />
       );
     });
@@ -214,6 +217,7 @@ function Calendar({
     width,
     locale,
     x,
+    todayText,
   ]);
 
   const onChangeVisibleDate = useCallback(

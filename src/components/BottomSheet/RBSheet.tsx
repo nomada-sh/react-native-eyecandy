@@ -100,10 +100,14 @@ class RBSheet extends Component<RBSheetProps, RBSheetState> {
 
       onOpen?.();
 
-      Animated.timing(animatedHeight, {
-        useNativeDriver: false,
+      // Animated.timing(animatedHeight, {
+      //   useNativeDriver: false,
+      //   toValue: height,
+      //   duration: openDuration,
+      // }).start();
+      Animated.spring(animatedHeight, {
         toValue: height,
-        duration: openDuration,
+        useNativeDriver: false,
       }).start();
     } else {
       Animated.timing(animatedHeight, {

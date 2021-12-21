@@ -26,6 +26,7 @@ export interface MonthProps {
   onPressToday: () => void;
   x: SharedValue<number>;
   size: number;
+  todayText?: string;
 }
 
 function Month({
@@ -42,6 +43,7 @@ function Month({
   onPressToday,
   x,
   size,
+  todayText,
 }: MonthProps) {
   const days = useMemo(
     () => getCalendar(year, month),
@@ -87,6 +89,7 @@ function Month({
         onPressMonth={onPressMonth}
         onPressToday={onPressToday}
         locale={locale}
+        todayText={todayText}
       />
       <Header locale={locale} month={month} year={year} />
       <Days

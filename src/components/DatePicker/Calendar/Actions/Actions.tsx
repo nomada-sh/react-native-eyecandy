@@ -9,6 +9,7 @@ export interface ActionsProps {
   onPressMonth: () => void;
   onPressToday: () => void;
   locale: string;
+  todayText: string;
 }
 
 function Actions({
@@ -17,6 +18,7 @@ function Actions({
   onPressMonth,
   onPressToday,
   locale, // = 'en-US',
+  todayText,
 }: ActionsProps) {
   const format = useCallback(
     (date: Date, options?: Intl.DateTimeFormatOptions) => {
@@ -46,6 +48,7 @@ function Actions({
               marginEnd: 0,
             },
           ]}
+          size="xlarge"
           color="primary"
           onPress={onPressMonth}
         >
@@ -58,14 +61,20 @@ function Actions({
               marginStart: 0,
             },
           ]}
+          size="xlarge"
           color="primary"
           onPress={onPressYear}
         >
           {year}
         </Body>
       </View>
-      <Body style={styles.text} color="primary" onPress={onPressToday}>
-        Today
+      <Body
+        size="xlarge"
+        style={styles.text}
+        color="primary"
+        onPress={onPressToday}
+      >
+        {todayText}
       </Body>
     </View>
   );
@@ -73,6 +82,7 @@ function Actions({
 
 Actions.defaultProps = {
   locale: 'en-US',
+  todayText: 'Today',
 };
 
 const styles = StyleSheet.create({

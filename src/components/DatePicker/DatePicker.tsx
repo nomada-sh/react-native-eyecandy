@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 
 import Calendar from './Calendar';
 import BottomSheet from '../BottomSheetV2';
@@ -18,10 +18,25 @@ export interface DatePickerProps {
   date: Date; // = new Date();
   locale: string; // = 'en-US';
   onDateChange?: (date: Date) => void;
+  disableCloseOnSelect?: boolean;
+  doneText: string;
+  backText: string;
+  todayText: string;
 }
 
-function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
+function DatePicker({
+  date,
+  onDateChange,
+  locale,
+  disableCloseOnSelect,
+  doneText,
+  backText,
+  todayText,
+}: DatePickerProps) {
+  // TODO: Listen to changes in width.
   const width = useRef(Dimensions.get('window').width).current;
+
+  const [tab, setTab] = useState<'date' | 'time'>('date');
 
   const [yearMonthSelectionStep, setYearMonthSelectionStep] = useState<
     'year' | 'month' | undefined
@@ -44,25 +59,35 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
     setYearMonthSelectionStep('month');
   }, []);
 
+  const handleDateChange = useCallback(
+    (date: Date) => {
+      onDateChange?.(date);
+      if (!disableCloseOnSelect) onClose();
+    },
+    [onDateChange, disableCloseOnSelect, onClose],
+  );
+
   const content = useMemo(() => {
     return (
       <Calendar
         width={width}
         locale={locale}
         date={date}
-        onDateChange={onDateChange}
+        onDateChange={handleDateChange}
         onGoToYears={onGoToYears}
         onGoToMonths={onGoToMonths}
         yearMonthSelectionStep={yearMonthSelectionStep}
         setYearMonthSelectionStep={setYearMonthSelectionStep}
+        todayText={todayText}
       />
     );
   }, [
     date,
+    handleDateChange,
     locale,
-    onDateChange,
     onGoToMonths,
     onGoToYears,
+    todayText,
     width,
     yearMonthSelectionStep,
   ]);
@@ -78,8 +103,8 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
   );
 
   const doneButtonText = useMemo(() => {
-    return yearMonthSelectionStep ? 'Back' : 'Done';
-  }, [yearMonthSelectionStep]);
+    return yearMonthSelectionStep ? backText : doneText;
+  }, [backText, doneText, yearMonthSelectionStep]);
 
   const onDonePress = useCallback(() => {
     if (yearMonthSelectionStep) setYearMonthSelectionStep(undefined);
@@ -100,15 +125,45 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
         bold
         focused={visible}
       />
-      <BottomSheet height={410} visible={visible} onClose={onClose}>
+      <BottomSheet
+        height={disableCloseOnSelect ? 410 : 350}
+        visible={visible}
+        onClose={onClose}
+      >
+        {/* {yearMonthSelectionStep === undefined ? (
+          <View style={styles.tabsContainer}>
+            <Button
+              text="Date"
+              color="primary"
+              variant="rounded"
+              fullwidth={false}
+              style={styles.tab}
+              onPress={() => setTab('date')}
+            />
+            <Button
+              text="Time"
+              variant="rounded"
+              fullwidth={false}
+              style={styles.tab}
+              buttonStyle={styles.tabButton}
+              onPress={() => setTab('time')}
+            />
+          </View>
+        ) : null} */}
         {content}
-        <View
-          style={{
-            padding: 10,
-          }}
-        >
-          <Button color="primary" text={doneButtonText} onPress={onDonePress} />
-        </View>
+        {disableCloseOnSelect ? (
+          <View
+            style={{
+              padding: 10,
+            }}
+          >
+            <Button
+              color="primary"
+              text={doneButtonText}
+              onPress={onDonePress}
+            />
+          </View>
+        ) : null}
       </BottomSheet>
     </View>
   );
@@ -117,6 +172,22 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
 DatePicker.defaultProps = {
   date: new Date(),
   locale: 'en-US',
+  doneText: 'Done',
+  backText: 'Back',
+  todayText: 'Today',
 };
+
+const styles = StyleSheet.create({
+  tabsContainer: {
+    flexDirection: 'row',
+    padding: 10,
+  },
+  tab: {
+    flex: 1,
+    height: 45,
+    marginHorizontal: 10,
+  },
+  tabButton: {},
+});
 
 export default React.memo(DatePicker);
