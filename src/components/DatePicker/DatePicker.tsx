@@ -10,6 +10,9 @@ import { Dimensions, View } from 'react-native';
 import Calendar from './Calendar';
 import BottomSheet from '../BottomSheetV2';
 import Button from '../Button';
+// TODO: Create Button with input styles.
+import LinkButton from '../LinkButton';
+import { CalendarEvent } from '../../icons';
 
 export interface DatePickerProps {
   date: Date; // = new Date();
@@ -90,7 +93,14 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
 
   return (
     <View>
-      <Button onPress={onPress} text={formattedDate} />
+      <LinkButton
+        icon={CalendarEvent}
+        onPress={onPress}
+        text={formattedDate}
+        showChevron={false}
+        bold
+        focused={visible}
+      />
       <BottomSheet height={410} visible={visible} onClose={onClose}>
         {content}
         <View

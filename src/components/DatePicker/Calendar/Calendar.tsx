@@ -240,6 +240,7 @@ function Calendar({
         step={yearMonthSelectionStep}
         date={currentDate}
         goToYears={onGoToYears}
+        locale={locale}
       />
     );
 

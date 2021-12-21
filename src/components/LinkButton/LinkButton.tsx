@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import BaseButton, { BaseButtonProps } from '../BaseButton';
 import { usePressableStyles, useTheme } from '../../hooks';
@@ -13,6 +13,9 @@ export interface LinkButtonProps extends BaseButtonProps {
     style?: StyleProp<ViewStyle>;
   }>;
   text: string;
+  showChevron?: boolean;
+  bold?: boolean;
+  focused?: boolean;
 }
 
 function LinkButton({
@@ -20,26 +23,40 @@ function LinkButton({
   icon,
   buttonStyle,
   color = 'default',
+  showChevron = true,
+  bold,
+  focused,
   ...props
 }: LinkButtonProps) {
-  const { components } = useTheme();
+  const { components, palette } = useTheme();
   const colors = components.button[color];
 
   const Icon = icon;
 
-  const buttonStyles = usePressableStyles([styles.button, buttonStyle]);
+  const buttonStyles = usePressableStyles([
+    styles.button,
+    buttonStyle,
+    {
+      borderColor: focused ? palette.primary[500] : colors.background,
+    },
+  ]);
 
-  const textStyle = {
+  const textStyle: TextStyle = {
     color: colors.foreground,
+    fontWeight: bold ? 'bold' : 'normal',
   };
 
   return (
     <BaseButton color={color} buttonStyle={buttonStyles} {...props}>
       {Icon ? (
-        <Icon style={styles.icon} size={20} stroke={textStyle.color} />
+        <Icon
+          style={styles.icon}
+          size={20}
+          stroke={focused ? palette.primary[500] : (textStyle.color as string)}
+        />
       ) : null}
       <Body style={[textStyle, styles.text]}>{text}</Body>
-      <ChevronRight color="grey" size={20} />
+      {showChevron ? <ChevronRight color="grey" size={20} /> : null}
     </BaseButton>
   );
 }
@@ -48,6 +65,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     paddingHorizontal: 16,
+    borderWidth: 1,
   },
   text: {
     flex: 1,
