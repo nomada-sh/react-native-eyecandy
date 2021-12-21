@@ -27,8 +27,8 @@ export interface CalendarProps {
   locale?: string;
   style?: StyleProp<ViewStyle>;
   debug?: boolean;
-  onPressYear: () => void;
-  onPressMonth: () => void;
+  onGoToYears: () => void;
+  onGoToMonths: () => void;
   onDateChange?: (date: Date) => void;
   yearMonthSelectionStep?: 'year' | 'month';
 }
@@ -42,8 +42,8 @@ function Calendar({
   date,
   onDateChange,
   width,
-  onPressYear,
-  onPressMonth,
+  onGoToYears,
+  onGoToMonths,
   yearMonthSelectionStep,
 }: CalendarProps) {
   const calendar = useMemo(() => new CalendarBase(), []);
@@ -179,8 +179,8 @@ function Calendar({
           key={`${year}-${month}`}
           onPressDay={onPressDay}
           onPressToday={onPressToday}
-          onPressYear={onPressYear}
-          onPressMonth={onPressMonth}
+          onPressYear={onGoToYears}
+          onPressMonth={onGoToMonths}
           selectedDate={date}
           month={month}
           year={year}
@@ -197,8 +197,8 @@ function Calendar({
     months,
     onPressDay,
     onPressToday,
-    onPressYear,
-    onPressMonth,
+    onGoToYears,
+    onGoToMonths,
     date,
     getCalendar,
     width,
@@ -206,9 +206,18 @@ function Calendar({
     x,
   ]);
 
+  const onPressYear = useCallback(() => {}, []);
+
+  const onPressMonth = useCallback(() => {}, []);
+
   if (yearMonthSelectionStep)
     return (
-      <YearMonthSelection step={yearMonthSelectionStep} date={currentDate} />
+      <YearMonthSelection
+        onPressYear={onPressYear}
+        onPressMonth={onPressMonth}
+        step={yearMonthSelectionStep}
+        date={currentDate}
+      />
     );
 
   return (

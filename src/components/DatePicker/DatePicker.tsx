@@ -49,8 +49,8 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
         locale={locale}
         date={date}
         onDateChange={onDateChange}
-        onPressYear={onGoToYears}
-        onPressMonth={onGoToMonths}
+        onGoToYears={onGoToYears}
+        onGoToMonths={onGoToMonths}
         yearMonthSelectionStep={yearMonthSelectionStep}
       />
     );
