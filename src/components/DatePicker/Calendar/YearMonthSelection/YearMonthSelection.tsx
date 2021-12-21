@@ -41,14 +41,6 @@ function YearMonthSelection({
     [locale, year],
   );
 
-  const formatDate = useCallback(
-    (date: Date) => {
-      const formattedMonth = formatMonth(date.getMonth());
-      return `${formattedMonth}, ${date.getFullYear()}`;
-    },
-    [formatMonth],
-  );
-
   const initialIndexRef = useRef(0);
 
   const years = useMemo(() => {
@@ -57,7 +49,7 @@ function YearMonthSelection({
       const group: number[] = [];
       for (let j = 0; j < 4; j++) {
         const y = i + j;
-        if (y === year) initialIndexRef.current = years.length;
+        if (y === year) initialIndexRef.current = years.length - 2;
         group.push(y);
       }
       years.push(group);
