@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { FlatList } from 'react-native-gesture-handler';
@@ -47,11 +47,17 @@ function YearMonthSelection({
     [formatMonth],
   );
 
+  const initialIndexRef = useRef(0);
+
   const years = useMemo(() => {
     const years: number[][] = [];
     for (let i = year - YEARS; i <= year + YEARS; i += 4) {
       const group: number[] = [];
-      for (let j = 0; j < 4; j++) group.push(i + j);
+      for (let j = 0; j < 4; j++) {
+        const y = i + j;
+        if (y === year) initialIndexRef.current = years.length;
+        group.push(y);
+      }
       years.push(group);
     }
     return years;
@@ -78,6 +84,12 @@ function YearMonthSelection({
     return (
       <View style={styles.container}>
         <FlatList
+          initialScrollIndex={initialIndexRef.current}
+          getItemLayout={(_, index) => ({
+            length: 55,
+            offset: 55 * index,
+            index,
+          })}
           contentContainerStyle={[
             styles.flatlist,
             {
@@ -92,6 +104,7 @@ function YearMonthSelection({
                 {item.map(y => (
                   <View key={y} style={styles.year}>
                     <Button
+                      style={styles.yearButton}
                       onPress={() => onPressYear?.(new Date(y, month))}
                       color={y === year ? 'primary' : 'default'}
                       text={y.toString()}
@@ -159,6 +172,10 @@ const styles = StyleSheet.create({
   year: {
     padding: 6,
     width: '25%',
+    height: 55,
+  },
+  yearButton: {
+    height: 55 - 12,
   },
   titleContainer: {
     padding: 16,
