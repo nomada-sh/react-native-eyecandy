@@ -17,6 +17,8 @@ import {
 } from 'react-native-gesture-handler';
 
 import Month from './Month';
+import YearMonthSelection from './YearMonthSelection';
+
 import wrap from '../wrap';
 
 export interface CalendarProps {
@@ -28,6 +30,7 @@ export interface CalendarProps {
   onPressYear: () => void;
   onPressMonth: () => void;
   onDateChange?: (date: Date) => void;
+  yearMonthSelectionStep?: 'year' | 'month';
 }
 
 type Context = {
@@ -41,6 +44,7 @@ function Calendar({
   width,
   onPressYear,
   onPressMonth,
+  yearMonthSelectionStep,
 }: CalendarProps) {
   const calendar = useMemo(() => new CalendarBase(), []);
 
@@ -111,6 +115,11 @@ function Calendar({
   const x = useSharedValue(-width);
   const index = useSharedValue(2);
 
+  const currentDate = useMemo(() => {
+    const current = months[index.value];
+    return new Date(current.year, current.month, 1);
+  }, [index.value, months]);
+
   const onPressToday = useCallback(() => {
     onDateChange?.(new Date());
 
@@ -124,6 +133,8 @@ function Calendar({
       to.getMonth() === from.getMonth();
 
     if (same) return;
+
+    // TODO: Improve this
 
     setMonths(createMonths(to));
 
@@ -143,8 +154,10 @@ function Calendar({
     },
     onEnd: (e, ctx) => {
       const threshold = width / 3;
+
       const direction = e.translationX > 0 ? 1 : -1;
-      const exact = Math.round(ctx.startX / width) * width;
+      const startX = Math.round(ctx.startX / width) * width;
+
       if (Math.abs(e.translationX) > threshold) {
         index.value = wrap(months.length, index.value - direction);
         const next = wrap(months.length, index.value + 2);
@@ -152,9 +165,9 @@ function Calendar({
 
         runOnJS(onChange)(index.value, next, prev);
 
-        x.value = withTiming(exact + direction * width, { duration: 300 });
+        x.value = withTiming(startX + direction * width, { duration: 300 });
       } else {
-        x.value = withTiming(exact, { duration: 300 });
+        x.value = withTiming(startX, { duration: 300 });
       }
     },
   });
@@ -192,6 +205,11 @@ function Calendar({
     locale,
     x,
   ]);
+
+  if (yearMonthSelectionStep)
+    return (
+      <YearMonthSelection step={yearMonthSelectionStep} date={currentDate} />
+    );
 
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>

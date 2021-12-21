@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Dimensions, View } from 'react-native';
 
 import Calendar from './Calendar';
@@ -15,25 +21,30 @@ export interface DatePickerProps {
 function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
   const width = useRef(Dimensions.get('window').width).current;
 
-  const [contentVisible, setContentVisible] = React.useState(false);
-  const onClose = useCallback(() => setContentVisible(false), []);
+  const [yearMonthSelectionStep, setYearMonthSelectionStep] = useState<
+    'year' | 'month' | undefined
+  >();
 
-  const [yearsVisible, setYearsVisible] = React.useState(false);
+  const [visible, setVisible] = useState(false);
+  const onClose = useCallback(() => {
+    setVisible(false);
+    setYearMonthSelectionStep(undefined);
+  }, []);
 
   const onPress = useCallback(() => {
     //setYearsVisible(false);
-    setContentVisible(true);
+    setVisible(true);
   }, []);
 
   const onGoToYears = useCallback(() => {
-    setYearsVisible(true);
+    setYearMonthSelectionStep('year');
   }, []);
 
-  const onGoToMonths = useCallback(() => {}, []);
-
-  const onPressYear = useCallback((year: number) => {
-    setYearsVisible(false);
+  const onGoToMonths = useCallback(() => {
+    setYearMonthSelectionStep('month');
   }, []);
+
+  const onPressYear = useCallback((year: number) => {}, []);
 
   const content = useMemo(() => {
     return (
@@ -44,9 +55,18 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
         onDateChange={onDateChange}
         onPressYear={onGoToYears}
         onPressMonth={onGoToMonths}
+        yearMonthSelectionStep={yearMonthSelectionStep}
       />
     );
-  }, [date, locale, onDateChange, onGoToMonths, onGoToYears, width]);
+  }, [
+    date,
+    locale,
+    onDateChange,
+    onGoToMonths,
+    onGoToYears,
+    width,
+    yearMonthSelectionStep,
+  ]);
 
   const formattedDate = useMemo(
     () =>
@@ -58,27 +78,34 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
     [date, locale],
   );
 
-  const year = useMemo(() => date.getFullYear(), [date]);
+  const doneButtonText = useMemo(() => {
+    return yearMonthSelectionStep ? 'Back' : 'Done';
+  }, [yearMonthSelectionStep]);
+
+  const onDonePress = useCallback(() => {
+    if (yearMonthSelectionStep) setYearMonthSelectionStep(undefined);
+    else setVisible(false);
+  }, [yearMonthSelectionStep]);
 
   return (
     <View>
       <Button onPress={onPress} text={formattedDate} />
-      <BottomSheet height={410} visible={contentVisible} onClose={onClose}>
+      <BottomSheet height={410} visible={visible} onClose={onClose}>
         {content}
         <View
           style={{
             padding: 10,
           }}
         >
-          <Button color="primary" text="Done" onPress={onClose} />
+          <Button color="primary" text={doneButtonText} onPress={onDonePress} />
         </View>
-        {yearsVisible ? (
+        {/* {yearsVisible ? (
           <Years
             onPressYear={onPressYear}
             year={year}
             onPressBack={() => setYearsVisible(false)}
           />
-        ) : null}
+        ) : null} */}
       </BottomSheet>
     </View>
   );
