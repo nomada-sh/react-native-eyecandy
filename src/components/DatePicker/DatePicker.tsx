@@ -8,7 +8,6 @@ import React, {
 import { Dimensions, View } from 'react-native';
 
 import Calendar from './Calendar';
-import Years from './Years';
 import BottomSheet from '../BottomSheetV2';
 import Button from '../Button';
 
@@ -28,7 +27,6 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
   const [visible, setVisible] = useState(false);
   const onClose = useCallback(() => {
     setVisible(false);
-    setYearMonthSelectionStep(undefined);
   }, []);
 
   const onPress = useCallback(() => {
@@ -43,8 +41,6 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
   const onGoToMonths = useCallback(() => {
     setYearMonthSelectionStep('month');
   }, []);
-
-  const onPressYear = useCallback((year: number) => {}, []);
 
   const content = useMemo(() => {
     return (
@@ -87,6 +83,10 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
     else setVisible(false);
   }, [yearMonthSelectionStep]);
 
+  useEffect(() => {
+    if (visible) setYearMonthSelectionStep(undefined);
+  }, [visible]);
+
   return (
     <View>
       <Button onPress={onPress} text={formattedDate} />
@@ -99,13 +99,6 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
         >
           <Button color="primary" text={doneButtonText} onPress={onDonePress} />
         </View>
-        {/* {yearsVisible ? (
-          <Years
-            onPressYear={onPressYear}
-            year={year}
-            onPressBack={() => setYearsVisible(false)}
-          />
-        ) : null} */}
       </BottomSheet>
     </View>
   );
