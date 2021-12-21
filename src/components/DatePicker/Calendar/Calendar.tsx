@@ -1,16 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
-import type { CalendarDate } from 'calendar-base';
-
-import Days from './Days';
-import Header from './Header';
-import Actions from './Actions';
+import { CalendarDate, Calendar as CalendarBase } from 'calendar-base';
 
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
-  useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
@@ -23,99 +18,17 @@ import {
 
 import loop from '../loop';
 
+import Month from './Month';
+
 export interface CalendarProps {
   width: number;
   date: Date;
   locale?: string;
   style?: StyleProp<ViewStyle>;
-  getCalendar: (year: number, month: number) => (false | CalendarDate)[];
   debug?: boolean;
-  onPressDay?: (value: CalendarDate) => void;
-  onPressYear?: () => void;
-  onPressMonth?: () => void;
-  onPressToday?: () => void;
-  animateOnPressToday?: boolean;
+  onPressYear: () => void;
+  onPressMonth: () => void;
   onDateChange?: (date: Date) => void;
-}
-
-function Month({
-  month,
-  year,
-  getCalendar,
-  locale,
-  selectedDate: selectedDateProp,
-  width,
-  index,
-  onPressDay,
-  onPressYear,
-  onPressMonth,
-  onPressToday,
-  x,
-  size,
-}: any) {
-  const days = useMemo(
-    () => getCalendar(year, month),
-    [getCalendar, year, month],
-  );
-
-  const selectedDate = useMemo(
-    () => ({
-      year: selectedDateProp.getFullYear(),
-      month: selectedDateProp.getMonth(),
-      day: selectedDateProp.getDate(),
-    }),
-    [selectedDateProp],
-  );
-
-  const date = useMemo(() => new Date(year, month), [month, year]);
-
-  const style = useAnimatedStyle(() => {
-    function loop(value: number, min: number, max: number): number {
-      'worklet';
-      if (value >= 0) {
-        return value % max;
-      } else {
-        return loop(max + value, min, max);
-      }
-    }
-    const newX = loop(x.value, 0, width * size) + index * width;
-
-    let translateX = newX - width * (size + 1);
-    if (newX >= 0 && newX <= width * size) translateX = newX - width;
-
-    return {
-      transform: [{ translateX }],
-    };
-  }, [x, index, width]);
-
-  return (
-    <Animated.View
-      style={[
-        {
-          width,
-          position: 'absolute',
-        },
-        style,
-      ]}
-      key={`${year}-${month}`}
-    >
-      <Actions
-        date={date}
-        onPressYear={onPressYear}
-        onPressMonth={onPressMonth}
-        onPressToday={onPressToday}
-        locale={locale}
-      />
-      <Header locale={locale} month={month} year={year} />
-      <Days
-        data={days}
-        onDayPress={onPressDay}
-        selectedDate={selectedDate}
-        month={month}
-        year={year}
-      />
-    </Animated.View>
-  );
 }
 
 type Context = {
@@ -126,9 +39,19 @@ function Calendar({
   locale,
   date,
   onDateChange,
-  getCalendar,
   width,
+  onPressYear,
+  onPressMonth,
 }: CalendarProps) {
+  const calendar = useMemo(() => new CalendarBase(), []);
+
+  const getCalendar = useCallback(
+    (year: number, month: number) => {
+      return calendar.getCalendar(year, month);
+    },
+    [calendar],
+  );
+
   const createMonths = useCallback((date: Date) => {
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -244,6 +167,8 @@ function Calendar({
           key={`${year}-${month}`}
           onPressDay={onPressDay}
           onPressToday={onPressToday}
+          onPressYear={onPressYear}
+          onPressMonth={onPressMonth}
           selectedDate={date}
           month={month}
           year={year}
@@ -256,7 +181,18 @@ function Calendar({
         />
       );
     });
-  }, [months, onPressDay, onPressToday, date, getCalendar, width, locale, x]);
+  }, [
+    months,
+    onPressDay,
+    onPressToday,
+    onPressYear,
+    onPressMonth,
+    date,
+    getCalendar,
+    width,
+    locale,
+    x,
+  ]);
 
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
