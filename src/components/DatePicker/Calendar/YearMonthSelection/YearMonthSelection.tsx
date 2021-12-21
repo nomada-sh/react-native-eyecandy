@@ -1,31 +1,32 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { FlatList } from 'react-native-gesture-handler';
 
 import Button from '../../../Button';
 import { Body } from '../../../../typography';
+import { useUpdateEffect } from 'react-use';
 
 export interface YearMonthSelectionProps {
   step?: 'year' | 'month';
-  onPressYear?: (date: Date) => void;
-  onPressMonth?: (date: Date) => void;
+  onChange?: (date: Date) => void;
   goToYears?: () => void;
   locale: string;
   date: Date;
   selectedDate: Date;
+  setStep?: (step: 'year' | 'month' | undefined) => void;
 }
 
 const YEARS = 50;
 
 function YearMonthSelection({
   step,
-  date,
+  date: visibleDate,
   locale,
-  onPressMonth,
-  onPressYear,
+  onChange,
   goToYears,
   selectedDate,
+  setStep,
 }: YearMonthSelectionProps) {
   const { yearSelected, monthSelected } = useMemo(() => {
     return {
@@ -42,37 +43,39 @@ function YearMonthSelection({
     };
   }, []);
 
-  const { year, month } = useMemo(() => {
+  const { initialYear } = useMemo(() => {
     return {
-      year: date.getFullYear(),
-      month: date.getMonth(),
+      initialYear: visibleDate.getFullYear(),
+      initialMonth: visibleDate.getMonth(),
     };
-  }, [date]);
+  }, [visibleDate]);
+
+  const [year, setYear] = useState(initialYear);
 
   const formatMonth = useCallback(
     (month: number) => {
       return new Intl.DateTimeFormat([locale, 'en-US'], {
         month: 'long',
-      }).format(new Date(year, month, 1));
+      }).format(new Date(initialYear, month, 1));
     },
-    [locale, year],
+    [locale, initialYear],
   );
 
-  const initialIndexRef = useRef(0);
+  const initialYearIndexRef = useRef(0);
 
   const years = useMemo(() => {
     const years: number[][] = [];
-    for (let i = year - YEARS; i <= year + YEARS; i += 4) {
+    for (let i = initialYear - YEARS; i <= initialYear + YEARS; i += 4) {
       const group: number[] = [];
       for (let j = 0; j < 4; j++) {
         const y = i + j;
-        if (y === year) initialIndexRef.current = years.length - 2;
+        if (y === initialYear) initialYearIndexRef.current = years.length - 2;
         group.push(y);
       }
       years.push(group);
     }
     return years;
-  }, [year]);
+  }, [initialYear]);
 
   const months = useMemo(() => {
     const months: Array<Array<{ month: number; name: string }>> = [];
@@ -91,11 +94,15 @@ function YearMonthSelection({
     return months;
   }, [formatMonth]);
 
+  useUpdateEffect(() => {
+    setYear(initialYear);
+  }, [initialYear]);
+
   if (step === 'year')
     return (
       <View style={styles.container}>
         <FlatList
-          initialScrollIndex={initialIndexRef.current}
+          initialScrollIndex={initialYearIndexRef.current}
           getItemLayout={(_, index) => ({
             length: 55,
             offset: 55 * index,
@@ -116,7 +123,11 @@ function YearMonthSelection({
                   <View key={y} style={styles.year}>
                     <Button
                       style={styles.yearButton}
-                      onPress={() => onPressYear?.(new Date(y, month))}
+                      //onPress={() => onPressYear?.(new Date(y, month))}
+                      onPress={() => {
+                        setYear(y);
+                        setStep?.('month');
+                      }}
                       color={
                         y === yearSelected || y === yearNow
                           ? 'primary'
@@ -153,7 +164,7 @@ function YearMonthSelection({
                 {item.map(({ month: m, name }) => (
                   <View key={name} style={styles.month}>
                     <Button
-                      onPress={() => onPressMonth?.(new Date(year, m))}
+                      onPress={() => onChange?.(new Date(year, m))}
                       color={
                         (m === monthSelected && year === yearSelected) ||
                         (m === monthNow && year === yearNow)

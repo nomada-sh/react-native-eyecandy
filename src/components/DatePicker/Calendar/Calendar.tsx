@@ -216,15 +216,7 @@ function Calendar({
     x,
   ]);
 
-  const onPressYear = useCallback(
-    (date: Date) => {
-      goToDate(date, true);
-      setYearMonthSelectionStep?.('month');
-    },
-    [goToDate, setYearMonthSelectionStep],
-  );
-
-  const onPressMonth = useCallback(
+  const onChangeVisibleDate = useCallback(
     (date: Date) => {
       goToDate(date);
       setYearMonthSelectionStep?.(undefined);
@@ -235,13 +227,13 @@ function Calendar({
   if (yearMonthSelectionStep)
     return (
       <YearMonthSelection
-        onPressYear={onPressYear}
-        onPressMonth={onPressMonth}
+        onChange={onChangeVisibleDate}
         step={yearMonthSelectionStep}
         date={currentDate}
         selectedDate={date}
         goToYears={onGoToYears}
         locale={locale}
+        setStep={setYearMonthSelectionStep}
       />
     );
 

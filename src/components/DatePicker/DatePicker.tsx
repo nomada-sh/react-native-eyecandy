@@ -33,7 +33,6 @@ function DatePicker({ date, onDateChange, locale }: DatePickerProps) {
   }, []);
 
   const onPress = useCallback(() => {
-    //setYearsVisible(false);
     setVisible(true);
   }, []);
 
