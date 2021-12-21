@@ -14,7 +14,7 @@ export interface DayProps {
 }
 
 function Day({ value, onPress, selected, debug }: DayProps) {
-  const { palette, dark } = useTheme();
+  const { palette, dark, components } = useTheme();
 
   const today = useMemo(() => {
     if (!value) return false;
@@ -41,8 +41,8 @@ function Day({ value, onPress, selected, debug }: DayProps) {
   const textColor = useMemo(() => {
     if (selected) return 'white';
     if (today) return palette.primary[500];
-    return undefined;
-  }, [palette.primary, selected, today]);
+    return components.text.default.normal;
+  }, [components.text.default.normal, palette.primary, selected, today]);
 
   const count = useRef(1);
   value &&
