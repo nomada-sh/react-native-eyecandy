@@ -13,6 +13,7 @@ export interface YearMonthSelectionProps {
   goToYears?: () => void;
   locale: string;
   date: Date;
+  selectedDate: Date;
 }
 
 const YEARS = 50;
@@ -24,7 +25,16 @@ function YearMonthSelection({
   onPressMonth,
   onPressYear,
   goToYears,
+  selectedDate,
 }: YearMonthSelectionProps) {
+  const { yearNow, monthNow } = useMemo(() => {
+    const now = new Date();
+    return {
+      yearNow: now.getFullYear(),
+      monthNow: now.getMonth(),
+    };
+  }, []);
+
   const { year, month } = useMemo(() => {
     return {
       year: date.getFullYear(),
@@ -100,7 +110,10 @@ function YearMonthSelection({
                     <Button
                       style={styles.yearButton}
                       onPress={() => onPressYear?.(new Date(y, month))}
-                      color={y === year ? 'primary' : 'default'}
+                      color={
+                        y === year || y === yearNow ? 'primary' : 'default'
+                      }
+                      inverse={y === yearNow && y !== year}
                       text={y.toString()}
                     />
                   </View>
@@ -132,7 +145,14 @@ function YearMonthSelection({
                   <View key={name} style={styles.month}>
                     <Button
                       onPress={() => onPressMonth?.(new Date(year, m))}
-                      color={m === month ? 'primary' : 'default'}
+                      color={
+                        m === month || (yearNow === year && m === monthNow)
+                          ? 'primary'
+                          : 'default'
+                      }
+                      inverse={
+                        year === yearNow && m === monthNow && m !== month
+                      }
                       text={name}
                     />
                   </View>
