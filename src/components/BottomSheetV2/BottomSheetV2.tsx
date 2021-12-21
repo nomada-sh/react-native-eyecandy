@@ -138,7 +138,13 @@ function Content({
             ]}
           />
         </View>
-        {children}
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          {children}
+        </View>
         <View
           style={{
             width: '100%',
