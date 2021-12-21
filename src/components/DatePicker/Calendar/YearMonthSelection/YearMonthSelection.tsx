@@ -10,6 +10,7 @@ export interface YearMonthSelectionProps {
   step?: 'year' | 'month';
   onPressYear?: (date: Date) => void;
   onPressMonth?: (date: Date) => void;
+  goToYears?: () => void;
   locale: string;
   date: Date;
 }
@@ -22,6 +23,7 @@ function YearMonthSelection({
   locale,
   onPressMonth,
   onPressYear,
+  goToYears,
 }: YearMonthSelectionProps) {
   const { year, month } = useMemo(() => {
     return {
@@ -123,7 +125,7 @@ function YearMonthSelection({
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          <Body size="large" color="primary" weight="bold">
+          <Body onPress={goToYears} size="large" color="primary" weight="bold">
             {year}
           </Body>
         </View>

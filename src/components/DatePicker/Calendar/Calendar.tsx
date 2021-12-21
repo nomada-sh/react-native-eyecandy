@@ -239,6 +239,7 @@ function Calendar({
         onPressMonth={onPressMonth}
         step={yearMonthSelectionStep}
         date={currentDate}
+        goToYears={onGoToYears}
       />
     );
 
