@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Svg, { SvgProps } from 'react-native-svg';
 
 import { useTheme } from '../hooks';
@@ -7,17 +7,28 @@ import type { TextColors } from '../theme';
 export interface IconProps extends Omit<SvgProps, 'color'> {
   size?: number;
   color?: TextColors;
+  filled?: boolean;
 }
 
 export default function Icon({
   size = 24,
   stroke: strokeProp,
+  fill: fillProp,
   color = 'default',
+  filled,
   ...props
 }: IconProps) {
   const { components } = useTheme();
-  const colors = components.text[color];
-  const stroke = strokeProp || colors.normal;
+
+  const stroke = useMemo(
+    () => strokeProp || components.text[color].normal,
+    [strokeProp, components.text, color],
+  );
+
+  const fill = useMemo(
+    () => fillProp || (filled ? stroke : undefined),
+    [fillProp, filled, stroke],
+  );
 
   return (
     <Svg
@@ -27,6 +38,7 @@ export default function Icon({
       height={size}
       fill="none"
       stroke={stroke}
+      color={fill}
       {...props}
     />
   );

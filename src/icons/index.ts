@@ -19,3 +19,7 @@ export { default as User } from './User';
 export { default as Search } from './Search';
 export { default as CalendarEvent } from './CalendarEvent';
 export { default as ArrowLeft } from './ArrowLeft';
+export { default as Home } from './Home';
+export { default as HomeFill } from './HomeFill';
+export { default as Home } from './Home';
+export { default as HomeFill } from './HomeFill';
