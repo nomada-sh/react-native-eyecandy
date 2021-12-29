@@ -20,6 +20,7 @@ export interface MenuItemProps {
   iconColor?: string;
   iconBackgroundColor?: string;
   separator?: boolean;
+  onPress?: () => void;
 }
 
 function MenuItem({
@@ -30,6 +31,7 @@ function MenuItem({
   iconColor,
   iconBackgroundColor,
   separator = false,
+  onPress,
 }: MenuItemProps) {
   const { palette } = useTheme();
   const rippleColor = useRippleColor(palette.background.container);
@@ -46,6 +48,7 @@ function MenuItem({
         styles.container,
         style,
       ]}
+      onPress={onPress}
     >
       <View style={styles.content}>
         {icon && (
