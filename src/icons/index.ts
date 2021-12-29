@@ -8,6 +8,7 @@ export { default as Star } from './Star';
 export { default as Message } from './Message';
 export { default as Eye } from './Eye';
 export { default as Settings } from './Settings';
+export { default as SettingsFill } from './SettingsFill';
 export { default as Users } from './Users';
 export { default as Check } from './Check';
 export { default as ChevronDown } from './ChevronDown';
