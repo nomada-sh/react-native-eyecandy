@@ -23,3 +23,4 @@ export { default as ArrowLeft } from './ArrowLeft';
 export { default as Home } from './Home';
 export { default as HomeFill } from './HomeFill';
 export { default as Building } from './Building';
+export { default as MoonSun } from './MoonSun';
