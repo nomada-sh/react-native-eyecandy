@@ -24,3 +24,4 @@ export { default as Home } from './Home';
 export { default as HomeFill } from './HomeFill';
 export { default as Building } from './Building';
 export { default as MoonSun } from './MoonSun';
+export { default as SignOut } from './SignOut';
