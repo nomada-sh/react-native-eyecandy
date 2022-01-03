@@ -10,11 +10,13 @@ export default function createTheme(options: ThemeOptions = {}): Theme {
   const palette = createPalette({
     dark,
     palette: options.palette,
+    basePalette: options.baseTheme && options.baseTheme.palette,
   });
 
   const typography = createTypography({
     dark,
     typography: options.typography,
+    baseTypography: options.baseTheme && options.baseTheme.typography,
   });
 
   return {
@@ -25,6 +27,7 @@ export default function createTheme(options: ThemeOptions = {}): Theme {
       dark,
       palette,
       typography,
+      baseComponents: options.baseTheme && options.baseTheme.components,
     }),
   };
 }

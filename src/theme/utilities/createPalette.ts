@@ -6,22 +6,24 @@ import { Palette } from '../variables';
 export default function createPalette({
   dark = false,
   palette,
+  basePalette,
 }: {
   dark?: boolean;
   palette: ThemeOptions['palette'];
+  basePalette?: ThemePalette;
 }): ThemePalette {
-  const basePalette = Palette(dark);
+  const defaultPalette = basePalette ? basePalette : Palette(dark);
 
   if (typeof palette === 'function')
     return deepmerge(
-      basePalette,
+      defaultPalette,
       palette({
         dark,
-        palette: basePalette,
+        palette: defaultPalette,
       }),
     ) as ThemePalette;
 
-  if (palette) return deepmerge(basePalette, palette) as ThemePalette;
+  if (palette) return deepmerge(defaultPalette, palette) as ThemePalette;
 
-  return basePalette;
+  return defaultPalette;
 }

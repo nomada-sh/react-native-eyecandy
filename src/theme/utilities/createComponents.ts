@@ -1,38 +1,46 @@
 import deepmerge from 'deepmerge';
 
 import Components from '../components';
-import type { ThemeOptions, ThemeComponents } from '../typings';
-
-import createPalette from './createPalette';
-import createTypography from './createTypography';
+import type {
+  ThemeOptions,
+  ThemeComponents,
+  ThemePalette,
+  ThemeTypography,
+} from '../typings';
 
 export default function createComponents({
   dark = false,
   palette,
   typography,
   components,
-}: ThemeOptions): ThemeComponents {
-  const newPalette = createPalette({ palette, dark });
-  const newTypography = createTypography({ typography, dark });
-
-  const baseComponents = Components({
-    dark,
-    palette: newPalette,
-    typography: newTypography,
-  });
+  baseComponents,
+}: {
+  dark?: boolean;
+  palette: ThemePalette;
+  typography: ThemeTypography;
+  components?: ThemeOptions['components'];
+  baseComponents?: ThemeComponents;
+}): ThemeComponents {
+  const defaultComponents = baseComponents
+    ? baseComponents
+    : Components({
+        dark,
+        palette,
+        typography,
+      });
 
   if (typeof components === 'function')
     return deepmerge(
-      baseComponents,
+      defaultComponents,
       components({
         dark,
-        palette: newPalette,
-        typography: newTypography,
+        palette,
+        typography,
       }),
     ) as ThemeComponents;
 
   if (components)
-    return deepmerge(baseComponents, components) as ThemeComponents;
+    return deepmerge(defaultComponents, components) as ThemeComponents;
 
-  return baseComponents;
+  return defaultComponents;
 }

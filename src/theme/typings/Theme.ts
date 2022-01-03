@@ -34,4 +34,5 @@ export type ThemeOptions = {
     { dark: boolean; typography: ThemeTypography }
   >;
   components?: ThemeCreator<ThemeComponents, ThemeVariables>;
+  baseTheme?: Theme;
 };
