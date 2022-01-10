@@ -1,4 +1,4 @@
-import type { ThemeComponents } from './Components';
+import type { ThemeComponents } from './ThemeComponents';
 import type { ThemePalette, ThemeTypography } from './variables';
 
 export type ThemeVariables = {

@@ -1,5 +1,5 @@
 export * from './Theme';
-export * from './Components';
+export * from './ThemeComponents';
 
 export * from './components';
 export * from './variables';
