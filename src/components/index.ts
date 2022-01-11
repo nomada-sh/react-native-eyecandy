@@ -64,3 +64,6 @@ export type { BottomSheetProps as BottomSheetPropsV2 } from './BottomSheetV2';
 
 export { default as DatePicker } from './DatePicker';
 export type { DatePickerProps } from './DatePicker';
+
+export { default as RefreshControl } from './RefreshControl';
+export type { RefreshControlProps } from './RefreshControl';
