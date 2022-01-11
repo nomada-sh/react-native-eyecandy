@@ -14,6 +14,7 @@ function RefreshControl(props: RefreshControlProps) {
     <RefreshControlBase
       progressBackgroundColor={palette.white}
       colors={[palette.primary[500]]}
+      tintColor={palette.primary[500]}
       {...props}
     />
   );
