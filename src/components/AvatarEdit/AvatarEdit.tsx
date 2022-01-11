@@ -43,7 +43,7 @@ function AvatarEdit({
 
   const onImageSelected = useCallback(
     (res: ImagePickerResponse) => {
-      if (res.errorCode) throw new Error(res.errorMessage);
+      if (res.errorCode) throw JSON.stringify(res);
 
       if (res.didCancel) return;
 
