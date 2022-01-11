@@ -1,7 +1,8 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Body } from '../../../../typography';
+import formatDate from '../../formatDate';
 
 export interface ActionsProps {
   date: Date;
@@ -20,23 +21,12 @@ function Actions({
   locale, // = 'en-US',
   todayText,
 }: ActionsProps) {
-  const format = useCallback(
-    (date: Date, options?: Intl.DateTimeFormatOptions) => {
-      return new Intl.DateTimeFormat([locale, 'en-US'], options).format(date);
-    },
-    [locale],
-  );
-
   const { month, year } = useMemo(() => {
     return {
-      month: format(date, {
-        month: 'long',
-      }),
-      year: format(date, {
-        year: 'numeric',
-      }),
+      month: formatDate(date, 'MMMM', locale),
+      year: formatDate(date, 'yyyy', locale),
     };
-  }, [date, format]);
+  }, [date, locale]);
 
   return (
     <View style={styles.container}>
