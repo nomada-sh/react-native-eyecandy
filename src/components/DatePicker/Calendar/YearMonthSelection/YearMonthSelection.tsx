@@ -6,6 +6,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import Button from '../../../Button';
 import { Body } from '../../../../typography';
 import { useUpdateEffect } from 'react-use';
+import formatDate from '../../formatDate';
 
 export interface YearMonthSelectionProps {
   step?: 'year' | 'month';
@@ -54,9 +55,7 @@ function YearMonthSelection({
 
   const formatMonth = useCallback(
     (month: number) => {
-      return new Intl.DateTimeFormat([locale, 'en-US'], {
-        month: 'long',
-      }).format(new Date(initialYear, month, 1));
+      return formatDate(new Date(initialYear, month, 1), 'MMMM', locale);
     },
     [locale, initialYear],
   );

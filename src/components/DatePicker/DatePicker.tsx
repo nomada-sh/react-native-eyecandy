@@ -14,7 +14,7 @@ import Button from '../Button';
 import LinkButton from '../LinkButton';
 import IconButton from '../IconButton';
 import { CalendarEvent, ArrowLeft } from '../../icons';
-
+import formatDate from './formatDate';
 export interface DatePickerProps {
   date: Date; // = new Date();
   locale: string; // = 'en-US';
@@ -94,12 +94,7 @@ function DatePicker({
   ]);
 
   const formattedDate = useMemo(
-    () =>
-      Intl.DateTimeFormat(locale, {
-        month: 'long',
-        year: 'numeric',
-        day: 'numeric',
-      }).format(date),
+    () => formatDate(date, 'PPP', locale),
     [date, locale],
   );
 
