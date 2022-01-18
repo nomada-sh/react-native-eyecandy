@@ -47,8 +47,14 @@ export type { CardProps } from './Card';
 export { default as Menu } from './Menu';
 export type { MenuProps } from './Menu';
 
+export { default as BaseMenuItem } from './BaseMenuItem';
+export type { BaseMenuItemProps } from './BaseMenuItem';
+
 export { default as MenuItem } from './MenuItem';
 export type { MenuItemProps } from './MenuItem';
+
+export { default as MenuItemSwitch } from './MenuItemSwitch';
+export type { MenuItemSwitchProps } from './MenuItemSwitch';
 
 export { default as Select } from './Select';
 export type { SelectProps, Item as SelectItem } from './Select';

@@ -2,15 +2,24 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import BaseMenuItem, { BaseMenuItemProps } from '../BaseMenuItem';
-import { ChevronRight } from '../../icons';
 import { Body } from '../../typography';
+import Switch from '../Switch';
 
-export interface MenuItemProps extends Omit<BaseMenuItemProps, 'children'> {
+export interface MenuItemSwitchProps
+  extends Omit<BaseMenuItemProps, 'children'> {
   text?: string;
   textColor?: string;
+  value?: boolean;
+  onValueChange?: (value: boolean) => void;
 }
 
-function MenuItem({ textColor, text, ...props }: MenuItemProps) {
+function MenuItemSwitch({
+  textColor,
+  text,
+  value,
+  onValueChange,
+  ...props
+}: MenuItemSwitchProps) {
   return (
     <BaseMenuItem {...props}>
       <Body
@@ -21,7 +30,7 @@ function MenuItem({ textColor, text, ...props }: MenuItemProps) {
       >
         {text}
       </Body>
-      <ChevronRight size={16} color="grey" />
+      <Switch value={value} onValueChange={onValueChange} />
     </BaseMenuItem>
   );
 }
@@ -32,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MenuItem;
+export default MenuItemSwitch;
