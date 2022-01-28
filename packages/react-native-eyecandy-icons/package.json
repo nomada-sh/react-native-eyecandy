@@ -11,10 +11,10 @@
   "scripts": {
     "build": "bob build",
     "prepare": "npm run build",
-    "publish:local": "yalc publish --push",
-    "add:local": "yalc add --dev @nomada-sh/react-native-eyecandy-theme",
-    "remove:local": "yalc remove --all",
-    "check:local": "yalc check"
+    "local:publish": "yalc publish --push",
+    "local:add": "yalc add --dev @nomada-sh/react-native-eyecandy-theme",
+    "local:remove": "yalc remove --all",
+    "local:check": "yalc check"
   },
   "files": [
     "src",
