@@ -27,3 +27,5 @@ export { default as MoonSun } from './MoonSun';
 export { default as SignOut } from './SignOut';
 export { default as Plus } from './Plus';
 export { default as Tree } from './Tree';
+
+export { default as ArrowLeftTest } from './ArrowLeftTest';

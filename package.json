@@ -5,8 +5,8 @@
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/index.d.ts",
-  "react-native": "src/index.tsx",
-  "source": "src/index.tsx",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
   "files": [
     "src",
     "lib",
@@ -27,7 +27,8 @@
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "lint:fix": "eslint --fix \"**/*.{js,ts,tsx}\"",
-    "prepare": "bob build",
+    "build": "bob build",
+    "prepare": "npm run build",
     "release": "release-it",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
@@ -50,72 +51,12 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-export-namespace-from": "^7.16.5",
-    "@commitlint/config-conventional": "^15.0.0",
-    "@react-native-community/eslint-config": "^3.0.1",
-    "@react-native-picker/picker": "^2.2.1",
-    "@release-it/conventional-changelog": "^3.3.0",
-    "@types/color": "^3.0.2",
-    "@types/jest": "^27.0.3",
-    "@types/react": "^17.0.37",
-    "@types/react-native": "^0.66.9",
-    "babel-plugin-module-resolver": "^4.1.0",
-    "commitlint": "^15.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
     "jest": "^27.4.4",
-    "pod-install": "^0.1.29",
-    "prettier": "^2.5.1",
-    "react": "^17.0.2",
-    "react-native": "^0.66.4",
-    "react-native-builder-bob": "^0.18.2",
-    "react-native-gesture-handler": "^2.1.0",
-    "react-native-image-picker": "^4.6.0",
-    "react-native-reanimated": "^2.3.1",
-    "react-native-svg": "^12.1.1",
-    "release-it": "^14.11.8",
-    "typescript": "^4.5.3",
-    "yalc": "^1.0.0-pre.53"
-  },
-  "peerDependencies": {
-    "@react-native-picker/picker": "*",
-    "react": "*",
-    "react-native": "*",
-    "react-native-gesture-handler": "*",
-    "react-native-image-picker": "*",
-    "react-native-reanimated": "*",
-    "react-native-svg": "*"
-  },
-  "jest": {
-    "preset": "react-native",
-    "modulePathIgnorePatterns": [
-      "<rootDir>/example/node_modules",
-      "<rootDir>/lib/"
-    ]
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "Version ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "angular"
-      }
-    }
+    "prettier": "^2.5.1"
   },
   "eslintConfig": {
     "root": true,
