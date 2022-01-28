@@ -46,6 +46,22 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
   "devDependencies": {
     "@nomada-sh/react-native-eyecandy-icons": "file:.yalc/@nomada-sh/react-native-eyecandy-icons",
     "@nomada-sh/react-native-eyecandy-theme": "file:.yalc/@nomada-sh/react-native-eyecandy-theme",
@@ -71,27 +87,6 @@
     "react-native-gesture-handler": "*",
     "react-native-image-picker": "*",
     "react-native-reanimated": "*"
-  },
-  "jest": {
-    "preset": "react-native",
-    "modulePathIgnorePatterns": [
-      "<rootDir>/example/node_modules",
-      "<rootDir>/lib/"
-    ]
-  },
-  "react-native-builder-bob": {
-    "source": "src",
-    "output": "lib",
-    "targets": [
-      "commonjs",
-      "module",
-      [
-        "typescript",
-        {
-          "project": "tsconfig.build.json"
-        }
-      ]
-    ]
   },
   "dependencies": {
     "calendar-base": "^1.1.1",
