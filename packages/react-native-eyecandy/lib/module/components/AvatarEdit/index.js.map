@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.ts"],"names":["AvatarEdit"],"mappings":"AAAA,OAAOA,UAAP,MAAuB,cAAvB;AAEA,cAAc,cAAd;AACA,eAAeA,UAAf","sourcesContent":["import AvatarEdit from './AvatarEdit';\n\nexport * from './AvatarEdit';\nexport default AvatarEdit;\n"]}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.ts"],"names":["Text"],"mappings":";;;;;;;;AAAA;;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;;;;;eACeA,a","sourcesContent":["import Text from './Text';\n\nexport * from './Text';\nexport default Text;\n"]}

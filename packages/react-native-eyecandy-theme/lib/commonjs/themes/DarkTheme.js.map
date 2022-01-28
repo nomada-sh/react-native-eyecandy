@@ -1,0 +1,1 @@
+{"version":3,"sources":["DarkTheme.ts"],"names":["DarkTheme","dark"],"mappings":";;;;;;;AAAA;;;;AAEA,MAAMA,SAAS,GAAG,0BAAY;AAC5BC,EAAAA,IAAI,EAAE;AADsB,CAAZ,CAAlB;eAIeD,S","sourcesContent":["import createTheme from './createTheme';\n\nconst DarkTheme = createTheme({\n  dark: true,\n});\n\nexport default DarkTheme;\n"]}

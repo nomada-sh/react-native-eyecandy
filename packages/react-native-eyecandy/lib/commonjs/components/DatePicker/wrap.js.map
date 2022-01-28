@@ -1,0 +1,1 @@
+{"version":3,"sources":["wrap.ts"],"names":["wrap","m","n"],"mappings":";;;;;;;AAAe,SAASA,IAAT,CAAcC,CAAd,EAAyBC,CAAzB,EAAoC;AACjD;;AACA,SAAOA,CAAC,IAAI,CAAL,GAASA,CAAC,GAAGD,CAAb,GAAiB,CAAEC,CAAC,GAAGD,CAAL,GAAUA,CAAX,IAAgBA,CAAxC;AACD","sourcesContent":["export default function wrap(m: number, n: number) {\n  'worklet';\n  return n >= 0 ? n % m : ((n % m) + m) % m;\n}\n"]}

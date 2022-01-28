@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.ts"],"names":["Avatar"],"mappings":"AAAA,OAAOA,MAAP,MAAmB,UAAnB;AAEA,cAAc,UAAd;AACA,eAAeA,MAAf","sourcesContent":["import Avatar from './Avatar';\n\nexport * from './Avatar';\nexport default Avatar;\n"]}

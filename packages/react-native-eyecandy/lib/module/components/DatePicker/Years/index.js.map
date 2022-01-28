@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.ts"],"names":["Years"],"mappings":"AAAA,OAAOA,KAAP,MAAkB,SAAlB;AAEA,cAAc,SAAd;AACA,eAAeA,KAAf","sourcesContent":["import Years from './Years';\n\nexport * from './Years';\nexport default Years;\n"]}

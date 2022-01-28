@@ -1,0 +1,1 @@
+{"version":3,"sources":["DefaultTheme.ts"],"names":["createTheme","DefaultTheme"],"mappings":"AAAA,OAAOA,WAAP,MAAwB,eAAxB;AAEA,MAAMC,YAAY,GAAGD,WAAW,EAAhC;AAEA,eAAeC,YAAf","sourcesContent":["import createTheme from './createTheme';\n\nconst DefaultTheme = createTheme();\n\nexport default DefaultTheme;\n"]}

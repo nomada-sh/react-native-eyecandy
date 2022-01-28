@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.ts"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAyB,WAAzB;AACA,cAAc,WAAd","sourcesContent":["export { default}   from './Heading';\nexport * from './Heading';\n"]}
