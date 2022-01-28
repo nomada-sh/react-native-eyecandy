@@ -7,6 +7,7 @@ import getTextColors from './getTextColors';
 import getInputColors from './getInputColors';
 import getSwitchColors from './getSwitchColors';
 import getBackgroundColors from './getBackgroundColors';
+import getDividerColors from './getDividerColors';
 
 const createColors: CreateThemeColors = (options = {}) => {
   const variables = {
@@ -40,6 +41,10 @@ const createColors: CreateThemeColors = (options = {}) => {
     background: getBackgroundColors({
       ...variables,
       colors: partialColors.background,
+    }),
+    divider: getDividerColors({
+      ...variables,
+      colors: partialColors.divider,
     }),
   };
 };

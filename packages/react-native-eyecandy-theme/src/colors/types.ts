@@ -8,6 +8,7 @@ export type ThemeColors = {
   text: ThemeTextColors;
   switch: ThemeSwitchColors;
   background: ThemeBackgroundColors;
+  divider: ThemeDividerColors;
 };
 
 export type ThemeColorsVariables = {
@@ -124,4 +125,15 @@ export type ThemeTextColor = {
 
 export type ThemeTextColors = {
   [key in ThemeTextColorsChoices]: ThemeTextColor;
+};
+
+/**
+ * Divider
+ */
+export type ThemeDividerColorChoices = 'default';
+
+export type ThemeDividerColor = string;
+
+export type ThemeDividerColors = {
+  [key in ThemeDividerColorChoices]: ThemeDividerColor;
 };

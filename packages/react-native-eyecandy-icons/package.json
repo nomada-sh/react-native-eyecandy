@@ -35,6 +35,7 @@
   "dependencies": {},
   "devDependencies": {
     "@nomada-sh/react-native-eyecandy-theme": "file:.yalc/@nomada-sh/react-native-eyecandy-theme",
+    "@types/react": "^17.0.38",
     "react": "^17.0.2",
     "react-native": "^0.67.1",
     "react-native-builder-bob": "^0.18.2",
