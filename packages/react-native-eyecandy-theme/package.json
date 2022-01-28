@@ -12,7 +12,7 @@
     "prepare": "bob build",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
-    "publish:local": "yalc publish --push"
+    "local:publish": "yalc publish --push"
   },
   "files": [
     "src",
