@@ -10,6 +10,8 @@ export interface IconProps extends Omit<SvgProps, 'color'> {
   size?: number;
   color?: ThemeTextColorsChoices;
   filled?: boolean;
+  // TODO: Verify that this is the correct type.
+  children?: React.ReactNode;
 }
 
 export default function Icon({

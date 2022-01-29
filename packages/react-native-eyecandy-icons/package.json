@@ -9,10 +9,11 @@
   "react-native": "src/index.ts",
   "source": "src/index.ts",
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "build": "bob build",
     "prepare": "npm run build",
     "local:publish": "yalc publish --push",
-    "local:add": "yalc add --dev @nomada-sh/react-native-eyecandy-theme",
+    "local:add": "yalc add @nomada-sh/react-native-eyecandy-theme",
     "local:remove": "yalc remove --all",
     "local:check": "yalc check"
   },
@@ -32,9 +33,10 @@
       "typescript"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "@nomada-sh/react-native-eyecandy-theme": "^1.0.0"
+  },
   "devDependencies": {
-    "@nomada-sh/react-native-eyecandy-theme": "file:.yalc/@nomada-sh/react-native-eyecandy-theme",
     "@types/react": "^17.0.38",
     "react": "^17.0.2",
     "react-native": "^0.67.1",
@@ -44,7 +46,6 @@
     "yalc": "^1.0.0-pre.53"
   },
   "peerDependencies": {
-    "@nomada-sh/react-native-eyecandy-theme": "*",
     "react": "*",
     "react-native": "*",
     "react-native-svg": "*"
