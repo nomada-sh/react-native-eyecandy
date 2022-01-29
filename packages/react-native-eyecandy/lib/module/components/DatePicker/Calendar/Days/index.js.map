@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":["Days"],"mappings":"AAAA,OAAOA,IAAP,MAAiB,QAAjB;AAEA,cAAc,QAAd;AACA,eAAeA,IAAf","sourcesContent":["import Days from './Days';\n\nexport * from './Days';\nexport default Days;\n"]}

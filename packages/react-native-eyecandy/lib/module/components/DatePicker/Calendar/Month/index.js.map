@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":["Month"],"mappings":"AAAA,OAAOA,KAAP,MAAkB,SAAlB;AAEA,cAAc,SAAd;AACA,eAAeA,KAAf","sourcesContent":["import Month from './Month';\n\nexport * from './Month';\nexport default Month;\n"]}

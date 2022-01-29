@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":["Month"],"mappings":";;;;;;;;AAAA;;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;;;;;eACeA,c","sourcesContent":["import Month from './Month';\n\nexport * from './Month';\nexport default Month;\n"]}

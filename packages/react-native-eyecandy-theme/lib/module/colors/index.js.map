@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":["default","createColors"],"mappings":"AAAA,SAASA,OAAO,IAAIC,YAApB,QAAwC,gBAAxC;AACA,cAAc,SAAd","sourcesContent":["export { default as createColors } from './createColors';\nexport * from './types';\n"]}

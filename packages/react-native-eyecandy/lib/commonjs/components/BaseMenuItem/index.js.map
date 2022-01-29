@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;AACA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA","sourcesContent":["export { default } from './BaseMenuItem';\nexport * from './BaseMenuItem';\n"]}

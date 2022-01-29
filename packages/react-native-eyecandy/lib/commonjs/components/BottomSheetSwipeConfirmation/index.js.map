@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":["BottomSheetSwipeConfirmation"],"mappings":";;;;;;;;AAAA;;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;;;;;eACeA,qC","sourcesContent":["import BottomSheetSwipeConfirmation from './BottomSheetSwipeConfirmation';\n\nexport * from './BottomSheetSwipeConfirmation';\nexport default BottomSheetSwipeConfirmation;\n"]}

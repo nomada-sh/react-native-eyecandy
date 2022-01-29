@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":["default","Palette","createPalette"],"mappings":"AAAA,SAASA,OAAO,IAAIC,OAApB,QAAmC,WAAnC;AACA,SAASD,OAAO,IAAIE,aAApB,QAAyC,iBAAzC;AACA,cAAc,SAAd","sourcesContent":["export { default as Palette } from './Palette';\nexport { default as createPalette } from './createPalette';\nexport * from './types';\n"]}

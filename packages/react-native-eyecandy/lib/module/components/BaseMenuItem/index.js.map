@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,gBAAxB;AACA,cAAc,gBAAd","sourcesContent":["export { default } from './BaseMenuItem';\nexport * from './BaseMenuItem';\n"]}

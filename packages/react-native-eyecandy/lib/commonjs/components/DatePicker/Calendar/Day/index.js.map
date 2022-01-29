@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":["Day"],"mappings":";;;;;;;;AAAA;;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;;;;;eACeA,Y","sourcesContent":["import Day from './Day';\n\nexport * from './Day';\nexport default Day;\n"]}

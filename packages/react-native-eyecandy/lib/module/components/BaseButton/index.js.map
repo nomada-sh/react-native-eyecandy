@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":["BaseButton"],"mappings":"AAAA,OAAOA,UAAP,MAAuB,cAAvB;AAEA,cAAc,cAAd;AACA,eAAeA,UAAf","sourcesContent":["import BaseButton from './BaseButton';\n\nexport * from './BaseButton';\nexport default BaseButton;\n"]}

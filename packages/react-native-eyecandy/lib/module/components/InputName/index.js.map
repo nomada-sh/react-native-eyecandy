@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":["InputName"],"mappings":"AAAA,OAAOA,SAAP,MAAsB,aAAtB;AAEA,eAAeA,SAAf","sourcesContent":["import InputName from './InputName';\n\nexport default InputName;\n"]}

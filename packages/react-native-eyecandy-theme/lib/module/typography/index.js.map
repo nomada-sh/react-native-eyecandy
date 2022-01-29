@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":["default","Typography","createTypography"],"mappings":"AAAA,SAASA,OAAO,IAAIC,UAApB,QAAsC,cAAtC;AACA,SAASD,OAAO,IAAIE,gBAApB,QAA4C,oBAA5C;AACA,cAAc,SAAd","sourcesContent":["export { default as Typography } from './Typography';\nexport { default as createTypography } from './createTypography';\nexport * from './types';\n"]}
