@@ -1,7 +1,7 @@
-import { useContext } from 'react';
+import {useContext} from 'react';
 
-import { ThemeContext } from './ThemeProvider';
-import { Theme } from '../themes';
+import {ThemeContext} from './ThemeProvider';
+import {Theme} from '../themes';
 
 export default function useTheme(): Theme;
 

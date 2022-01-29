@@ -1,2 +1,2 @@
-export { default} from './TextInputErrors';
+export {default} from './TextInputErrors';
 export * from './TextInputErrors';

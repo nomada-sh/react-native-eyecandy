@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import type { BottomSheetHandle } from '../components';
+import {useRef} from 'react';
+import type {BottomSheetHandle} from '../components';
 
 export default function useBottomSheet() {
   const ref = useRef<BottomSheetHandle>(null);

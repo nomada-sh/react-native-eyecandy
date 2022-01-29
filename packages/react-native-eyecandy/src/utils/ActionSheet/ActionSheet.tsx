@@ -1,6 +1,6 @@
-import { NativeModules, Platform, ActionSheetIOS } from 'react-native';
+import {NativeModules, Platform, ActionSheetIOS} from 'react-native';
 
-const { RNActionSheet } = NativeModules;
+const {RNActionSheet} = NativeModules;
 
 export interface ActionSheetOptions {
   optionsIOS: string[];

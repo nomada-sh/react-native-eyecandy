@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { StyleSheet } from 'react-native';
+import {useMemo} from 'react';
+import {StyleSheet} from 'react-native';
 
 import {
   ThemeButtonColorChoices,
@@ -13,7 +13,7 @@ export default function useStyles({
   color?: ThemeButtonColorChoices;
   inverse?: boolean;
 }) {
-  const { background, foreground } = useColors(c => c.button[color]);
+  const {background, foreground} = useColors(c => c.button[color]);
 
   return useMemo(
     () =>

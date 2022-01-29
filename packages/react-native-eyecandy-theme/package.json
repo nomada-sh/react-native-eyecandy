@@ -30,15 +30,21 @@
       "typescript"
     ]
   },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
   "dependencies": {
     "deepmerge": "^4.2.2"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
     "@types/react": "^17.0.38",
+    "@types/react-native": "^0.66.15",
     "jest": "^27.4.7",
+    "react": "^17.0.2",
+    "react-native": "^0.67.1",
     "react-native-builder-bob": "^0.18.2",
-    "ts-jest": "^27.1.3",
     "typescript": "^4.5.5",
     "yalc": "^1.0.0-pre.53"
   }

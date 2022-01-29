@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -69,7 +69,9 @@ function CodeInput({
   }, [code, dimissKeyboardOnFinish, finished, focused, onFinish]);
 
   useEffect(() => {
-    if (!focused) return;
+    if (!focused) {
+      return;
+    }
 
     const subscription = Keyboard.addListener('keyboardDidHide', () => {
       inputRef.current?.blur();
@@ -92,7 +94,9 @@ function CodeInput({
         maxLength={length + 1}
         value={code}
         onChangeText={text => {
-          if (!/^\d*$/.test(text)) return;
+          if (!/^\d*$/.test(text)) {
+            return;
+          }
 
           const newCode = text.substring(
             0,

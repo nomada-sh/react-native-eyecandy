@@ -1,2 +1,2 @@
-export { default } from './BottomSheetV2';
+export {default} from './BottomSheetV2';
 export * from './BottomSheetV2';

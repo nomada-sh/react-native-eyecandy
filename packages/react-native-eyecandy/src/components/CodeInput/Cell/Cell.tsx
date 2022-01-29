@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, TouchableWithoutFeedback } from 'react-native';
+import {View, TouchableWithoutFeedback} from 'react-native';
 
-import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
-import { Text } from '../../../typography';
+import {useColors} from '@nomada-sh/react-native-eyecandy-theme';
+import {Text} from '../../../typography';
 
 export interface CellProps {
   index: number;
@@ -14,7 +14,7 @@ export interface CellProps {
 }
 
 const Cell = React.forwardRef<View, CellProps>(
-  ({ size = 56, index, value, focused, onPress, ...props }, ref?) => {
+  ({size = 56, index, value, focused, onPress, ...props}, ref?) => {
     const colors = useColors(c => c.input.default);
 
     return (
@@ -34,8 +34,7 @@ const Cell = React.forwardRef<View, CellProps>(
             justifyContent: 'center',
             alignItems: 'center',
           }}
-          {...props}
-        >
+          {...props}>
           <Text size={size / 2.5} weight="semibold">
             {value}
           </Text>

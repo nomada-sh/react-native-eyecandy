@@ -1,7 +1,7 @@
 import type Color from 'color';
-import { useMemo } from 'react';
+import {useMemo} from 'react';
 
-import { getRippleColor } from '../utils';
+import {getRippleColor} from '../utils';
 
 type ColorType = string | Color;
 

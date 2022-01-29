@@ -1,6 +1,6 @@
 import useTheme from './useTheme';
 
-import { ThemePalette } from '../palette';
+import {ThemePalette} from '../palette';
 
 export default function usePalette(): ThemePalette;
 

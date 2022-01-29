@@ -1,11 +1,8 @@
-import React, { useMemo } from 'react';
+import React, {useMemo} from 'react';
 
-import Animated, {
-  SharedValue,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
+import Animated, {SharedValue, useAnimatedStyle} from 'react-native-reanimated';
 
-import type { CalendarDate } from 'calendar-base';
+import type {CalendarDate} from 'calendar-base';
 
 import Header from '../Header';
 import Actions from '../Actions';
@@ -65,10 +62,12 @@ function Month({
     const newX = wrap(width * size, x.value) + index * width;
 
     let translateX = newX - width * (size + 1);
-    if (newX >= 0 && newX <= width * size) translateX = newX - width;
+    if (newX >= 0 && newX <= width * size) {
+      translateX = newX - width;
+    }
 
     return {
-      transform: [{ translateX }],
+      transform: [{translateX}],
     };
   }, [x, index, width]);
 
@@ -81,8 +80,7 @@ function Month({
         },
         style,
       ]}
-      key={`${year}-${month}`}
-    >
+      key={`${year}-${month}`}>
       <Actions
         date={date}
         onPressYear={onPressYear}

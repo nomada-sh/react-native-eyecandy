@@ -1,8 +1,8 @@
-import React, { useMemo, FC, ReactNode } from 'react';
-import type { StyleProp, ViewStyle } from 'react-native';
+import React, {useMemo, FC, ReactNode} from 'react';
+import type {StyleProp, ViewStyle} from 'react-native';
 
-import BaseButton, { BaseButtonProps } from '../BaseButton';
-import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
+import BaseButton, {BaseButtonProps} from '../BaseButton';
+import {useColors} from '@nomada-sh/react-native-eyecandy-theme';
 
 interface IconProps {
   size: number;
@@ -28,7 +28,7 @@ function IconButton({
   inverse,
   ...props
 }: IconButtonProps) {
-  const { foreground, background } = useColors(c => c.button[color]);
+  const {foreground, background} = useColors(c => c.button[color]);
 
   let icon: ReactNode = useMemo(() => {
     const iconSize = iconSizeProp ?? size * 0.4;
@@ -62,8 +62,7 @@ function IconButton({
       inverse={inverse}
       height={size}
       variant={variant}
-      {...props}
-    >
+      {...props}>
       {icon}
     </BaseButton>
   );

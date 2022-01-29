@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import type { StyleProp, ViewStyle } from 'react-native';
+import React, {useCallback, useMemo, useState} from 'react';
+import type {StyleProp, ViewStyle} from 'react-native';
 
-import { CalendarDate, Calendar as CalendarBase } from 'calendar-base';
+import {CalendarDate, Calendar as CalendarBase} from 'calendar-base';
 
 import Animated, {
   runOnJS,
@@ -149,7 +149,9 @@ function Calendar({
       to.getFullYear() === from.getFullYear() &&
       to.getMonth() === from.getMonth();
 
-    if (same) return;
+    if (same) {
+      return;
+    }
 
     goToDate(to, true);
   }, [goToDate, index.value, months, onDateChange]);
@@ -177,15 +179,15 @@ function Calendar({
 
         runOnJS(onChange)(index.value, next, prev);
 
-        x.value = withTiming(startX + direction * width, { duration: 300 });
+        x.value = withTiming(startX + direction * width, {duration: 300});
       } else {
-        x.value = withTiming(startX, { duration: 300 });
+        x.value = withTiming(startX, {duration: 300});
       }
     },
   });
 
   const content = useMemo(() => {
-    return months.map(({ year, month }, index) => {
+    return months.map(({year, month}, index) => {
       return (
         <Month
           key={`${year}-${month}`}
@@ -228,7 +230,7 @@ function Calendar({
     [goToDate, setYearMonthSelectionStep],
   );
 
-  if (yearMonthSelectionStep)
+  if (yearMonthSelectionStep) {
     return (
       <YearMonthSelection
         onChange={onChangeVisibleDate}
@@ -240,6 +242,7 @@ function Calendar({
         setStep={setYearMonthSelectionStep}
       />
     );
+  }
 
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
@@ -248,8 +251,7 @@ function Calendar({
           width,
           flexDirection: 'row',
           flex: 1,
-        }}
-      >
+        }}>
         {content}
       </Animated.View>
     </PanGestureHandler>

@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import type { TextInputProps, TextInputRefCurrent } from './typings';
+import type {TextInputProps, TextInputRefCurrent} from './typings';
 
 export default function useTextInput({
   onFocus,
@@ -31,7 +31,9 @@ export default function useTextInput({
 
   const inputRef = useRef<TextInputRefCurrent>(null);
 
-  const placeholder = placeholderProp ? `${placeholderProp}${required ? ' *' : ''}` : undefined;
+  const placeholder = placeholderProp
+    ? `${placeholderProp}${required ? ' *' : ''}`
+    : undefined;
 
   const handleFocus = useCallback<NonNullable<typeof onFocus>>(
     e => {
@@ -68,8 +70,11 @@ export default function useTextInput({
   }, [onSecureTextEntryChange, secureTextEntry]);
 
   useEffect(() => {
-    if (typeof inputRefProp === 'function') inputRefProp(inputRef.current);
-    else if (inputRefProp) inputRefProp.current = inputRef.current;
+    if (typeof inputRefProp === 'function') {
+      inputRefProp(inputRef.current);
+    } else if (inputRefProp) {
+      inputRefProp.current = inputRef.current;
+    }
   }, [inputRef, inputRefProp]);
 
   return {

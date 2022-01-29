@@ -6,9 +6,9 @@ import {
 } from 'react-native';
 
 import TextInputErrors from '../TextInputErrors';
-import { EyeCheck, EyeOff } from '@nomada-sh/react-native-eyecandy-icons';
+import {EyeCheck, EyeOff} from '@nomada-sh/react-native-eyecandy-icons';
 
-import type { TextInputProps } from './typings';
+import type {TextInputProps} from './typings';
 import useStyles from './useStyles';
 import useTextInput from './useTextInput';
 
@@ -56,7 +56,7 @@ export default function TextInput({
     placeholder: placeholderProp,
   });
 
-  const { styles, keyboardAppearance, renderIcon } = useStyles({
+  const {styles, keyboardAppearance, renderIcon} = useStyles({
     color,
     focused,
     widthPaddingStart: StartIcon === undefined,
@@ -95,8 +95,7 @@ export default function TextInput({
         ) : null}
         {showSecureTextEntryToggle ? (
           <TouchableWithoutFeedback
-            onPress={() => onPressSecureTextEntryToggle()}
-          >
+            onPress={() => onPressSecureTextEntryToggle()}>
             <View style={styles.iconContainer}>
               {renderIcon(
                 secureTextEntry ? EyeOff : EyeCheck,

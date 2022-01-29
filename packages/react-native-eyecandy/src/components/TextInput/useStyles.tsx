@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
-import { StyleSheet } from 'react-native';
+import React, {useCallback} from 'react';
+import {StyleSheet} from 'react-native';
 
-import { useTheme, useColors } from '@nomada-sh/react-native-eyecandy-theme';
+import {useTheme, useColors} from '@nomada-sh/react-native-eyecandy-theme';
 
-import type { TextInputIcon, TextInputProps } from './typings';
+import type {TextInputIcon, TextInputProps} from './typings';
 
 export default function useStyles({
   color = 'default',
@@ -24,7 +24,7 @@ export default function useStyles({
   hasError?: boolean;
   fullWidth?: boolean;
 }) {
-  const { palette, typography, dark } = useTheme();
+  const {palette, typography, dark} = useTheme();
   const colors = useColors(c => c.input[color]);
   const fontSize = typography.body.fontSize;
 
@@ -54,39 +54,39 @@ export default function useStyles({
     : 'light';
 
   const styles = StyleSheet.create({
-        container: {
-          width: fullWidth ? '100%' : undefined,
-        },
-        inputContainer: {
-          height: 56,
-          borderWidth: 1,
-          backgroundColor,
-          borderRadius: 12,
-          overflow: 'hidden',
-          flexDirection: 'row',
-          borderStyle: 'solid',
-          borderColor: indicatorColor,
-        },
-        iconContainer: {
-          justifyContent: 'center',
-          paddingHorizontal: padding,
-        },
-        icon: {
-          fontSize: 20,
-          color: iconColor,
-        },
-        input: {
-          flex: 1,
-          color: textColor,
-          fontSize: fontSize.medium,
-          fontWeight: empty ? 'normal' : '700',
-          paddingEnd: widthPaddingEnd ? padding : 0,
-          paddingStart: widthPaddingStart ? padding : 0,
-        },
-        inputPlaceholder: {
-          color: placeholderColor,
-        },
-      })
+    container: {
+      width: fullWidth ? '100%' : undefined,
+    },
+    inputContainer: {
+      height: 56,
+      borderWidth: 1,
+      backgroundColor,
+      borderRadius: 12,
+      overflow: 'hidden',
+      flexDirection: 'row',
+      borderStyle: 'solid',
+      borderColor: indicatorColor,
+    },
+    iconContainer: {
+      justifyContent: 'center',
+      paddingHorizontal: padding,
+    },
+    icon: {
+      fontSize: 20,
+      color: iconColor,
+    },
+    input: {
+      flex: 1,
+      color: textColor,
+      fontSize: fontSize.medium,
+      fontWeight: empty ? 'normal' : '700',
+      paddingEnd: widthPaddingEnd ? padding : 0,
+      paddingStart: widthPaddingStart ? padding : 0,
+    },
+    inputPlaceholder: {
+      color: placeholderColor,
+    },
+  });
 
   const renderIcon = useCallback(
     (Icon: TextInputIcon, stroke?: string) => {

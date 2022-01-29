@@ -1,11 +1,11 @@
-import React, { useMemo, useRef } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import React, {useMemo, useRef} from 'react';
+import {Pressable, StyleSheet, View} from 'react-native';
 
-import type { CalendarDate } from 'calendar-base';
+import type {CalendarDate} from 'calendar-base';
 
-import { Body } from '../../../../typography';
-import {useTheme} from '@nomada-sh/react-native-eyecandy-theme'
-import { useRippleColor } from '../../../../hooks';
+import {Body} from '../../../../typography';
+import {useTheme} from '@nomada-sh/react-native-eyecandy-theme';
+import {useRippleColor} from '../../../../hooks';
 
 export interface DayProps {
   value: CalendarDate | false;
@@ -14,11 +14,13 @@ export interface DayProps {
   debug?: boolean;
 }
 
-function Day({ value, onPress, selected, debug }: DayProps) {
-  const { palette, dark, colors } = useTheme();
+function Day({value, onPress, selected, debug}: DayProps) {
+  const {palette, dark, colors} = useTheme();
 
   const today = useMemo(() => {
-    if (!value) return false;
+    if (!value) {
+      return false;
+    }
 
     const now = new Date();
 
@@ -30,18 +32,26 @@ function Day({ value, onPress, selected, debug }: DayProps) {
   }, [value]);
 
   const rippleColor = useRippleColor(
-    selected ? palette.primary[500] : colors.background.default.container
+    selected ? palette.primary[500] : colors.background.default.container,
   );
 
   const backgroundColor = useMemo(() => {
-    if (selected) return palette.primary[500];
-    if (today) return palette.grey[dark ? 800 : 200];
+    if (selected) {
+      return palette.primary[500];
+    }
+    if (today) {
+      return palette.grey[dark ? 800 : 200];
+    }
     return 'transparent';
   }, [dark, palette.grey, palette.primary, selected, today]);
 
   const textColor = useMemo(() => {
-    if (selected) return 'white';
-    if (today) return palette.primary[500];
+    if (selected) {
+      return 'white';
+    }
+    if (today) {
+      return palette.primary[500];
+    }
     return colors.text.default.normal;
   }, [colors.text.default.normal, palette.primary, selected, today]);
 
@@ -66,21 +76,21 @@ function Day({ value, onPress, selected, debug }: DayProps) {
         ]}
         disabled={value === false}
         onPress={() => {
-          if (value !== false && onPress) onPress(value);
+          if (value !== false && onPress) {
+            onPress(value);
+          }
         }}
         android_ripple={{
           color: rippleColor.string(),
           borderless: true,
           radius: 20,
-        }}
-      >
+        }}>
         <Body
           color="default"
           weight={selected ? 'bold' : 'normal'}
           style={{
             color: textColor,
-          }}
-        >
+          }}>
           {value !== false ? value.day : '00'}
         </Body>
       </Pressable>

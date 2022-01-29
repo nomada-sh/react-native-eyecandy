@@ -1,6 +1,6 @@
-import { DeepPartial } from '../types';
-import { CustomThemePalette, ThemePalette } from '../palette';
-import { CustomThemeTypography, ThemeTypography } from '../typography';
+import {DeepPartial} from '../types';
+import {CustomThemePalette, ThemePalette} from '../palette';
+import {CustomThemeTypography, ThemeTypography} from '../typography';
 
 export type ThemeColors = {
   button: ThemeButtonColors;

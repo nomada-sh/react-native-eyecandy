@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {useMemo} from 'react';
+import {StyleSheet, View} from 'react-native';
 
-import { Body } from '../../../../typography';
+import {Body} from '../../../../typography';
 import formatDate from '../../formatDate';
 
 export interface ActionsProps {
@@ -21,7 +21,7 @@ function Actions({
   locale, // = 'en-US',
   todayText,
 }: ActionsProps) {
-  const { month, year } = useMemo(() => {
+  const {month, year} = useMemo(() => {
     return {
       month: formatDate(date, 'MMMM', locale),
       year: formatDate(date, 'yyyy', locale),
@@ -40,8 +40,7 @@ function Actions({
           ]}
           size="xlarge"
           color="primary"
-          onPress={onPressMonth}
-        >
+          onPress={onPressMonth}>
           {month}
         </Body>
         <Body
@@ -53,8 +52,7 @@ function Actions({
           ]}
           size="xlarge"
           color="primary"
-          onPress={onPressYear}
-        >
+          onPress={onPressYear}>
           {year}
         </Body>
       </View>
@@ -62,8 +60,7 @@ function Actions({
         size="xlarge"
         style={styles.text}
         color="primary"
-        onPress={onPressToday}
-      >
+        onPress={onPressToday}>
         {todayText}
       </Body>
     </View>

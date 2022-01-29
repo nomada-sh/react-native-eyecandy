@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ViewProps } from 'react-native';
+import {View, ViewProps} from 'react-native';
 
 export interface MenuProps extends ViewProps {}
 

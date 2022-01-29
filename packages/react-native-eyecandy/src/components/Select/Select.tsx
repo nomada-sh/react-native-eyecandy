@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Platform, TouchableWithoutFeedback, View } from 'react-native';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
+import {Platform, TouchableWithoutFeedback, View} from 'react-native';
 
 import SelectBase from 'react-native-picker-select';
 
-import { ChevronDown } from '@nomada-sh/react-native-eyecandy-icons';
+import {ChevronDown} from '@nomada-sh/react-native-eyecandy-icons';
 
-import type { SelectProps } from './typings';
+import type {SelectProps} from './typings';
 import useStyles from './useStyles';
 
 function Select<ValueType>({

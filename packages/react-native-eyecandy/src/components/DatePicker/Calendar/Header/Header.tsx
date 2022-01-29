@@ -1,7 +1,7 @@
-import React, { useMemo, useRef } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {useMemo, useRef} from 'react';
+import {StyleSheet, View} from 'react-native';
 
-import { Body } from '../../../../typography';
+import {Body} from '../../../../typography';
 
 export interface HeaderProps {
   locale?: string;
@@ -13,7 +13,7 @@ export interface HeaderProps {
 const EN_NAMES = 'SMTWTFS'.split('');
 const ES_NAMES = 'DLMMJVS'.split('');
 
-function Header({ debug, locale, month, year }: HeaderProps) {
+function Header({debug, locale, month, year}: HeaderProps) {
   const count = useRef(1);
   debug &&
     console.log(
@@ -25,9 +25,13 @@ function Header({ debug, locale, month, year }: HeaderProps) {
 
   const names = useMemo(() => {
     if (locale) {
-      if (/^es(-[A-Za-z]{2})?$/.test(locale)) return ES_NAMES;
+      if (/^es(-[A-Za-z]{2})?$/.test(locale)) {
+        return ES_NAMES;
+      }
 
-      if (/^en(-[A-Za-z]{2})?$/.test(locale)) return EN_NAMES;
+      if (/^en(-[A-Za-z]{2})?$/.test(locale)) {
+        return EN_NAMES;
+      }
     }
 
     return EN_NAMES;
@@ -42,8 +46,7 @@ function Header({ debug, locale, month, year }: HeaderProps) {
             color="greyout"
             align="center"
             key={index}
-            style={styles.name}
-          >
+            style={styles.name}>
             {name}
           </Body>
         );

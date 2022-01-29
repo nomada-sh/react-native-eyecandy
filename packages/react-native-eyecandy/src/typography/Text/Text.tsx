@@ -5,7 +5,10 @@ import {
   TextStyle,
 } from 'react-native';
 
-import { useColors, ThemeTextColorsChoices } from '@nomada-sh/react-native-eyecandy-theme';
+import {
+  useColors,
+  ThemeTextColorsChoices,
+} from '@nomada-sh/react-native-eyecandy-theme';
 
 export interface TextProps extends TextBaseProps {
   weight?: TextStyle['fontWeight'] | 'semibold' | 'medium' | 'regular';
@@ -30,16 +33,18 @@ function Text({
 
   let textColor: string = colors.normal;
 
-  if (customColor)
+  if (customColor) {
     textColor = customColor;
-  if (contrast)
+  }
+  if (contrast) {
     textColor = colors.contrast;
+  }
 
   let fontWeight: TextStyle['fontWeight'];
 
   switch (weight) {
     case 'semibold':
-      fontWeight = '700'
+      fontWeight = '700';
       break;
     case 'regular':
       fontWeight = 'normal';

@@ -6,8 +6,8 @@ import type {
   ViewStyle,
 } from 'react-native';
 
-import type { TextInputErrorsProps } from '../TextInputErrors';
-import type { ThemeInputColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
+import type {TextInputErrorsProps} from '../TextInputErrors';
+import type {ThemeInputColorChoices} from '@nomada-sh/react-native-eyecandy-theme';
 
 export type TextInputIcon = React.FC<{
   size: number;

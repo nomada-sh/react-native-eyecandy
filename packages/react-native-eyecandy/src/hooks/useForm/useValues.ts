@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
+import {useCallback, useState} from 'react';
 
-import { useUpdateEffect } from 'react-use';
+import {useUpdateEffect} from 'react-use';
 
-import type { Fields, Values, Name } from './types';
+import type {Fields, Values, Name} from './types';
 
 export default function useValues<T extends Fields>(fields: T) {
   const createValues = useCallback(() => {
@@ -19,7 +19,7 @@ export default function useValues<T extends Fields>(fields: T) {
   const [values, setValues] = useState(createValues);
 
   const setValue = useCallback(
-    (name: Name<T>, value: string) => setValues(v => ({ ...v, [name]: value })),
+    (name: Name<T>, value: string) => setValues(v => ({...v, [name]: value})),
     [],
   );
 
@@ -32,5 +32,5 @@ export default function useValues<T extends Fields>(fields: T) {
     clearValues();
   }, [clearValues]);
 
-  return { values, setValue, setValues, clearValues };
+  return {values, setValue, setValues, clearValues};
 }

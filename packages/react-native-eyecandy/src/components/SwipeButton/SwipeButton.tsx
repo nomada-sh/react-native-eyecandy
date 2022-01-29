@@ -1,14 +1,12 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
-import SwipeButtonBase, {
-  Props as SwipeButtonBaseProps,
-} from 'rn-swipe-button';
+import SwipeButtonBase, {Props as SwipeButtonBaseProps} from 'rn-swipe-button';
 
 import Color from 'color';
 
-import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
-import { ChevronRight } from '@nomada-sh/react-native-eyecandy-icons';
+import {useTheme} from '@nomada-sh/react-native-eyecandy-theme';
+import {ChevronRight} from '@nomada-sh/react-native-eyecandy-icons';
 
 // TODO: Fix thumbIconComponent type.
 export interface SwipeButtonProps
@@ -23,13 +21,17 @@ function SwipeButton({
   title = '',
   ...props
 }: SwipeButtonProps) {
-  const { typography, colors } = useTheme(t => ({
+  const {typography, colors} = useTheme(t => ({
     typography: t.typography,
     colors: t.colors.button.primary,
   }));
 
-  const fillColor = Color(colors.background).rgb().darken(0.3).alpha(0.8).string()
-  const thumbColor = Color(colors.background).darken(0.4).string()
+  const fillColor = Color(colors.background)
+    .rgb()
+    .darken(0.3)
+    .alpha(0.8)
+    .string();
+  const thumbColor = Color(colors.background).darken(0.4).string();
 
   return (
     <SwipeButtonBase

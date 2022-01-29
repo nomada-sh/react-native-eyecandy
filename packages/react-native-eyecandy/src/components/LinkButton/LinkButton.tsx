@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
-import { StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import React, {FC} from 'react';
+import {StyleProp, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
-import BaseButton, { BaseButtonProps } from '../BaseButton';
-import { useTheme, useColors } from '@nomada-sh/react-native-eyecandy-theme';
-import { usePressableStyles } from '../../hooks';
-import { ChevronRight } from '@nomada-sh/react-native-eyecandy-icons';
-import { Body } from '../../typography';
+import BaseButton, {BaseButtonProps} from '../BaseButton';
+import {useTheme, useColors} from '@nomada-sh/react-native-eyecandy-theme';
+import {usePressableStyles} from '../../hooks';
+import {ChevronRight} from '@nomada-sh/react-native-eyecandy-icons';
+import {Body} from '../../typography';
 
 export interface LinkButtonProps extends BaseButtonProps {
   icon?: FC<{
@@ -29,7 +29,7 @@ function LinkButton({
   focused,
   ...props
 }: LinkButtonProps) {
-  const { palette } = useTheme();
+  const {palette} = useTheme();
   const colors = useColors(c => c.button[color]);
 
   const Icon = icon;

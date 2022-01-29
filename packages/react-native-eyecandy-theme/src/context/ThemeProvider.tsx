@@ -1,6 +1,6 @@
-import React, { createContext, ReactNode } from 'react';
+import React, {createContext, ReactNode} from 'react';
 
-import { DefaultTheme } from '../themes';
+import {DefaultTheme} from '../themes';
 
 export const ThemeContext = createContext(DefaultTheme);
 

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import BottomSheet, { BottomSheetProps } from '../BottomSheet';
+import BottomSheet, {BottomSheetProps} from '../BottomSheet';
 import SwipeButton from '../SwipeButton';
-import { Body } from '../../typography';
+import {Body} from '../../typography';
 
 export interface BottomSheetSwipeConfirmationProps extends BottomSheetProps {
   title: string;
@@ -25,16 +25,14 @@ function BottomSheetSwipeConfirmation({
         },
         style,
       ]}
-      {...props}
-    >
+      {...props}>
       <Body
         color="greyout"
         align="center"
         weight="medium"
         style={{
           marginBottom: 16,
-        }}
-      >
+        }}>
         {title}
       </Body>
       <SwipeButton onSwipeSuccess={onConfirm} title={swipeTitle} />

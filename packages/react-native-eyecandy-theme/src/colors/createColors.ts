@@ -1,6 +1,6 @@
-import { CreateThemeColors } from './types';
-import { createPalette } from '../palette';
-import { createTypography } from '../typography';
+import {CreateThemeColors} from './types';
+import {createPalette} from '../palette';
+import {createTypography} from '../typography';
 
 import getButtonColors from './getButtonColors';
 import getTextColors from './getTextColors';

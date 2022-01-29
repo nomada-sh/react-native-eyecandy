@@ -1,11 +1,5 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {Dimensions, StyleSheet, View} from 'react-native';
 
 import Calendar from './Calendar';
 import BottomSheet from '../BottomSheetV2';
@@ -13,7 +7,7 @@ import Button from '../Button';
 // TODO: Create Button with input styles.
 import LinkButton from '../LinkButton';
 import IconButton from '../IconButton';
-import { CalendarEvent, ArrowLeft } from '@nomada-sh/react-native-eyecandy-icons';
+import {CalendarEvent, ArrowLeft} from '@nomada-sh/react-native-eyecandy-icons';
 import formatDate from './formatDate';
 export interface DatePickerProps {
   date: Date; // = new Date();
@@ -63,7 +57,9 @@ function DatePicker({
   const handleDateChange = useCallback(
     (date: Date) => {
       onDateChange?.(date);
-      if (!disableCloseOnSelect) onClose();
+      if (!disableCloseOnSelect) {
+        onClose();
+      }
     },
     [onDateChange, disableCloseOnSelect, onClose],
   );
@@ -103,12 +99,17 @@ function DatePicker({
   }, [backText, doneText, yearMonthSelectionStep]);
 
   const onDonePress = useCallback(() => {
-    if (yearMonthSelectionStep) setYearMonthSelectionStep(undefined);
-    else setVisible(false);
+    if (yearMonthSelectionStep) {
+      setYearMonthSelectionStep(undefined);
+    } else {
+      setVisible(false);
+    }
   }, [yearMonthSelectionStep]);
 
   useEffect(() => {
-    if (visible) setYearMonthSelectionStep(undefined);
+    if (visible) {
+      setYearMonthSelectionStep(undefined);
+    }
   }, [visible]);
 
   return (
@@ -124,8 +125,7 @@ function DatePicker({
       <BottomSheet
         height={disableCloseOnSelect ? 410 : 350}
         visible={visible}
-        onClose={onClose}
-      >
+        onClose={onClose}>
         {/* {yearMonthSelectionStep === undefined ? (
           <View style={styles.tabsContainer}>
             <Button
@@ -151,8 +151,7 @@ function DatePicker({
           <View
             style={{
               padding: 10,
-            }}
-          >
+            }}>
             <Button
               color="primary"
               text={doneButtonText}

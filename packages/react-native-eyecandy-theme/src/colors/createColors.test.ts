@@ -1,5 +1,5 @@
 import createColors from './createColors';
-import { CustomThemeColors, ThemeButtonColors } from './types';
+import {CustomThemeColors, ThemeButtonColors} from './types';
 
 test('createColors', () => {
   const colors = createColors();
@@ -10,6 +10,7 @@ test('createColors', () => {
     input: expect.any(Object),
     text: expect.any(Object),
     switch: expect.any(Object),
+    divider: expect.any(Object),
   });
 
   const backgroundColor = {

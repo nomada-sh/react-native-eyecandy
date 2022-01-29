@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import {useCallback, useMemo} from 'react';
 
 import type {
   Fields,
@@ -12,7 +12,9 @@ import type {
 } from './types';
 
 const firstLetterToUpperCase = (str: any) => {
-  if (typeof str !== 'string') return str;
+  if (typeof str !== 'string') {
+    return str;
+  }
 
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
@@ -31,8 +33,9 @@ function extractMessage<T extends ValidationType>(
       : validation[1];
   }
 
-  if (validation !== undefined)
+  if (validation !== undefined) {
     return defaultMessage(nameFormatted, validation);
+  }
 
   return `${nameFormatted} is not valid. (${key})`;
 }
@@ -47,8 +50,9 @@ export default function useMessages<T extends Fields>(
       const field = fields[name];
 
       // !Should never happen.
-      if (typeof field === 'string')
+      if (typeof field === 'string') {
         throw new Error(`Field ${name} has no validation requirements`);
+      }
 
       switch (key) {
         case 'required':
@@ -93,7 +97,9 @@ export default function useMessages<T extends Fields>(
   const getMessages = useCallback(
     (name: Name<T>, error: Error) => {
       return Object.entries(error).reduce((acc, [key, value]) => {
-        if (!value) return acc;
+        if (!value) {
+          return acc;
+        }
 
         return {
           ...acc,

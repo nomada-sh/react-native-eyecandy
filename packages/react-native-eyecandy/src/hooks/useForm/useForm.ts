@@ -1,19 +1,20 @@
-import { useCallback, useRef } from 'react';
+import {useCallback, useRef} from 'react';
 
-import type { Fields, InputProps, Message, Name, Error } from './types';
+import type {Fields, InputProps, Message, Name, Error} from './types';
 import useErrors from './useErrors';
 import useMessages from './useMessages';
 import useValues from './useValues';
 
 export default function useForm<T extends Fields>(initialFields: T) {
   const fieldsRef = useRef<T>(initialFields);
-  if (JSON.stringify(fieldsRef.current) !== JSON.stringify(initialFields))
+  if (JSON.stringify(fieldsRef.current) !== JSON.stringify(initialFields)) {
     fieldsRef.current = initialFields;
+  }
 
   const fields = fieldsRef.current;
 
-  const { values, setValue, clearValues } = useValues(fields);
-  const { errors, setError, clearErrors, validate } = useErrors(fields);
+  const {values, setValue, clearValues} = useValues(fields);
+  const {errors, setError, clearErrors, validate} = useErrors(fields);
 
   const messages = useMessages(fields, errors);
 
@@ -41,7 +42,9 @@ export default function useForm<T extends Fields>(initialFields: T) {
         for (let k in errs) {
           const err = errs[k as keyof typeof errs] as boolean;
           const msg = msgs[k as keyof typeof msgs] as string;
-          if (err && msg) result.push([err, msg]);
+          if (err && msg) {
+            result.push([err, msg]);
+          }
         }
 
         return result;
@@ -55,11 +58,15 @@ export default function useForm<T extends Fields>(initialFields: T) {
 
       const field = fields[name];
       if (typeof field !== 'string') {
-        if (typeof field.maxLength === 'number')
+        if (typeof field.maxLength === 'number') {
           props.maxLength = field.maxLength;
-        else if (field.maxLength) props.maxLength = field.maxLength[0];
+        } else if (field.maxLength) {
+          props.maxLength = field.maxLength[0];
+        }
 
-        if (field.required) props.required = true;
+        if (field.required) {
+          props.required = true;
+        }
       }
 
       return props;

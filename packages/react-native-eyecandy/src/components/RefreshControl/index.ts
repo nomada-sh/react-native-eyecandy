@@ -1,2 +1,2 @@
-export { default } from './RefreshControl';
+export {default} from './RefreshControl';
 export * from './RefreshControl';

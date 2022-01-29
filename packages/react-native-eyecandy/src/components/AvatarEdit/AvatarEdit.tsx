@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 import {
   GestureResponderEvent,
   Pressable,
@@ -16,13 +16,13 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 
-import Avatar, { AvatarProps } from '../Avatar';
+import Avatar, {AvatarProps} from '../Avatar';
 import IconButton from '../IconButton';
-import { Camera } from '@nomada-sh/react-native-eyecandy-icons';
-import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
-import { ActionSheet } from '../../utils';
+import {Camera} from '@nomada-sh/react-native-eyecandy-icons';
+import {useColors} from '@nomada-sh/react-native-eyecandy-theme';
+import {ActionSheet} from '../../utils';
 
-import { ms } from '../../utils';
+import {ms} from '../../utils';
 
 export interface AvatarEditProps extends Omit<PressableProps, 'style'> {
   size?: number;
@@ -43,9 +43,13 @@ function AvatarEdit({
 
   const onImageSelected = useCallback(
     (res: ImagePickerResponse) => {
-      if (res.errorCode) throw JSON.stringify(res);
+      if (res.errorCode) {
+        throw JSON.stringify(res);
+      }
 
-      if (res.didCancel) return;
+      if (res.didCancel) {
+        return;
+      }
 
       onChange?.(res.assets);
     },
@@ -54,7 +58,9 @@ function AvatarEdit({
 
   const onActionSheetSelect = useCallback(
     index => {
-      if (index === 2) return;
+      if (index === 2) {
+        return;
+      }
 
       const options: ImageLibraryOptions = {
         mediaType: 'photo',
@@ -96,8 +102,7 @@ function AvatarEdit({
         },
         style,
       ]}
-      {...props}
-    >
+      {...props}>
       <Avatar size={size} source={source} />
       <IconButton
         style={[

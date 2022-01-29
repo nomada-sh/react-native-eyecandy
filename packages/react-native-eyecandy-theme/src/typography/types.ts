@@ -1,4 +1,4 @@
-import { DeepPartial } from '../types';
+import {DeepPartial} from '../types';
 
 export type ThemeHeadingFontSizes = {
   h1: number;

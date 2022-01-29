@@ -22,7 +22,8 @@
     "!**/__mocks__"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch",
     "build": "bob build",
     "prepare": "npm run build",
     "typecheck": "tsc --noEmit",
@@ -45,13 +46,6 @@
   "homepage": "https://github.com/nomada-sh/react-native-eyecandy#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  },
-  "jest": {
-    "preset": "react-native",
-    "modulePathIgnorePatterns": [
-      "<rootDir>/example/node_modules",
-      "<rootDir>/lib/"
-    ]
   },
   "react-native-builder-bob": {
     "source": "src",

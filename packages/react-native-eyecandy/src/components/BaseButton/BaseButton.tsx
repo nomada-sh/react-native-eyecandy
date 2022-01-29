@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from 'react';
+import React, {ReactNode, useMemo} from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -8,8 +8,8 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { usePressableStyles } from '../../hooks';
-import type { ThemeButtonColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
+import {usePressableStyles} from '../../hooks';
+import type {ThemeButtonColorChoices} from '@nomada-sh/react-native-eyecandy-theme';
 import useStyles from './useStyles';
 
 export interface BaseButtonProps extends PressableProps {
@@ -84,8 +84,7 @@ function BaseButton({
           color: styles.ripple.color,
         }}
         disabled={disabled}
-        {...props}
-      >
+        {...props}>
         {children}
       </Pressable>
       {disabled && !hideDisabledOverlay ? (

@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 
-import { FlatList } from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 
 import Button from '../../../Button';
-import { Body } from '../../../../typography';
-import { useUpdateEffect } from 'react-use';
+import {Body} from '../../../../typography';
+import {useUpdateEffect} from 'react-use';
 import formatDate from '../../formatDate';
 
 export interface YearMonthSelectionProps {
@@ -29,14 +29,14 @@ function YearMonthSelection({
   selectedDate,
   setStep,
 }: YearMonthSelectionProps) {
-  const { yearSelected, monthSelected } = useMemo(() => {
+  const {yearSelected, monthSelected} = useMemo(() => {
     return {
       yearSelected: selectedDate.getFullYear(),
       monthSelected: selectedDate.getMonth(),
     };
   }, [selectedDate]);
 
-  const { yearNow, monthNow } = useMemo(() => {
+  const {yearNow, monthNow} = useMemo(() => {
     const now = new Date();
     return {
       yearNow: now.getFullYear(),
@@ -44,7 +44,7 @@ function YearMonthSelection({
     };
   }, []);
 
-  const { initialYear } = useMemo(() => {
+  const {initialYear} = useMemo(() => {
     return {
       initialYear: visibleDate.getFullYear(),
       initialMonth: visibleDate.getMonth(),
@@ -68,7 +68,9 @@ function YearMonthSelection({
       const group: number[] = [];
       for (let j = 0; j < 4; j++) {
         const y = i + j;
-        if (y === initialYear) initialYearIndexRef.current = years.length - 2;
+        if (y === initialYear) {
+          initialYearIndexRef.current = years.length - 2;
+        }
         group.push(y);
       }
       years.push(group);
@@ -77,16 +79,17 @@ function YearMonthSelection({
   }, [initialYear]);
 
   const months = useMemo(() => {
-    const months: Array<Array<{ month: number; name: string }>> = [];
+    const months: Array<Array<{month: number; name: string}>> = [];
 
     for (let i = 0; i < 4; i++) {
       const group = [];
 
-      for (let j = 0; j < 3; j++)
+      for (let j = 0; j < 3; j++) {
         group.push({
           month: i * 3 + j,
           name: formatMonth(i * 3 + j),
         });
+      }
 
       months.push(group);
     }
@@ -97,7 +100,7 @@ function YearMonthSelection({
     setYear(initialYear);
   }, [initialYear]);
 
-  if (step === 'year')
+  if (step === 'year') {
     return (
       <View style={styles.container}>
         <FlatList
@@ -115,9 +118,9 @@ function YearMonthSelection({
           ]}
           data={years}
           keyExtractor={(_, index) => index.toString()}
-          renderItem={({ item }) => {
+          renderItem={({item}) => {
             return (
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{flexDirection: 'row'}}>
                 {item.map(y => (
                   <View key={y} style={styles.year}>
                     <Button
@@ -144,8 +147,9 @@ function YearMonthSelection({
         />
       </View>
     );
+  }
 
-  if (step === 'month')
+  if (step === 'month') {
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
@@ -157,10 +161,10 @@ function YearMonthSelection({
           contentContainerStyle={styles.flatlist}
           data={months}
           keyExtractor={(_, index) => index.toString()}
-          renderItem={({ item }) => {
+          renderItem={({item}) => {
             return (
-              <View style={{ flexDirection: 'row' }}>
-                {item.map(({ month: m, name }) => (
+              <View style={{flexDirection: 'row'}}>
+                {item.map(({month: m, name}) => (
                   <View key={name} style={styles.month}>
                     <Button
                       onPress={() => onChange?.(new Date(year, m))}
@@ -186,6 +190,7 @@ function YearMonthSelection({
         />
       </View>
     );
+  }
 
   return null;
 }

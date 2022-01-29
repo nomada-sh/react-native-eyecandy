@@ -1,6 +1,6 @@
-import { useCallback, useState } from 'react';
+import {useCallback, useState} from 'react';
 
-import { useUpdateEffect } from 'react-use';
+import {useUpdateEffect} from 'react-use';
 
 import type {
   Fields,
@@ -14,7 +14,9 @@ import type {
 function getValidation<T extends ValidationType>(
   validation: Validation<T> | undefined,
 ): T | undefined {
-  if (validation === undefined) return undefined;
+  if (validation === undefined) {
+    return undefined;
+  }
 
   switch (typeof validation) {
     case 'function':
@@ -23,7 +25,9 @@ function getValidation<T extends ValidationType>(
       return validation;
   }
 
-  if (validation instanceof Array) return validation[0];
+  if (validation instanceof Array) {
+    return validation[0];
+  }
 
   return undefined;
 }
@@ -51,7 +55,7 @@ export default function useErrors<T extends Fields>(fields: T) {
   const setError = useCallback(
     (name: Name<T>, error: Error) =>
       setErrors(prevErrors => {
-        const newErrors = { ...prevErrors, [name]: error };
+        const newErrors = {...prevErrors, [name]: error};
         const equal = JSON.stringify(newErrors) === JSON.stringify(prevErrors);
         return equal ? prevErrors : newErrors;
       }),
@@ -68,7 +72,9 @@ export default function useErrors<T extends Fields>(fields: T) {
       const error: Error = {};
       const field = fields[name];
 
-      if (typeof field === 'string') return error;
+      if (typeof field === 'string') {
+        return error;
+      }
 
       // Required validation
       const required = field.required ? value.length > 0 : true;
@@ -98,11 +104,21 @@ export default function useErrors<T extends Fields>(fields: T) {
         }
       });
 
-      if (!required) error.required = true;
-      if (!validation) error.validate = true;
-      if (!maxLength) error.maxLength = true;
-      if (!minLength) error.minLength = true;
-      if (!is) error.is = true;
+      if (!required) {
+        error.required = true;
+      }
+      if (!validation) {
+        error.validate = true;
+      }
+      if (!maxLength) {
+        error.maxLength = true;
+      }
+      if (!minLength) {
+        error.minLength = true;
+      }
+      if (!is) {
+        error.is = true;
+      }
 
       return error;
     },

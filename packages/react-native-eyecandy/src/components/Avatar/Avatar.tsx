@@ -1,20 +1,16 @@
 import React from 'react';
-import {
-  ImageBackground,
-  ImageBackgroundProps,
-  StyleSheet,
-} from 'react-native';
+import {ImageBackground, ImageBackgroundProps, StyleSheet} from 'react-native';
 
-import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
+import {useTheme} from '@nomada-sh/react-native-eyecandy-theme';
 
-import { ms } from '../../utils';
+import {ms} from '../../utils';
 
 export interface AvatarProps extends ImageBackgroundProps {
   size?: number;
 }
 
-function Avatar({ size = ms(64), style, ...props }: AvatarProps) {
-  const { dark, palette } = useTheme();
+function Avatar({size = ms(64), style, ...props}: AvatarProps) {
+  const {dark, palette} = useTheme();
 
   return (
     <ImageBackground
