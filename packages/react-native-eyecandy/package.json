@@ -28,7 +28,7 @@
     "prepare": "npm run build",
     "typecheck": "tsc --noEmit",
     "local:publish": "yalc publish --push",
-    "local:add": "yalc add --dev @nomada-sh/react-native-eyecandy-theme @nomada-sh/react-native-eyecandy-icons",
+    "local:add": "yalc add @nomada-sh/react-native-eyecandy-theme @nomada-sh/react-native-eyecandy-icons",
     "local:remove": "yalc remove --all",
     "local:check": "yalc check"
   },
@@ -57,8 +57,6 @@
     ]
   },
   "devDependencies": {
-    "@nomada-sh/react-native-eyecandy-icons": "file:.yalc/@nomada-sh/react-native-eyecandy-icons",
-    "@nomada-sh/react-native-eyecandy-theme": "file:.yalc/@nomada-sh/react-native-eyecandy-theme",
     "@types/color": "^3.0.2",
     "@types/jest": "^26.0.0",
     "@types/react": "*",
@@ -74,8 +72,6 @@
     "yalc": "^1.0.0-pre.53"
   },
   "peerDependencies": {
-    "@nomada-sh/react-native-eyecandy-icons": "*",
-    "@nomada-sh/react-native-eyecandy-theme": "*",
     "react": "*",
     "react-native": "*",
     "react-native-gesture-handler": "*",
@@ -83,6 +79,8 @@
     "react-native-reanimated": "*"
   },
   "dependencies": {
+    "@nomada-sh/react-native-eyecandy-icons": "^1.0.0",
+    "@nomada-sh/react-native-eyecandy-theme": "^1.0.0",
     "calendar-base": "^1.1.1",
     "color": "^4.2.0",
     "date-fns": "^2.28.0",

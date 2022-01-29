@@ -1320,6 +1320,20 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@nomada-sh/react-native-eyecandy-icons@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@nomada-sh/react-native-eyecandy-icons/-/react-native-eyecandy-icons-1.0.0.tgz#83c8541643e83daeed3af6fc480e2a9f5a828220"
+  integrity sha512-HWnU0zPjdTTCPApVAuIcz8ylw5uys9w2R75OW/0xGXun9Xg9M7PUh9Y4pOs8AwT8whcATwcVlN5wCUkrpOEm+Q==
+  dependencies:
+    "@nomada-sh/react-native-eyecandy-theme" "^1.0.0"
+
+"@nomada-sh/react-native-eyecandy-theme@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@nomada-sh/react-native-eyecandy-theme/-/react-native-eyecandy-theme-1.0.0.tgz#89527967fcfb9115c32b6d6a8a9969ed0a8f120a"
+  integrity sha512-kHpNuek7VcECwPOGv/ONgSeXvw1YTQIPqY/UVI8gfpTqZPBbJ5NfKWjoeaYNztFemK4s+f/I9N9pj0fpUrSAxg==
+  dependencies:
+    deepmerge "^4.2.2"
+
 "@react-native-community/cli-debugger-ui@^6.0.0-rc.0":
   version "6.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-6.0.0-rc.0.tgz#774378626e4b70f5e1e2e54910472dcbaffa1536"
