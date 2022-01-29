@@ -2,3 +2,4 @@ lib
 .yalc
 yalc.lock
 node_modules
+yarn-error.log
