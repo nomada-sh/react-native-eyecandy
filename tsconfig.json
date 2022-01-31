@@ -1,17 +1,13 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@nomada-sh/react-native-eyecandy": ["./src"],
-      "@nomada-sh/react-native-eyecandy/*": ["./src/*"],
-    },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,
-    "importsNotUsedAsValues": "error",
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,

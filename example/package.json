@@ -1,28 +1,41 @@
 {
-  "name": "react-native-eyecandy-example",
-  "description": "Example app for react-native-eyecandy",
-  "version": "0.0.1",
+  "name": "example",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start"
+    "start": "react-native start",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch",
+    "local:add": "yalc add @nomada-sh/react-native-eyecandy-theme @nomada-sh/react-native-eyecandy-icons @nomada-sh/react-native-eyecandy",
+    "local:remove": "yalc remove --all"
   },
   "dependencies": {
-    "@react-native-picker/picker": "^2.2.1",
-    "react": "^17.0.2",
-    "react-native": "^0.66.4",
-    "react-native-gesture-handler": "^2.1.0",
-    "react-native-image-picker": "^4.6.0",
+    "@nomada-sh/react-native-eyecandy": "file:.yalc/@nomada-sh/react-native-eyecandy",
+    "@nomada-sh/react-native-eyecandy-icons": "file:.yalc/@nomada-sh/react-native-eyecandy-icons",
+    "@nomada-sh/react-native-eyecandy-theme": "file:.yalc/@nomada-sh/react-native-eyecandy-theme",
+    "react": "17.0.2",
+    "react-native": "0.66.4",
+    "react-native-gesture-handler": "^2.2.0",
+    "react-native-image-picker": "^4.7.3",
     "react-native-reanimated": "^2.3.1",
     "react-native-svg": "^12.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/plugin-proposal-export-namespace-from": "^7.16.5",
+    "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
-    "babel-plugin-module-resolver": "^4.0.0",
-    "metro-react-native-babel-preset": "^0.64.0",
-    "react-native-svg-transformer": "^0.14.3"
+    "@types/jest": "^26.0.23",
+    "@types/react-native": "^0.66.4",
+    "@types/react-test-renderer": "^17.0.1",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.66.2",
+    "react-test-renderer": "17.0.2",
+    "typescript": "^4.4.4",
+    "yalc": "^1.0.0-pre.53"
+  },
+  "resolutions": {
+    "@types/react": "^17"
   }
 }

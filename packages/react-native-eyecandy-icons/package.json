@@ -1,0 +1,53 @@
+{
+  "name": "@nomada-sh/react-native-eyecandy-icons",
+  "version": "1.0.0",
+  "description": "React Native Eyecandy Icons",
+  "license": "MIT",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "bob build",
+    "prepare": "npm run build",
+    "local:publish": "yalc publish --push",
+    "local:add": "yalc add @nomada-sh/react-native-eyecandy-theme",
+    "local:remove": "yalc remove --all",
+    "local:check": "yalc check"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "dependencies": {
+    "@nomada-sh/react-native-eyecandy-theme": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.38",
+    "react": "^17.0.2",
+    "react-native": "^0.67.1",
+    "react-native-builder-bob": "^0.18.2",
+    "react-native-svg": "^12.1.1",
+    "typescript": "^4.5.5",
+    "yalc": "^1.0.0-pre.53"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-svg": "*"
+  }
+}
