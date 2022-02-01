@@ -57,7 +57,13 @@ function YearMonthSelection({
 
   const formatMonth = useCallback(
     (month: number) => {
-      return formatDate(new Date(initialYear, month, 1), 'MMMM', locale);
+      const formattedMonth = formatDate(
+        new Date(initialYear, month, 1),
+        'MMMM',
+        locale,
+      );
+
+      return formattedMonth[0].toUpperCase() + formattedMonth.slice(1);
     },
     [locale, initialYear],
   );

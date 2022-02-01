@@ -168,12 +168,16 @@ function Calendar({
       x.value = ctx.startX + e.translationX;
     },
     onEnd: (e, ctx) => {
-      const threshold = width / 3;
+      const distanceThreshold = width / 3;
+      const velocityThreshold = 800;
 
       const direction = e.translationX > 0 ? 1 : -1;
       const startX = Math.round(ctx.startX / width) * width;
 
-      if (Math.abs(e.translationX) > threshold) {
+      if (
+        Math.abs(e.translationX) > distanceThreshold ||
+        Math.abs(e.velocityX) > velocityThreshold
+      ) {
         index.value = wrap(months.length, index.value - direction);
         const next = wrap(months.length, index.value + 2);
         const prev = wrap(months.length, index.value - 2);

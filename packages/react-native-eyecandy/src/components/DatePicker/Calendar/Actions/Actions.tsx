@@ -24,8 +24,10 @@ function Actions({
   todayText,
 }: ActionsProps) {
   const { month, year } = useMemo(() => {
+    const formattedMonth = formatDate(date, 'MMMM', locale);
+
     return {
-      month: formatDate(date, 'MMMM', locale),
+      month: formattedMonth[0].toUpperCase() + formattedMonth.slice(1),
       year: formatDate(date, 'yyyy', locale),
     };
   }, [date, locale]);
