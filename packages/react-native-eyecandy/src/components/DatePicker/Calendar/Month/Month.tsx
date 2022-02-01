@@ -1,8 +1,12 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 
-import Animated, {SharedValue, useAnimatedStyle} from 'react-native-reanimated';
+import Animated, {
+  SharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 
-import type {CalendarDate} from 'calendar-base';
+import type { CalendarDate } from 'calendar-base';
+import type { Locale } from 'date-fns';
 
 import Header from '../Header';
 import Actions from '../Actions';
@@ -13,7 +17,7 @@ export interface MonthProps {
   month: number;
   year: number;
   getCalendar: (year: number, month: number) => (false | CalendarDate)[];
-  locale?: string;
+  locale?: Locale;
   selectedDate: Date;
   width: number;
   index: number;
@@ -67,7 +71,7 @@ function Month({
     }
 
     return {
-      transform: [{translateX}],
+      transform: [{ translateX }],
     };
   }, [x, index, width]);
 

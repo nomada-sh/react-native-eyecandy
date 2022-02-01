@@ -1,7 +1,8 @@
-import React, {useCallback, useMemo, useState} from 'react';
-import type {StyleProp, ViewStyle} from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
+import type { Locale } from 'date-fns';
 
-import {CalendarDate, Calendar as CalendarBase} from 'calendar-base';
+import { CalendarDate, Calendar as CalendarBase } from 'calendar-base';
 
 import Animated, {
   runOnJS,
@@ -24,7 +25,7 @@ import wrap from '../wrap';
 export interface CalendarProps {
   width: number;
   date: Date;
-  locale?: string;
+  locale?: Locale;
   style?: StyleProp<ViewStyle>;
   debug?: boolean;
   onGoToYears: () => void;
@@ -179,15 +180,15 @@ function Calendar({
 
         runOnJS(onChange)(index.value, next, prev);
 
-        x.value = withTiming(startX + direction * width, {duration: 300});
+        x.value = withTiming(startX + direction * width, { duration: 300 });
       } else {
-        x.value = withTiming(startX, {duration: 300});
+        x.value = withTiming(startX, { duration: 300 });
       }
     },
   });
 
   const content = useMemo(() => {
-    return months.map(({year, month}, index) => {
+    return months.map(({ year, month }, index) => {
       return (
         <Month
           key={`${year}-${month}`}

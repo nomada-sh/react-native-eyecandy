@@ -1,8 +1,8 @@
 import React from 'react';
 
-import BottomSheet, {BottomSheetProps} from '../BottomSheet';
+import BottomSheet, { BottomSheetProps } from '../BottomSheet';
 import SwipeButton from '../SwipeButton';
-import {Body} from '../../typography';
+import { Body } from '../../typography';
 
 export interface BottomSheetSwipeConfirmationProps extends BottomSheetProps {
   title: string;

@@ -1,2 +1,2 @@
-export {default} from './BaseMenuItem';
+export { default } from './BaseMenuItem';
 export * from './BaseMenuItem';

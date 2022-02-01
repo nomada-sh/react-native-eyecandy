@@ -1,8 +1,8 @@
-import React, {memo} from 'react';
+import React, { memo } from 'react';
 
-import {Path} from 'react-native-svg';
+import { Path } from 'react-native-svg';
 
-import Icon, {IconProps} from './Icon';
+import Icon, { IconProps } from './Icon';
 
 const SvgComponent = (props: IconProps) => (
   <Icon {...props}>

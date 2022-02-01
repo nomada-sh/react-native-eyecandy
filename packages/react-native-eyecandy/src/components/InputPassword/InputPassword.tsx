@@ -1,6 +1,6 @@
 import React from 'react';
-import TextInput, {TextInputProps} from '../TextInput';
-import {Lock} from '@nomada-sh/react-native-eyecandy-icons';
+import TextInput, { TextInputProps } from '../TextInput';
+import { Lock } from '@nomada-sh/react-native-eyecandy-icons';
 
 function InputPassword(props: TextInputProps) {
   return (

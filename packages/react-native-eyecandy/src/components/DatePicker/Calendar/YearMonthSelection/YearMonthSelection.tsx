@@ -1,18 +1,20 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import {FlatList} from 'react-native-gesture-handler';
+import { FlatList } from 'react-native-gesture-handler';
 
 import Button from '../../../Button';
-import {Body} from '../../../../typography';
-import {useUpdateEffect} from 'react-use';
+import { Body } from '../../../../typography';
+import { useUpdateEffect } from 'react-use';
 import formatDate from '../../formatDate';
+
+import type { Locale } from 'date-fns';
 
 export interface YearMonthSelectionProps {
   step?: 'year' | 'month';
   onChange?: (date: Date) => void;
   goToYears?: () => void;
-  locale: string;
+  locale: Locale;
   date: Date;
   selectedDate: Date;
   setStep?: (step: 'year' | 'month' | undefined) => void;
@@ -29,14 +31,14 @@ function YearMonthSelection({
   selectedDate,
   setStep,
 }: YearMonthSelectionProps) {
-  const {yearSelected, monthSelected} = useMemo(() => {
+  const { yearSelected, monthSelected } = useMemo(() => {
     return {
       yearSelected: selectedDate.getFullYear(),
       monthSelected: selectedDate.getMonth(),
     };
   }, [selectedDate]);
 
-  const {yearNow, monthNow} = useMemo(() => {
+  const { yearNow, monthNow } = useMemo(() => {
     const now = new Date();
     return {
       yearNow: now.getFullYear(),
@@ -44,7 +46,7 @@ function YearMonthSelection({
     };
   }, []);
 
-  const {initialYear} = useMemo(() => {
+  const { initialYear } = useMemo(() => {
     return {
       initialYear: visibleDate.getFullYear(),
       initialMonth: visibleDate.getMonth(),
@@ -79,7 +81,7 @@ function YearMonthSelection({
   }, [initialYear]);
 
   const months = useMemo(() => {
-    const months: Array<Array<{month: number; name: string}>> = [];
+    const months: Array<Array<{ month: number; name: string }>> = [];
 
     for (let i = 0; i < 4; i++) {
       const group = [];
@@ -118,9 +120,9 @@ function YearMonthSelection({
           ]}
           data={years}
           keyExtractor={(_, index) => index.toString()}
-          renderItem={({item}) => {
+          renderItem={({ item }) => {
             return (
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 {item.map(y => (
                   <View key={y} style={styles.year}>
                     <Button
@@ -161,10 +163,10 @@ function YearMonthSelection({
           contentContainerStyle={styles.flatlist}
           data={months}
           keyExtractor={(_, index) => index.toString()}
-          renderItem={({item}) => {
+          renderItem={({ item }) => {
             return (
-              <View style={{flexDirection: 'row'}}>
-                {item.map(({month: m, name}) => (
+              <View style={{ flexDirection: 'row' }}>
+                {item.map(({ month: m, name }) => (
                   <View key={name} style={styles.month}>
                     <Button
                       onPress={() => onChange?.(new Date(year, m))}

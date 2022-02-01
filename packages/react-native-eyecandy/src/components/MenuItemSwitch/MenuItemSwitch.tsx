@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import BaseMenuItem, {BaseMenuItemProps} from '../BaseMenuItem';
-import {Body} from '../../typography';
+import BaseMenuItem, { BaseMenuItemProps } from '../BaseMenuItem';
+import { Body } from '../../typography';
 import Switch from '../Switch';
 
 export interface MenuItemSwitchProps

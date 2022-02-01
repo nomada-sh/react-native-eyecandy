@@ -1,4 +1,4 @@
-import {enUS, es} from 'date-fns/locale';
+import { enUS, es } from 'date-fns/locale';
 
 export default function (locale: string) {
   switch (locale) {

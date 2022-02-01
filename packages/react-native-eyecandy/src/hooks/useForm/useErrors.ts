@@ -1,6 +1,6 @@
-import {useCallback, useState} from 'react';
+import { useCallback, useState } from 'react';
 
-import {useUpdateEffect} from 'react-use';
+import { useUpdateEffect } from 'react-use';
 
 import type {
   Fields,
@@ -55,7 +55,7 @@ export default function useErrors<T extends Fields>(fields: T) {
   const setError = useCallback(
     (name: Name<T>, error: Error) =>
       setErrors(prevErrors => {
-        const newErrors = {...prevErrors, [name]: error};
+        const newErrors = { ...prevErrors, [name]: error };
         const equal = JSON.stringify(newErrors) === JSON.stringify(prevErrors);
         return equal ? prevErrors : newErrors;
       }),

@@ -1,9 +1,9 @@
-import React, {useEffect, useImperativeHandle, useRef} from 'react';
-import {Platform, StyleProp, ViewStyle} from 'react-native';
+import React, { useEffect, useImperativeHandle, useRef } from 'react';
+import { Platform, StyleProp, ViewStyle } from 'react-native';
 
-import RBSheet, {RBSheetProps} from './RBSheet';
+import RBSheet, { RBSheetProps } from './RBSheet';
 
-import {useTheme} from '@nomada-sh/react-native-eyecandy-theme';
+import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
 export interface BottomSheetProps extends RBSheetProps {
   ref?: React.Ref<RBSheet>;
@@ -21,9 +21,9 @@ const DARK_MASK_COLOR = 'rgba(0, 0, 0, 0.75)',
   LIGHT_MASK_COLOR = 'rgba(0, 0, 0, 0.5)';
 
 const BottomSheet = React.forwardRef<BottomSheetHandle, BottomSheetProps>(
-  ({style, visible, customStyles, ...props}, forwardedRef?) => {
+  ({ style, visible, customStyles, ...props }, forwardedRef?) => {
     // TODO: Create BottomSheet colors.
-    const {dark, background, divider} = useTheme(t => ({
+    const { dark, background, divider } = useTheme(t => ({
       dark: t.dark,
       background: t.colors.background.default,
       divider: t.colors.divider.default,

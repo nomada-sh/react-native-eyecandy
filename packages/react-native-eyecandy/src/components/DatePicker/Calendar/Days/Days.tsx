@@ -1,7 +1,7 @@
-import React, {useCallback, useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, { useCallback, useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import type {CalendarDate} from 'calendar-base';
+import type { CalendarDate } from 'calendar-base';
 
 import Day from '../Day';
 

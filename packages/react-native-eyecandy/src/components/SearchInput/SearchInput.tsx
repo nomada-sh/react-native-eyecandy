@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import Button from '../Button';
-import TextInput, {TextInputProps} from '../TextInput';
-import {Search, Filter} from '@nomada-sh/react-native-eyecandy-icons';
+import TextInput, { TextInputProps } from '../TextInput';
+import { Search, Filter } from '@nomada-sh/react-native-eyecandy-icons';
 
 export interface SearchInputProps
   extends Omit<TextInputProps, 'onPressAction'> {

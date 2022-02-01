@@ -1,6 +1,6 @@
-import {useCallback, useRef} from 'react';
+import { useCallback, useRef } from 'react';
 
-import type {Fields, InputProps, Message, Name, Error} from './types';
+import type { Fields, InputProps, Message, Name, Error } from './types';
 import useErrors from './useErrors';
 import useMessages from './useMessages';
 import useValues from './useValues';
@@ -13,8 +13,8 @@ export default function useForm<T extends Fields>(initialFields: T) {
 
   const fields = fieldsRef.current;
 
-  const {values, setValue, clearValues} = useValues(fields);
-  const {errors, setError, clearErrors, validate} = useErrors(fields);
+  const { values, setValue, clearValues } = useValues(fields);
+  const { errors, setError, clearErrors, validate } = useErrors(fields);
 
   const messages = useMessages(fields, errors);
 

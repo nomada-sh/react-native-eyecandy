@@ -1,8 +1,8 @@
-import {ThemeButtonColors, GetThemeColors} from './types';
+import { ThemeButtonColors, GetThemeColors } from './types';
 import mergeColors from './mergeColors';
 
 const getButtonColors: GetThemeColors<ThemeButtonColors> = options => {
-  const {dark, palette} = options;
+  const { dark, palette } = options;
 
   const defaultColors: ThemeButtonColors = {
     default: {

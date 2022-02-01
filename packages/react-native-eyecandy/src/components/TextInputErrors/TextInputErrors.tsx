@@ -1,7 +1,7 @@
-import React, {useMemo} from 'react';
-import {Animated} from 'react-native';
+import React, { useMemo } from 'react';
+import { Animated } from 'react-native';
 
-import {Body} from '../../typography';
+import { Body } from '../../typography';
 
 type Error = [boolean | undefined | null, string];
 
@@ -10,7 +10,7 @@ export interface TextInputErrorsProps {
   error?: Error;
 }
 
-function TextInputErrors({errors = [], error}: TextInputErrorsProps) {
+function TextInputErrors({ errors = [], error }: TextInputErrorsProps) {
   const isEmpty = useMemo(
     () => !errors.length && !error,
     [errors.length, error],

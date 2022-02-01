@@ -1,4 +1,4 @@
-import {ThemeTypography, CreateThemeTypographyOptions} from './types';
+import { ThemeTypography, CreateThemeTypographyOptions } from './types';
 import deepmerge from 'deepmerge';
 
 import defaultTypography from './Typography';

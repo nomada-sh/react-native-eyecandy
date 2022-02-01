@@ -1,6 +1,6 @@
 import useTheme from './useTheme';
 
-import {ThemeTypography} from '../typography';
+import { ThemeTypography } from '../typography';
 
 export default function useTypography(): ThemeTypography;
 

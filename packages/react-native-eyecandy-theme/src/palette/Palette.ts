@@ -1,4 +1,4 @@
-import {ThemePalette} from './types';
+import { ThemePalette } from './types';
 
 const Palette: ThemePalette = {
   primary: {

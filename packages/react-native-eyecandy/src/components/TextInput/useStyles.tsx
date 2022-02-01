@@ -1,9 +1,9 @@
-import React, {useCallback} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { useCallback } from 'react';
+import { StyleSheet } from 'react-native';
 
-import {useTheme, useColors} from '@nomada-sh/react-native-eyecandy-theme';
+import { useTheme, useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
-import type {TextInputIcon, TextInputProps} from './typings';
+import type { TextInputIcon, TextInputProps } from './typings';
 
 export default function useStyles({
   color = 'default',
@@ -24,7 +24,7 @@ export default function useStyles({
   hasError?: boolean;
   fullWidth?: boolean;
 }) {
-  const {palette, typography, dark} = useTheme();
+  const { palette, typography, dark } = useTheme();
   const colors = useColors(c => c.input[color]);
   const fontSize = typography.body.fontSize;
 

@@ -4,7 +4,7 @@ import {
   ThemeHeadingFontSizes,
 } from '@nomada-sh/react-native-eyecandy-theme';
 
-import Text, {TextProps} from '../Text';
+import Text, { TextProps } from '../Text';
 
 export interface HeadingProps extends Omit<TextProps, 'variant'> {
   variant?: keyof ThemeHeadingFontSizes;

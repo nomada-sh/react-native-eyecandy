@@ -1,16 +1,16 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import BaseMenuItem, {BaseMenuItemProps} from '../BaseMenuItem';
-import {ChevronRight} from '@nomada-sh/react-native-eyecandy-icons';
-import {Body} from '../../typography';
+import BaseMenuItem, { BaseMenuItemProps } from '../BaseMenuItem';
+import { ChevronRight } from '@nomada-sh/react-native-eyecandy-icons';
+import { Body } from '../../typography';
 
 export interface MenuItemProps extends Omit<BaseMenuItemProps, 'children'> {
   text?: string;
   textColor?: string;
 }
 
-function MenuItem({textColor, text, ...props}: MenuItemProps) {
+function MenuItem({ textColor, text, ...props }: MenuItemProps) {
   return (
     <BaseMenuItem {...props}>
       <Body

@@ -1,15 +1,17 @@
-import React, {useMemo} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, { useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import {Body} from '../../../../typography';
+import { Body } from '../../../../typography';
 import formatDate from '../../formatDate';
+
+import type { Locale } from 'date-fns';
 
 export interface ActionsProps {
   date: Date;
   onPressYear: () => void;
   onPressMonth: () => void;
   onPressToday: () => void;
-  locale: string;
+  locale: Locale;
   todayText: string;
 }
 
@@ -21,7 +23,7 @@ function Actions({
   locale, // = 'en-US',
   todayText,
 }: ActionsProps) {
-  const {month, year} = useMemo(() => {
+  const { month, year } = useMemo(() => {
     return {
       month: formatDate(date, 'MMMM', locale),
       year: formatDate(date, 'yyyy', locale),

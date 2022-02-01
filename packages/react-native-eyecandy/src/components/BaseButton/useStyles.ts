@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import Color from 'color';
 
@@ -6,7 +6,7 @@ import {
   ThemeButtonColorChoices,
   useColors,
 } from '@nomada-sh/react-native-eyecandy-theme';
-import {getRippleColor} from '../../utils';
+import { getRippleColor } from '../../utils';
 
 export default function useStyles({
   color = 'default',
@@ -24,7 +24,7 @@ export default function useStyles({
   fullwidth?: boolean;
 }) {
   const colors = useColors(c => c.button);
-  const {background, foreground} = colors[color];
+  const { background, foreground } = colors[color];
 
   const borderRadius = /([a-z]+-)?rounded$/.test(variant) ? height / 2 : 12;
 

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -93,10 +93,10 @@ class RBSheet extends Component<RBSheetProps, RBSheetState> {
       onOpen,
     } = this.props;
 
-    const {animatedHeight, pan} = this.state;
+    const { animatedHeight, pan } = this.state;
 
     if (visible) {
-      this.setState({modalVisible: visible});
+      this.setState({ modalVisible: visible });
 
       onOpen?.();
 
@@ -115,7 +115,7 @@ class RBSheet extends Component<RBSheetProps, RBSheetState> {
         toValue: minClosingHeight,
         duration: closeDuration,
       }).start(() => {
-        pan.setValue({x: 0, y: 0});
+        pan.setValue({ x: 0, y: 0 });
         this.setState({
           modalVisible: visible,
           animatedHeight: new Animated.Value(0),
@@ -127,14 +127,14 @@ class RBSheet extends Component<RBSheetProps, RBSheetState> {
   }
 
   createPanResponder(props: RBSheetProps) {
-    const {closeOnDragDown = false, height, onClose} = props;
-    const {pan} = this.state;
+    const { closeOnDragDown = false, height, onClose } = props;
+    const { pan } = this.state;
 
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => closeOnDragDown,
       onPanResponderMove: (e, gestureState) => {
         if (gestureState.dy > 0) {
-          Animated.event([null, {dy: pan.y}], {useNativeDriver: false})(
+          Animated.event([null, { dy: pan.y }], { useNativeDriver: false })(
             e,
             gestureState,
           );
@@ -146,7 +146,7 @@ class RBSheet extends Component<RBSheetProps, RBSheetState> {
         }
 
         Animated.spring(pan, {
-          toValue: {x: 0, y: 0},
+          toValue: { x: 0, y: 0 },
           useNativeDriver: false,
         }).start();
       },
@@ -174,7 +174,7 @@ class RBSheet extends Component<RBSheetProps, RBSheetState> {
       onClose,
     } = this.props;
 
-    const {animatedHeight, pan, modalVisible} = this.state;
+    const { animatedHeight, pan, modalVisible } = this.state;
 
     const panStyle = {
       transform: pan.getTranslateTransform(),
@@ -205,7 +205,7 @@ class RBSheet extends Component<RBSheetProps, RBSheetState> {
             style={[
               panStyle,
               styles.container,
-              {height: animatedHeight},
+              { height: animatedHeight },
               customStyles.container,
             ]}>
             {closeOnDragDown && (

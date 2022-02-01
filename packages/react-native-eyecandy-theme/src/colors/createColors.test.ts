@@ -1,5 +1,5 @@
 import createColors from './createColors';
-import {CustomThemeColors, ThemeButtonColors} from './types';
+import { CustomThemeColors, ThemeButtonColors } from './types';
 
 test('createColors', () => {
   const colors = createColors();

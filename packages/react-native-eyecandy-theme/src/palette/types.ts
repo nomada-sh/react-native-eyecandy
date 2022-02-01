@@ -1,4 +1,4 @@
-import {DeepPartial} from '../types';
+import { DeepPartial } from '../types';
 
 export type Color = {
   50: string;

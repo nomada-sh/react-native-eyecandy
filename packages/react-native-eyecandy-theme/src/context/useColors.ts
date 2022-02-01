@@ -1,6 +1,6 @@
 import useTheme from './useTheme';
 
-import {ThemeColors} from '../colors';
+import { ThemeColors } from '../colors';
 
 export default function useColors(): ThemeColors;
 

@@ -1,4 +1,4 @@
-import {CreateThemePaletteOptions, ThemePalette} from './types';
+import { CreateThemePaletteOptions, ThemePalette } from './types';
 import deepmerge from 'deepmerge';
 
 import defaultPalette from './Palette';

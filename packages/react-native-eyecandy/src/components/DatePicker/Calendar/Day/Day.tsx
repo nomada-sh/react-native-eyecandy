@@ -1,11 +1,11 @@
-import React, {useMemo, useRef} from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
+import React, { useMemo, useRef } from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
 
-import type {CalendarDate} from 'calendar-base';
+import type { CalendarDate } from 'calendar-base';
 
-import {Body} from '../../../../typography';
-import {useTheme} from '@nomada-sh/react-native-eyecandy-theme';
-import {useRippleColor} from '../../../../hooks';
+import { Body } from '../../../../typography';
+import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
+import { useRippleColor } from '../../../../hooks';
 
 export interface DayProps {
   value: CalendarDate | false;
@@ -14,8 +14,8 @@ export interface DayProps {
   debug?: boolean;
 }
 
-function Day({value, onPress, selected, debug}: DayProps) {
-  const {palette, dark, colors} = useTheme();
+function Day({ value, onPress, selected, debug }: DayProps) {
+  const { palette, dark, colors } = useTheme();
 
   const today = useMemo(() => {
     if (!value) {

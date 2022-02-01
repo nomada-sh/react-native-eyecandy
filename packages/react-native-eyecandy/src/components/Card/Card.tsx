@@ -1,15 +1,15 @@
 import React from 'react';
-import type {ReactNode} from 'react';
-import {View, ViewProps} from 'react-native';
+import type { ReactNode } from 'react';
+import { View, ViewProps } from 'react-native';
 
-import {useTheme} from '@nomada-sh/react-native-eyecandy-theme';
+import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
 export interface CardProps extends ViewProps {
   children?: ReactNode;
 }
 
-function Card({style, ...props}: CardProps) {
-  const {dark, palette} = useTheme();
+function Card({ style, ...props }: CardProps) {
+  const { dark, palette } = useTheme();
 
   return (
     <View

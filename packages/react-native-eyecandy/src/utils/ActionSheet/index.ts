@@ -1,1 +1,1 @@
-export {default} from './ActionSheet';
+export { default } from './ActionSheet';

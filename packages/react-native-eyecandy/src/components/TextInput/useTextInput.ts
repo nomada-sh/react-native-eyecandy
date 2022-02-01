@@ -1,6 +1,6 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import type {TextInputProps, TextInputRefCurrent} from './typings';
+import type { TextInputProps, TextInputRefCurrent } from './typings';
 
 export default function useTextInput({
   onFocus,

@@ -1,5 +1,10 @@
-import React, {useCallback, useMemo, useState} from 'react';
-import {Modal, StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import {
+  Modal,
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
 
 import Animated, {
   useSharedValue,
@@ -18,9 +23,9 @@ import {
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
 
-import {useUpdateEffect} from 'react-use';
+import { useUpdateEffect } from 'react-use';
 
-import {useColors} from '@nomada-sh/react-native-eyecandy-theme';
+import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
 const HANDLE_HEIGHT = 40;
 
@@ -48,7 +53,7 @@ function Content({
   const height = useSharedValue(initialHeight);
   const open = useSharedValue(false);
 
-  const {background, divider} = useColors(c => ({
+  const { background, divider } = useColors(c => ({
     background: c.background.default,
     divider: c.divider.default,
   }));
@@ -59,7 +64,7 @@ function Content({
 
     open.value = true;
 
-    y.value = withSpring(0, {damping: 12}, () => {
+    y.value = withSpring(0, { damping: 12 }, () => {
       onOpen && runOnJS(onOpen)();
     });
   }, [onOpen, open, y]);
@@ -69,7 +74,7 @@ function Content({
 
     open.value = false;
 
-    y.value = withTiming(height.value, {duration: 300}, () => {
+    y.value = withTiming(height.value, { duration: 300 }, () => {
       onClose && runOnJS(onClose)();
     });
   }, [height, onClose, open, y]);
@@ -95,7 +100,7 @@ function Content({
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{translateY: y.value}],
+      transform: [{ translateY: y.value }],
       height: height.value * 2,
       backgroundColor: background.content,
       borderTopLeftRadius: 32,

@@ -1,10 +1,12 @@
-import React, {useMemo, useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, { useMemo, useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import {Body} from '../../../../typography';
+import { Body } from '../../../../typography';
+
+import type { Locale } from 'date-fns';
 
 export interface HeaderProps {
-  locale?: string;
+  locale?: Locale;
   month?: number;
   year?: number;
   debug?: boolean;
@@ -13,7 +15,7 @@ export interface HeaderProps {
 const EN_NAMES = 'SMTWTFS'.split('');
 const ES_NAMES = 'DLMMJVS'.split('');
 
-function Header({debug, locale, month, year}: HeaderProps) {
+function Header({ debug, locale, month, year }: HeaderProps) {
   const count = useRef(1);
   debug &&
     console.log(
@@ -25,11 +27,13 @@ function Header({debug, locale, month, year}: HeaderProps) {
 
   const names = useMemo(() => {
     if (locale) {
-      if (/^es(-[A-Za-z]{2})?$/.test(locale)) {
+      const code = locale.code ?? 'en';
+
+      if (/^es(-[A-Za-z]{2})?$/.test(code)) {
         return ES_NAMES;
       }
 
-      if (/^en(-[A-Za-z]{2})?$/.test(locale)) {
+      if (/^en(-[A-Za-z]{2})?$/.test(code)) {
         return EN_NAMES;
       }
     }

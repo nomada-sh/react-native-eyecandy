@@ -1,9 +1,15 @@
 import React from 'react';
-import {Pressable, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 
-import IconButton, {IconButtonProps} from '../IconButton';
-import {useRippleColor} from '../../hooks';
-import {useColors} from '@nomada-sh/react-native-eyecandy-theme';
+import IconButton, { IconButtonProps } from '../IconButton';
+import { useRippleColor } from '../../hooks';
+import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
 export interface BaseMenuItemProps {
   style?: StyleProp<ViewStyle>;
@@ -24,7 +30,7 @@ function BaseMenuItem({
   onPress,
   children,
 }: BaseMenuItemProps) {
-  const {background, divider} = useColors(c => ({
+  const { background, divider } = useColors(c => ({
     background: c.background.default,
     divider: c.divider.default,
   }));

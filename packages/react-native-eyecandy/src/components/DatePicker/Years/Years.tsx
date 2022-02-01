@@ -1,9 +1,9 @@
-import React, {useMemo} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import React, { useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
-import {Body} from '../../../typography';
-import {useColors} from '@nomada-sh/react-native-eyecandy-theme';
+import { Body } from '../../../typography';
+import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 import Button from '../../Button';
 
 export interface YearsProps {
@@ -13,7 +13,7 @@ export interface YearsProps {
   onPressYear: (year: number) => void;
 }
 
-function Years({onPressBack, year, maxYears, onPressYear}: YearsProps) {
+function Years({ onPressBack, year, maxYears, onPressYear }: YearsProps) {
   const background = useColors(c => c.background.default);
 
   const years = useMemo(() => {
