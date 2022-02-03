@@ -182,6 +182,7 @@ class RBSheet extends Component<RBSheetProps, RBSheetState> {
 
     return (
       <Modal
+        statusBarTranslucent
         transparent
         animationType={animationType}
         visible={modalVisible}

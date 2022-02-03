@@ -1,4 +1,4 @@
-import React, { useMemo, FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
 import BaseButton, { BaseButtonProps } from '../BaseButton';
@@ -15,6 +15,7 @@ export interface IconButtonProps extends BaseButtonProps {
   size?: number;
   iconSize?: number;
   iconColor?: string;
+  iconStyle?: StyleProp<ViewStyle>;
 }
 
 function IconButton({
@@ -24,30 +25,19 @@ function IconButton({
   iconSize: iconSizeProp,
   color = 'default',
   iconColor: iconColorProp,
+  iconStyle,
   variant = 'rounded',
   inverse,
   ...props
 }: IconButtonProps) {
   const { foreground, background } = useColors(c => c.button[color]);
 
-  let icon: ReactNode = useMemo(() => {
-    const iconSize = iconSizeProp ?? size * 0.4;
-    const iconColor = iconColorProp
-      ? iconColorProp
-      : inverse
-      ? background
-      : foreground;
-
-    return Icon ? <Icon size={iconSize} stroke={iconColor} /> : null;
-  }, [
-    Icon,
-    background,
-    foreground,
-    iconColorProp,
-    iconSizeProp,
-    inverse,
-    size,
-  ]);
+  const iconSize = iconSizeProp ?? size * 0.4;
+  const iconColor = iconColorProp
+    ? iconColorProp
+    : inverse
+    ? background
+    : foreground;
 
   return (
     <BaseButton
@@ -63,7 +53,9 @@ function IconButton({
       height={size}
       variant={variant}
       {...props}>
-      {icon}
+      {Icon ? (
+        <Icon size={iconSize} stroke={iconColor} style={iconStyle} />
+      ) : null}
     </BaseButton>
   );
 }
