@@ -28,3 +28,4 @@ export { default as SignOut } from './SignOut';
 export { default as Plus } from './Plus';
 export { default as Tree } from './Tree';
 export { default as Warning } from './Warning';
+export { default as Dots } from './Dots';
