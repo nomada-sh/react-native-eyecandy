@@ -34,9 +34,8 @@ export default function useStyles({
 
   let disabledColor = backgroundColor.fade(0.4);
 
-  if (/^transparent(-[a-z]+)?/.test(variant)) {
+  if (/^transparent(-[a-z]+)?/.test(variant))
     backgroundColor = backgroundColor.alpha(0);
-  }
 
   return StyleSheet.create({
     container: {

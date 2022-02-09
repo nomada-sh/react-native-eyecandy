@@ -1,6 +1,7 @@
-import React, { ReactNode, useMemo } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import {
   ActivityIndicator,
+  GestureResponderEvent,
   Pressable,
   PressableProps,
   StyleProp,
@@ -8,8 +9,10 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { usePressableStyles } from '../../hooks';
 import type { ThemeButtonColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+
+import { usePressableStyles } from '../../hooks';
 import useStyles from './useStyles';
 
 export interface BaseButtonProps extends PressableProps {
@@ -54,12 +57,10 @@ function BaseButton({
   loading,
   styles: customStyles = {},
   hideDisabledOverlay,
+  onPress: onPressProp,
   ...props
 }: BaseButtonProps) {
-  const disabled = useMemo(
-    () => disabledProp || loading,
-    [disabledProp, loading],
-  );
+  const disabled = disabledProp || loading;
 
   const styles = useStyles({
     color,
@@ -76,6 +77,14 @@ function BaseButton({
     customStyles.button,
   ]);
 
+  const onPress = useCallback(
+    (e: GestureResponderEvent) => {
+      ReactNativeHapticFeedback.trigger('impactMedium');
+      onPressProp?.(e);
+    },
+    [onPressProp],
+  );
+
   return (
     <View style={[styles.container, style, customStyles.container]}>
       <Pressable
@@ -84,6 +93,7 @@ function BaseButton({
           color: styles.ripple.color,
         }}
         disabled={disabled}
+        onPress={onPress}
         {...props}>
         {children}
       </Pressable>
