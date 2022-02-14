@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useCallback } from 'react';
+import { Platform, StyleSheet } from 'react-native';
 
 import SwipeButtonBase, {
   Props as SwipeButtonBaseProps,
@@ -9,6 +9,7 @@ import Color from 'color';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import { ChevronRight } from '@nomada-sh/react-native-eyecandy-icons';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 // TODO: Fix thumbIconComponent type.
 export interface SwipeButtonProps
@@ -21,6 +22,8 @@ function SwipeButton({
   containerStyles,
   thumbIconStyles,
   title = '',
+  onSwipeFail: onSwipeFailProp,
+  onSwipeSuccess: onSwipeSuccessProp,
   ...props
 }: SwipeButtonProps) {
   const { typography, colors } = useTheme(t => ({
@@ -34,6 +37,18 @@ function SwipeButton({
     .alpha(0.8)
     .string();
   const thumbColor = Color(colors.background).darken(0.4).string();
+
+  const onSwipeFail = useCallback(() => {
+    ReactNativeHapticFeedback.trigger('notificationError');
+
+    onSwipeFailProp?.();
+  }, [onSwipeFailProp]);
+
+  const onSwipeSuccess = useCallback(() => {
+    ReactNativeHapticFeedback.trigger('notificationSuccess');
+
+    onSwipeSuccessProp?.();
+  }, [onSwipeSuccessProp]);
 
   return (
     <SwipeButtonBase
@@ -66,6 +81,8 @@ function SwipeButton({
       railFillBorderColor={fillColor}
       thumbIconBackgroundColor={thumbColor}
       thumbIconBorderColor={thumbColor}
+      onSwipeFail={onSwipeFail}
+      onSwipeSuccess={onSwipeSuccess}
       {...props}
     />
   );

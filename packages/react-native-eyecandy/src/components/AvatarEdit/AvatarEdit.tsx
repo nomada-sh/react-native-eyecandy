@@ -15,6 +15,7 @@ import {
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 import Avatar, { AvatarProps } from '../Avatar';
 import IconButton from '../IconButton';
@@ -73,8 +74,12 @@ function AvatarEdit({
     [onImageSelected],
   );
 
+  // TODO: Translate this.
+
   const handlePress = useCallback(
     (e: GestureResponderEvent) => {
+      ReactNativeHapticFeedback.trigger('impactMedium');
+
       ActionSheet(
         {
           optionsIOS: ['From Gallery', 'From Camera', 'Cancel'],

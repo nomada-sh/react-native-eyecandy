@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   Pressable,
   StyleProp,
@@ -7,9 +7,11 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+
 import IconButton, { IconButtonProps } from '../IconButton';
 import { useRippleColor } from '../../hooks';
-import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
 export interface BaseMenuItemProps {
   style?: StyleProp<ViewStyle>;
@@ -27,7 +29,7 @@ function BaseMenuItem({
   iconColor,
   iconBackgroundColor,
   separator = false,
-  onPress,
+  onPress: onPressProp,
   children,
 }: BaseMenuItemProps) {
   const { background, divider } = useColors(c => ({
@@ -36,6 +38,11 @@ function BaseMenuItem({
   }));
 
   const rippleColor = useRippleColor(background.container);
+
+  const onPress = useCallback(() => {
+    ReactNativeHapticFeedback.trigger('impactMedium');
+    onPressProp?.();
+  }, [onPressProp]);
 
   return (
     <Pressable
