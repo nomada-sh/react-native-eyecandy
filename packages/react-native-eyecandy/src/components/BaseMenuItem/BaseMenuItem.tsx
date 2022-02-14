@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import {
-  GestureResponderEvent,
   Pressable,
   StyleProp,
   StyleSheet,
