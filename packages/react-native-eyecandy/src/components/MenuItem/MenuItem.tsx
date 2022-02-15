@@ -8,9 +8,10 @@ import { Body } from '../../typography';
 export interface MenuItemProps extends Omit<BaseMenuItemProps, 'children'> {
   text?: string;
   textColor?: string;
+  hideArrow?: boolean;
 }
 
-function MenuItem({ textColor, text, ...props }: MenuItemProps) {
+function MenuItem({ textColor, text, hideArrow, ...props }: MenuItemProps) {
   return (
     <BaseMenuItem {...props}>
       <Body
@@ -20,7 +21,7 @@ function MenuItem({ textColor, text, ...props }: MenuItemProps) {
         customColor={textColor}>
         {text}
       </Body>
-      <ChevronRight size={16} color="greyout" />
+      {hideArrow ? null : <ChevronRight size={16} color="greyout" />}
     </BaseMenuItem>
   );
 }
