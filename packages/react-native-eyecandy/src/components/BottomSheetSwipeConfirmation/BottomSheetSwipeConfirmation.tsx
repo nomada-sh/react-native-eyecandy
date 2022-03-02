@@ -1,13 +1,15 @@
 import React from 'react';
 
-import BottomSheet, { BottomSheetProps } from '../BottomSheet';
+import BottomSheet, { BottomSheetProps } from '../BottomSheetV2';
 import SwipeButton from '../SwipeButton';
 import { Body } from '../../typography';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface BottomSheetSwipeConfirmationProps extends BottomSheetProps {
   title: string;
   swipeTitle?: string;
   onConfirm?: () => void;
+  style?: StyleProp<ViewStyle>;
 }
 
 function BottomSheetSwipeConfirmation({
@@ -19,7 +21,7 @@ function BottomSheetSwipeConfirmation({
 }: BottomSheetSwipeConfirmationProps) {
   return (
     <BottomSheet
-      style={[
+      contentStyle={[
         {
           alignItems: 'center',
         },
@@ -41,9 +43,7 @@ function BottomSheetSwipeConfirmation({
 }
 
 BottomSheetSwipeConfirmation.defaultProps = {
-  ...BottomSheet.defaultProps,
   height: 170,
-  closeOnPressMask: false,
 };
 
 export default BottomSheetSwipeConfirmation;

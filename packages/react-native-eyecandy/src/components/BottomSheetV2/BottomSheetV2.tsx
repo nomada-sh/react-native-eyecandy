@@ -4,6 +4,8 @@ import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
 
 import Animated, {
@@ -45,6 +47,7 @@ export interface ContentProps {
   onDismiss?: () => void;
   onClose?: () => void;
   onOpen?: () => void;
+  style?: StyleProp<ViewStyle>;
 }
 
 function Content({
@@ -54,6 +57,7 @@ function Content({
   onDismiss,
   onClose,
   onOpen,
+  style,
 }: ContentProps) {
   const height = useSharedValue(initialHeight);
   const open = useSharedValue(false);
@@ -145,9 +149,12 @@ function Content({
           />
         </View>
         <View
-          style={{
-            flex: 1,
-          }}>
+          style={[
+            {
+              flex: 1,
+            },
+            style,
+          ]}>
           {children}
         </View>
         <View
@@ -168,6 +175,7 @@ export interface BottomSheetProps {
   visible?: boolean;
   height: number;
   onClose?: () => void;
+  contentStyle?: StyleProp<ViewStyle>;
 }
 
 function BottomSheet({
@@ -175,6 +183,7 @@ function BottomSheet({
   visible = false,
   height: initialHeight,
   onClose,
+  contentStyle,
 }: BottomSheetProps) {
   const height = useMemo(() => initialHeight + HANDLE_HEIGHT, [initialHeight]);
   const [modalVisible, setModalVisible] = useState<boolean | undefined>(
@@ -213,6 +222,7 @@ function BottomSheet({
             height,
           }}>
           <WrappedContent
+            style={contentStyle}
             height={height}
             visible={visible}
             onDismiss={onClose}
