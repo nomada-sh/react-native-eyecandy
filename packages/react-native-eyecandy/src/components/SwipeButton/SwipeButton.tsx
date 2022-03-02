@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { SafeAreaViewBase, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import Color from 'color';
 
@@ -54,7 +54,6 @@ function SwipeButton({
 }: SwipeButtonProps) {
   const feedbackRef = useRef<boolean[]>([...feedbackTypes.map(() => false)]);
   const minProgress = 1 / (feedbackTypes.length + 1);
-  const maxProgress = 1 - minProgress;
 
   const swipableSize = height - padding * 2;
   const swipeRange = width - padding * 2;
@@ -76,15 +75,11 @@ function SwipeButton({
     onFailProp?.();
   }, [onFailProp]);
 
-  const onSwipeSuccess = useCallback(
-    (endProgress: number) => {
-      if (endProgress < maxProgress)
-        ReactNativeHapticFeedback.trigger('notificationSuccess');
+  const onSwipeSuccess = useCallback(() => {
+    ReactNativeHapticFeedback.trigger('notificationSuccess');
 
-      onSuccessProp?.();
-    },
-    [maxProgress, onSuccessProp],
-  );
+    onSuccessProp?.();
+  }, [onSuccessProp]);
 
   const onSwiping = useCallback(
     (currentProgress: number) => {
@@ -105,7 +100,7 @@ function SwipeButton({
 
   const calculateProgress = (newX: number) => {
     'worklet';
-    return newX / (maxX + swipableSize);
+    return (newX + swipableSize) / (maxX + swipableSize);
   };
 
   const gestureHandler = useAnimatedGestureHandler<
@@ -122,11 +117,9 @@ function SwipeButton({
       onSwiping && runOnJS(onSwiping)(progress.value);
     },
     onEnd: _ => {
-      const endProgress = progress.value;
-
       if (x.value > swipeRange / 2 - swipableSize / 2) {
         x.value = withTiming(maxX, undefined, () => {
-          runOnJS(onSwipeSuccess)(endProgress);
+          runOnJS(onSwipeSuccess)();
         });
       } else {
         x.value = withTiming(0, undefined, () => {
