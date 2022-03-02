@@ -29,6 +29,11 @@ import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
 const HANDLE_HEIGHT = 40;
 
+const clamp = (value: number, lowerBound: number, upperBound: number) => {
+  'worklet';
+  return Math.min(Math.max(lowerBound, value), upperBound);
+};
+
 type Context = {
   startY: number;
 };
@@ -87,14 +92,13 @@ function Content({
       ctx.startY = y.value;
     },
     onActive: (event, ctx) => {
-      y.value = ctx.startY + event.translationY;
+      const newY = ctx.startY + event.translationY;
+      y.value = clamp(newY, -height.value, height.value);
     },
     onEnd: event => {
       if (height.value / 3 - event.translationY < 0) {
         onDismiss && runOnJS(onDismiss)();
-      }
-
-      y.value = withSpring(0);
+      } else y.value = withSpring(0);
     },
   });
 
@@ -168,7 +172,7 @@ export interface BottomSheetProps {
 
 function BottomSheet({
   children,
-  visible,
+  visible = false,
   height: initialHeight,
   onClose,
 }: BottomSheetProps) {
