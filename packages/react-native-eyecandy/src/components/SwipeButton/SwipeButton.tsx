@@ -39,9 +39,9 @@ const clamp = (value: number, lowerBound: number, upperBound: number) => {
 };
 
 const feedbackTypes: ReactNativeHapticFeedback.HapticFeedbackTypes[] = [
+  'impactLight',
   'impactMedium',
   'impactHeavy',
-  'notificationSuccess',
 ];
 
 function SwipeButton({
