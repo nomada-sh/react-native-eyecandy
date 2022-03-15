@@ -3,7 +3,12 @@ import React from 'react';
 import BottomSheet, { BottomSheetProps } from '../BottomSheetV2';
 import SwipeButton from '../SwipeButton';
 import { Body } from '../../typography';
-import { StyleProp, useWindowDimensions, ViewStyle } from 'react-native';
+import {
+  Platform,
+  StyleProp,
+  useWindowDimensions,
+  ViewStyle,
+} from 'react-native';
 
 export interface BottomSheetSwipeConfirmationProps extends BottomSheetProps {
   title: string;
@@ -50,7 +55,7 @@ function BottomSheetSwipeConfirmation({
 }
 
 BottomSheetSwipeConfirmation.defaultProps = {
-  height: 150,
+  height: Platform.OS === 'ios' ? 190 : 150,
 };
 
 export default BottomSheetSwipeConfirmation;
