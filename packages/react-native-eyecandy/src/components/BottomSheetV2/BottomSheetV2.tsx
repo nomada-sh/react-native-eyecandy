@@ -4,6 +4,8 @@ import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
 
 import Animated, {
@@ -29,6 +31,11 @@ import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
 const HANDLE_HEIGHT = 40;
 
+const clamp = (value: number, lowerBound: number, upperBound: number) => {
+  'worklet';
+  return Math.min(Math.max(lowerBound, value), upperBound);
+};
+
 type Context = {
   startY: number;
 };
@@ -40,6 +47,7 @@ export interface ContentProps {
   onDismiss?: () => void;
   onClose?: () => void;
   onOpen?: () => void;
+  style?: StyleProp<ViewStyle>;
 }
 
 function Content({
@@ -49,6 +57,7 @@ function Content({
   onDismiss,
   onClose,
   onOpen,
+  style,
 }: ContentProps) {
   const height = useSharedValue(initialHeight);
   const open = useSharedValue(false);
@@ -87,14 +96,13 @@ function Content({
       ctx.startY = y.value;
     },
     onActive: (event, ctx) => {
-      y.value = ctx.startY + event.translationY;
+      const newY = ctx.startY + event.translationY;
+      y.value = clamp(newY, -height.value, height.value);
     },
     onEnd: event => {
       if (height.value / 3 - event.translationY < 0) {
         onDismiss && runOnJS(onDismiss)();
-      }
-
-      y.value = withSpring(0);
+      } else y.value = withSpring(0);
     },
   });
 
@@ -141,9 +149,12 @@ function Content({
           />
         </View>
         <View
-          style={{
-            flex: 1,
-          }}>
+          style={[
+            {
+              flex: 1,
+            },
+            style,
+          ]}>
           {children}
         </View>
         <View
@@ -164,13 +175,15 @@ export interface BottomSheetProps {
   visible?: boolean;
   height: number;
   onClose?: () => void;
+  contentStyle?: StyleProp<ViewStyle>;
 }
 
 function BottomSheet({
   children,
-  visible,
+  visible = false,
   height: initialHeight,
   onClose,
+  contentStyle,
 }: BottomSheetProps) {
   const height = useMemo(() => initialHeight + HANDLE_HEIGHT, [initialHeight]);
   const [modalVisible, setModalVisible] = useState<boolean | undefined>(
@@ -209,6 +222,7 @@ function BottomSheet({
             height,
           }}>
           <WrappedContent
+            style={contentStyle}
             height={height}
             visible={visible}
             onDismiss={onClose}

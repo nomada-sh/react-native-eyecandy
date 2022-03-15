@@ -1,13 +1,15 @@
 import React from 'react';
 
-import BottomSheet, { BottomSheetProps } from '../BottomSheet';
+import BottomSheet, { BottomSheetProps } from '../BottomSheetV2';
 import SwipeButton from '../SwipeButton';
 import { Body } from '../../typography';
+import { StyleProp, useWindowDimensions, ViewStyle } from 'react-native';
 
 export interface BottomSheetSwipeConfirmationProps extends BottomSheetProps {
   title: string;
   swipeTitle?: string;
   onConfirm?: () => void;
+  style?: StyleProp<ViewStyle>;
 }
 
 function BottomSheetSwipeConfirmation({
@@ -17,11 +19,14 @@ function BottomSheetSwipeConfirmation({
   onConfirm,
   ...props
 }: BottomSheetSwipeConfirmationProps) {
+  const { width } = useWindowDimensions();
+
   return (
     <BottomSheet
-      style={[
+      contentStyle={[
         {
           alignItems: 'center',
+          paddingHorizontal: 20,
         },
         style,
       ]}
@@ -31,19 +36,21 @@ function BottomSheetSwipeConfirmation({
         align="center"
         weight="medium"
         style={{
-          marginBottom: 16,
+          marginBottom: 20,
         }}>
         {title}
       </Body>
-      <SwipeButton onSwipeSuccess={onConfirm} title={swipeTitle} />
+      <SwipeButton
+        width={width - 40}
+        onSuccess={onConfirm}
+        title={swipeTitle}
+      />
     </BottomSheet>
   );
 }
 
 BottomSheetSwipeConfirmation.defaultProps = {
-  ...BottomSheet.defaultProps,
-  height: 170,
-  closeOnPressMask: false,
+  height: 150,
 };
 
 export default BottomSheetSwipeConfirmation;
