@@ -21,6 +21,7 @@ export interface BaseMenuItemProps {
   separator?: boolean;
   onPress?: () => void;
   children?: React.ReactNode;
+  testID?: string;
 }
 
 function BaseMenuItem({
@@ -31,6 +32,7 @@ function BaseMenuItem({
   separator = false,
   onPress: onPressProp,
   children,
+  testID,
 }: BaseMenuItemProps) {
   const { background, divider } = useColors(c => ({
     background: c.background.default,
@@ -56,7 +58,8 @@ function BaseMenuItem({
         styles.container,
         style,
       ]}
-      onPress={onPress}>
+      onPress={onPress}
+      testID={testID}>
       <View style={styles.content}>
         {icon && (
           <IconButton
