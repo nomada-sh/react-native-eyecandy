@@ -153,7 +153,7 @@ function SwipeButton({
         borderRadius: height / 2,
         backgroundColor: colors.background,
       }}>
-      <Body>{title}</Body>
+      <Body customColor="white">{title}</Body>
       <Animated.View
         style={[
           StyleSheet.absoluteFill,
