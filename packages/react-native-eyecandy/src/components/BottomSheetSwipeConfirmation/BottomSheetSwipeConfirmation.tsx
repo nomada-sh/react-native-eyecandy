@@ -15,6 +15,7 @@ export interface BottomSheetSwipeConfirmationProps extends BottomSheetProps {
   swipeTitle?: string;
   onConfirm?: () => void;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
 }
 
 function BottomSheetSwipeConfirmation({
@@ -22,12 +23,14 @@ function BottomSheetSwipeConfirmation({
   swipeTitle,
   style,
   onConfirm,
+  testID,
   ...props
 }: BottomSheetSwipeConfirmationProps) {
   const { width } = useWindowDimensions();
 
   return (
     <BottomSheet
+      testID={testID}
       contentStyle={[
         {
           alignItems: 'center',
@@ -37,6 +40,7 @@ function BottomSheetSwipeConfirmation({
       ]}
       {...props}>
       <Body
+        testID={`${testID}-title`}
         color="greyout"
         align="center"
         weight="medium"
@@ -46,6 +50,7 @@ function BottomSheetSwipeConfirmation({
         {title}
       </Body>
       <SwipeButton
+        testID={`${testID}-swipe-button`}
         width={width - 40}
         onSuccess={onConfirm}
         title={swipeTitle}

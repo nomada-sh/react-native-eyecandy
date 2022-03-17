@@ -48,6 +48,8 @@ export interface ContentProps {
   onClose?: () => void;
   onOpen?: () => void;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
+  disableAnimations?: boolean;
 }
 
 function Content({
@@ -58,6 +60,8 @@ function Content({
   onClose,
   onOpen,
   style,
+  testID,
+  disableAnimations,
 }: ContentProps) {
   const height = useSharedValue(initialHeight);
   const open = useSharedValue(false);
@@ -108,7 +112,7 @@ function Content({
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateY: y.value }],
+      transform: [{ translateY: disableAnimations ? 0 : y.value }],
       height: height.value * 2,
       backgroundColor: background.content,
       borderTopLeftRadius: 32,
@@ -130,8 +134,10 @@ function Content({
   );
 
   return (
-    <PanGestureHandler onGestureEvent={gestureHandler}>
-      <Animated.View style={animatedStyle}>
+    <PanGestureHandler
+      onGestureEvent={gestureHandler}
+      enabled={!disableAnimations}>
+      <Animated.View style={animatedStyle} testID={testID}>
         <View
           style={{
             height: HANDLE_HEIGHT,
@@ -176,6 +182,8 @@ export interface BottomSheetProps {
   height: number;
   onClose?: () => void;
   contentStyle?: StyleProp<ViewStyle>;
+  testID?: string;
+  disableAnimations?: boolean;
 }
 
 function BottomSheet({
@@ -184,6 +192,8 @@ function BottomSheet({
   height: initialHeight,
   onClose,
   contentStyle,
+  testID,
+  disableAnimations,
 }: BottomSheetProps) {
   const height = useMemo(() => initialHeight + HANDLE_HEIGHT, [initialHeight]);
   const [modalVisible, setModalVisible] = useState<boolean | undefined>(
@@ -202,26 +212,31 @@ function BottomSheet({
 
   return (
     <Modal
-      animationType="fade"
+      testID={`${testID}-modal`}
+      animationType={disableAnimations ? 'none' : 'fade'}
       visible={modalVisible}
       statusBarTranslucent
       transparent
       onRequestClose={onClose}>
       <View
+        testID={`${testID}-container`}
         style={[
           styles.container,
           {
             backgroundColor: 'rgba(0,0,0,0.5)',
           },
         ]}>
-        <TouchableWithoutFeedback onPress={onClose}>
+        <TouchableWithoutFeedback testID={`${testID}-mask`} onPress={onClose}>
           <View style={styles.mask} />
         </TouchableWithoutFeedback>
         <View
+          testID={`${testID}-content-container`}
           style={{
             height,
           }}>
           <WrappedContent
+            disableAnimations={disableAnimations}
+            testID={`${testID}-content`}
             style={contentStyle}
             height={height}
             visible={visible}
