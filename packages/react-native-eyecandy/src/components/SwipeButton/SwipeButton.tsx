@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import Color from 'color';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
+import { ChevronRight } from '@nomada-sh/react-native-eyecandy-icons';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import { Body } from '../../typography';
 import {
@@ -27,6 +28,7 @@ export interface SwipeButtonProps {
   height?: number;
   padding?: number;
   width: number;
+  testID?: string;
 }
 
 type Context = {
@@ -51,6 +53,7 @@ function SwipeButton({
   padding = 5,
   height = 80,
   width,
+  testID,
 }: SwipeButtonProps) {
   const feedbackRef = useRef<boolean[]>([...feedbackTypes.map(() => false)]);
   const minProgress = 1 / (feedbackTypes.length + 1);
@@ -144,6 +147,7 @@ function SwipeButton({
 
   return (
     <View
+      testID={testID}
       style={{
         alignItems: 'center',
         justifyContent: 'center',
@@ -153,8 +157,11 @@ function SwipeButton({
         borderRadius: height / 2,
         backgroundColor: colors.background,
       }}>
-      <Body customColor="white">{title}</Body>
+      <Body testID={`${testID}-title`} customColor="white">
+        {title}
+      </Body>
       <Animated.View
+        testID={`${testID}-track`}
         style={[
           StyleSheet.absoluteFill,
           {
@@ -202,6 +209,7 @@ function SwipeButton({
       </View> */}
       <PanGestureHandler onGestureEvent={gestureHandler}>
         <Animated.View
+          testID={`${testID}-thumb`}
           style={[
             {
               position: 'absolute',
@@ -209,10 +217,14 @@ function SwipeButton({
               width: swipableSize,
               borderRadius: swipableSize / 2,
               backgroundColor: 'white',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingStart: 5,
             },
             animatedStyle,
-          ]}
-        />
+          ]}>
+          <ChevronRight color="primary" size={swipableSize * 0.8} />
+        </Animated.View>
       </PanGestureHandler>
     </View>
   );
