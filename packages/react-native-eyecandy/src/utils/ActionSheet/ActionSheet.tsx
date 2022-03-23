@@ -11,6 +11,7 @@ export interface ActionSheetOptions {
   message?: string;
   cancelButtonIndex?: number;
   onCancelAndroidIndex?: number;
+  darkTheme?: boolean;
 }
 
 const ActionSheet = (
@@ -23,6 +24,8 @@ const ActionSheet = (
     destructiveButtonIndex,
     cancelButtonIndex,
     onCancelAndroidIndex = -1,
+    // TODO: Implement for Android
+    darkTheme,
   }: ActionSheetOptions,
   callback: (index: number) => void,
 ) => {
@@ -36,6 +39,8 @@ const ActionSheet = (
         destructiveButtonIndex:
           destructiveButtonIndex === null ? undefined : destructiveButtonIndex,
         cancelButtonIndex: cancelButtonIndex,
+        userInterfaceStyle:
+          darkTheme !== undefined ? (darkTheme ? 'dark' : 'light') : undefined,
       },
       callback,
     );
