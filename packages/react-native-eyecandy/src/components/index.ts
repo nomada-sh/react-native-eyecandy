@@ -73,3 +73,9 @@ export type { DatePickerProps } from './DatePicker';
 
 export { default as RefreshControl } from './RefreshControl';
 export type { RefreshControlProps } from './RefreshControl';
+
+export { default as RadioGroup } from './RadioGroup';
+export type { RadioGroupProps } from './RadioGroup';
+
+export { default as RadioGroupItem } from './RadioGroupItem';
+export type { RadioGroupItemProps } from './RadioGroupItem';
