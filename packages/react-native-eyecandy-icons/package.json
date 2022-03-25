@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit",
     "build": "bob build",
     "prepare": "npm run build",
+    "publish": "npm publish --access public",
     "local:publish": "yalc publish --push",
     "local:add": "yalc add @nomada-sh/react-native-eyecandy-theme",
     "local:remove": "yalc remove --all",

@@ -12,6 +12,7 @@
     "prepare": "bob build",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
+    "publish": "npm publish --access public",
     "local:publish": "yalc publish --push"
   },
   "files": [
