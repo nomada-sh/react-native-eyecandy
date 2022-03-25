@@ -2,6 +2,13 @@
   "name": "@nomada-sh/react-native-eyecandy",
   "version": "1.0.0",
   "private": true,
+  "workspaces": {
+    "packages": 
+    [
+    "example",
+    "packages/*"
+  ]
+},
   "scripts": {
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx . --fix"
