@@ -11,6 +11,9 @@
     "build:theme": "yarn workspace @nomada-sh/react-native-eyecandy-theme build",
     "build:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons build",
     "build:components": "yarn workspace @nomada-sh/react-native-eyecandy build",
+    "publish:theme": "yarn workspace @nomada-sh/react-native-eyecandy-theme publish",
+    "publish:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons publish",
+    "publish:components": "yarn workspace @nomada-sh/react-native-eyecandy publish",
     "build": "yarn build:theme && yarn build:icons && yarn build:components"
   },
   "devDependencies": {}
