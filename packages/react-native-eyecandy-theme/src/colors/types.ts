@@ -9,6 +9,7 @@ export type ThemeColors = {
   switch: ThemeSwitchColors;
   background: ThemeBackgroundColors;
   divider: ThemeDividerColors;
+  badge: ThemeBadgeColors;
 };
 
 export type ThemeColorsVariables = {
@@ -136,4 +137,18 @@ export type ThemeDividerColor = string;
 
 export type ThemeDividerColors = {
   [key in ThemeDividerColorChoices]: ThemeDividerColor;
+};
+
+/**
+ * Badge
+ */
+export type ThemeBadgeColorChoices = 'default' | 'primary' | 'error' | 'warning' | 'success' | 'greyout';
+
+export type ThemeBadgeColor = {
+  border: string;
+  background: string;
+};
+
+export type ThemeBadgeColors = {
+  [key in ThemeBadgeColorChoices]: ThemeBadgeColor;
 };

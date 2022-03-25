@@ -1,0 +1,43 @@
+import { ThemeDividerColors, GetThemeColors } from './types';
+import mergeColors from './mergeColors';
+import { ThemeBadgeColors } from '.';
+
+const getDividerColors: GetThemeColors<ThemeBadgeColors> = options => {
+  const { dark, palette } = options;
+
+  const border = dark ? palette.grey[900] : 'white';
+
+  const defaultColors: ThemeBadgeColors = {
+    default: {
+      border,
+      background: dark ? 'white' : palette.grey[900],
+    },
+    primary: {
+      border,
+      background: palette.primary[500],
+    },
+    error: {
+      border,
+      background: palette.error[200],
+    },
+    warning: {
+      border,
+      background: palette.warning[200],
+    },
+    success: {
+      border,
+      background: palette.success[200],
+    },
+    greyout: {
+      border,
+      background: palette.grey[dark ? 400 : 500],
+    },
+  };
+
+  return mergeColors({
+    ...options,
+    defaultColors: defaultColors,
+  });
+};
+
+export default getDividerColors;

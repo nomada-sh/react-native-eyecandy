@@ -8,6 +8,7 @@ import getInputColors from './getInputColors';
 import getSwitchColors from './getSwitchColors';
 import getBackgroundColors from './getBackgroundColors';
 import getDividerColors from './getDividerColors';
+import getBadgeColors from './getBadgeColors';
 
 const createColors: CreateThemeColors = (options = {}) => {
   const variables = {
@@ -45,6 +46,10 @@ const createColors: CreateThemeColors = (options = {}) => {
     divider: getDividerColors({
       ...variables,
       colors: partialColors.divider,
+    }),
+    badge: getBadgeColors({
+      ...variables,
+      colors: partialColors.badge,
     }),
   };
 };
