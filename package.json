@@ -1,24 +1,17 @@
 {
-  "name": "@nomada-sh/react-native-eyecandy",
+  "name": "react-native-eyecandy",
   "version": "1.0.0",
   "private": true,
-  "workspaces": {
-    "packages": 
-    [
-    "example",
-    "packages/*"
-  ]
-},
+  "workspaces": [
+      "example",
+      "packages/*"
+  ],
   "scripts": {
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx . --fix"
+    "start": "yarn workspace example start",
+    "build:theme": "yarn workspace @nomada-sh/react-native-eyecandy-theme build",
+    "build:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons build",
+    "build:components": "yarn workspace @nomada-sh/react-native-eyecandy build",
+    "build": "yarn build:theme && yarn build:icons && yarn build:components"
   },
-  "devDependencies": {
-    "@react-native-community/eslint-config": "^3.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.10.1",
-    "@typescript-eslint/parser": "^5.10.1",
-    "eslint": "^7.32.0",
-    "prettier": "^2.5.1",
-    "typescript": "^4.5.5"
-  }
+  "devDependencies": {}
 }

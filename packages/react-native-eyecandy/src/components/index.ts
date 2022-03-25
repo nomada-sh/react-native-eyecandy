@@ -79,3 +79,6 @@ export type { RadioGroupProps } from './RadioGroup';
 
 export { default as RadioGroupItem } from './RadioGroupItem';
 export type { RadioGroupItemProps } from './RadioGroupItem';
+
+export { default as Badge } from './Badge';
+export type { BadgeProps } from './Badge';
