@@ -1,19 +1,16 @@
 import React from 'react';
-import {
-  TextInput as TextInputBase,
-  View,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 
 import { EyeCheck, EyeOff } from '@nomada-sh/react-native-eyecandy-icons';
+import TextInputMaskBase from 'react-native-text-input-mask';
 
 import TextInputErrors from '../TextInputErrors';
 
-import type { TextInputProps } from './typings';
+import type { TextInputMaskProps } from './typings';
 import useStyles from './useStyles';
-import useTextInput from './useTextInput';
+import useTextInputMask from './useTextInputMask';
 
-export default function TextInput({
+export default function TextInputMask({
   startIcon: StartIcon,
   endIcon: EndIcon,
   onPressAction,
@@ -34,7 +31,7 @@ export default function TextInput({
   fullWidth,
   placeholder: placeholderProp,
   ...props
-}: TextInputProps) {
+}: TextInputMaskProps) {
   const {
     inputRef,
     focused,
@@ -45,7 +42,7 @@ export default function TextInput({
     secureTextEntry,
     hasError,
     placeholder,
-  } = useTextInput({
+  } = useTextInputMask({
     onBlur,
     onFocus,
     onSecureTextEntryChange,
@@ -75,7 +72,7 @@ export default function TextInput({
             <View style={styles.iconContainer}>{renderIcon(StartIcon)}</View>
           </TouchableWithoutFeedback>
         ) : null}
-        <TextInputBase
+        <TextInputMaskBase
           onFocus={handleFocus}
           onBlur={handleBlur}
           secureTextEntry={secureTextEntry}

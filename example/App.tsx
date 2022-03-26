@@ -1,15 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { Badge, Avatar } from '@nomada-sh/react-native-eyecandy';
-import {
-  ThemeProvider,
-  DarkTheme,
-} from '@nomada-sh/react-native-eyecandy-theme';
+import { Badge, Avatar, TextInputMask } from '@nomada-sh/react-native-eyecandy';
+import { ThemeProvider } from '@nomada-sh/react-native-eyecandy-theme';
 
 const App = () => {
   return (
-    <ThemeProvider theme={DarkTheme}>
+    <ThemeProvider>
       <View>
         <Badge>
           <Avatar
@@ -18,6 +15,14 @@ const App = () => {
             }}
           />
         </Badge>
+        <TextInputMask
+          onChangeText={(formatted, extracted) => {
+            console.log(formatted, extracted);
+          }}
+          mask={'+1 ([000]) [000] [00] [00]'}
+          placeholder="+1 (___) ___ __ __"
+          keyboardType="numeric"
+        />
       </View>
     </ThemeProvider>
   );
