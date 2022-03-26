@@ -1,5 +1,6 @@
-import { ThemeDividerColors, GetThemeColors } from './types';
 import mergeColors from './mergeColors';
+import { GetThemeColors } from './types';
+
 import { ThemeBadgeColors } from '.';
 
 const getDividerColors: GetThemeColors<ThemeBadgeColors> = options => {

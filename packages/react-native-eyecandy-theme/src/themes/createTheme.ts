@@ -1,7 +1,8 @@
-import { CreateTheme } from './types';
+import { createColors } from '../colors';
 import { createPalette } from '../palette';
 import { createTypography } from '../typography';
-import { createColors } from '../colors';
+
+import { CreateTheme } from './types';
 
 const createTheme: CreateTheme = (options = {}) => {
   const palette = createPalette(options.palette);

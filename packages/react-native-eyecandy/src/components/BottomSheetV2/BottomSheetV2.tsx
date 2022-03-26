@@ -8,6 +8,12 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
+import {
+  gestureHandlerRootHOC,
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,
   withSpring,
@@ -18,16 +24,7 @@ import Animated, {
   useCode,
   call,
 } from 'react-native-reanimated';
-
-import {
-  gestureHandlerRootHOC,
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
-
 import { useUpdateEffect } from 'react-use';
-
-import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
 const HANDLE_HEIGHT = 40;
 
@@ -136,7 +133,8 @@ function Content({
   return (
     <PanGestureHandler
       onGestureEvent={gestureHandler}
-      enabled={!disableAnimations}>
+      enabled={!disableAnimations}
+    >
       <Animated.View style={animatedStyle} testID={testID}>
         <View
           style={{
@@ -144,7 +142,8 @@ function Content({
             width: '100%',
             alignItems: 'center',
             justifyContent: 'center',
-          }}>
+          }}
+        >
           <View
             style={[
               styles.handle,
@@ -160,7 +159,8 @@ function Content({
               flex: 1,
             },
             style,
-          ]}>
+          ]}
+        >
           {children}
         </View>
         <View
@@ -217,7 +217,8 @@ function BottomSheet({
       visible={modalVisible}
       statusBarTranslucent
       transparent
-      onRequestClose={onClose}>
+      onRequestClose={onClose}
+    >
       <View
         testID={`${testID}-container`}
         style={[
@@ -225,7 +226,8 @@ function BottomSheet({
           {
             backgroundColor: 'rgba(0,0,0,0.5)',
           },
-        ]}>
+        ]}
+      >
         <TouchableWithoutFeedback testID={`${testID}-mask`} onPress={onClose}>
           <View style={styles.mask} />
         </TouchableWithoutFeedback>
@@ -233,7 +235,8 @@ function BottomSheet({
           testID={`${testID}-content-container`}
           style={{
             height,
-          }}>
+          }}
+        >
           <WrappedContent
             disableAnimations={disableAnimations}
             testID={`${testID}-content`}
@@ -241,7 +244,8 @@ function BottomSheet({
             height={height}
             visible={visible}
             onDismiss={onClose}
-            onClose={handleClose}>
+            onClose={handleClose}
+          >
             {children}
           </WrappedContent>
         </View>

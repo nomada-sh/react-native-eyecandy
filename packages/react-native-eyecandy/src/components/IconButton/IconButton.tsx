@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
-import BaseButton, { BaseButtonProps } from '../BaseButton';
 import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
+
+import BaseButton, { BaseButtonProps } from '../BaseButton';
 
 interface IconProps {
   size: number;
@@ -52,7 +53,8 @@ function IconButton({
       inverse={inverse}
       height={size}
       variant={variant}
-      {...props}>
+      {...props}
+    >
       {Icon ? (
         <Icon size={iconSize} stroke={iconColor} style={iconStyle} />
       ) : null}

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Heading, { HeadingProps } from './Heading';
 
 export default function H5(props: HeadingProps) {

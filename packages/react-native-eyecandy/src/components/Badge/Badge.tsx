@@ -1,9 +1,10 @@
+import React from 'react';
+import { StyleSheet, View, ViewProps } from 'react-native';
+
 import {
   ThemeBadgeColorChoices,
   useColors,
 } from '@nomada-sh/react-native-eyecandy-theme';
-import React from 'react';
-import { StyleSheet, View, ViewProps } from 'react-native';
 
 type AnchorOrigin = {
   horizontal: 'left' | 'right';

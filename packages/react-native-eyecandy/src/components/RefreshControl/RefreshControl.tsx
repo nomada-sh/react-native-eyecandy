@@ -3,6 +3,7 @@ import {
   RefreshControl as RefreshControlBase,
   RefreshControlProps as RefreshControlBaseProps,
 } from 'react-native';
+
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
 export interface RefreshControlProps extends RefreshControlBaseProps {}

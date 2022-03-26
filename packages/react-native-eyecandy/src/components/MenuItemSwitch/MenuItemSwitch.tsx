@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import BaseMenuItem, { BaseMenuItemProps } from '../BaseMenuItem';
 import { Body } from '../../typography';
+import BaseMenuItem, { BaseMenuItemProps } from '../BaseMenuItem';
 import Switch from '../Switch';
 
 export interface MenuItemSwitchProps
@@ -26,7 +26,8 @@ function MenuItemSwitch({
         style={styles.text}
         weight="bold"
         size="medium"
-        customColor={textColor}>
+        customColor={textColor}
+      >
         {text}
       </Body>
       <Switch value={value} onValueChange={onValueChange} />

@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-import RadioButton from '../RadioButton';
-import { Body } from '../../typography';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import Color from 'color';
 import { RectButton } from 'react-native-gesture-handler';
+
+import { Body } from '../../typography';
+import RadioButton from '../RadioButton';
 
 export interface RadioGroupItemProps<V> {
   testID?: string;
@@ -49,22 +50,26 @@ function RadioGroupItem<V>({
           borderColor,
         },
         containerStyle,
-      ]}>
+      ]}
+    >
       <RectButton
         testID={`${testID}-button`}
         rippleColor={rippleColor}
-        onPress={onPress}>
+        onPress={onPress}
+      >
         <View
           style={[styles.button, style]}
           accessible
-          accessibilityRole="button">
+          accessibilityRole="button"
+        >
           <RadioButton value={selected} />
           <Body
             testID={`${testID}-label`}
             size="small"
             weight="bold"
             style={styles.label}
-            numberOfLines={numberOfLines}>
+            numberOfLines={numberOfLines}
+          >
             {label}
           </Body>
         </View>

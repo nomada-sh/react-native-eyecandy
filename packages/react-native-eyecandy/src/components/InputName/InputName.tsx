@@ -1,6 +1,8 @@
 import React from 'react';
-import TextInput, { TextInputProps } from '../TextInput';
+
 import { User } from '@nomada-sh/react-native-eyecandy-icons';
+
+import TextInput, { TextInputProps } from '../TextInput';
 
 function InputName(props: TextInputProps) {
   return (

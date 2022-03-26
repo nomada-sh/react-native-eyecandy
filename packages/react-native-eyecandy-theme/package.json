@@ -10,6 +10,7 @@
   "source": "src/index.ts",
   "scripts": {
     "prepare": "bob build",
+    "build": "bob build",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "publish": "npm publish --access public",

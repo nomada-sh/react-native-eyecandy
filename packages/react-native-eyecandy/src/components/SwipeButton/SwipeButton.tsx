@@ -1,16 +1,14 @@
 import React, { useCallback, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Color from 'color';
-
-import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import { ChevronRight } from '@nomada-sh/react-native-eyecandy-icons';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import { Body } from '../../typography';
+import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
+import Color from 'color';
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Animated, {
   interpolate,
   runOnJS,
@@ -19,6 +17,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+
+import { Body } from '../../typography';
 
 // TODO: Fix thumbIconComponent type.
 export interface SwipeButtonProps {
@@ -156,7 +156,8 @@ function SwipeButton({
         padding,
         borderRadius: height / 2,
         backgroundColor: colors.background,
-      }}>
+      }}
+    >
       <Body testID={`${testID}-title`} customColor="white">
         {title}
       </Body>
@@ -222,7 +223,8 @@ function SwipeButton({
               paddingStart: 5,
             },
             animatedStyle,
-          ]}>
+          ]}
+        >
           <ChevronRight color="primary" size={swipableSize * 0.8} />
         </Animated.View>
       </PanGestureHandler>

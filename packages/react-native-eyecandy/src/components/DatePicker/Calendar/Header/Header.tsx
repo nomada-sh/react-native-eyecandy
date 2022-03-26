@@ -1,9 +1,9 @@
 import React, { useMemo, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { Body } from '../../../../typography';
-
 import type { Locale } from 'date-fns';
+
+import { Body } from '../../../../typography';
 
 export interface HeaderProps {
   locale?: Locale;
@@ -50,7 +50,8 @@ function Header({ debug, locale, month, year }: HeaderProps) {
             color="greyout"
             align="center"
             key={index}
-            style={styles.name}>
+            style={styles.name}
+          >
             {name}
           </Body>
         );

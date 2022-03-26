@@ -1,5 +1,6 @@
-import type Color from 'color';
 import { useMemo } from 'react';
+
+import type Color from 'color';
 
 import { getRippleColor } from '../utils';
 

@@ -1,5 +1,5 @@
-import createPalette from './createPalette';
 import defaultPalette from './Palette';
+import createPalette from './createPalette';
 
 test('createPalette default', () => {
   const palette = createPalette();

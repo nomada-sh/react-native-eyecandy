@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
 
 import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
+
 import { Text } from '../../../typography';
 
 export interface CellProps {
@@ -34,7 +35,8 @@ const Cell = React.forwardRef<View, CellProps>(
             justifyContent: 'center',
             alignItems: 'center',
           }}
-          {...props}>
+          {...props}
+        >
           <Text size={size / 2.5} weight="semibold">
             {value}
           </Text>

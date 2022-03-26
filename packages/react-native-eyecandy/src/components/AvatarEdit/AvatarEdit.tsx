@@ -1,5 +1,4 @@
-import React from 'react';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import {
   GestureResponderEvent,
   Pressable,
@@ -9,21 +8,19 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import { Camera } from '@nomada-sh/react-native-eyecandy-icons';
+import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {
   ImageLibraryOptions,
   ImagePickerResponse,
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
+import { ActionSheet, ms } from '../../utils';
 import Avatar, { AvatarProps } from '../Avatar';
 import IconButton from '../IconButton';
-import { Camera } from '@nomada-sh/react-native-eyecandy-icons';
-import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
-import { ActionSheet } from '../../utils';
-
-import { ms } from '../../utils';
 
 export interface AvatarEditProps extends Omit<PressableProps, 'style'> {
   size?: number;
@@ -107,7 +104,8 @@ function AvatarEdit({
         },
         style,
       ]}
-      {...props}>
+      {...props}
+    >
       <Avatar size={size} source={source} />
       <IconButton
         style={[

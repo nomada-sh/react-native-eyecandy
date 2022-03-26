@@ -7,10 +7,9 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import Color from 'color';
-
 import { Check } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
+import Color from 'color';
 
 export interface RadioButtonProps {
   value?: boolean;
@@ -46,7 +45,8 @@ function RadioButton({
           },
           styles.container,
           style,
-        ]}>
+        ]}
+      >
         <View
           style={[
             {
@@ -56,7 +56,8 @@ function RadioButton({
               backgroundColor,
             },
             styles.iconContainer,
-          ]}>
+          ]}
+        >
           {value ? <Check stroke="white" size={15} /> : null}
         </View>
       </View>

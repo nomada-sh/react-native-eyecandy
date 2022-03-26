@@ -1,5 +1,5 @@
-import { ThemeDividerColors, GetThemeColors } from './types';
 import mergeColors from './mergeColors';
+import { ThemeDividerColors, GetThemeColors } from './types';
 
 const getDividerColors: GetThemeColors<ThemeDividerColors> = options => {
   const { dark, palette } = options;

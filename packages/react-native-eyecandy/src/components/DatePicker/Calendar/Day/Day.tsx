@@ -1,11 +1,11 @@
 import React, { useMemo, useRef } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import type { CalendarDate } from 'calendar-base';
 
-import { Body } from '../../../../typography';
-import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import { useRippleColor } from '../../../../hooks';
+import { Body } from '../../../../typography';
 
 export interface DayProps {
   value: CalendarDate | false;
@@ -84,13 +84,15 @@ function Day({ value, onPress, selected, debug }: DayProps) {
           color: rippleColor.string(),
           borderless: true,
           radius: 20,
-        }}>
+        }}
+      >
         <Body
           color="default"
           weight={selected ? 'bold' : 'normal'}
           style={{
             color: textColor,
-          }}>
+          }}
+        >
           {value !== false ? value.day : '00'}
         </Body>
       </Pressable>

@@ -191,11 +191,13 @@ class RBSheet extends Component<RBSheetProps, RBSheetState> {
           if (closeOnPressBack) {
             onClose?.();
           }
-        }}>
+        }}
+      >
         <KeyboardAvoidingView
           enabled={keyboardAvoidingViewEnabled}
           behavior="padding"
-          style={[styles.wrapper, customStyles.wrapper]}>
+          style={[styles.wrapper, customStyles.wrapper]}
+        >
           <TouchableOpacity
             style={styles.mask}
             activeOpacity={1}
@@ -208,11 +210,13 @@ class RBSheet extends Component<RBSheetProps, RBSheetState> {
               styles.container,
               { height: animatedHeight },
               customStyles.container,
-            ]}>
+            ]}
+          >
             {closeOnDragDown && (
               <View
                 {...(dragFromTopOnly && this.panResponder.panHandlers)}
-                style={styles.draggableContainer}>
+                style={styles.draggableContainer}
+              >
                 <View
                   style={[styles.draggableIcon, customStyles.draggableIcon]}
                 />

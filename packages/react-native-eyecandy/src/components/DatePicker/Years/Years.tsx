@@ -1,9 +1,10 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
+
+import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { Body } from '../../../typography';
-import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 import Button from '../../Button';
 
 export interface YearsProps {
@@ -31,12 +32,14 @@ function Years({ onPressBack, year, maxYears, onPressYear }: YearsProps) {
         {
           backgroundColor: background.content,
         },
-      ]}>
+      ]}
+    >
       <View
         style={{
           margin: 16,
           marginBottom: 4,
-        }}>
+        }}
+      >
         <Body onPress={onPressBack} color="primary" weight="bold">
           Back
         </Body>
@@ -48,14 +51,16 @@ function Years({ onPressBack, year, maxYears, onPressYear }: YearsProps) {
           flexDirection: 'row',
           flexWrap: 'wrap',
         }}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {years.map(y => (
           <View
             key={y}
             style={{
               width: '33%',
               padding: 8,
-            }}>
+            }}
+          >
             <Button
               onPress={() => onPressYear(y)}
               buttonStyle={{

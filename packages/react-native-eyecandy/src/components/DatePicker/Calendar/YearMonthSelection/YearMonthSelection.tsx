@@ -1,14 +1,13 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { FlatList } from 'react-native-gesture-handler';
-
-import Button from '../../../Button';
-import { Body } from '../../../../typography';
-import { useUpdateEffect } from 'react-use';
-import formatDate from '../../formatDate';
-
 import type { Locale } from 'date-fns';
+import { FlatList } from 'react-native-gesture-handler';
+import { useUpdateEffect } from 'react-use';
+
+import { Body } from '../../../../typography';
+import Button from '../../../Button';
+import formatDate from '../../formatDate';
 
 export interface YearMonthSelectionProps {
   step?: 'year' | 'month';

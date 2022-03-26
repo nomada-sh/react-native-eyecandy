@@ -1,13 +1,14 @@
 import { useContext } from 'react';
 
-import { ThemeContext } from './ThemeProvider';
 import { Theme } from '../themes';
 
-export default function useTheme(): Theme;
+import { ThemeContext } from './ThemeProvider';
 
-export default function useTheme<T>(selector: (theme: Theme) => T): T;
+function useTheme(): Theme;
 
-export default function useTheme<T>(selector?: (theme: Theme) => T): T | Theme {
+function useTheme<T>(selector: (theme: Theme) => T): T;
+
+function useTheme<T>(selector?: (theme: Theme) => T): T | Theme {
   const theme = useContext(ThemeContext);
 
   if (selector) {
@@ -16,3 +17,5 @@ export default function useTheme<T>(selector?: (theme: Theme) => T): T | Theme {
 
   return theme;
 }
+
+export default useTheme;

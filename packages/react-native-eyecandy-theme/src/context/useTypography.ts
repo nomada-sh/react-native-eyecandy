@@ -1,14 +1,12 @@
-import useTheme from './useTheme';
-
 import { ThemeTypography } from '../typography';
 
-export default function useTypography(): ThemeTypography;
+import useTheme from './useTheme';
 
-export default function useTypography<T>(
-  selector: (typography: ThemeTypography) => T,
-): T;
+function useTypography(): ThemeTypography;
 
-export default function useTypography<T>(
+function useTypography<T>(selector: (typography: ThemeTypography) => T): T;
+
+function useTypography<T>(
   selector?: (typography: ThemeTypography) => T,
 ): T | ThemeTypography {
   const theme = useTheme();
@@ -19,3 +17,5 @@ export default function useTypography<T>(
 
   return theme.typography;
 }
+
+export default useTypography;

@@ -1,14 +1,14 @@
-import { CreateThemeColors } from './types';
 import { createPalette } from '../palette';
 import { createTypography } from '../typography';
 
+import getBackgroundColors from './getBackgroundColors';
+import getBadgeColors from './getBadgeColors';
 import getButtonColors from './getButtonColors';
-import getTextColors from './getTextColors';
+import getDividerColors from './getDividerColors';
 import getInputColors from './getInputColors';
 import getSwitchColors from './getSwitchColors';
-import getBackgroundColors from './getBackgroundColors';
-import getDividerColors from './getDividerColors';
-import getBadgeColors from './getBadgeColors';
+import getTextColors from './getTextColors';
+import { CreateThemeColors } from './types';
 
 const createColors: CreateThemeColors = (options = {}) => {
   const variables = {

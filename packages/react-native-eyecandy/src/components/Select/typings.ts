@@ -1,12 +1,11 @@
 import type { FC } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
+import type { ThemeInputColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
 import type {
   PickerSelectProps as SelectBaseProps,
   Item as ItemBase,
 } from 'react-native-picker-select';
-
-import type { ThemeInputColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
 
 export interface Item<ValueType = unknown> extends ItemBase {
   value: ValueType | null;

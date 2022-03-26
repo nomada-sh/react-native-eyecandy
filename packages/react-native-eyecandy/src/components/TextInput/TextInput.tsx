@@ -5,8 +5,9 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
-import TextInputErrors from '../TextInputErrors';
 import { EyeCheck, EyeOff } from '@nomada-sh/react-native-eyecandy-icons';
+
+import TextInputErrors from '../TextInputErrors';
 
 import type { TextInputProps } from './typings';
 import useStyles from './useStyles';
@@ -68,7 +69,7 @@ export default function TextInput({
 
   return (
     <View style={[styles.container, style]}>
-      <View style={[styles.inputContainer]}>
+      <View style={styles.inputContainer}>
         {StartIcon ? (
           <TouchableWithoutFeedback onPress={() => onPressIcon()}>
             <View style={styles.iconContainer}>{renderIcon(StartIcon)}</View>
@@ -95,7 +96,8 @@ export default function TextInput({
         ) : null}
         {showSecureTextEntryToggle ? (
           <TouchableWithoutFeedback
-            onPress={() => onPressSecureTextEntryToggle()}>
+            onPress={() => onPressSecureTextEntryToggle()}
+          >
             <View style={styles.iconContainer}>
               {renderIcon(
                 secureTextEntry ? EyeOff : EyeCheck,

@@ -1,9 +1,8 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Platform, TouchableWithoutFeedback, View } from 'react-native';
 
-import SelectBase from 'react-native-picker-select';
-
 import { ChevronDown } from '@nomada-sh/react-native-eyecandy-icons';
+import SelectBase from 'react-native-picker-select';
 
 import type { SelectProps } from './typings';
 import useStyles from './useStyles';

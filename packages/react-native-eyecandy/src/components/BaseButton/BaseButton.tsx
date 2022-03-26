@@ -13,6 +13,7 @@ import type { ThemeButtonColorChoices } from '@nomada-sh/react-native-eyecandy-t
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 import { usePressableStyles } from '../../hooks';
+
 import useStyles from './useStyles';
 
 export interface BaseButtonProps extends PressableProps {
@@ -94,7 +95,8 @@ function BaseButton({
         }}
         disabled={disabled}
         onPress={onPress}
-        {...props}>
+        {...props}
+      >
         {children}
       </Pressable>
       {disabled && !hideDisabledOverlay ? (

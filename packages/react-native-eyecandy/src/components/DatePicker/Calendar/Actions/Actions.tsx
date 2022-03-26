@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import type { Locale } from 'date-fns';
+
 import { Body } from '../../../../typography';
 import formatDate from '../../formatDate';
-
-import type { Locale } from 'date-fns';
 
 export interface ActionsProps {
   date: Date;
@@ -44,7 +44,8 @@ function Actions({
           ]}
           size="xlarge"
           color="primary"
-          onPress={onPressMonth}>
+          onPress={onPressMonth}
+        >
           {month}
         </Body>
         <Body
@@ -56,7 +57,8 @@ function Actions({
           ]}
           size="xlarge"
           color="primary"
-          onPress={onPressYear}>
+          onPress={onPressYear}
+        >
           {year}
         </Body>
       </View>
@@ -64,7 +66,8 @@ function Actions({
         size="xlarge"
         style={styles.text}
         color="primary"
-        onPress={onPressToday}>
+        onPress={onPressToday}
+      >
         {todayText}
       </Body>
     </View>
