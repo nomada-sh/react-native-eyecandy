@@ -14,6 +14,8 @@
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "publish": "npm publish --access public",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "local:publish": "yalc publish --push"
   },
   "files": [
@@ -29,7 +31,12 @@
     "targets": [
       "commonjs",
       "module",
-      "typescript"
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
     ]
   },
   "peerDependencies": {

@@ -33,4 +33,6 @@ export interface TextInputProps
     | ((current: TextInputRefCurrent) => void);
   fullWidth?: boolean;
   required?: boolean;
+  // TODO: Add type
+  textInputComponent?: any;
 }

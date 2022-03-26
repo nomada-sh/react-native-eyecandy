@@ -1,5 +1,4 @@
 {
-  "name": "react-native-eyecandy",
   "version": "1.0.0",
   "private": true,
   "workspaces": [
@@ -15,15 +14,15 @@
     "publish:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons publish",
     "publish:components": "yarn workspace @nomada-sh/react-native-eyecandy publish",
     "build": "yarn build:theme && yarn build:icons && yarn build:components",
-    "lint:theme": "eslint packages/react-native-eyecandy-theme",
-    "lint:fix:theme": "eslint packages/react-native-eyecandy-theme --fix",
-    "lint:icons": "eslint packages/react-native-eyecandy-icons",
-    "lint:fix:icons": "eslint packages/react-native-eyecandy-icons --fix",
-    "lint:components": "eslint packages/react-native-eyecandy",
-    "lint:fix:components": "eslint packages/react-native-eyecandy --fix",
-    "lint:example": "eslint example",
-    "lint:fix:example": "eslint example --fix",
+    "lint:theme": "yarn workspace @nomada-sh/react-native-eyecandy-theme lint",
+    "lint:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons lint",
+    "lint:components": "yarn workspace @nomada-sh/react-native-eyecandy lint",
+    "lint:example": "yarn workspace example lint",
     "lint": "yarn lint:theme && yarn lint:icons && yarn lint:components && yarn lint:example",
+    "lint:fix:theme": "yarn workspace @nomada-sh/react-native-eyecandy-theme lint:fix",
+    "lint:fix:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons lint:fix",
+    "lint:fix:components": "yarn workspace @nomada-sh/react-native-eyecandy lint:fix",
+    "lint:fix:example": "yarn workspace example lint:fix",
     "lint:fix": "yarn lint:fix:theme && yarn lint:fix:icons && yarn lint:fix:components && yarn lint:fix:example"
   },
   "devDependencies": {

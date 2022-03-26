@@ -1,6 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": [
-    "src"
-  ]
+  "extends": "../../tsconfig",
+  "references": [
+    { "path": "../react-native-eyecandy-theme" },
+    { "path": "../react-native-eyecandy-icons" },
+  ],
+  "compilerOptions": {
+    "outDir": "./lib/typescript"
+  }
 }

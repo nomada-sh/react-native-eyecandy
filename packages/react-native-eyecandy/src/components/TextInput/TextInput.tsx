@@ -33,6 +33,7 @@ export default function TextInput({
   required,
   fullWidth,
   placeholder: placeholderProp,
+  textInputComponent: TextInputComponent = TextInputBase,
   ...props
 }: TextInputProps) {
   const {
@@ -75,7 +76,7 @@ export default function TextInput({
             <View style={styles.iconContainer}>{renderIcon(StartIcon)}</View>
           </TouchableWithoutFeedback>
         ) : null}
-        <TextInputBase
+        <TextInputComponent
           onFocus={handleFocus}
           onBlur={handleBlur}
           secureTextEntry={secureTextEntry}
