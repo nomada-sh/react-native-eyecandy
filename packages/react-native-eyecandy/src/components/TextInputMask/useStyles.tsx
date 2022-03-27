@@ -14,6 +14,8 @@ export default function useStyles({
   dirty = false,
   hasError = false,
   fullWidth = true,
+  inputEndPadding = 16,
+  inputStartPadding = 16,
 }: {
   color?: TextInputMaskProps['color'];
   focused: boolean;
@@ -23,6 +25,8 @@ export default function useStyles({
   dirty?: boolean;
   hasError?: boolean;
   fullWidth?: boolean;
+  inputEndPadding?: number;
+  inputStartPadding?: number;
 }) {
   const { palette, typography, dark } = useTheme();
   const colors = useColors(c => c.input[color]);
@@ -80,8 +84,8 @@ export default function useStyles({
       color: textColor,
       fontSize: fontSize.medium,
       fontWeight: empty ? 'normal' : '700',
-      paddingEnd: widthPaddingEnd ? padding : 0,
-      paddingStart: widthPaddingStart ? padding : 0,
+      paddingEnd: widthPaddingEnd ? inputEndPadding : 0,
+      paddingStart: widthPaddingStart ? inputStartPadding : 0,
     },
     inputPlaceholder: {
       color: placeholderColor,

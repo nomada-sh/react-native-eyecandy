@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
 
 import { EyeCheck, EyeOff } from '@nomada-sh/react-native-eyecandy-icons';
-import TextInputMaskBase from 'react-native-text-input-mask';
+import MaskInput from 'react-native-mask-input';
 
 import TextInputErrors from '../TextInputErrors';
 
@@ -30,6 +30,8 @@ export default function TextInputMask({
   required,
   fullWidth,
   placeholder: placeholderProp,
+  inputEndPadding,
+  inputStartPadding,
   ...props
 }: TextInputMaskProps) {
   const {
@@ -62,6 +64,8 @@ export default function TextInputMask({
     value: value ?? defaultValue,
     hasError,
     fullWidth,
+    inputEndPadding,
+    inputStartPadding,
   });
 
   return (
@@ -72,7 +76,7 @@ export default function TextInputMask({
             <View style={styles.iconContainer}>{renderIcon(StartIcon)}</View>
           </TouchableWithoutFeedback>
         ) : null}
-        <TextInputMaskBase
+        <MaskInput
           onFocus={handleFocus}
           onBlur={handleBlur}
           secureTextEntry={secureTextEntry}

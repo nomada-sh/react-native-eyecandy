@@ -2,7 +2,7 @@ import type React from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
 import type { ThemeInputColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
-import type { TextInputMaskProps as TextInputMaskBaseProps } from 'react-native-text-input-mask';
+import { MaskInputProps } from 'react-native-mask-input';
 
 import type { TextInputErrorsProps } from '../TextInputErrors';
 
@@ -16,7 +16,7 @@ export type TextInputMaskIcon = React.FC<{
 export type TextInputMaskRefCurrent = any | null;
 
 export interface TextInputMaskProps
-  extends TextInputMaskBaseProps,
+  extends MaskInputProps,
     TextInputErrorsProps {
   startIcon?: TextInputMaskIcon;
   endIcon?: TextInputMaskIcon;
@@ -24,10 +24,12 @@ export interface TextInputMaskProps
   showSecureTextEntryToggle?: boolean;
   onSecureTextEntryChange?: (secureTextEntry: boolean) => void;
   color?: ThemeInputColorChoices;
-  inputStyle?: TextInputMaskBaseProps['style'];
+  inputStyle?: MaskInputProps['style'];
   inputRef?:
     | React.MutableRefObject<TextInputMaskRefCurrent>
     | ((current: TextInputMaskRefCurrent) => void);
   fullWidth?: boolean;
   required?: boolean;
+  inputStartPadding?: number;
+  inputEndPadding?: number;
 }
