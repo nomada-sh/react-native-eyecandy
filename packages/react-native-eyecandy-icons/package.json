@@ -15,10 +15,7 @@
     "publish": "npm publish --access public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "local:publish": "yalc publish --push",
-    "local:add": "yalc add @nomada-sh/react-native-eyecandy-theme",
-    "local:remove": "yalc remove --all",
-    "local:check": "yalc check"
+    "local:publish": "yalc publish --push"
   },
   "files": [
     "src",
@@ -49,9 +46,7 @@
     "react": "^17.0.2",
     "react-native": "^0.67.1",
     "react-native-builder-bob": "^0.18.2",
-    "react-native-svg": "^12.1.1",
-    "typescript": "^4.5.5",
-    "yalc": "^1.0.0-pre.53"
+    "react-native-svg": "^12.1.1"
   },
   "peerDependencies": {
     "react": "*",
