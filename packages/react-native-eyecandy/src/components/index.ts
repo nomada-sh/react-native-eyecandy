@@ -85,3 +85,9 @@ export type { BadgeProps } from './Badge';
 
 export { default as TextInputMask } from './TextInputMask';
 export type { TextInputMaskProps } from './TextInputMask';
+
+export { default as TextInputV2 } from './TextInputV2';
+export type { TextInputV2Props } from './TextInputV2';
+
+export { default as TextInputContainer } from './TextInputContainer';
+export type { TextInputContainerProps } from './TextInputContainer';
