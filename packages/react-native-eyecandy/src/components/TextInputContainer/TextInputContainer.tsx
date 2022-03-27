@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import {
+  TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
   View,
   StyleSheet,
@@ -46,7 +47,6 @@ export interface TextInputContainerProps
   onPressIconLeft?: () => void;
   iconRight?: React.FC<IconProps>;
   onPressIconRight?: () => void;
-  Input: React.FC<RNTextInputProps>;
 }
 
 const defaultStyles: Styles = {};
@@ -80,9 +80,13 @@ function TextInputContainer({
   onPressIconLeft,
   iconRight,
   onPressIconRight,
-  Input,
+  TextInput,
+  textInputRef,
   ...props
-}: TextInputContainerProps) {
+}: TextInputContainerProps & {
+  TextInput: typeof RNTextInput;
+  textInputRef: React.Ref<RNTextInput>;
+}) {
   const withError = false;
   const [focused, setFocused] = useState(false);
   const { palette, colors, fontSize } = useTheme(t => ({
@@ -149,13 +153,14 @@ function TextInputContainer({
       {/* Left Component */}
       {inputLeft}
 
-      {/* Input */}
-      <Input
+      {/* TextInput */}
+      <TextInput
         style={[styles.input, dynamicStyles.input, customStyles.input]}
         disableFullscreenUI
         onBlur={handleBlur}
         onFocus={handleFocus}
         placeholderTextColor={placeholderColor}
+        ref={textInputRef}
         {...props}
       />
 
