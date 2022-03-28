@@ -1,19 +1,26 @@
 import React from 'react';
-import { TextInput as RNTextInput } from 'react-native';
+import {
+  TextInput as RNTextInput,
+  TextInputProps as RNTextInputProps,
+} from 'react-native';
 
 import TextInputContainer, {
   TextInputContainerProps,
+  extractTextInputContainerProps,
 } from '../TextInputContainer';
-
-export interface TextInputV2Props extends TextInputContainerProps {}
+export interface TextInputV2Props
+  extends TextInputContainerProps,
+    RNTextInputProps {}
 
 const TextInputV2 = React.forwardRef<RNTextInput, TextInputV2Props>(
   (props, ref) => {
+    const [containerProps, inputProps] =
+      extractTextInputContainerProps<RNTextInputProps>(props);
+
     return (
-      <TextInputContainer
-        renderTextInput={props => <RNTextInput {...props} ref={ref} />}
-        {...props}
-      />
+      <TextInputContainer {...containerProps}>
+        <RNTextInput disableFullscreenUI {...inputProps} ref={ref} />
+      </TextInputContainer>
     );
   },
 );

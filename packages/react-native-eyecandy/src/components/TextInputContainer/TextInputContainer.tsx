@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import {
+  TextStyle,
   TextInputProps as RNTextInputProps,
   View,
   StyleSheet,
@@ -8,34 +9,31 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
-import {
-  ThemeInputColorChoices,
-  useTheme,
-} from '@nomada-sh/react-native-eyecandy-theme';
+import useTextInputTheme, {
+  UseThemeInputThemeProps,
+} from './useTextInputTheme';
 
 export type Styles = {
   root?: StyleProp<ViewStyle>;
-  input?: RNTextInputProps['style'];
+  input?: StyleProp<TextStyle>;
   iconContainer?: StyleProp<ViewStyle>;
   leftIconContainer?: StyleProp<ViewStyle>;
   rightIconContainer?: StyleProp<ViewStyle>;
 };
 
-interface IconProps {
+export interface IconProps {
   size: number;
   stroke: string;
 }
 
-interface IconTouchableProps {
+export interface IconTouchableProps {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
   icon?: React.FC<IconProps>;
   color: string;
 }
 
-export interface TextInputContainerProps
-  extends Omit<RNTextInputProps, 'style'> {
-  color?: ThemeInputColorChoices;
+export interface TextInputContainerProps extends UseThemeInputThemeProps {
   styles?: Styles;
   fullWidth?: boolean;
   inputLeft?: React.ReactNode;
@@ -67,56 +65,63 @@ function IconTouchable({
 
 function TextInputContainer({
   fullWidth = true,
-  color = 'default',
   styles: customStyles = defaultStyles,
-  onFocus,
-  onBlur,
+  children,
   inputLeft,
   inputRight,
   iconLeft,
   onPressIconLeft,
   iconRight,
   onPressIconRight,
-  renderTextInput,
-  ...props
+  color,
+  withError,
 }: TextInputContainerProps & {
-  renderTextInput: (props: RNTextInputProps) => JSX.Element;
+  children?: React.ReactElement<{
+    placeholderTextColor?: string;
+    style?: StyleProp<TextStyle>;
+    onFocus?: (e: any) => void;
+    onBlur?: (e: any) => void;
+  }>;
 }) {
-  const withError = false;
-  const [focused, setFocused] = useState(false);
-  const { palette, colors, fontSize } = useTheme(t => ({
-    palette: t.palette,
-    colors: t.colors.input[color],
-    fontSize: t.typography.body.fontSize,
-  }));
-
-  const errorColor = palette.error[200];
-
-  const backgroundColor = focused
-    ? colors.focused.background
-    : colors.background;
-
-  let textColor = colors.foreground;
-  textColor = withError ? errorColor : textColor;
-
-  let placeholderColor = colors.placeholder;
-  placeholderColor = withError ? errorColor : placeholderColor;
-
-  let borderColor = focused ? colors.focused.indicator : backgroundColor;
-  borderColor = withError ? errorColor : borderColor;
-
-  let iconColor = focused ? borderColor : textColor;
+  const { theme, setFocused } = useTextInputTheme({
+    withError,
+    color,
+  });
 
   const dynamicStyles = StyleSheet.create({
     root: {
       width: fullWidth ? '100%' : undefined,
-      backgroundColor,
-      borderColor,
+      backgroundColor: theme.backgroundColor,
+      borderColor: theme.borderColor,
     },
     input: {
-      color: textColor,
-      fontSize: fontSize.medium,
+      color: theme.textColor,
+      fontSize: theme.textSize,
     },
+  });
+
+  const injectedChildren = React.Children.map(children, child => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, {
+        placeholderTextColor: theme.placeholderTextColor,
+        style: [
+          styles.input,
+          dynamicStyles.input,
+          customStyles.input,
+          child.props.style,
+        ],
+        onFocus: (e: any) => {
+          setFocused(true);
+          if (child.props.onFocus) child.props.onFocus(e);
+        },
+        onBlur: (e: any) => {
+          setFocused(false);
+          if (child.props.onBlur) child.props.onBlur(e);
+        },
+      });
+    }
+
+    return child;
   });
 
   return (
@@ -126,14 +131,15 @@ function TextInputContainer({
         onPress={onPressIconLeft}
         style={[styles.leftIconContainer, customStyles.leftIconContainer]}
         icon={iconLeft}
-        color={iconColor}
+        color={theme.iconColor}
       />
 
       {/* Left Component */}
       {inputLeft}
 
-      {/* Render TextInput */}
-      {renderTextInput({
+      {/* Children */}
+      {injectedChildren}
+      {/* {renderTextInput({
         onFocus: e => {
           setFocused(true);
           if (onFocus) onFocus(e);
@@ -146,7 +152,7 @@ function TextInputContainer({
         disableFullscreenUI: true,
         placeholderTextColor: placeholderColor,
         ...props,
-      })}
+      })} */}
 
       {/* Right Component */}
       {inputRight}
@@ -156,7 +162,7 @@ function TextInputContainer({
         onPress={onPressIconRight}
         style={[styles.rightIconContainer, customStyles.rightIconContainer]}
         icon={iconRight}
-        color={iconColor}
+        color={theme.iconColor}
       />
     </View>
   );

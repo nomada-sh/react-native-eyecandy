@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
 
-import { Body, TextInputMask } from '@nomada-sh/react-native-eyecandy';
+import {
+  Body,
+  TextInputMask,
+  TextInputV2,
+  TextInput,
+} from '@nomada-sh/react-native-eyecandy';
 import CountryPicker, {
   Country,
   CountryCode,
@@ -86,6 +91,9 @@ export default function TextInputs() {
         onChangeText={setValue}
         placeholder={placeholder}
       />
+
+      <TextInputV2 />
+      <TextInput />
     </ScrollView>
   );
 }
