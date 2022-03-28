@@ -1,17 +1,43 @@
 {
-  "name": "@nomada-sh/react-native-eyecandy",
   "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "example",
+    "packages/*"
+  ],
   "scripts": {
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx . --fix"
+    "start": "yarn workspace example start",
+    "build:theme": "yarn workspace @nomada-sh/react-native-eyecandy-theme build",
+    "build:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons build",
+    "build:components": "yarn workspace @nomada-sh/react-native-eyecandy build",
+    "build": "yarn build:theme && yarn build:icons && yarn build:components",
+    "publish:theme": "yarn workspace @nomada-sh/react-native-eyecandy-theme publish",
+    "publish:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons publish",
+    "publish:components": "yarn workspace @nomada-sh/react-native-eyecandy publish",
+    "lint:theme": "yarn workspace @nomada-sh/react-native-eyecandy-theme lint",
+    "lint:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons lint",
+    "lint:components": "yarn workspace @nomada-sh/react-native-eyecandy lint",
+    "lint:example": "yarn workspace example lint",
+    "lint": "yarn lint:theme && yarn lint:icons && yarn lint:components && yarn lint:example",
+    "lint:fix:theme": "yarn workspace @nomada-sh/react-native-eyecandy-theme lint:fix",
+    "lint:fix:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons lint:fix",
+    "lint:fix:components": "yarn workspace @nomada-sh/react-native-eyecandy lint:fix",
+    "lint:fix:example": "yarn workspace example lint:fix",
+    "lint:fix": "yarn lint:fix:theme && yarn lint:fix:icons && yarn lint:fix:components && yarn lint:fix:example"
   },
   "devDependencies": {
-    "@react-native-community/eslint-config": "^3.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.10.1",
-    "@typescript-eslint/parser": "^5.10.1",
-    "eslint": "^7.32.0",
-    "prettier": "^2.5.1",
-    "typescript": "^4.5.5"
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.7.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-react-native": "^4.0.0",
+    "prettier": "^2.6.1",
+    "typescript": "^4.5.5",
+    "yalc": "^1.0.0-pre.53"
   }
 }

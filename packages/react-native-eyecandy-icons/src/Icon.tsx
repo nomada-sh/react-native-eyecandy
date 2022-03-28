@@ -1,10 +1,10 @@
 import React from 'react';
-import Svg, { SvgProps } from 'react-native-svg';
 
 import {
   useColors,
   ThemeTextColorsChoices,
 } from '@nomada-sh/react-native-eyecandy-theme';
+import Svg, { SvgProps } from 'react-native-svg';
 
 export interface IconProps extends Omit<SvgProps, 'color'> {
   size?: number;

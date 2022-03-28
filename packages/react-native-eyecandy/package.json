@@ -1,10 +1,10 @@
 {
   "name": "@nomada-sh/react-native-eyecandy",
-  "version": "2.1.10",
+  "version": "2.1.16",
   "description": "React Native Eyecandy",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
-  "types": "lib/typescript/index.d.ts",
+  "types": "lib/typescript/src/index.d.ts",
   "react-native": "src/index",
   "source": "src/index",
   "files": [
@@ -27,10 +27,10 @@
     "build": "bob build",
     "prepare": "npm run build",
     "typecheck": "tsc --noEmit",
-    "local:publish": "yalc publish --push",
-    "local:add": "yalc add @nomada-sh/react-native-eyecandy-theme @nomada-sh/react-native-eyecandy-icons",
-    "local:remove": "yalc remove --all",
-    "local:check": "yalc check"
+    "release": "npm publish --access public",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "local:publish": "yalc publish --push"
   },
   "keywords": [
     "react-native",
@@ -65,27 +65,27 @@
     "react": "*",
     "react-native": "*",
     "react-native-builder-bob": "^0.18.2",
-    "react-native-gesture-handler": "*",
+    "react-native-gesture-handler": "^2.2.0",
     "react-native-haptic-feedback": "^1.13.0",
-    "react-native-image-picker": "*",
-    "react-native-reanimated": "*",
-    "typescript": "^4.1.3",
-    "yalc": "^1.0.0-pre.53"
+    "react-native-image-picker": "^4.4.2",
+    "react-native-reanimated": "2.3.1"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-gesture-handler": "*",
-    "react-native-image-picker": "*",
-    "react-native-reanimated": "*",
-    "react-native-haptic-feedback": "*"
+    "react-native-gesture-handler": "^2.2.0",
+    "react-native-haptic-feedback": "^1.13.0",
+    "react-native-image-picker": "^4.4.2",
+    "react-native-reanimated": "^2.3.1"
   },
   "dependencies": {
-    "@nomada-sh/react-native-eyecandy-icons": "^1.0.0",
-    "@nomada-sh/react-native-eyecandy-theme": "^1.0.0",
+    "@nomada-sh/react-native-eyecandy-icons": "^1.0.5",
+    "@nomada-sh/react-native-eyecandy-theme": "^1.0.3",
     "calendar-base": "^1.1.1",
     "color": "^4.2.0",
     "date-fns": "^2.28.0",
+    "react-native-country-picker-modal": "^2.0.0",
+    "react-native-mask-input": "^1.2.0",
     "react-native-picker-select": "^8.0.4",
     "react-use": "^17.3.2",
     "rn-swipe-button": "^1.3.6"

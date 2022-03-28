@@ -1,14 +1,12 @@
-import useTheme from './useTheme';
-
 import { ThemeColors } from '../colors';
 
-export default function useColors(): ThemeColors;
+import useTheme from './useTheme';
 
-export default function useColors<T>(selector: (colors: ThemeColors) => T): T;
+function useColors(): ThemeColors;
 
-export default function useColors<T>(
-  selector?: (colors: ThemeColors) => T,
-): T | ThemeColors {
+function useColors<T>(selector: (colors: ThemeColors) => T): T;
+
+function useColors<T>(selector?: (colors: ThemeColors) => T): T | ThemeColors {
   const theme = useTheme();
 
   if (selector) {
@@ -17,3 +15,5 @@ export default function useColors<T>(
 
   return theme.colors;
 }
+
+export default useColors;

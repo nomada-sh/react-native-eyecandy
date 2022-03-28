@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import BaseMenuItem, { BaseMenuItemProps } from '../BaseMenuItem';
 import { ChevronRight } from '@nomada-sh/react-native-eyecandy-icons';
+
 import { Body } from '../../typography';
+import BaseMenuItem, { BaseMenuItemProps } from '../BaseMenuItem';
 
 export interface MenuItemProps extends Omit<BaseMenuItemProps, 'children'> {
   text?: string;
@@ -18,7 +19,8 @@ function MenuItem({ textColor, text, hideArrow, ...props }: MenuItemProps) {
         style={styles.text}
         weight="bold"
         size="medium"
-        customColor={textColor}>
+        customColor={textColor}
+      >
         {text}
       </Body>
       {hideArrow ? null : <ChevronRight size={16} color="greyout" />}

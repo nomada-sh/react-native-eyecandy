@@ -1,6 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": [
-    "src"
-  ]
+  "extends": "../../tsconfig",
+  "references": [],
+  "compilerOptions": {
+    "outDir": "./lib/typescript",
+  }
 }

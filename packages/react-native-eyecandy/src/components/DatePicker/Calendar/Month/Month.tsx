@@ -1,17 +1,16 @@
 import React, { useMemo } from 'react';
 
+import type { CalendarDate } from 'calendar-base';
+import type { Locale } from 'date-fns';
 import Animated, {
   SharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
 
-import type { CalendarDate } from 'calendar-base';
-import type { Locale } from 'date-fns';
-
-import Header from '../Header';
+import wrap from '../../wrap';
 import Actions from '../Actions';
 import Days from '../Days';
-import wrap from '../../wrap';
+import Header from '../Header';
 
 export interface MonthProps {
   month: number;
@@ -84,7 +83,8 @@ function Month({
         },
         style,
       ]}
-      key={`${year}-${month}`}>
+      key={`${year}-${month}`}
+    >
       <Actions
         date={date}
         onPressYear={onPressYear}

@@ -1,9 +1,9 @@
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
 import { Platform, StyleProp, ViewStyle } from 'react-native';
 
-import RBSheet, { RBSheetProps } from './RBSheet';
-
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
+
+import RBSheet, { RBSheetProps } from './RBSheet';
 
 export interface BottomSheetProps extends RBSheetProps {
   ref?: React.Ref<RBSheet>;

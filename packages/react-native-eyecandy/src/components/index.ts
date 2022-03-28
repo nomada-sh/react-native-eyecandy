@@ -79,3 +79,18 @@ export type { RadioGroupProps } from './RadioGroup';
 
 export { default as RadioGroupItem } from './RadioGroupItem';
 export type { RadioGroupItemProps } from './RadioGroupItem';
+
+export { default as Badge } from './Badge';
+export type { BadgeProps } from './Badge';
+
+export { default as TextInputMask } from './TextInputMask';
+export type { TextInputMaskProps } from './TextInputMask';
+
+export { default as TextInputV2 } from './TextInputV2';
+export type { TextInputV2Props } from './TextInputV2';
+
+export { default as TextInputContainer } from './TextInputContainer';
+export type { TextInputContainerProps } from './TextInputContainer';
+
+export { default as PhoneTextInput } from './PhoneTextInput';
+export type { PhoneTextInputProps } from './PhoneTextInput';

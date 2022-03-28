@@ -1,7 +1,7 @@
-import { ThemeTypography, CreateThemeTypographyOptions } from './types';
 import deepmerge from 'deepmerge';
 
 import defaultTypography from './Typography';
+import { ThemeTypography, CreateThemeTypographyOptions } from './types';
 
 export default function createPalette(
   typography?: CreateThemeTypographyOptions,

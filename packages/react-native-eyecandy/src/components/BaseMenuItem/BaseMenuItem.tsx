@@ -10,8 +10,8 @@ import {
 import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
-import IconButton, { IconButtonProps } from '../IconButton';
 import { useRippleColor } from '../../hooks';
+import IconButton, { IconButtonProps } from '../IconButton';
 
 export interface BaseMenuItemProps {
   style?: StyleProp<ViewStyle>;
@@ -59,7 +59,8 @@ function BaseMenuItem({
         style,
       ]}
       onPress={onPress}
-      testID={testID}>
+      testID={testID}
+    >
       <View style={styles.content}>
         {icon && (
           <IconButton

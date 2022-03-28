@@ -1,9 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
-import type { Locale } from 'date-fns';
 
 import { CalendarDate, Calendar as CalendarBase } from 'calendar-base';
-
+import type { Locale } from 'date-fns';
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
@@ -12,15 +15,10 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import {
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
+import wrap from '../wrap';
 
 import Month from './Month';
 import YearMonthSelection from './YearMonthSelection';
-
-import wrap from '../wrap';
 
 export interface CalendarProps {
   width: number;
@@ -256,7 +254,8 @@ function Calendar({
           width,
           flexDirection: 'row',
           flex: 1,
-        }}>
+        }}
+      >
         {content}
       </Animated.View>
     </PanGestureHandler>

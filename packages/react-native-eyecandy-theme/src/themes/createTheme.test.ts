@@ -1,6 +1,7 @@
-import createTheme from './createTheme';
 import { Palette } from '../palette';
 import { Typography } from '../typography';
+
+import createTheme from './createTheme';
 
 test('createTheme', () => {
   const theme = createTheme();

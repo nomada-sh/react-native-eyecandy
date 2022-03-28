@@ -1,4 +1,5 @@
 import deepmerge from 'deepmerge';
+
 import { MergeThemeColorsOptions } from './types';
 
 export default function mergeColors<T>({

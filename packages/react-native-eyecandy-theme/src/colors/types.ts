@@ -1,5 +1,5 @@
-import { DeepPartial } from '../types';
 import { CustomThemePalette, ThemePalette } from '../palette';
+import { DeepPartial } from '../types';
 import { CustomThemeTypography, ThemeTypography } from '../typography';
 
 export type ThemeColors = {
@@ -9,6 +9,7 @@ export type ThemeColors = {
   switch: ThemeSwitchColors;
   background: ThemeBackgroundColors;
   divider: ThemeDividerColors;
+  badge: ThemeBadgeColors;
 };
 
 export type ThemeColorsVariables = {
@@ -76,7 +77,7 @@ export type ThemeButtonColors = {
  * Input
  */
 
-export type ThemeInputColorChoices = 'default';
+export type ThemeInputColorChoices = 'default' | 'error';
 
 export type ThemeInputColor = {
   background: string;
@@ -136,4 +137,24 @@ export type ThemeDividerColor = string;
 
 export type ThemeDividerColors = {
   [key in ThemeDividerColorChoices]: ThemeDividerColor;
+};
+
+/**
+ * Badge
+ */
+export type ThemeBadgeColorChoices =
+  | 'default'
+  | 'primary'
+  | 'error'
+  | 'warning'
+  | 'success'
+  | 'greyout';
+
+export type ThemeBadgeColor = {
+  border: string;
+  background: string;
+};
+
+export type ThemeBadgeColors = {
+  [key in ThemeBadgeColorChoices]: ThemeBadgeColor;
 };

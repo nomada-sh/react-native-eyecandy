@@ -2,6 +2,7 @@ type ValidateFunction = (value: string) => boolean;
 
 export type ValidationIsOptions = 'number' | 'email';
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type ValidationType = Function | number | string | ValidationIsOptions;
 export type MessageType<T extends ValidationType> =
   | string

@@ -1,5 +1,5 @@
-import { ThemeBackgroundColors, GetThemeColors } from './types';
 import mergeColors from './mergeColors';
+import { ThemeBackgroundColors, GetThemeColors } from './types';
 
 const getButtonColors: GetThemeColors<ThemeBackgroundColors> = options => {
   const { dark, palette } = options;
@@ -8,6 +8,7 @@ const getButtonColors: GetThemeColors<ThemeBackgroundColors> = options => {
     default: {
       container: dark ? palette.grey[900] : 'white',
       content: dark ? palette.grey[900] : 'white',
+      // content: dark ? palette.grey[800] : palette.grey[100],
     },
   };
 

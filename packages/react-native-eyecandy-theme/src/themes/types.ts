@@ -1,7 +1,7 @@
-import { DeepPartial } from '../types';
-import { ThemePalette } from '../palette';
-import { ThemeTypography } from '../typography';
 import { ThemeColors } from '../colors';
+import { ThemePalette } from '../palette';
+import { DeepPartial } from '../types';
+import { ThemeTypography } from '../typography';
 
 export type Theme = {
   dark: boolean;

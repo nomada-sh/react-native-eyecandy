@@ -1,5 +1,5 @@
-import { ThemeSwitchColors, GetThemeColors } from './types';
 import mergeColors from './mergeColors';
+import { ThemeSwitchColors, GetThemeColors } from './types';
 
 const getSwitchColors: GetThemeColors<ThemeSwitchColors> = options => {
   const { dark, palette } = options;

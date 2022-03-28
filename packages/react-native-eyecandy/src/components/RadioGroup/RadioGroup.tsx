@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 
 import { Body } from '../../typography';
-
 import type { RadioGroupItemProps } from '../RadioGroupItem';
 
 type Child<V> = React.ReactElement<RadioGroupItemProps<V>>;
@@ -87,7 +86,8 @@ function RadioGroup<V>({
           const { width } = event.nativeEvent.layout;
           setWidth(width);
         }}
-        style={styles.itemsContainer}>
+        style={styles.itemsContainer}
+      >
         {injectedChildren}
       </View>
     </View>

@@ -1,14 +1,12 @@
-import useTheme from './useTheme';
-
 import { ThemePalette } from '../palette';
 
-export default function usePalette(): ThemePalette;
+import useTheme from './useTheme';
 
-export default function usePalette<T>(
-  selector: (palette: ThemePalette) => T,
-): T;
+function usePalette(): ThemePalette;
 
-export default function usePalette<T>(
+function usePalette<T>(selector: (palette: ThemePalette) => T): T;
+
+function usePalette<T>(
   selector?: (palette: ThemePalette) => T,
 ): T | ThemePalette {
   const theme = useTheme();
@@ -19,3 +17,5 @@ export default function usePalette<T>(
 
   return theme.palette;
 }
+
+export default usePalette;

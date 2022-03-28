@@ -1,13 +1,14 @@
-import { CreateThemeColors } from './types';
 import { createPalette } from '../palette';
 import { createTypography } from '../typography';
 
+import getBackgroundColors from './getBackgroundColors';
+import getBadgeColors from './getBadgeColors';
 import getButtonColors from './getButtonColors';
-import getTextColors from './getTextColors';
+import getDividerColors from './getDividerColors';
 import getInputColors from './getInputColors';
 import getSwitchColors from './getSwitchColors';
-import getBackgroundColors from './getBackgroundColors';
-import getDividerColors from './getDividerColors';
+import getTextColors from './getTextColors';
+import { CreateThemeColors } from './types';
 
 const createColors: CreateThemeColors = (options = {}) => {
   const variables = {
@@ -45,6 +46,10 @@ const createColors: CreateThemeColors = (options = {}) => {
     divider: getDividerColors({
       ...variables,
       colors: partialColors.divider,
+    }),
+    badge: getBadgeColors({
+      ...variables,
+      colors: partialColors.badge,
     }),
   };
 };

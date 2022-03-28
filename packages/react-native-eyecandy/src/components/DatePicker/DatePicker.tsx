@@ -7,19 +7,21 @@ import React, {
 } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 
-import Calendar from './Calendar';
-import BottomSheet from '../BottomSheetV2';
-import Button from '../Button';
-// TODO: Create Button with input styles.
-import LinkButton from '../LinkButton';
-import IconButton from '../IconButton';
 import {
   CalendarEvent,
   ArrowLeft,
 } from '@nomada-sh/react-native-eyecandy-icons';
-import formatDate from './formatDate';
 import type { Locale } from 'date-fns';
 import en from 'date-fns/locale/en-US';
+
+import BottomSheet from '../BottomSheetV2';
+import Button from '../Button';
+// TODO: Create Button with input styles.
+import IconButton from '../IconButton';
+import LinkButton from '../LinkButton';
+
+import Calendar from './Calendar';
+import formatDate from './formatDate';
 export interface DatePickerProps {
   date: Date; // = new Date();
   locale: Locale; // = 'en-US';
@@ -136,7 +138,8 @@ function DatePicker({
       <BottomSheet
         height={disableCloseOnSelect ? 410 : 350}
         visible={visible}
-        onClose={onClose}>
+        onClose={onClose}
+      >
         {/* {yearMonthSelectionStep === undefined ? (
           <View style={styles.tabsContainer}>
             <Button
@@ -162,7 +165,8 @@ function DatePicker({
           <View
             style={{
               padding: 10,
-            }}>
+            }}
+          >
             <Button
               color="primary"
               text={doneButtonText}

@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import Color from 'color';
-
 import {
   ThemeButtonColorChoices,
   useColors,
 } from '@nomada-sh/react-native-eyecandy-theme';
+import Color from 'color';
+
 import { getRippleColor } from '../../utils';
 
 export default function useStyles({

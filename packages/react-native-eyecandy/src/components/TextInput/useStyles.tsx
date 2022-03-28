@@ -79,7 +79,7 @@ export default function useStyles({
       flex: 1,
       color: textColor,
       fontSize: fontSize.medium,
-      fontWeight: empty ? 'normal' : '700',
+      // fontWeight: empty ? 'normal' : '700',
       paddingEnd: widthPaddingEnd ? padding : 0,
       paddingStart: widthPaddingStart ? padding : 0,
     },
