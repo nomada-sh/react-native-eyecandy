@@ -18,20 +18,23 @@ interface TicksProps {
   strokeWidth: number;
 }
 
+function calculateTickGap(width: number, tickCount: number) {
+  return width / (tickCount - 1);
+}
+
 function Ticks({
   tickCount: initialTickCount,
-  width: initialWidth,
+  width,
   strokeWidth,
   height,
 }: TicksProps) {
-  const tickCount = initialTickCount + 1;
-  const tickGap = initialWidth / (tickCount - 1);
-  const width = tickGap + initialWidth;
-  const viewBox = `0 0 ${width + strokeWidth} ${height}`;
+  const tickCount = initialTickCount + 2;
+  const tickGap = calculateTickGap(width, tickCount);
+  const viewBox = `0 0 ${width} ${height}`;
 
   const ticks: React.ReactNode[] = [];
-  for (let i = 0; i < tickCount; i++) {
-    const x = strokeWidth / 2 + tickGap * i;
+  for (let i = 0; i < tickCount - 1; i++) {
+    const x = tickGap * i;
     let yPadding = i === 0 ? 0 : 5;
 
     ticks.push(
