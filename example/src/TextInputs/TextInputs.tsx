@@ -7,6 +7,7 @@ import {
   TextInputV2,
   TextInput,
 } from '@nomada-sh/react-native-eyecandy';
+import { Lock } from '@nomada-sh/react-native-eyecandy-icons';
 import CountryPicker, {
   Country,
   CountryCode,
@@ -25,6 +26,8 @@ const InputLeft = ({ onSelect, countryCode, callingCode }: any) => {
       style={{
         flexDirection: 'row',
         alignItems: 'center',
+        paddingLeft: 16,
+        paddingRight: 5,
       }}
     >
       <CountryPicker
@@ -84,16 +87,23 @@ export default function TextInputs() {
             callingCode={callingCode}
           />
         }
+        inputPaddingLeft={0}
         maxLength={Masks.BRL_PHONE.length}
         keyboardType="phone-pad"
         mask={Masks.BRL_PHONE}
         value={value}
         onChangeText={setValue}
         placeholder={placeholder}
+        required
       />
 
-      <TextInputV2 />
-      <TextInput />
+      <TextInputV2 iconLeft={Lock} placeholder="test" error required />
+      <TextInput
+        startIcon={Lock}
+        errors={[[true, 'Error']]}
+        placeholder="test"
+      />
+      <TextInput startIcon={Lock} placeholder="test" />
     </ScrollView>
   );
 }

@@ -10,14 +10,13 @@ export type Theme = {
   borderColor: string;
   textColor: string;
   textSize: number;
-  errorTextColor: string;
   placeholderTextColor: string;
   iconColor: string;
 };
 
 export type UseThemeInputThemeProps = {
   color?: ThemeInputColorChoices;
-  withError?: boolean;
+  error?: boolean;
 };
 
 export type UseThemeInputThemeReturnType = {
@@ -26,33 +25,28 @@ export type UseThemeInputThemeReturnType = {
 };
 
 export default function useTextInputTheme({
-  color = 'default',
-  withError,
+  color: colorProp = 'default',
+  error,
 }: UseThemeInputThemeProps): UseThemeInputThemeReturnType {
+  const color: ThemeInputColorChoices = error ? 'error' : colorProp;
   const [focused, setFocused] = useState(false);
 
-  const { palette, colors, fontSize } = useTheme(t => ({
+  const { colors, fontSize } = useTheme(t => ({
     palette: t.palette,
     colors: t.colors.input[color],
     fontSize: t.typography.body.fontSize,
   }));
 
-  const errorTextColor = palette.error[200];
+  // const errorTextColor = palette.error[200];
 
   const backgroundColor = focused
     ? colors.focused.background
     : colors.background;
 
-  let textColor = colors.foreground;
-  textColor = withError ? errorTextColor : textColor;
-
-  let placeholderTextColor = colors.placeholder;
-  placeholderTextColor = withError ? errorTextColor : placeholderTextColor;
-
-  let borderColor = focused ? colors.focused.indicator : backgroundColor;
-  borderColor = withError ? errorTextColor : borderColor;
-
-  let iconColor = focused ? borderColor : textColor;
+  const textColor = colors.foreground;
+  const placeholderTextColor = colors.placeholder;
+  const borderColor = focused ? colors.focused.indicator : colors.border;
+  const iconColor = focused ? borderColor : textColor;
 
   return {
     setFocused,
@@ -61,7 +55,6 @@ export default function useTextInputTheme({
       borderColor,
       textColor,
       textSize: fontSize.medium,
-      errorTextColor,
       placeholderTextColor,
       iconColor,
     },

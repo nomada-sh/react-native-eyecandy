@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   TextStyle,
-  TextInputProps as RNTextInputProps,
   View,
   StyleSheet,
   StyleProp,
@@ -21,12 +20,20 @@ export type Styles = {
   rightIconContainer?: StyleProp<ViewStyle>;
 };
 
-export interface IconProps {
+interface TextInputProps {
+  placeholderTextColor?: string;
+  style?: StyleProp<TextStyle>;
+  onFocus?: (e: any) => void;
+  onBlur?: (e: any) => void;
+  placeholder?: string;
+}
+
+interface IconProps {
   size: number;
   stroke: string;
 }
 
-export interface IconTouchableProps {
+interface IconTouchableProps {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
   icon?: React.FC<IconProps>;
@@ -42,6 +49,11 @@ export interface TextInputContainerProps extends UseThemeInputThemeProps {
   onPressIconLeft?: () => void;
   iconRight?: React.FC<IconProps>;
   onPressIconRight?: () => void;
+  focusOnLeftIconPress?: boolean;
+  focusOnRightIconPress?: boolean;
+  inputPaddingLeft?: number;
+  inputPaddingRight?: number;
+  required?: boolean;
 }
 
 const defaultStyles: Styles = {};
@@ -74,17 +86,30 @@ function TextInputContainer({
   iconRight,
   onPressIconRight,
   color,
-  withError,
+  error: withError,
+  focus,
+  focusOnLeftIconPress = true,
+  focusOnRightIconPress,
+  inputPaddingLeft: inputPaddingLeftProp,
+  inputPaddingRight: inputPaddingRightProp,
+  required,
 }: TextInputContainerProps & {
-  children?: React.ReactElement<{
-    placeholderTextColor?: string;
-    style?: StyleProp<TextStyle>;
-    onFocus?: (e: any) => void;
-    onBlur?: (e: any) => void;
-  }>;
+  children?: React.ReactElement<TextInputProps>;
+  focus: () => void;
 }) {
+  const inputHorizontalPadding = 16;
+  let inputPaddingLeft = iconLeft ? 0 : inputHorizontalPadding;
+
+  if (inputPaddingLeftProp !== undefined)
+    inputPaddingLeft = inputPaddingLeftProp;
+
+  let inputPaddingRight = iconRight ? 0 : inputHorizontalPadding;
+
+  if (inputPaddingRightProp !== undefined)
+    inputPaddingRight = inputPaddingRightProp;
+
   const { theme, setFocused } = useTextInputTheme({
-    withError,
+    error: withError,
     color,
   });
 
@@ -97,11 +122,15 @@ function TextInputContainer({
     input: {
       color: theme.textColor,
       fontSize: theme.textSize,
+      paddingLeft: inputPaddingLeft,
+      paddingRight: inputPaddingRight,
     },
   });
 
   const injectedChildren = React.Children.map(children, child => {
     if (React.isValidElement(child)) {
+      const placeholder = child.props.placeholder ?? '';
+
       return React.cloneElement(child, {
         placeholderTextColor: theme.placeholderTextColor,
         style: [
@@ -118,17 +147,28 @@ function TextInputContainer({
           setFocused(false);
           if (child.props.onBlur) child.props.onBlur(e);
         },
+        placeholder: required ? `${placeholder} *` : placeholder,
       });
     }
 
     return child;
   });
 
+  const handlePressIconLeft = () => {
+    if (onPressIconLeft) onPressIconLeft();
+    if (focusOnLeftIconPress) focus();
+  };
+
+  const handlePressIconRight = () => {
+    if (onPressIconRight) onPressIconRight();
+    if (focusOnRightIconPress) focus();
+  };
+
   return (
     <View style={[styles.root, dynamicStyles.root, customStyles.root]}>
       {/* Left Icon */}
       <IconTouchable
-        onPress={onPressIconLeft}
+        onPress={handlePressIconLeft}
         style={[styles.leftIconContainer, customStyles.leftIconContainer]}
         icon={iconLeft}
         color={theme.iconColor}
@@ -137,29 +177,14 @@ function TextInputContainer({
       {/* Left Component */}
       {inputLeft}
 
-      {/* Children */}
       {injectedChildren}
-      {/* {renderTextInput({
-        onFocus: e => {
-          setFocused(true);
-          if (onFocus) onFocus(e);
-        },
-        onBlur: e => {
-          setFocused(false);
-          if (onBlur) onBlur(e);
-        },
-        style: [styles.input, dynamicStyles.input, customStyles.input],
-        disableFullscreenUI: true,
-        placeholderTextColor: placeholderColor,
-        ...props,
-      })} */}
 
       {/* Right Component */}
       {inputRight}
 
       {/* Right Icon */}
       <IconTouchable
-        onPress={onPressIconRight}
+        onPress={handlePressIconRight}
         style={[styles.rightIconContainer, customStyles.rightIconContainer]}
         icon={iconRight}
         color={theme.iconColor}
@@ -176,17 +201,18 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     flexDirection: 'row',
     borderStyle: 'solid',
-    paddingHorizontal: 16,
   },
   input: {
     flex: 1,
   },
-  iconContainer: {},
+  iconContainer: {
+    justifyContent: 'center',
+  },
   leftIconContainer: {
-    marginRight: 16,
+    paddingHorizontal: 16,
   },
   rightIconContainer: {
-    marginLeft: 16,
+    paddingHorizontal: 16,
   },
 });
 

@@ -77,7 +77,7 @@ export type ThemeButtonColors = {
  * Input
  */
 
-export type ThemeInputColorChoices = 'default';
+export type ThemeInputColorChoices = 'default' | 'error';
 
 export type ThemeInputColor = {
   background: string;

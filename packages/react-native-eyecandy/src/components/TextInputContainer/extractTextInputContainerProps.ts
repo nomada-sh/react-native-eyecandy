@@ -13,7 +13,12 @@ export default function extractTextInputContainerProps<P>(
     onPressIconRight,
     styles,
     color,
-    withError,
+    error,
+    focusOnLeftIconPress,
+    focusOnRightIconPress,
+    inputPaddingLeft,
+    inputPaddingRight,
+    required,
     ...inputProps
   } = props;
 
@@ -28,7 +33,12 @@ export default function extractTextInputContainerProps<P>(
       onPressIconRight,
       styles,
       color,
-      withError,
+      error,
+      focusOnLeftIconPress,
+      focusOnRightIconPress,
+      inputPaddingLeft,
+      inputPaddingRight,
+      required,
     } as TextInputContainerProps,
     inputProps as P,
   ];

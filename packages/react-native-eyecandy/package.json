@@ -89,6 +89,7 @@
     "calendar-base": "^1.1.1",
     "color": "^4.2.0",
     "date-fns": "^2.28.0",
+    "react-native-country-picker-modal": "^2.0.0",
     "react-native-mask-input": "^1.2.0",
     "react-native-picker-select": "^8.0.4",
     "react-use": "^17.3.2",
