@@ -1,11 +1,11 @@
 {
   "name": "@nomada-sh/react-native-eyecandy-theme",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React Native Eyecandy Theme",
   "license": "MIT",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
-  "types": "lib/typescript/index.d.ts",
+  "types": "lib/typescript/src/index.d.ts",
   "react-native": "src/index.ts",
   "source": "src/index.ts",
   "scripts": {
@@ -13,7 +13,7 @@
     "build": "bob build",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
-    "publish": "npm publish --access public",
+    "release": "npm publish --access public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "local:publish": "yalc publish --push"
