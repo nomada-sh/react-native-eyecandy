@@ -11,8 +11,7 @@ const TextInputV2 = React.forwardRef<RNTextInput, TextInputV2Props>(
   (props, ref) => {
     return (
       <TextInputContainer
-        TextInput={RNTextInput}
-        textInputRef={ref}
+        renderTextInput={props => <RNTextInput {...props} ref={ref} />}
         {...props}
       />
     );

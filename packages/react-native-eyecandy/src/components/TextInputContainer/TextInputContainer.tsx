@@ -1,13 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
-  TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
   View,
   StyleSheet,
   StyleProp,
   ViewStyle,
-  NativeSyntheticEvent,
-  TextInputFocusEventData,
   TouchableWithoutFeedback,
 } from 'react-native';
 
@@ -80,12 +77,10 @@ function TextInputContainer({
   onPressIconLeft,
   iconRight,
   onPressIconRight,
-  TextInput,
-  textInputRef,
+  renderTextInput,
   ...props
 }: TextInputContainerProps & {
-  TextInput: typeof RNTextInput;
-  textInputRef: React.Ref<RNTextInput>;
+  renderTextInput: (props: RNTextInputProps) => JSX.Element;
 }) {
   const withError = false;
   const [focused, setFocused] = useState(false);
@@ -124,22 +119,6 @@ function TextInputContainer({
     },
   });
 
-  const handleFocus = useCallback(
-    (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-      setFocused(true);
-      if (onFocus) onFocus(e);
-    },
-    [onFocus],
-  );
-
-  const handleBlur = useCallback(
-    (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-      setFocused(false);
-      if (onBlur) onBlur(e);
-    },
-    [onBlur],
-  );
-
   return (
     <View style={[styles.root, dynamicStyles.root, customStyles.root]}>
       {/* Left Icon */}
@@ -153,16 +132,21 @@ function TextInputContainer({
       {/* Left Component */}
       {inputLeft}
 
-      {/* TextInput */}
-      <TextInput
-        style={[styles.input, dynamicStyles.input, customStyles.input]}
-        disableFullscreenUI
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        placeholderTextColor={placeholderColor}
-        ref={textInputRef}
-        {...props}
-      />
+      {/* Render TextInput */}
+      {renderTextInput({
+        onFocus: e => {
+          setFocused(true);
+          if (onFocus) onFocus(e);
+        },
+        onBlur: e => {
+          setFocused(false);
+          if (onBlur) onBlur(e);
+        },
+        style: [styles.input, dynamicStyles.input, customStyles.input],
+        disableFullscreenUI: true,
+        placeholderTextColor: placeholderColor,
+        ...props,
+      })}
 
       {/* Right Component */}
       {inputRight}

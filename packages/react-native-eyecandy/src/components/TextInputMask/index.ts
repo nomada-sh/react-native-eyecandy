@@ -1,2 +1,2 @@
 export { default } from './TextInputMask';
-export * from './typings';
+export * from './TextInputMask';

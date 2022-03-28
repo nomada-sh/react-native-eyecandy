@@ -1,20 +1,29 @@
 import React from 'react';
 import { TextInput as RNTextInput } from 'react-native';
 
-import MaskInput, { Masks, MaskInputProps } from 'react-native-mask-input';
+import MaskInput, { MaskInputProps } from 'react-native-mask-input';
 
 import TextInputContainer, {
   TextInputContainerProps,
 } from '../TextInputContainer';
 
-export interface TextInputMaskProps extends TextInputContainerProps {}
+export interface TextInputMaskProps
+  extends Omit<TextInputContainerProps, 'onChangeText' | 'value'>,
+    MaskInputProps {}
 
 const TextInputMask = React.forwardRef<RNTextInput, TextInputMaskProps>(
-  (props, ref) => {
+  ({ onChangeText, value, mask, ...props }, ref) => {
     return (
       <TextInputContainer
-        TextInput={RNTextInput}
-        textInputRef={ref}
+        renderTextInput={props => (
+          <MaskInput
+            onChangeText={onChangeText}
+            value={value}
+            mask={mask}
+            {...props}
+            ref={ref}
+          />
+        )}
         {...props}
       />
     );

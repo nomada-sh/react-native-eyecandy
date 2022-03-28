@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
 
-import {
-  Body,
-  TextInputMask,
-  TextInputV2,
-} from '@nomada-sh/react-native-eyecandy';
-import { Lock } from '@nomada-sh/react-native-eyecandy-icons';
+import { Body, TextInputMask } from '@nomada-sh/react-native-eyecandy';
 import CountryPicker, {
   Country,
   CountryCode,
+  DARK_THEME,
+  DEFAULT_THEME,
 } from 'react-native-country-picker-modal';
-import MaskInput, { Masks } from 'react-native-mask-input';
+import { Masks } from 'react-native-mask-input';
+
+import { useTheme } from '../shared/hooks';
 
 const InputLeft = ({ onSelect, countryCode, callingCode }: any) => {
+  const { dark } = useTheme();
+
   return (
     <View
       style={{
@@ -22,11 +23,13 @@ const InputLeft = ({ onSelect, countryCode, callingCode }: any) => {
       }}
     >
       <CountryPicker
+        theme={dark ? DARK_THEME : DEFAULT_THEME}
         containerButtonStyle={{
           width: 30,
         }}
         withFilter
         withCallingCode
+        withAlphaFilter
         countryCode={countryCode}
         onSelect={onSelect}
       />
@@ -68,49 +71,7 @@ export default function TextInputs() {
         padding: 20,
       }}
     >
-      {/* <TextInputMask
-        startIcon={() => {
-          return (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <CountryPicker
-                containerButtonStyle={{
-                  width: 30,
-                }}
-                withFilter
-                withCallingCode
-                countryCode={countryCode}
-                onSelect={onSelect}
-              />
-              {callingCode ? (
-                <Body
-                  style={{
-                    marginLeft: 8,
-                  }}
-                >
-                  +{callingCode}
-                </Body>
-              ) : null}
-            </View>
-          );
-        }}
-        inputStartPadding={0}
-        maxLength={Masks.BRL_PHONE.length}
-        keyboardType="phone-pad"
-        mask={Masks.BRL_PHONE}
-        value={value}
-        onChangeText={setValue}
-        placeholder={placeholder}
-      /> */}
-      <TextInputV2
-        keyboardType="phone-pad"
-        value={value}
-        onChangeText={setValue}
-        placeholder={placeholder}
+      <TextInputMask
         inputLeft={
           <InputLeft
             onSelect={onSelect}
@@ -118,6 +79,12 @@ export default function TextInputs() {
             callingCode={callingCode}
           />
         }
+        maxLength={Masks.BRL_PHONE.length}
+        keyboardType="phone-pad"
+        mask={Masks.BRL_PHONE}
+        value={value}
+        onChangeText={setValue}
+        placeholder={placeholder}
       />
     </ScrollView>
   );
