@@ -37,12 +37,9 @@ export default function useTextInputTheme({
     fontSize: t.typography.body.fontSize,
   }));
 
-  // const errorTextColor = palette.error[200];
-
   const backgroundColor = focused
     ? colors.focused.background
     : colors.background;
-
   const textColor = colors.foreground;
   const placeholderTextColor = colors.placeholder;
   const borderColor = focused ? colors.focused.indicator : colors.border;

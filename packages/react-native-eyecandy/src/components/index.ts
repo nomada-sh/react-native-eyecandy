@@ -91,3 +91,6 @@ export type { TextInputV2Props } from './TextInputV2';
 
 export { default as TextInputContainer } from './TextInputContainer';
 export type { TextInputContainerProps } from './TextInputContainer';
+
+export { default as PhoneTextInput } from './PhoneTextInput';
+export type { PhoneTextInputProps } from './PhoneTextInput';
