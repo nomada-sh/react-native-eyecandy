@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
@@ -23,7 +23,18 @@ interface InputLeftProps {
 }
 
 const InputLeft = ({ onChange, countryCode, callingCode }: InputLeftProps) => {
-  const { dark } = useTheme();
+  const { dark, palette, colors } = useTheme();
+
+  const baseTheme = dark ? DARK_THEME : DEFAULT_THEME;
+
+  const theme: typeof baseTheme = useMemo(
+    () => ({
+      ...baseTheme,
+      backgroundColor: colors.background.default.container,
+      primaryColor: palette.primary[500],
+    }),
+    [baseTheme, colors.background.default.container, palette.primary],
+  );
 
   return (
     <View
@@ -35,13 +46,14 @@ const InputLeft = ({ onChange, countryCode, callingCode }: InputLeftProps) => {
       }}
     >
       <CountryPicker
-        theme={dark ? DARK_THEME : DEFAULT_THEME}
+        theme={theme}
         containerButtonStyle={{
           width: 30,
         }}
         withFilter
         withCallingCode
         withAlphaFilter
+        withCloseButton={false}
         countryCode={countryCode}
         onSelect={onChange}
       />
