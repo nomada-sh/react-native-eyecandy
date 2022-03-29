@@ -1,9 +1,11 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { View, ScrollView, useWindowDimensions } from 'react-native';
 
 import { Body, LineValueSelector } from '@nomada-sh/react-native-eyecandy';
 
 export default function TextInputs() {
+  const { width } = useWindowDimensions();
+
   return (
     <ScrollView>
       <Body
@@ -15,7 +17,14 @@ export default function TextInputs() {
       >
         100
       </Body>
-      <LineValueSelector />
+      <View
+        style={{
+          alignItems: 'center',
+        }}
+      >
+        <LineValueSelector width={width} />
+        <LineValueSelector width={width / 2} tickCount={3} />
+      </View>
     </ScrollView>
   );
 }
