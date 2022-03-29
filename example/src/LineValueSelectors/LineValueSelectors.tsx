@@ -14,10 +14,18 @@ export default function TextInputs() {
         style={{
           padding: 20,
         }}
-        weight="bold"
         size="xlarge"
       >
-        {ticksMoved}
+        ticksMoved: {ticksMoved}
+      </Body>
+      <Body
+        style={{
+          padding: 20,
+        }}
+        size="xlarge"
+        weight="bold"
+      >
+        {value}
       </Body>
       <View
         style={{
