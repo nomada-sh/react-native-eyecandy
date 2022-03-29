@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   PanGestureHandler,
@@ -132,6 +132,7 @@ function LineValueSelector({
   const x = useSharedValue(indicatorX.value);
   const startExactX = useSharedValue(2 * tickGap);
   const lastExactX = useSharedValue(2 * tickGap);
+  const indicatorScale = useSharedValue(1);
 
   const calculateExactX = (x: number) => {
     'worklet';
@@ -154,6 +155,7 @@ function LineValueSelector({
     },
     onActive: (e, ctx) => {
       x.value = ctx.startX + e.translationX;
+      indicatorScale.value = withTiming(1.5, { duration: 100 });
     },
     onEnd: e => {
       const vx = Math.abs(e.velocityX);
@@ -165,11 +167,14 @@ function LineValueSelector({
           },
           () => {
             x.value = withTiming(calculateExactX(x.value));
+            indicatorScale.value = withTiming(1, { duration: 100 });
           },
         );
       } else {
         const exactX = calculateExactX(x.value);
+
         x.value = withSpring(exactX);
+        indicatorScale.value = withTiming(1, { duration: 100 });
 
         // const ticksMoved = calculateTicksMoved(exactX);
       }
@@ -187,7 +192,12 @@ function LineValueSelector({
 
   const indicatorStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateX: indicatorX.value }],
+      transform: [
+        { translateX: indicatorX.value },
+        {
+          scaleY: indicatorScale.value,
+        },
+      ],
     };
   });
 
@@ -249,7 +259,7 @@ function LineValueSelector({
         style={{
           width,
           height: ticksHeight * 3,
-          backgroundColor: 'red',
+          // backgroundColor: 'red',
           justifyContent: 'center',
           overflow: 'hidden',
         }}
@@ -277,7 +287,7 @@ function LineValueSelector({
           {ticksRight}
         </Animated.View>
         <Animated.View style={indicatorStyle}>
-          <Indicator height={ticksHeight * 2} strokeWidth={6} stroke="yellow" />
+          <Indicator height={ticksHeight * 2} strokeWidth={6} stroke="blue" />
         </Animated.View>
       </Animated.View>
     </PanGestureHandler>

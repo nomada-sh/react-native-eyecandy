@@ -17,7 +17,7 @@ export default function TextInputs() {
         weight="bold"
         size="xlarge"
       >
-        {value + ticksMoved}
+        {ticksMoved}
       </Body>
       <View
         style={{
