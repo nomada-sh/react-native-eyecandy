@@ -9,6 +9,10 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withDecay,
+  withSpring,
+  useAnimatedReaction,
+  runOnJS,
+  withTiming,
 } from 'react-native-reanimated';
 import { Svg, Line } from 'react-native-svg';
 
@@ -18,11 +22,19 @@ export interface LineValueSelectorProps {
   ticksHeight?: number;
   strokeWidth?: number;
   width: number;
+  indicatorX?: number;
+  onTicksMoved?: (ticksMoved: number) => void;
 }
 
 interface TicksProps {
   tickCount: number;
   width: number;
+  height: number;
+  strokeWidth: number;
+  stroke: string;
+}
+
+interface IndicatorProps {
   height: number;
   strokeWidth: number;
   stroke: string;
@@ -35,6 +47,25 @@ type Context = {
 
 function calculateTickGap(width: number, tickCount: number) {
   return width / (tickCount - 1);
+}
+
+function Indicator({ height, stroke, strokeWidth }: IndicatorProps) {
+  const width = strokeWidth;
+  const viewBox = `0 0 ${width} ${height}`;
+
+  return (
+    <Svg width={width} height={height} viewBox={viewBox}>
+      <Line
+        x1={0}
+        y1={0}
+        x2={0}
+        y2={height}
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+      />
+    </Svg>
+  );
 }
 
 function Ticks({
@@ -91,11 +122,27 @@ function LineValueSelector({
   ticksHeight = 15,
   strokeWidth = 2,
   width,
+  onTicksMoved,
 }: LineValueSelectorProps) {
   const totalTicks = Math.ceil(width / ticksWidth);
   const fullTicksWidth = ticksWidth * totalTicks;
+  const tickGap = calculateTickGap(ticksWidth, tickCount + 2);
 
-  const x = useSharedValue(0);
+  const indicatorX = useSharedValue(2 * tickGap - strokeWidth);
+  const x = useSharedValue(indicatorX.value);
+  const startExactX = useSharedValue(2 * tickGap);
+  const lastExactX = useSharedValue(2 * tickGap);
+
+  const calculateExactX = (x: number) => {
+    'worklet';
+    return Math.round(x / tickGap) * tickGap;
+  };
+
+  const calculateTicksMoved = (exactX: number) => {
+    'worklet';
+    const diff = exactX - startExactX.value;
+    return -diff / tickGap;
+  };
 
   const gestureHandler = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -103,18 +150,48 @@ function LineValueSelector({
   >({
     onStart: (e, ctx) => {
       ctx.startX = x.value;
+      startExactX.value = calculateExactX(x.value);
     },
     onActive: (e, ctx) => {
       x.value = ctx.startX + e.translationX;
     },
     onEnd: e => {
-      x.value = withDecay({
-        velocity: e.velocityX,
-      });
+      const vx = Math.abs(e.velocityX);
+
+      if (vx > 200) {
+        x.value = withDecay(
+          {
+            velocity: e.velocityX,
+          },
+          () => {
+            x.value = withTiming(calculateExactX(x.value));
+          },
+        );
+      } else {
+        const exactX = calculateExactX(x.value);
+        x.value = withSpring(exactX);
+
+        // const ticksMoved = calculateTicksMoved(exactX);
+      }
     },
   });
 
-  const animatedStyleLeft = useAnimatedStyle(() => {
+  useAnimatedReaction(
+    () => calculateExactX(x.value),
+    v => {
+      if (lastExactX.value === v) return;
+      lastExactX.value = v;
+      if (onTicksMoved) runOnJS(onTicksMoved)(calculateTicksMoved(v));
+    },
+  );
+
+  const indicatorStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: indicatorX.value }],
+    };
+  });
+
+  const ticksLeftStyle = useAnimatedStyle(() => {
     const translateX = wrap(
       x.value + 2 * fullTicksWidth,
       -fullTicksWidth,
@@ -126,7 +203,7 @@ function LineValueSelector({
     };
   });
 
-  const animatedStyleRight = useAnimatedStyle(() => {
+  const ticksRightStyle = useAnimatedStyle(() => {
     const translateX = wrap(
       fullTicksWidth + x.value + 2 * fullTicksWidth,
       -fullTicksWidth,
@@ -162,7 +239,7 @@ function LineValueSelector({
         tickCount={tickCount}
         width={ticksWidth}
         height={ticksHeight}
-        stroke="black"
+        stroke="green"
       />,
     );
 
@@ -183,7 +260,7 @@ function LineValueSelector({
               flexDirection: 'row',
               position: 'absolute',
             },
-            animatedStyleLeft,
+            ticksLeftStyle,
           ]}
         >
           {ticksLeft}
@@ -194,10 +271,13 @@ function LineValueSelector({
               flexDirection: 'row',
               position: 'absolute',
             },
-            animatedStyleRight,
+            ticksRightStyle,
           ]}
         >
           {ticksRight}
+        </Animated.View>
+        <Animated.View style={indicatorStyle}>
+          <Indicator height={ticksHeight * 2} strokeWidth={6} stroke="yellow" />
         </Animated.View>
       </Animated.View>
     </PanGestureHandler>

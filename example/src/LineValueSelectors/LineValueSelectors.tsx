@@ -5,6 +5,8 @@ import { Body, LineValueSelector } from '@nomada-sh/react-native-eyecandy';
 
 export default function TextInputs() {
   const { width } = useWindowDimensions();
+  const [ticksMoved, setTicksMoved] = React.useState(0);
+  const [value, setValue] = React.useState(0);
 
   return (
     <ScrollView>
@@ -15,15 +17,15 @@ export default function TextInputs() {
         weight="bold"
         size="xlarge"
       >
-        100
+        {value + ticksMoved}
       </Body>
       <View
         style={{
           alignItems: 'center',
         }}
       >
-        <LineValueSelector width={width} />
-        <LineValueSelector width={width / 2} tickCount={3} />
+        <LineValueSelector width={width} onTicksMoved={setTicksMoved} />
+        {/* <LineValueSelector width={width / 2} tickCount={3} /> */}
       </View>
     </ScrollView>
   );
