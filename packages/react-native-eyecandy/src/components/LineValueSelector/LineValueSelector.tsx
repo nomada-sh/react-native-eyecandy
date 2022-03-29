@@ -131,7 +131,6 @@ function LineValueSelector({
   const indicatorX = useSharedValue(2 * tickGap - strokeWidth);
   const x = useSharedValue(indicatorX.value);
   const startExactX = useSharedValue(2 * tickGap);
-  const lastExactX = useSharedValue(2 * tickGap);
   const indicatorScale = useSharedValue(1);
 
   const calculateExactX = (x: number) => {
@@ -139,9 +138,9 @@ function LineValueSelector({
     return Math.round(x / tickGap) * tickGap;
   };
 
-  const calculateTicksMoved = (exactX: number) => {
+  const calculateTicksMoved = (x: number) => {
     'worklet';
-    const diff = exactX - startExactX.value;
+    const diff = calculateExactX(x) - startExactX.value;
     return -diff / tickGap;
   };
 
@@ -151,11 +150,10 @@ function LineValueSelector({
   >({
     onStart: (e, ctx) => {
       ctx.startX = x.value;
-      startExactX.value = calculateExactX(x.value);
+      indicatorScale.value = withTiming(1.5, { duration: 100 });
     },
     onActive: (e, ctx) => {
       x.value = ctx.startX + e.translationX;
-      indicatorScale.value = withTiming(1.5, { duration: 100 });
     },
     onEnd: e => {
       const vx = Math.abs(e.velocityX);
@@ -175,18 +173,14 @@ function LineValueSelector({
 
         x.value = withSpring(exactX);
         indicatorScale.value = withTiming(1, { duration: 100 });
-
-        // const ticksMoved = calculateTicksMoved(exactX);
       }
     },
   });
 
   useAnimatedReaction(
-    () => calculateExactX(x.value),
-    v => {
-      if (lastExactX.value === v) return;
-      lastExactX.value = v;
-      if (onTicksMoved) runOnJS(onTicksMoved)(calculateTicksMoved(v));
+    () => x.value,
+    x => {
+      if (onTicksMoved) runOnJS(onTicksMoved)(calculateTicksMoved(x));
     },
   );
 
