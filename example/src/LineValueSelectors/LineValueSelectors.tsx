@@ -6,7 +6,7 @@ import { Body, LineValueSelector } from '@nomada-sh/react-native-eyecandy';
 export default function TextInputs() {
   const { width } = useWindowDimensions();
 
-  const [value, setValue] = React.useState(400);
+  const [value, setValue] = React.useState(0);
 
   return (
     <ScrollView

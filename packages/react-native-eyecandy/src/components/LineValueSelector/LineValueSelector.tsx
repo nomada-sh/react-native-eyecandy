@@ -16,7 +16,26 @@ import Animated, {
   runOnJS,
   AnimateProps,
 } from 'react-native-reanimated';
-import { Svg, Line } from 'react-native-svg';
+
+import Ticks from './Ticks';
+
+function calculateTickGap(width: number, tickCount: number) {
+  return width / (tickCount - 1);
+}
+
+function wrap(x: number, min: number, max: number) {
+  'worklet';
+  let r = 0;
+
+  if (x < min) r = max - ((min - x) % (max - min));
+  else r = min + ((x - min) % (max - min));
+
+  return r;
+}
+
+type Context = {
+  startX: number;
+};
 
 export interface LineValueSelectorProps
   extends Omit<AnimateProps<ViewProps>, 'children'> {
@@ -30,70 +49,6 @@ export interface LineValueSelectorProps
   increment?: number;
   indicatorColor?: string;
   ticksColor?: string;
-}
-
-interface TicksProps {
-  tickCount: number;
-  width: number;
-  height: number;
-  strokeWidth: number;
-  stroke: string;
-}
-
-type Context = {
-  startX: number;
-};
-
-function calculateTickGap(width: number, tickCount: number) {
-  return width / (tickCount - 1);
-}
-
-function Ticks({
-  tickCount: initialTickCount,
-  width,
-  strokeWidth,
-  height,
-  stroke,
-}: TicksProps) {
-  const tickCount = initialTickCount + 2;
-  const tickGap = calculateTickGap(width, tickCount);
-  const viewBox = `0 0 ${width} ${height}`;
-
-  const ticks: React.ReactNode[] = [];
-  for (let i = 0; i < tickCount - 1; i++) {
-    const x = tickGap * i;
-    let yPadding = i === 0 ? 0 : 5;
-
-    ticks.push(
-      <Line
-        key={i}
-        x1={x}
-        y1={yPadding}
-        x2={x}
-        y2={height - yPadding}
-        stroke={stroke}
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />,
-    );
-  }
-
-  return (
-    <Svg width={width} height={height} viewBox={viewBox}>
-      {ticks}
-    </Svg>
-  );
-}
-
-function wrap(x: number, min: number, max: number) {
-  'worklet';
-  let r = 0;
-
-  if (x < min) r = max - ((min - x) % (max - min));
-  else r = min + ((x - min) % (max - min));
-
-  return r;
 }
 
 function LineValueSelector({
