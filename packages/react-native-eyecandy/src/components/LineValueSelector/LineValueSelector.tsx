@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ViewProps } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
@@ -90,10 +90,25 @@ function LineValueSelector({
   const startExactX = 2 * tickGap;
   const nextStartExactX = useSharedValue(startExactX);
 
-  const maxExactX =
-    max !== undefined ? indicatorX - (max / increment) * tickGap : undefined;
-  const minExactX =
-    min !== undefined ? indicatorX + (min / increment) * tickGap : undefined;
+  const calculateMaxExactX = useCallback(() => {
+    return max !== undefined
+      ? indicatorX - (max / increment) * tickGap
+      : undefined;
+  }, [increment, indicatorX, max, tickGap]);
+
+  const calculateMinExactX = useCallback(() => {
+    return min !== undefined
+      ? indicatorX - (min / increment) * tickGap
+      : undefined;
+  }, [min, indicatorX, increment, tickGap]);
+
+  const maxExactX = useSharedValue(calculateMaxExactX());
+  const minExactX = useSharedValue(calculateMinExactX());
+
+  useEffect(() => {
+    maxExactX.value = calculateMaxExactX();
+    minExactX.value = calculateMinExactX();
+  }, [calculateMaxExactX, calculateMinExactX, max, maxExactX, min, minExactX]);
 
   const calculateExactX = (x: number) => {
     'worklet';
@@ -102,8 +117,11 @@ function LineValueSelector({
 
   const clampX = (x: number) => {
     'worklet';
-    const newX = maxExactX !== undefined ? Math.max(maxExactX, x) : x;
-    return minExactX !== undefined ? Math.min(minExactX, newX) : newX;
+    const newX =
+      maxExactX.value !== undefined ? Math.max(maxExactX.value, x) : x;
+    return minExactX.value !== undefined
+      ? Math.min(minExactX.value, newX)
+      : newX;
   };
 
   const gestureHandler = useAnimatedGestureHandler<
@@ -118,9 +136,13 @@ function LineValueSelector({
     },
     onEnd: e => {
       const max =
-        minExactX !== undefined ? minExactX : Number.POSITIVE_INFINITY;
+        minExactX.value !== undefined
+          ? minExactX.value
+          : Number.POSITIVE_INFINITY;
       const min =
-        maxExactX !== undefined ? maxExactX : Number.NEGATIVE_INFINITY;
+        maxExactX.value !== undefined
+          ? maxExactX.value
+          : Number.NEGATIVE_INFINITY;
 
       const vx = Math.abs(e.velocityX);
 

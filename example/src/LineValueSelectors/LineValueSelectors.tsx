@@ -39,8 +39,6 @@ export default function TextInputs() {
             onChange={ticks => setValue(prev => prev + ticks)}
             ticksColor="white"
             indicatorColor="#49dbe9"
-            min={0}
-            max={2000}
           />
           <View
             style={{
