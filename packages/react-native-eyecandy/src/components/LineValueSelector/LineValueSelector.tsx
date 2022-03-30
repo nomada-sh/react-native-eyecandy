@@ -177,7 +177,6 @@ function LineValueSelector({
     x => {
       const exactX = calculateExactX(x);
       const prevExactX = calculateExactX(prevX.value);
-
       if (exactX === prevExactX) return;
 
       const diff = exactX - prevExactX;
@@ -249,7 +248,8 @@ function LineValueSelector({
         tickCount={tickCount}
         width={ticksWidth}
         height={ticksHeight}
-        stroke={ticksColor}
+        // stroke={ticksColor}
+        stroke={'red'}
       />,
     );
 
