@@ -22,8 +22,9 @@ export interface LineValueSelectorProps {
   ticksStrokeWidth?: number;
   width: number;
   indicatorX?: number;
-  onTicksMovedFromStartChange?: (ticksMovedFromStart: number) => void;
-  onStop?: (ticksMoved: number) => void;
+  onIncrease?: (increase: number) => void;
+  onDecrease?: (descrease: number) => void;
+  increment?: number;
 }
 
 interface TicksProps {
@@ -96,9 +97,10 @@ function LineValueSelector({
   ticksWidth = 80,
   ticksHeight = 15,
   ticksStrokeWidth = 2,
+  increment = 1,
   width,
-  onTicksMovedFromStartChange: onTicksMoved,
-  onStop,
+  onDecrease,
+  onIncrease,
 }: LineValueSelectorProps) {
   const totalTicks = Math.ceil(width / ticksWidth);
   const fullTicksWidth = ticksWidth * totalTicks;
@@ -107,24 +109,14 @@ function LineValueSelector({
   const indicatorX = useSharedValue(2 * tickGap - ticksStrokeWidth);
   const indicatorScale = useSharedValue(1);
   const x = useSharedValue(indicatorX.value);
+  const prevX = useSharedValue(indicatorX.value);
+
   const startExactX = 2 * tickGap;
   const nextStartExactX = useSharedValue(startExactX);
 
   const calculateExactX = (x: number) => {
     'worklet';
     return Math.round(x / tickGap) * tickGap;
-  };
-
-  const calculateTicksMoved = (x: number) => {
-    'worklet';
-    const diff = calculateExactX(x) - nextStartExactX.value;
-    return -diff / tickGap;
-  };
-
-  const calculateTicksMovedFromStart = (x: number) => {
-    'worklet';
-    const diff = calculateExactX(x) - startExactX;
-    return -diff / tickGap;
   };
 
   const gestureHandler = useAnimatedGestureHandler<
@@ -145,8 +137,6 @@ function LineValueSelector({
 
         x.value = withSpring(exactX);
 
-        if (onStop) runOnJS(onStop)(calculateTicksMoved(exactX));
-
         nextStartExactX.value = exactX;
       };
 
@@ -166,8 +156,20 @@ function LineValueSelector({
   useAnimatedReaction(
     () => x.value,
     x => {
-      if (onTicksMoved) runOnJS(onTicksMoved)(calculateTicksMovedFromStart(x));
+      const exactX = calculateExactX(x);
+      const prevExactX = calculateExactX(prevX.value);
+
+      if (exactX === prevExactX) return;
+
+      const diff = exactX - prevExactX;
+      const ticksMoved = (increment * -diff) / tickGap;
+
+      if (ticksMoved > 0 && onIncrease) runOnJS(onIncrease)(ticksMoved);
+      else if (ticksMoved < 0 && onDecrease) runOnJS(onDecrease)(-ticksMoved);
+
+      prevX.value = x;
     },
+    [increment, tickGap, onDecrease, onIncrease],
   );
 
   const indicatorStyle = useAnimatedStyle(() => {
@@ -238,7 +240,6 @@ function LineValueSelector({
         style={{
           width,
           height: ticksHeight * 3,
-          // backgroundColor: 'red',
           justifyContent: 'center',
           overflow: 'hidden',
         }}

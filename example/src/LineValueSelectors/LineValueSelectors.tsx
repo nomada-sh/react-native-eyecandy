@@ -5,21 +5,11 @@ import { Body, LineValueSelector } from '@nomada-sh/react-native-eyecandy';
 
 export default function TextInputs() {
   const { width } = useWindowDimensions();
-  const [ticksMovedFromStart, setTicksMovedFromStart] = React.useState(0);
 
   const [value, setValue] = React.useState(400);
-  const initialValueRef = React.useRef(value);
 
   return (
     <ScrollView>
-      <Body
-        style={{
-          padding: 20,
-        }}
-        size="xlarge"
-      >
-        ticksMovedFromStart: {ticksMovedFromStart}
-      </Body>
       <Body
         style={{
           padding: 20,
@@ -36,13 +26,9 @@ export default function TextInputs() {
       >
         <LineValueSelector
           width={width}
-          onTicksMovedFromStartChange={ticksMovedFromStart => {
-            setValue(initialValueRef.current + ticksMovedFromStart * 10);
-          }}
-          onStop={ticksMoved => {
-            console.log(ticksMoved);
-            // setValue(value + ticksMoved * 10);
-          }}
+          increment={100}
+          onIncrease={increase => setValue(prev => prev + increase)}
+          onDecrease={decrease => setValue(prev => prev - decrease)}
         />
         {/* <LineValueSelector width={width / 2} tickCount={3} /> */}
       </View>
