@@ -49,6 +49,8 @@ export interface LineValueSelectorProps
   increment?: number;
   indicatorColor?: string;
   ticksColor?: string;
+  max?: number;
+  min?: number;
 }
 
 function LineValueSelector({
@@ -62,6 +64,8 @@ function LineValueSelector({
   style,
   indicatorColor: indicatorColorProp,
   ticksColor: ticksColorProp,
+  max,
+  min,
   ...props
 }: LineValueSelectorProps) {
   const { colors, palette } = useTheme();
@@ -78,17 +82,28 @@ function LineValueSelector({
   const fullTicksWidth = ticksWidth * totalTicks;
   const tickGap = calculateTickGap(ticksWidth, tickCount + 2);
 
-  const indicatorX = useSharedValue(2 * tickGap - ticksStrokeWidth);
+  const indicatorX = 2 * tickGap;
   const indicatorScale = useSharedValue(1);
-  const x = useSharedValue(indicatorX.value);
-  const prevX = useSharedValue(indicatorX.value);
+  const x = useSharedValue(indicatorX);
+  const prevX = useSharedValue(indicatorX);
 
   const startExactX = 2 * tickGap;
   const nextStartExactX = useSharedValue(startExactX);
 
+  const maxExactX =
+    max !== undefined ? indicatorX - (max / increment) * tickGap : undefined;
+  const minExactX =
+    min !== undefined ? indicatorX + (min / increment) * tickGap : undefined;
+
   const calculateExactX = (x: number) => {
     'worklet';
     return Math.round(x / tickGap) * tickGap;
+  };
+
+  const clampX = (x: number) => {
+    'worklet';
+    const newX = maxExactX !== undefined ? Math.max(maxExactX, x) : x;
+    return minExactX !== undefined ? Math.min(minExactX, newX) : newX;
   };
 
   const gestureHandler = useAnimatedGestureHandler<
@@ -99,16 +114,19 @@ function LineValueSelector({
       ctx.startX = x.value;
     },
     onActive: (e, ctx) => {
-      x.value = ctx.startX + e.translationX;
+      x.value = clampX(ctx.startX + e.translationX);
     },
     onEnd: e => {
+      const max =
+        minExactX !== undefined ? minExactX : Number.POSITIVE_INFINITY;
+      const min =
+        maxExactX !== undefined ? maxExactX : Number.NEGATIVE_INFINITY;
+
       const vx = Math.abs(e.velocityX);
 
       const onFinish = () => {
         const exactX = calculateExactX(x.value);
-
         x.value = withSpring(exactX);
-
         nextStartExactX.value = exactX;
       };
 
@@ -116,6 +134,7 @@ function LineValueSelector({
         x.value = withDecay(
           {
             velocity: e.velocityX,
+            clamp: [min, max],
           },
           onFinish,
         );
@@ -148,7 +167,7 @@ function LineValueSelector({
       height: height * indicatorScale.value,
       width: 6,
       borderRadius: 3,
-      transform: [{ translateX: indicatorX.value }],
+      transform: [{ translateX: indicatorX - ticksStrokeWidth }],
     };
   });
 
@@ -200,8 +219,7 @@ function LineValueSelector({
         tickCount={tickCount}
         width={ticksWidth}
         height={ticksHeight}
-        // stroke={ticksColor}
-        stroke={'red'}
+        stroke={ticksColor}
       />,
     );
 

@@ -35,10 +35,12 @@ export default function TextInputs() {
         >
           <LineValueSelector
             width={width}
-            increment={10}
+            increment={100}
             onChange={ticks => setValue(prev => prev + ticks)}
             ticksColor="white"
             indicatorColor="#49dbe9"
+            min={0}
+            max={2000}
           />
           <View
             style={{
