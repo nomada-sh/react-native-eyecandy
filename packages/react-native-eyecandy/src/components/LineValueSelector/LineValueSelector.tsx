@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import {
   PanGestureHandler,
@@ -12,7 +12,6 @@ import Animated, {
   withSpring,
   useAnimatedReaction,
   runOnJS,
-  withTiming,
 } from 'react-native-reanimated';
 import { Svg, Line } from 'react-native-svg';
 
@@ -20,21 +19,16 @@ export interface LineValueSelectorProps {
   tickCount?: number;
   ticksWidth?: number;
   ticksHeight?: number;
-  strokeWidth?: number;
+  ticksStrokeWidth?: number;
   width: number;
   indicatorX?: number;
-  onTicksMoved?: (ticksMoved: number) => void;
+  onTicksMovedFromStartChange?: (ticksMovedFromStart: number) => void;
+  onStop?: (ticksMoved: number) => void;
 }
 
 interface TicksProps {
   tickCount: number;
   width: number;
-  height: number;
-  strokeWidth: number;
-  stroke: string;
-}
-
-interface IndicatorProps {
   height: number;
   strokeWidth: number;
   stroke: string;
@@ -47,25 +41,6 @@ type Context = {
 
 function calculateTickGap(width: number, tickCount: number) {
   return width / (tickCount - 1);
-}
-
-function Indicator({ height, stroke, strokeWidth }: IndicatorProps) {
-  const width = strokeWidth;
-  const viewBox = `0 0 ${width} ${height}`;
-
-  return (
-    <Svg width={width} height={height} viewBox={viewBox}>
-      <Line
-        x1={0}
-        y1={0}
-        x2={0}
-        y2={height}
-        stroke={stroke}
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-      />
-    </Svg>
-  );
 }
 
 function Ticks({
@@ -120,18 +95,20 @@ function LineValueSelector({
   tickCount = 3,
   ticksWidth = 80,
   ticksHeight = 15,
-  strokeWidth = 2,
+  ticksStrokeWidth = 2,
   width,
-  onTicksMoved,
+  onTicksMovedFromStartChange: onTicksMoved,
+  onStop,
 }: LineValueSelectorProps) {
   const totalTicks = Math.ceil(width / ticksWidth);
   const fullTicksWidth = ticksWidth * totalTicks;
   const tickGap = calculateTickGap(ticksWidth, tickCount + 2);
 
-  const indicatorX = useSharedValue(2 * tickGap - strokeWidth);
-  const x = useSharedValue(indicatorX.value);
-  const startExactX = useSharedValue(2 * tickGap);
+  const indicatorX = useSharedValue(2 * tickGap - ticksStrokeWidth);
   const indicatorScale = useSharedValue(1);
+  const x = useSharedValue(indicatorX.value);
+  const startExactX = 2 * tickGap;
+  const nextStartExactX = useSharedValue(startExactX);
 
   const calculateExactX = (x: number) => {
     'worklet';
@@ -140,7 +117,13 @@ function LineValueSelector({
 
   const calculateTicksMoved = (x: number) => {
     'worklet';
-    const diff = calculateExactX(x) - startExactX.value;
+    const diff = calculateExactX(x) - nextStartExactX.value;
+    return -diff / tickGap;
+  };
+
+  const calculateTicksMovedFromStart = (x: number) => {
+    'worklet';
+    const diff = calculateExactX(x) - startExactX;
     return -diff / tickGap;
   };
 
@@ -150,7 +133,6 @@ function LineValueSelector({
   >({
     onStart: (e, ctx) => {
       ctx.startX = x.value;
-      indicatorScale.value = withTiming(1.5, { duration: 100 });
     },
     onActive: (e, ctx) => {
       x.value = ctx.startX + e.translationX;
@@ -158,21 +140,25 @@ function LineValueSelector({
     onEnd: e => {
       const vx = Math.abs(e.velocityX);
 
+      const onFinish = () => {
+        const exactX = calculateExactX(x.value);
+
+        x.value = withSpring(exactX);
+
+        if (onStop) runOnJS(onStop)(calculateTicksMoved(exactX));
+
+        nextStartExactX.value = exactX;
+      };
+
       if (vx > 200) {
         x.value = withDecay(
           {
             velocity: e.velocityX,
           },
-          () => {
-            x.value = withTiming(calculateExactX(x.value));
-            indicatorScale.value = withTiming(1, { duration: 100 });
-          },
+          onFinish,
         );
       } else {
-        const exactX = calculateExactX(x.value);
-
-        x.value = withSpring(exactX);
-        indicatorScale.value = withTiming(1, { duration: 100 });
+        onFinish();
       }
     },
   });
@@ -180,18 +166,17 @@ function LineValueSelector({
   useAnimatedReaction(
     () => x.value,
     x => {
-      if (onTicksMoved) runOnJS(onTicksMoved)(calculateTicksMoved(x));
+      if (onTicksMoved) runOnJS(onTicksMoved)(calculateTicksMovedFromStart(x));
     },
   );
 
   const indicatorStyle = useAnimatedStyle(() => {
     return {
-      transform: [
-        { translateX: indicatorX.value },
-        {
-          scaleY: indicatorScale.value,
-        },
-      ],
+      backgroundColor: 'blue',
+      height: ticksHeight * 1.8 * indicatorScale.value,
+      width: 6,
+      borderRadius: 3,
+      transform: [{ translateX: indicatorX.value }],
     };
   });
 
@@ -225,7 +210,7 @@ function LineValueSelector({
     ticksLeft.push(
       <Ticks
         key={`ticks-left-${i}`}
-        strokeWidth={strokeWidth}
+        strokeWidth={ticksStrokeWidth}
         tickCount={tickCount}
         width={ticksWidth}
         height={ticksHeight}
@@ -239,7 +224,7 @@ function LineValueSelector({
     ticksRight.push(
       <Ticks
         key={`ticks-right-${i}`}
-        strokeWidth={strokeWidth}
+        strokeWidth={ticksStrokeWidth}
         tickCount={tickCount}
         width={ticksWidth}
         height={ticksHeight}
@@ -280,9 +265,7 @@ function LineValueSelector({
         >
           {ticksRight}
         </Animated.View>
-        <Animated.View style={indicatorStyle}>
-          <Indicator height={ticksHeight * 2} strokeWidth={6} stroke="blue" />
-        </Animated.View>
+        <Animated.View style={indicatorStyle} />
       </Animated.View>
     </PanGestureHandler>
   );
