@@ -1,4 +1,5 @@
 import React from 'react';
+import { ViewProps } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import {
@@ -13,10 +14,12 @@ import Animated, {
   withSpring,
   useAnimatedReaction,
   runOnJS,
+  AnimateProps,
 } from 'react-native-reanimated';
 import { Svg, Line } from 'react-native-svg';
 
-export interface LineValueSelectorProps {
+export interface LineValueSelectorProps
+  extends Omit<AnimateProps<ViewProps>, 'children'> {
   tickCount?: number;
   ticksWidth?: number;
   ticksHeight?: number;
@@ -26,6 +29,8 @@ export interface LineValueSelectorProps {
   onIncrease?: (increase: number) => void;
   onDecrease?: (descrease: number) => void;
   increment?: number;
+  indicatorColor?: string;
+  ticksColor?: string;
 }
 
 interface TicksProps {
@@ -38,7 +43,6 @@ interface TicksProps {
 
 type Context = {
   startX: number;
-  startX2: number;
 };
 
 function calculateTickGap(width: number, tickCount: number) {
@@ -102,10 +106,20 @@ function LineValueSelector({
   width,
   onDecrease,
   onIncrease,
+  style,
+  indicatorColor: indicatorColorProp,
+  ticksColor: ticksColorProp,
+  ...props
 }: LineValueSelectorProps) {
-  const { dark, colors, palette } = useTheme();
-  const indicatorColor = palette.primary[500];
-  const ticksColor = colors.text.default.normal;
+  const { colors, palette } = useTheme();
+  const indicatorColor =
+    indicatorColorProp !== undefined
+      ? indicatorColorProp
+      : palette.primary[500];
+  const ticksColor =
+    ticksColorProp !== undefined ? ticksColorProp : colors.text.default.normal;
+
+  const height = 3 * ticksHeight;
 
   const totalTicks = Math.ceil(width / ticksWidth);
   const fullTicksWidth = ticksWidth * totalTicks;
@@ -180,7 +194,7 @@ function LineValueSelector({
   const indicatorStyle = useAnimatedStyle(() => {
     return {
       backgroundColor: indicatorColor,
-      height: ticksHeight * 1.8 * indicatorScale.value,
+      height: height * indicatorScale.value,
       width: 6,
       borderRadius: 3,
       transform: [{ translateX: indicatorX.value }],
@@ -242,12 +256,16 @@ function LineValueSelector({
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
       <Animated.View
-        style={{
-          width,
-          height: ticksHeight * 3,
-          justifyContent: 'center',
-          overflow: 'hidden',
-        }}
+        style={[
+          {
+            width,
+            height,
+            justifyContent: 'center',
+            overflow: 'hidden',
+          },
+          style,
+        ]}
+        {...props}
       >
         <Animated.View
           style={[
