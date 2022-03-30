@@ -26,8 +26,7 @@ export interface LineValueSelectorProps
   ticksStrokeWidth?: number;
   width: number;
   indicatorX?: number;
-  onIncrease?: (increase: number) => void;
-  onDecrease?: (descrease: number) => void;
+  onChange?: (ticks: number) => void;
   increment?: number;
   indicatorColor?: string;
   ticksColor?: string;
@@ -104,8 +103,7 @@ function LineValueSelector({
   ticksStrokeWidth = 2,
   increment = 1,
   width,
-  onDecrease,
-  onIncrease,
+  onChange,
   style,
   indicatorColor: indicatorColorProp,
   ticksColor: ticksColorProp,
@@ -182,12 +180,11 @@ function LineValueSelector({
       const diff = exactX - prevExactX;
       const ticksMoved = (increment * -diff) / tickGap;
 
-      if (ticksMoved > 0 && onIncrease) runOnJS(onIncrease)(ticksMoved);
-      else if (ticksMoved < 0 && onDecrease) runOnJS(onDecrease)(-ticksMoved);
+      if (onChange) runOnJS(onChange)(ticksMoved);
 
       prevX.value = x;
     },
-    [increment, tickGap, onDecrease, onIncrease],
+    [increment, tickGap, onChange],
   );
 
   const indicatorStyle = useAnimatedStyle(() => {

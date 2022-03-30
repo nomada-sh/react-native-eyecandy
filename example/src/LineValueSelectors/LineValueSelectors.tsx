@@ -36,8 +36,7 @@ export default function TextInputs() {
           <LineValueSelector
             width={width}
             increment={10}
-            onIncrease={increase => setValue(prev => prev + increase)}
-            onDecrease={decrease => setValue(prev => prev - decrease)}
+            onChange={ticks => setValue(prev => prev + ticks)}
             ticksColor="white"
             indicatorColor="#49dbe9"
           />
