@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
@@ -102,6 +103,10 @@ function LineValueSelector({
   onDecrease,
   onIncrease,
 }: LineValueSelectorProps) {
+  const { dark, colors, palette } = useTheme();
+  const indicatorColor = palette.primary[500];
+  const ticksColor = colors.text.default.normal;
+
   const totalTicks = Math.ceil(width / ticksWidth);
   const fullTicksWidth = ticksWidth * totalTicks;
   const tickGap = calculateTickGap(ticksWidth, tickCount + 2);
@@ -174,7 +179,7 @@ function LineValueSelector({
 
   const indicatorStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: 'blue',
+      backgroundColor: indicatorColor,
       height: ticksHeight * 1.8 * indicatorScale.value,
       width: 6,
       borderRadius: 3,
@@ -216,7 +221,7 @@ function LineValueSelector({
         tickCount={tickCount}
         width={ticksWidth}
         height={ticksHeight}
-        stroke="black"
+        stroke={ticksColor}
       />,
     );
 
@@ -230,7 +235,7 @@ function LineValueSelector({
         tickCount={tickCount}
         width={ticksWidth}
         height={ticksHeight}
-        stroke="green"
+        stroke={ticksColor}
       />,
     );
 
