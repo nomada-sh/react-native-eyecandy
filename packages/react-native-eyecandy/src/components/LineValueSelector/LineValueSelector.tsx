@@ -44,7 +44,7 @@ export interface LineValueSelectorProps
   ticksHeight?: number;
   ticksStrokeWidth?: number;
   width: number;
-  indicatorX?: number;
+  indicatorTickPosition?: number;
   onChange?: (ticks: number) => void;
   increment?: number;
   indicatorColor?: string;
@@ -64,6 +64,7 @@ function LineValueSelector({
   style,
   indicatorColor: indicatorColorProp,
   ticksColor: ticksColorProp,
+  indicatorTickPosition = 2,
   max,
   min,
   ...props
@@ -82,13 +83,12 @@ function LineValueSelector({
   const fullTicksWidth = ticksWidth * totalTicks;
   const tickGap = calculateTickGap(ticksWidth, tickCount + 2);
 
-  const indicatorX = 2 * tickGap;
+  const indicatorX = indicatorTickPosition * tickGap;
   const indicatorScale = useSharedValue(1);
+
   const x = useSharedValue(indicatorX);
   const prevX = useSharedValue(indicatorX);
-
-  const startExactX = 2 * tickGap;
-  const nextStartExactX = useSharedValue(startExactX);
+  const nextStartExactX = useSharedValue(indicatorX);
 
   const calculateMaxExactX = useCallback(() => {
     return max !== undefined

@@ -23,7 +23,7 @@ export default function TextInputs() {
           }}
           weight="bold"
         >
-          $ {value}
+          $ {value.toFixed(2)}
         </Body>
         <View
           style={{
@@ -35,7 +35,8 @@ export default function TextInputs() {
         >
           <LineValueSelector
             width={width}
-            increment={10}
+            increment={0.25}
+            tickCount={3}
             onChange={ticks => setValue(prev => prev + ticks)}
             ticksColor="white"
             indicatorColor="#49dbe9"
