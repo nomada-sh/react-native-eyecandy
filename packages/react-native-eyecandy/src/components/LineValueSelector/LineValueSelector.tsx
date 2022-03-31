@@ -93,13 +93,13 @@ function LineValueSelector({
   const calculateMaxExactX = useCallback(() => {
     return max !== undefined
       ? indicatorX - (max / increment) * tickGap
-      : undefined;
+      : Number.POSITIVE_INFINITY;
   }, [increment, indicatorX, max, tickGap]);
 
   const calculateMinExactX = useCallback(() => {
     return min !== undefined
       ? indicatorX - (min / increment) * tickGap
-      : undefined;
+      : Number.NEGATIVE_INFINITY;
   }, [min, indicatorX, increment, tickGap]);
 
   const maxExactX = useSharedValue(calculateMaxExactX());
@@ -108,7 +108,7 @@ function LineValueSelector({
   useEffect(() => {
     maxExactX.value = calculateMaxExactX();
     minExactX.value = calculateMinExactX();
-  }, [calculateMaxExactX, calculateMinExactX, max, maxExactX, min, minExactX]);
+  }, [calculateMaxExactX, calculateMinExactX, maxExactX, minExactX]);
 
   const calculateExactX = (x: number) => {
     'worklet';
@@ -117,11 +117,7 @@ function LineValueSelector({
 
   const clampX = (x: number) => {
     'worklet';
-    const newX =
-      maxExactX.value !== undefined ? Math.max(maxExactX.value, x) : x;
-    return minExactX.value !== undefined
-      ? Math.min(minExactX.value, newX)
-      : newX;
+    return Math.min(Math.max(x, maxExactX.value), minExactX.value);
   };
 
   const gestureHandler = useAnimatedGestureHandler<
@@ -135,15 +131,6 @@ function LineValueSelector({
       x.value = clampX(ctx.startX + e.translationX);
     },
     onEnd: e => {
-      const max =
-        minExactX.value !== undefined
-          ? minExactX.value
-          : Number.POSITIVE_INFINITY;
-      const min =
-        maxExactX.value !== undefined
-          ? maxExactX.value
-          : Number.NEGATIVE_INFINITY;
-
       const vx = Math.abs(e.velocityX);
 
       const onFinish = () => {
@@ -156,7 +143,7 @@ function LineValueSelector({
         x.value = withDecay(
           {
             velocity: e.velocityX,
-            clamp: [min, max],
+            clamp: [maxExactX.value, minExactX.value],
           },
           onFinish,
         );
@@ -171,14 +158,14 @@ function LineValueSelector({
     x => {
       const exactX = calculateExactX(x);
       const prevExactX = calculateExactX(prevX.value);
-      if (exactX === prevExactX) return;
+      if (exactX !== prevExactX) {
+        const diff = exactX - prevExactX;
+        const ticksMoved = (increment * -diff) / tickGap;
 
-      const diff = exactX - prevExactX;
-      const ticksMoved = (increment * -diff) / tickGap;
+        if (onChange) runOnJS(onChange)(ticksMoved);
 
-      if (onChange) runOnJS(onChange)(ticksMoved);
-
-      prevX.value = x;
+        prevX.value = x;
+      }
     },
     [increment, tickGap, onChange],
   );
