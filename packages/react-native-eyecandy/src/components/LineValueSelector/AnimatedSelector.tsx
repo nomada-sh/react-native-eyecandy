@@ -126,7 +126,6 @@ function AnimatedSelector({
     };
   });
 
-  // const offsetX = 2 * fullTicksWidth + 2 * tickGap;
   const offsetX = 2 * fullTicksWidth + indicatorTickPosition * tickGap;
 
   const ticksLeftStyle = useAnimatedStyle(() => {

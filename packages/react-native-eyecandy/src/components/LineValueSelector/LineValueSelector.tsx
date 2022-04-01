@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
+
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 import AnimatedSelector, { AnimatedSelectorProps } from './AnimatedSelector';
 
@@ -25,6 +27,7 @@ function LineValueSelector({
   max,
   ...props
 }: LineValueSelectorProps) {
+  const prevValueRef = useRef(value);
   const tickGap = calculateTickGap(ticksWidth, tickCount + 2);
   const x = (value / increment) * tickGap;
   const minX = min !== undefined ? (min / increment) * tickGap : undefined;
@@ -36,6 +39,11 @@ function LineValueSelector({
       onTranslate={newX => {
         const newValue = (newX / tickGap) * increment;
         onChange(newValue);
+
+        if (prevValueRef.current !== newValue)
+          ReactNativeHapticFeedback.trigger('impactLight');
+
+        prevValueRef.current = newValue;
       }}
       tickCount={tickCount}
       ticksWidth={ticksWidth}
