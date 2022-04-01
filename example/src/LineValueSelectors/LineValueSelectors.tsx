@@ -11,15 +11,10 @@ import {
 export default function TextInputs() {
   const { width } = useWindowDimensions();
 
-  // const [value, setValue] = React.useState('');
-  // const n = Number.isNaN(Number(value)) ? 0 : Number(value);
-
   const [value, setValue] = React.useState(100);
   const [increment, setIncrement] = React.useState('10');
 
   const n = /^\d+$/.test(increment) ? Number(increment) : 1;
-
-  console.log(n);
 
   return (
     <ScrollView
