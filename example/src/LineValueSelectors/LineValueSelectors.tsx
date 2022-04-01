@@ -4,7 +4,7 @@ import { View, ScrollView, useWindowDimensions } from 'react-native';
 import {
   Body,
   Button,
-  LineValueSelectorV2,
+  LineValueSelector,
   TextInputV2,
 } from '@nomada-sh/react-native-eyecandy';
 
@@ -56,7 +56,7 @@ export default function TextInputs() {
             borderTopLeftRadius: 30,
           }}
         >
-          <LineValueSelectorV2
+          <LineValueSelector
             width={width}
             tickCount={4}
             ticksWidth={80}
