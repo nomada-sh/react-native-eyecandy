@@ -42,7 +42,6 @@ export interface AnimatedSelectorProps
   ticksColor?: string;
   onTranslate: (x: number) => void;
   x: number;
-  indicatorX?: number;
 }
 
 function calculateTickGap(width: number, tickCount: number) {
@@ -57,7 +56,6 @@ function AnimatedSelector({
   width,
   onTranslate,
   x: xProp,
-  indicatorX = 0,
   style,
   indicatorColor: indicatorColorProp,
   ticksColor: ticksColorProp,
@@ -103,11 +101,11 @@ function AnimatedSelector({
       height: height * indicatorScale.value,
       width: 6,
       borderRadius: 3,
-      transform: [{ translateX: indicatorX - ticksStrokeWidth }],
+      transform: [{ translateX: 2 * tickGap - ticksStrokeWidth }],
     };
   });
 
-  const offsetX = 2 * fullTicksWidth;
+  const offsetX = 2 * fullTicksWidth + 2 * tickGap;
 
   const ticksLeftStyle = useAnimatedStyle(() => {
     const translateX = wrap(-xProp + offsetX, -fullTicksWidth, fullTicksWidth);

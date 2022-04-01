@@ -14,8 +14,12 @@ export default function TextInputs() {
   // const [value, setValue] = React.useState('');
   // const n = Number.isNaN(Number(value)) ? 0 : Number(value);
 
-  const [value, setValue] = React.useState(0);
-  const [increment, setIncrement] = React.useState('1');
+  const [value, setValue] = React.useState(100);
+  const [increment, setIncrement] = React.useState('10');
+
+  const n = /^\d+$/.test(increment) ? Number(increment) : 1;
+
+  console.log(n);
 
   return (
     <ScrollView
@@ -29,14 +33,12 @@ export default function TextInputs() {
         <Button
           text="Increment"
           onPress={() => {
-            const n = Number.isNaN(Number(increment)) ? 0 : Number(increment);
             setValue(value + n);
           }}
         />
         <Button
           text="Decrement"
           onPress={() => {
-            const n = Number.isNaN(Number(increment)) ? 0 : Number(increment);
             setValue(value - n);
           }}
         />
@@ -59,8 +61,9 @@ export default function TextInputs() {
         >
           <LineValueSelectorV2
             width={width}
-            tickCount={3}
-            increment={10}
+            tickCount={9}
+            ticksWidth={160}
+            increment={n}
             ticksColor="white"
             indicatorColor="#49dbe9"
             value={value}
