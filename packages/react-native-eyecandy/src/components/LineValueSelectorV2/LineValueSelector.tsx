@@ -27,8 +27,8 @@ function LineValueSelector({
 }: LineValueSelectorV2Props) {
   const tickGap = calculateTickGap(ticksWidth, tickCount + 2);
   const x = (value / increment) * tickGap;
-  const minX = min ? (min / increment) * tickGap : undefined;
-  const maxX = max ? (max / increment) * tickGap : undefined;
+  const minX = min !== undefined ? (min / increment) * tickGap : undefined;
+  const maxX = max !== undefined ? (max / increment) * tickGap : undefined;
 
   return (
     <AnimatedSelector

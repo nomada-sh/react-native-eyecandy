@@ -44,6 +44,7 @@ export interface AnimatedSelectorProps
   x: number;
   minX?: number;
   maxX?: number;
+  indicatorTickPosition?: number;
 }
 
 function calculateTickGap(width: number, tickCount: number) {
@@ -63,6 +64,7 @@ function AnimatedSelector({
   ticksColor: ticksColorProp,
   minX: minXProp,
   maxX: maxXProp,
+  indicatorTickPosition = 2,
   ...props
 }: AnimatedSelectorProps) {
   const { colors, palette } = useTheme();
@@ -82,12 +84,17 @@ function AnimatedSelector({
   const indicatorScale = useSharedValue(0.6);
   const x = useSharedValue(-xProp);
 
-  const minX = minXProp !== undefined ? -minXProp : Number.NEGATIVE_INFINITY;
-  const maxX = maxXProp !== undefined ? -maxXProp : Number.POSITIVE_INFINITY;
+  const minX = minXProp !== undefined ? -minXProp : undefined;
+  const maxX = maxXProp !== undefined ? -maxXProp : undefined;
 
   const clampX = (x: number) => {
     'worklet';
-    return Math.min(Math.max(x, maxX), minX);
+    if (minX !== undefined && maxX !== undefined)
+      return Math.min(Math.max(x, maxX), minX);
+    else if (maxX !== undefined) return Math.max(x, maxX);
+    else if (minX !== undefined) return Math.min(x, minX);
+
+    return x;
   };
 
   const onGestureEvent = useAnimatedGestureHandler<
@@ -113,11 +120,14 @@ function AnimatedSelector({
       height: height * indicatorScale.value,
       width: 6,
       borderRadius: 3,
-      transform: [{ translateX: 2 * tickGap - ticksStrokeWidth }],
+      transform: [
+        { translateX: indicatorTickPosition * tickGap - ticksStrokeWidth },
+      ],
     };
   });
 
-  const offsetX = 2 * fullTicksWidth + 2 * tickGap;
+  // const offsetX = 2 * fullTicksWidth + 2 * tickGap;
+  const offsetX = 2 * fullTicksWidth + indicatorTickPosition * tickGap;
 
   const ticksLeftStyle = useAnimatedStyle(() => {
     const translateX = wrap(-xProp + offsetX, -fullTicksWidth, fullTicksWidth);
