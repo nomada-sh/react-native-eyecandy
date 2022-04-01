@@ -11,8 +11,10 @@ import {
 export default function TextInputs() {
   const { width } = useWindowDimensions();
 
-  const [value, setValue] = React.useState(100);
-  const [increment, setIncrement] = React.useState('10');
+  const [value, setValue] = React.useState(1);
+  const [increment, setIncrement] = React.useState('1');
+  const min = 1;
+  const max = 10;
 
   const n = /^\d+$/.test(increment) ? Number(increment) : 1;
 
@@ -28,13 +30,13 @@ export default function TextInputs() {
         <Button
           text="Increment"
           onPress={() => {
-            setValue(value + n);
+            if (value + n <= max) setValue(value + n);
           }}
         />
         <Button
           text="Decrement"
           onPress={() => {
-            setValue(value - n);
+            if (value - n >= min) setValue(value - n);
           }}
         />
         <Body
@@ -63,6 +65,8 @@ export default function TextInputs() {
             indicatorColor="#49dbe9"
             value={value}
             onChange={setValue}
+            min={min}
+            max={max}
           />
           <View
             style={{

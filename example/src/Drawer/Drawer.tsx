@@ -20,6 +20,7 @@ export default function Drawer() {
       screenOptions={{
         headerTintColor: colors.text.default.normal,
         headerRight: () => <Switch value={dark} onValueChange={setDark} />,
+        swipeEnabled: false,
       }}
     >
       <Screen name="TextInputs" component={TextInputs} />

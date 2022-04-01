@@ -42,6 +42,8 @@ export interface AnimatedSelectorProps
   ticksColor?: string;
   onTranslate: (x: number) => void;
   x: number;
+  minX?: number;
+  maxX?: number;
 }
 
 function calculateTickGap(width: number, tickCount: number) {
@@ -59,6 +61,8 @@ function AnimatedSelector({
   style,
   indicatorColor: indicatorColorProp,
   ticksColor: ticksColorProp,
+  minX: minXProp,
+  maxX: maxXProp,
   ...props
 }: AnimatedSelectorProps) {
   const { colors, palette } = useTheme();
@@ -78,16 +82,24 @@ function AnimatedSelector({
   const indicatorScale = useSharedValue(0.6);
   const x = useSharedValue(-xProp);
 
+  const minX = minXProp !== undefined ? -minXProp : Number.NEGATIVE_INFINITY;
+  const maxX = maxXProp !== undefined ? -maxXProp : Number.POSITIVE_INFINITY;
+
+  const clampX = (x: number) => {
+    'worklet';
+    return Math.min(Math.max(x, maxX), minX);
+  };
+
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     Context
   >({
     onStart: (e, ctx) => {
       indicatorScale.value = withTiming(1, { duration: 100 });
-      ctx.startX = x.value;
+      ctx.startX = -xProp;
     },
     onActive: (e, ctx) => {
-      x.value = ctx.startX + e.translationX;
+      x.value = clampX(ctx.startX + e.translationX);
       runOnJS(onTranslate)(-Math.round(x.value / tickGap) * tickGap);
     },
     onEnd: () => {
