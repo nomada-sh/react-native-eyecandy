@@ -3,15 +3,19 @@ import { View, ScrollView, useWindowDimensions } from 'react-native';
 
 import {
   Body,
-  LineValueSelector,
+  Button,
+  LineValueSelectorV2,
   TextInputV2,
 } from '@nomada-sh/react-native-eyecandy';
 
 export default function TextInputs() {
   const { width } = useWindowDimensions();
 
-  const [value, setValue] = React.useState('');
-  const n = Number.isNaN(Number(value)) ? 0 : Number(value);
+  // const [value, setValue] = React.useState('');
+  // const n = Number.isNaN(Number(value)) ? 0 : Number(value);
+
+  const [value, setValue] = React.useState(0);
+  const [increment, setIncrement] = React.useState('1');
 
   return (
     <ScrollView
@@ -21,7 +25,21 @@ export default function TextInputs() {
       }}
     >
       <View>
-        <TextInputV2 value={value} onChangeText={setValue} />
+        <TextInputV2 value={increment} onChangeText={setIncrement} />
+        <Button
+          text="Increment"
+          onPress={() => {
+            const n = Number.isNaN(Number(increment)) ? 0 : Number(increment);
+            setValue(value + n);
+          }}
+        />
+        <Button
+          text="Decrement"
+          onPress={() => {
+            const n = Number.isNaN(Number(increment)) ? 0 : Number(increment);
+            setValue(value - n);
+          }}
+        />
         <Body
           style={{
             padding: 40,
@@ -29,7 +47,7 @@ export default function TextInputs() {
           }}
           weight="bold"
         >
-          $ {n.toFixed(2)}
+          $ {value.toFixed(2)}
         </Body>
         <View
           style={{
@@ -39,20 +57,14 @@ export default function TextInputs() {
             borderTopLeftRadius: 30,
           }}
         >
-          <LineValueSelector
+          <LineValueSelectorV2
             width={width}
-            increment={0.25}
             tickCount={3}
-            onChange={ticks =>
-              setValue(prev => {
-                if (Number.isNaN(Number(prev))) return prev;
-                return String(Number(prev) + ticks);
-              })
-            }
+            increment={10}
             ticksColor="white"
             indicatorColor="#49dbe9"
-            min={0}
-            max={1000}
+            value={value}
+            onChange={setValue}
           />
           <View
             style={{
