@@ -15,8 +15,9 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { Body } from '../../typography';
+
 import Ticks from './Ticks';
-import withDecay from './withDecay';
 
 function wrap(x: number, min: number, max: number) {
   'worklet';
@@ -77,7 +78,9 @@ function AnimatedSelector({
   const ticksColor =
     ticksColorProp !== undefined ? ticksColorProp : colors.text.default.normal;
 
-  const height = 3 * ticksHeight;
+  const numbersHeight = 20;
+  const ticksFullHeight = ticksHeight * 3;
+  const height = ticksFullHeight + numbersHeight;
 
   const tickGap = calculateTickGap(ticksWidth, tickCount + 2);
   const totalTicks = Math.ceil(width / ticksWidth);
@@ -122,7 +125,7 @@ function AnimatedSelector({
 
       if (Math.abs(e.velocityX) > 200) {
         const newX = clampX(ctx.x + e.velocityX);
-        runOnJS(onTranslate)(-calculateExactX(newX));
+        // runOnJS(onTranslate)(-calculateExactX(newX));
       }
     },
   });
@@ -130,7 +133,7 @@ function AnimatedSelector({
   const indicatorStyle = useAnimatedStyle(() => {
     return {
       backgroundColor: indicatorColor,
-      height: height * indicatorScale.value,
+      height: ticksFullHeight * indicatorScale.value,
       width: 6,
       borderRadius: 3,
       transform: [
@@ -141,15 +144,17 @@ function AnimatedSelector({
 
   const offsetX = 2 * fullTicksWidth + indicatorTickPosition * tickGap;
 
-  const ticksLeftStyle = useAnimatedStyle(() => {
+  const leftStyle = useAnimatedStyle(() => {
     const translateX = wrap(-x + offsetX, -fullTicksWidth, fullTicksWidth);
 
     return {
       transform: [{ translateX }],
+      flexDirection: 'row',
+      position: 'absolute',
     };
   });
 
-  const ticksRightStyle = useAnimatedStyle(() => {
+  const rightStyle = useAnimatedStyle(() => {
     const translateX = wrap(
       fullTicksWidth - x + offsetX,
       -fullTicksWidth,
@@ -158,6 +163,8 @@ function AnimatedSelector({
 
     return {
       transform: [{ translateX }],
+      flexDirection: 'row',
+      position: 'absolute',
     };
   });
 
@@ -175,6 +182,21 @@ function AnimatedSelector({
       />,
     );
 
+  const numbersLeft: React.ReactNode[] = [];
+
+  for (let i = 0; i < totalTicks; i++)
+    numbersLeft.push(
+      <Body
+        customColor={ticksColor}
+        style={{
+          position: 'absolute',
+          left: i * ticksWidth - 2,
+        }}
+      >
+        {i}
+      </Body>,
+    );
+
   const ticksRight: React.ReactNode[] = [];
 
   for (let i = 0; i < totalTicks; i++)
@@ -185,8 +207,25 @@ function AnimatedSelector({
         tickCount={tickCount}
         width={ticksWidth}
         height={ticksHeight}
-        stroke={ticksColor}
+        // stroke={ticksColor}
+        stroke="red"
       />,
+    );
+
+  const numbersRight: React.ReactNode[] = [];
+
+  for (let i = 0; i < totalTicks; i++)
+    numbersRight.push(
+      <Body
+        // customColor={ticksColor}
+        customColor="red"
+        style={{
+          position: 'absolute',
+          left: i * ticksWidth - 2,
+        }}
+      >
+        {i + totalTicks}
+      </Body>,
     );
 
   return (
@@ -196,36 +235,30 @@ function AnimatedSelector({
           {
             width,
             height,
-            justifyContent: 'center',
-            overflow: 'hidden',
           },
           style,
         ]}
         {...props}
       >
         <Animated.View
-          style={[
-            {
-              flexDirection: 'row',
-              position: 'absolute',
-            },
-            ticksLeftStyle,
-          ]}
+          style={{
+            justifyContent: 'center',
+            overflow: 'hidden',
+            height: ticksFullHeight,
+          }}
         >
-          {ticksLeft}
+          <Animated.View style={leftStyle}>{ticksLeft}</Animated.View>
+          <Animated.View style={rightStyle}>{ticksRight}</Animated.View>
+          <Animated.View style={indicatorStyle} />
         </Animated.View>
         <Animated.View
-          style={[
-            {
-              flexDirection: 'row',
-              position: 'absolute',
-            },
-            ticksRightStyle,
-          ]}
+          style={{
+            height: numbersHeight,
+          }}
         >
-          {ticksRight}
+          <Animated.View style={leftStyle}>{numbersLeft}</Animated.View>
+          <Animated.View style={rightStyle}>{numbersRight}</Animated.View>
         </Animated.View>
-        <Animated.View style={indicatorStyle} />
       </Animated.View>
     </PanGestureHandler>
   );
