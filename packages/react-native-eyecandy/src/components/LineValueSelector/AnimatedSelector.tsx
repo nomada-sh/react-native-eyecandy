@@ -16,6 +16,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import Ticks from './Ticks';
+import withDecay from './withDecay';
 
 function wrap(x: number, min: number, max: number) {
   'worklet';
@@ -29,6 +30,7 @@ function wrap(x: number, min: number, max: number) {
 
 type Context = {
   startX: number;
+  x: number;
 };
 
 export interface AnimatedSelectorProps
@@ -108,17 +110,20 @@ function AnimatedSelector({
     onStart: (e, ctx) => {
       indicatorScale.value = withTiming(1, { duration: 100 });
       ctx.startX = -x;
+      ctx.x = ctx.startX;
     },
     onActive: (e, ctx) => {
       const newX = clampX(ctx.startX + e.translationX);
+      ctx.x = newX;
       runOnJS(onTranslate)(-calculateExactX(newX));
     },
-    onEnd: e => {
+    onEnd: (e, ctx) => {
       indicatorScale.value = withTiming(0.6, { duration: 100 });
 
-      // console.log(e.velocityX / 1000);
-      // if (Math.abs(e.velocityX) > 200) {
-      // }
+      if (Math.abs(e.velocityX) > 200) {
+        const newX = clampX(ctx.x + e.velocityX);
+        runOnJS(onTranslate)(-calculateExactX(newX));
+      }
     },
   });
 
