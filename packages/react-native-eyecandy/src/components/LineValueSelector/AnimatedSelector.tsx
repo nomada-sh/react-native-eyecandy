@@ -58,7 +58,7 @@ function AnimatedSelector({
   ticksStrokeWidth = 2,
   width,
   onTranslate,
-  x: xProp,
+  x,
   style,
   indicatorColor: indicatorColorProp,
   ticksColor: ticksColorProp,
@@ -82,7 +82,6 @@ function AnimatedSelector({
   const fullTicksWidth = ticksWidth * totalTicks;
 
   const indicatorScale = useSharedValue(0.6);
-  const x = useSharedValue(-xProp);
 
   const minX = minXProp !== undefined ? -minXProp : undefined;
   const maxX = maxXProp !== undefined ? -maxXProp : undefined;
@@ -97,20 +96,29 @@ function AnimatedSelector({
     return x;
   };
 
+  const calculateExactX = (x: number) => {
+    'worklet';
+    return Math.round(x / tickGap) * tickGap;
+  };
+
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     Context
   >({
     onStart: (e, ctx) => {
       indicatorScale.value = withTiming(1, { duration: 100 });
-      ctx.startX = -xProp;
+      ctx.startX = -x;
     },
     onActive: (e, ctx) => {
-      x.value = clampX(ctx.startX + e.translationX);
-      runOnJS(onTranslate)(-Math.round(x.value / tickGap) * tickGap);
+      const newX = clampX(ctx.startX + e.translationX);
+      runOnJS(onTranslate)(-calculateExactX(newX));
     },
-    onEnd: () => {
+    onEnd: e => {
       indicatorScale.value = withTiming(0.6, { duration: 100 });
+
+      // console.log(e.velocityX / 1000);
+      // if (Math.abs(e.velocityX) > 200) {
+      // }
     },
   });
 
@@ -129,7 +137,7 @@ function AnimatedSelector({
   const offsetX = 2 * fullTicksWidth + indicatorTickPosition * tickGap;
 
   const ticksLeftStyle = useAnimatedStyle(() => {
-    const translateX = wrap(-xProp + offsetX, -fullTicksWidth, fullTicksWidth);
+    const translateX = wrap(-x + offsetX, -fullTicksWidth, fullTicksWidth);
 
     return {
       transform: [{ translateX }],
@@ -138,7 +146,7 @@ function AnimatedSelector({
 
   const ticksRightStyle = useAnimatedStyle(() => {
     const translateX = wrap(
-      fullTicksWidth - xProp + offsetX,
+      fullTicksWidth - x + offsetX,
       -fullTicksWidth,
       fullTicksWidth,
     );

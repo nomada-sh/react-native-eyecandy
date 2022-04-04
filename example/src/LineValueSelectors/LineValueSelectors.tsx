@@ -13,8 +13,8 @@ export default function TextInputs() {
 
   const [value, setValue] = React.useState(0);
   const [increment, setIncrement] = React.useState('1');
-  const min = -10;
-  const max = 10;
+  const min = 0;
+  const max = 230;
 
   const n = /^\d+$/.test(increment) ? Number(increment) : 1;
 
@@ -58,9 +58,9 @@ export default function TextInputs() {
         >
           <LineValueSelector
             width={width}
-            tickCount={4}
+            tickCount={3}
             ticksWidth={80}
-            increment={n}
+            increment={0.5}
             ticksColor="white"
             indicatorColor="#49dbe9"
             value={value}
