@@ -178,12 +178,20 @@ function LineValueSelector({
     };
   });
 
-  const leftMaxNumber = totalTicks * increment * (1 + tickCount);
+  const value = tick.value * increment;
+
+  const numbersIncrement = increment * (1 + tickCount);
+
+  const leftMaxNumber = totalTicks * numbersIncrement;
   const rightMaxNumber = 2 * leftMaxNumber;
 
-  const value = tick.value * increment;
-  const rFactor = Math.floor(value / rightMaxNumber);
-  const lFactor = Math.floor(value / leftMaxNumber) - rFactor;
+  const rightFactor = Math.floor(value / rightMaxNumber);
+  // ! I don't know how I got to this, but it works
+  // TODO: Understand this
+  const leftFactor = 2 * (Math.floor(value / leftMaxNumber) - rightFactor);
+
+  const startLeftNumber = leftFactor * leftMaxNumber;
+  const startRightNumber = rightFactor * rightMaxNumber;
 
   const ticksLeft: React.ReactNode[] = [];
 
@@ -202,7 +210,7 @@ function LineValueSelector({
   const numbersLeft: React.ReactNode[] = [];
 
   for (let i = 0; i < totalTicks; i++) {
-    const v = 2 * lFactor * leftMaxNumber + i * increment * (1 + tickCount);
+    const v = startLeftNumber + i * numbersIncrement;
 
     numbersLeft.push(
       <Body
@@ -238,8 +246,7 @@ function LineValueSelector({
   const numbersRight: React.ReactNode[] = [];
 
   for (let i = 0; i < totalTicks; i++) {
-    const v =
-      rFactor * rightMaxNumber + (i + totalTicks) * increment * (1 + tickCount);
+    const v = startRightNumber + (i + totalTicks) * numbersIncrement;
 
     numbersRight.push(
       <Body

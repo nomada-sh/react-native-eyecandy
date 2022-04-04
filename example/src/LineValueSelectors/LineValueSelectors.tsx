@@ -13,9 +13,10 @@ export default function TextInputs() {
   const { width } = useWindowDimensions();
 
   const [increment, setIncrement] = React.useState(2);
-  const min = 0;
+  const min = -230;
   const max = 230;
 
+  // TODO: Offset line number by initialValue
   const { props, setValue, value } = useLineValueSelector({
     initialValue: 0,
     max,
