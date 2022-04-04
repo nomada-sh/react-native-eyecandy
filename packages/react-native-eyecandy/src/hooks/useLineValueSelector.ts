@@ -51,6 +51,7 @@ export default function useLineValueSelector(
       maxTick,
       onActive,
       onDecay,
+      increment,
     };
   }, [increment, maxTick, minTick, tick]);
 

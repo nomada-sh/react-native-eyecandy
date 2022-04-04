@@ -12,18 +12,15 @@ import {
 export default function TextInputs() {
   const { width } = useWindowDimensions();
 
-  // const [value, setValue] = React.useState(0);
-  const [increment, setIncrement] = React.useState('1');
+  const [increment, setIncrement] = React.useState(2);
   const min = 0;
   const max = 230;
 
-  const n = /^\d+$/.test(increment) ? Number(increment) : 1;
-
   const { props, setValue, value } = useLineValueSelector({
-    initialValue: 30,
+    initialValue: 0,
     max,
     min,
-    increment: 1,
+    increment,
   });
 
   return (
@@ -34,7 +31,6 @@ export default function TextInputs() {
       }}
     >
       <View>
-        <TextInputV2 value={increment} onChangeText={setIncrement} />
         <Button
           text="Increment"
           onPress={() => {

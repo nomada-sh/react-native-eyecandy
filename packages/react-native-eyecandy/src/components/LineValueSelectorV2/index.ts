@@ -1,2 +1,2 @@
-export { default } from './AnimatedSelector';
+export { default } from './LineValueSelector';
 export * from './LineValueSelector';
