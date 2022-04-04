@@ -4,19 +4,27 @@ import { View, ScrollView, useWindowDimensions } from 'react-native';
 import {
   Body,
   Button,
-  LineValueSelector,
   TextInputV2,
+  LineValueSelectorV2,
+  useLineValueSelector,
 } from '@nomada-sh/react-native-eyecandy';
 
 export default function TextInputs() {
   const { width } = useWindowDimensions();
 
-  const [value, setValue] = React.useState(0);
+  // const [value, setValue] = React.useState(0);
   const [increment, setIncrement] = React.useState('1');
   const min = 0;
   const max = 230;
 
   const n = /^\d+$/.test(increment) ? Number(increment) : 1;
+
+  const { props, setValue, value } = useLineValueSelector({
+    initialValue: 30,
+    max,
+    min,
+    increment: 1,
+  });
 
   return (
     <ScrollView
@@ -30,13 +38,13 @@ export default function TextInputs() {
         <Button
           text="Increment"
           onPress={() => {
-            if (value + n <= max) setValue(value + n);
+            setValue(value + 1);
           }}
         />
         <Button
           text="Decrement"
           onPress={() => {
-            if (value - n >= min) setValue(value - n);
+            setValue(value - 1);
           }}
         />
         <Body
@@ -46,7 +54,7 @@ export default function TextInputs() {
           }}
           weight="bold"
         >
-          $ {value.toFixed(2)}
+          {value.toFixed(2)} cm
         </Body>
         <View
           style={{
@@ -56,18 +64,14 @@ export default function TextInputs() {
             borderTopLeftRadius: 30,
           }}
         >
-          <LineValueSelector
+          <LineValueSelectorV2
             width={width}
             tickCount={3}
             ticksWidth={80}
-            increment={0.5}
             ticksColor="white"
             indicatorColor="#49dbe9"
-            value={value}
-            onChange={setValue}
-            min={min}
-            max={max}
             indicatorTickPosition={2}
+            {...props}
           />
           <View
             style={{
