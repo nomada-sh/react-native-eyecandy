@@ -12,13 +12,12 @@ import {
 export default function TextInputs() {
   const { width } = useWindowDimensions();
 
-  const [increment, setIncrement] = React.useState(2);
-  const min = -230;
-  const max = 230;
+  const [increment, setIncrement] = React.useState(1);
+  const [min, setMin] = React.useState(0);
+  const [max, setMax] = React.useState(230);
 
-  // TODO: Offset line number by initialValue
   const { props, setValue, value } = useLineValueSelector({
-    initialValue: 0,
+    initialValue: 32,
     max,
     min,
     increment,
@@ -32,22 +31,43 @@ export default function TextInputs() {
       }}
     >
       <View>
+        <TextInputV2
+          defaultValue={String(min)}
+          onChangeText={text => {
+            if (!Number.isNaN(Number(text))) setMin(Number(text));
+          }}
+        />
+        <TextInputV2
+          defaultValue={String(max)}
+          onChangeText={text => {
+            if (!Number.isNaN(Number(text))) setMax(Number(text));
+          }}
+        />
+        <TextInputV2
+          defaultValue={String(increment)}
+          onChangeText={text => {
+            if (!Number.isNaN(Number(text))) setIncrement(Number(text));
+          }}
+        />
         <Button
           text="Increment"
           onPress={() => {
-            setValue(value + 1);
+            const newValue = value + increment;
+            if (newValue <= max) setValue(newValue);
           }}
         />
         <Button
           text="Decrement"
           onPress={() => {
-            setValue(value - 1);
+            const newValue = value - increment;
+            if (newValue >= min) setValue(newValue);
           }}
         />
         <Body
           style={{
             padding: 40,
             fontSize: 48,
+            textAlign: 'right',
           }}
           weight="bold"
         >
