@@ -48,7 +48,7 @@ export interface LineValueSelectorProps
   tick: SharedValue<number>;
   minTick?: number;
   maxTick?: number;
-  onActive: (tick: number) => void;
+  onActive: (tick: number, velocity: number) => void;
   onDecay: (tick: number, velocity: number) => void;
   onEnd?: (tick: number) => void;
   indicatorTickPosition?: number;
@@ -126,7 +126,7 @@ function LineValueSelector({
     onActive: (e, ctx) => {
       const exactX = calculateExactX(clampX(ctx.startX + e.translationX));
       tick.value = -exactX / tickGap;
-      if (onActive) runOnJS(onActive)(tick.value);
+      if (onActive) runOnJS(onActive)(tick.value, -e.velocityX / tickGap);
     },
     onEnd: e => {
       indicatorScale.value = withTiming(0.6, { duration: 100 });

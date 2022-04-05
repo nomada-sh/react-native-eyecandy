@@ -3,7 +3,8 @@ import { useCallback, useMemo, useState } from 'react';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import { useSharedValue } from 'react-native-reanimated';
 
-const MAX_TICKS_PER_SECOND = 100;
+const DECAY_MAX_TICKS_PER_SECOND = 100;
+const ACTIVE_MAX_TICKS_PER_SECOND = 50;
 
 export interface UseLineValueSelectorOptions {
   min?: number;
@@ -38,21 +39,25 @@ export default function useLineValueSelector(
   const props = useMemo(() => {
     const calculateValue = (t: number) => t * increment;
 
-    const onActive = (t: number) => {
+    const impactLight = (t: number) => {
       if (t !== prevTick.value)
         ReactNativeHapticFeedback.trigger('impactLight');
 
       prevTick.value = t;
-      _setValue(calculateValue(t));
+    };
+
+    const onActive = (t: number, velocity: number) => {
+      impactLight(t);
+
+      if (Math.abs(velocity) <= ACTIVE_MAX_TICKS_PER_SECOND) {
+        _setValue(calculateValue(t));
+      }
     };
 
     const onDecay = (t: number, velocity: number) => {
-      if (t !== prevTick.value)
-        ReactNativeHapticFeedback.trigger('impactLight');
+      impactLight(t);
 
-      prevTick.value = t;
-
-      if (Math.abs(velocity) <= MAX_TICKS_PER_SECOND) {
+      if (Math.abs(velocity) <= DECAY_MAX_TICKS_PER_SECOND) {
         _setValue(calculateValue(t));
       }
     };
