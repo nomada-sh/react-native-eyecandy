@@ -96,7 +96,4 @@ export { default as PhoneTextInput } from './PhoneTextInput';
 export type { PhoneTextInputProps } from './PhoneTextInput';
 
 export { default as LineValueSelector } from './LineValueSelector';
-export type { LineValueSelectorProps as LineValueSelectorProps } from './LineValueSelector';
-
-export { default as LineValueSelectorV2 } from './LineValueSelectorV2';
-export type { LineValueSelectorProps as LineValueSelectorPropsV2 } from './LineValueSelectorV2';
+export type { LineValueSelectorProps } from './LineValueSelector';

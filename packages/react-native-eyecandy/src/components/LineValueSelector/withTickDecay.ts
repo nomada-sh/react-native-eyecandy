@@ -11,23 +11,22 @@ const DECELERATION = 0.997;
 const SLOPE_FACTOR = 0.1;
 const VELOCITY_FACTOR = 0.5;
 
-const withDecay = ({
+const withTickDecay = ({
   velocity: initialVelocity,
   clamp = [],
   calculateExact,
   tickGap,
-  onTick,
+  onDecay,
+  onEnd,
 }: {
   velocity: number;
-  /**
-   * @worklet
-   */
   clamp?: [number?, number?];
   /**
    * @worklet
    */
   calculateExact?: (x: number) => number;
-  onTick?: (tick: number, velocity: number) => void;
+  onDecay?: (tick: number, velocity: number) => void;
+  onEnd?: (tick: number) => void;
   tickGap: number;
 }) => {
   'worklet';
@@ -49,7 +48,7 @@ const withDecay = ({
       state.current = x / tickGap;
       state.lastTimestamp = now;
 
-      let finished = false;
+      let clampFinished = false;
 
       if (clamp) {
         const min = clamp[0];
@@ -57,20 +56,25 @@ const withDecay = ({
 
         if (min !== undefined && initialVelocity < 0 && state.current <= min) {
           state.current = min;
-          finished = true;
+          clampFinished = true;
         } else if (
           max !== undefined &&
           initialVelocity > 0 &&
           state.current >= max
         ) {
           state.current = max;
-          finished = true;
+          clampFinished = true;
         }
       }
 
-      if (onTick) runOnJS(onTick)(state.current, finished ? 0 : v / tickGap);
+      if (onDecay)
+        runOnJS(onDecay)(state.current, clampFinished ? 0 : v / tickGap);
 
-      return finished || Math.abs(v) < VELOCITY_EPS;
+      const finished = clampFinished || Math.abs(v) < VELOCITY_EPS;
+
+      if (finished && onEnd) runOnJS(onEnd)(state.current);
+
+      return finished;
     };
 
     const onStart = (
@@ -91,4 +95,4 @@ const withDecay = ({
   });
 };
 
-export default withDecay;
+export default withTickDecay;

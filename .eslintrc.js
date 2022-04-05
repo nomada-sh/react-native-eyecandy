@@ -38,6 +38,7 @@ module.exports = {
     'no-constant-condition': 'off',
     'no-empty': 'off',
     'no-unused-vars': 'off',
+    'object-shorthand': ['warn', 'always'],
 
     // react
     'react/prop-types': 'off',

@@ -5,7 +5,7 @@ import {
   Body,
   Button,
   TextInputV2,
-  LineValueSelectorV2,
+  LineValueSelector,
   useLineValueSelector,
 } from '@nomada-sh/react-native-eyecandy';
 
@@ -81,7 +81,7 @@ export default function TextInputs() {
             borderTopLeftRadius: 30,
           }}
         >
-          <LineValueSelectorV2
+          <LineValueSelector
             width={width}
             tickCount={3}
             ticksWidth={80}
