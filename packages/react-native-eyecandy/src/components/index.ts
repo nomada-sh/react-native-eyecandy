@@ -94,3 +94,6 @@ export type { TextInputContainerProps } from './TextInputContainer';
 
 export { default as PhoneTextInput } from './PhoneTextInput';
 export type { PhoneTextInputProps } from './PhoneTextInput';
+
+export { default as LineValueSelector } from './LineValueSelector';
+export type { LineValueSelectorProps } from './LineValueSelector';
