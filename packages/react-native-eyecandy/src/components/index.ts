@@ -97,3 +97,9 @@ export type { PhoneTextInputProps } from './PhoneTextInput';
 
 export { default as LineValueSelector } from './LineValueSelector';
 export type { LineValueSelectorProps } from './LineValueSelector';
+
+export { default as CheckList } from './CheckList';
+export type { CheckListProps } from './CheckList';
+
+export { default as CheckListOption } from './CheckListOption';
+export type { CheckListOptionProps } from './CheckListOption';
