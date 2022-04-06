@@ -18,7 +18,7 @@ export default function TextInputs() {
         padding: 20,
       }}
     >
-      <PhoneTextInput {...phoneInputProps} />
+      <PhoneTextInput placeholder="0000" {...phoneInputProps} />
 
       <TextInputV2 iconLeft={Lock} placeholder="test" error required />
       <TextInput

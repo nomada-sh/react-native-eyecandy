@@ -17,10 +17,17 @@ export default function TextInputs() {
   const [max, setMax] = React.useState(230);
 
   const { props, setValue, value } = useLineValueSelector({
-    initialValue: 32,
+    initialValue: 140,
     max,
     min,
     increment,
+  });
+
+  const { props: props2, value: value2 } = useLineValueSelector({
+    initialValue: 30,
+    max: 100,
+    min: 15,
+    increment: 0.1,
   });
 
   return (
@@ -73,6 +80,16 @@ export default function TextInputs() {
         >
           {value.toFixed(2)} cm
         </Body>
+        <Body
+          style={{
+            padding: 40,
+            fontSize: 48,
+            textAlign: 'right',
+          }}
+          weight="bold"
+        >
+          {value2.toFixed(2)} kg
+        </Body>
         <View
           style={{
             backgroundColor: '#3e39ea',
@@ -83,12 +100,21 @@ export default function TextInputs() {
         >
           <LineValueSelector
             width={width}
-            tickCount={3}
+            tickCount={4}
             ticksWidth={80}
             ticksColor="white"
             indicatorColor="#49dbe9"
             indicatorTickPosition={2}
             {...props}
+          />
+          <LineValueSelector
+            width={width}
+            tickCount={4}
+            ticksWidth={80}
+            ticksColor="white"
+            indicatorColor="#49dbe9"
+            indicatorTickPosition={2}
+            {...props2}
           />
           <View
             style={{
