@@ -4,6 +4,7 @@ import { Switch } from '@nomada-sh/react-native-eyecandy';
 import { useTheme as useEyecandyTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
+import Calendars from '../Calendars';
 import CheckLists from '../CheckLists';
 import LineValueSelectors from '../LineValueSelectors';
 import TextInputs from '../TextInputs';
@@ -17,7 +18,7 @@ export default function Drawer() {
 
   return (
     <Navigator
-      initialRouteName="CheckLists"
+      initialRouteName="Calendars"
       screenOptions={{
         headerTintColor: colors.text.default.normal,
         headerRight: () => <Switch value={dark} onValueChange={setDark} />,
@@ -27,6 +28,7 @@ export default function Drawer() {
       <Screen name="TextInputs" component={TextInputs} />
       <Screen name="LineValueSelectors" component={LineValueSelectors} />
       <Screen name="CheckLists" component={CheckLists} />
+      <Screen name="Calendars" component={Calendars} />
     </Navigator>
   );
 }

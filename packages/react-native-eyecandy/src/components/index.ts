@@ -103,3 +103,9 @@ export type { CheckListProps } from './CheckList';
 
 export { default as CheckListOption } from './CheckListOption';
 export type { CheckListOptionProps } from './CheckListOption';
+
+export { default as HorizontalDatePicker } from './HorizontalDatePicker';
+export type { HorizontalDatePickerProps } from './HorizontalDatePicker';
+
+export { default as WrappedScrollView } from './WrappedScrollView';
+export type { WrappedScrollViewProps } from './WrappedScrollView';
