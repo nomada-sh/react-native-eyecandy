@@ -25,7 +25,9 @@ function CheckList({
   ...props
 }: CheckListProps) {
   const isMaxSelected =
-    maxSelected !== undefined && selected.length >= maxSelected;
+    maxSelected !== undefined &&
+    maxSelected > 1 &&
+    selected.length >= maxSelected;
   const childrenCount = React.Children.count(children);
 
   const injectedChildren = React.Children.map(children, (child, index) => {
@@ -41,9 +43,14 @@ function CheckList({
         ],
         selected: isSelected,
         onPress: ({ id, value }: { id: string; value: any }) => {
-          const newSelected = selected.includes(id)
-            ? selected.filter(item => item !== id)
-            : [...selected, id];
+          let newSelected: string[] = [];
+          if (maxSelected === 1) {
+            newSelected = [id];
+          } else {
+            newSelected = selected.includes(id)
+              ? selected.filter(item => item !== id)
+              : [...selected, id];
+          }
 
           onSelectedChange(newSelected);
 

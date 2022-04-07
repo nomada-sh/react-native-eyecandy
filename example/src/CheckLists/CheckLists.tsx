@@ -42,7 +42,7 @@ export default function CheckLists() {
   return (
     <ScrollView>
       <CheckList
-        maxSelected={2}
+        maxSelected={1}
         selected={selected}
         onSelectedChange={setSelected}
         style={{

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
 
+import { ChevronDown } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import CountryPicker, {
   Country,
@@ -57,6 +58,7 @@ const InputLeft = ({ onChange, countryCode, callingCode }: InputLeftProps) => {
         countryCode={countryCode}
         onSelect={onChange}
       />
+      <ChevronDown size={20} />
       {callingCode ? (
         <Body
           style={{
