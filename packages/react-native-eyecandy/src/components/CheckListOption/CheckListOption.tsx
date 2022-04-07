@@ -24,6 +24,7 @@ export interface CheckListOptionProps<V = any>
   onPress?: (props: { value: V; id: string }) => void;
   disabled?: boolean;
   image?: ImageSourcePropType;
+  checkComponent?: React.FC<{ selected?: boolean }>;
 }
 
 function CheckListOption<V = any>({
@@ -36,6 +37,7 @@ function CheckListOption<V = any>({
   onPress,
   disabled,
   image,
+  checkComponent: CheckComponent,
   ...props
 }: CheckListOptionProps<V>) {
   const { dark, palette, colors } = useTheme();
@@ -75,7 +77,11 @@ function CheckListOption<V = any>({
             <Body weight="bold">{title}</Body>
             <Body color="greyout">{description}</Body>
           </View>
-          <RadioButton disabled value={selected} />
+          {CheckComponent ? (
+            <CheckComponent selected={selected} />
+          ) : (
+            <RadioButton disabled value={selected} />
+          )}
         </View>
       </RectButton>
       {disabled ? (
