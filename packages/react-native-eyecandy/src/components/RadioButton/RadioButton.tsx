@@ -18,6 +18,7 @@ export interface RadioButtonProps {
   color?: string;
   size?: number;
   label?: string;
+  disabled?: boolean;
 }
 
 function RadioButton({
@@ -25,6 +26,7 @@ function RadioButton({
   size = 32,
   style,
   onValueChange,
+  disabled,
 }: RadioButtonProps) {
   const { palette, dark } = useTheme();
 
@@ -34,7 +36,10 @@ function RadioButton({
     : palette.grey[dark ? 700 : 200];
 
   return (
-    <TouchableWithoutFeedback onPress={() => onValueChange?.(!value)}>
+    <TouchableWithoutFeedback
+      disabled={disabled}
+      onPress={() => onValueChange?.(!value)}
+    >
       <View
         style={[
           {
