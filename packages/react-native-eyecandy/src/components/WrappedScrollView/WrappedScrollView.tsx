@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, ViewProps } from 'react-native';
 
 import {
@@ -12,14 +12,12 @@ import Animated, {
   useAnimatedStyle,
   withDecay,
 } from 'react-native-reanimated';
-import { useEffectOnce } from 'react-use';
 
 export interface WrappedScrollViewProps extends AnimateProps<ViewProps> {
   value: SharedValue<number>;
   size: number;
   children: React.ReactNode;
   horizontal?: boolean;
-  initialIndex?: number;
 }
 
 function wrap(x: number, min: number, max: number) {
@@ -86,14 +84,9 @@ export default function WrappedScrollView({
   horizontal,
   children,
   style,
-  initialIndex = 0,
   ...props
 }: WrappedScrollViewProps) {
   const childrenCount = React.Children.count(children);
-
-  useEffectOnce(() => {
-    value.value = value.value + initialIndex * size;
-  });
 
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
