@@ -14,6 +14,9 @@ export interface MonthsProps {
   showSelected?: boolean;
   formatMonthLabel?: (date: Date) => string;
   onPress: (date: Date) => void;
+  monthWidth: number;
+  monthHorizontalMargin: number;
+  calculateIndex: (index: number) => number;
 }
 
 const defaultFormatMonthLabel = (date: Date) => {
@@ -27,6 +30,9 @@ function Months({
   showSelected = true,
   formatMonthLabel = defaultFormatMonthLabel,
   onPress,
+  monthHorizontalMargin,
+  monthWidth,
+  calculateIndex,
 }: MonthsProps) {
   const { colors } = useTheme();
   const selectedTextColor = colors.input.default.focused.indicator;
@@ -38,7 +44,8 @@ function Months({
   const today = new Date();
 
   for (let i = 0; i < 12; i++) {
-    const date = new Date(today.getFullYear(), i, 1);
+    const k = calculateIndex(i);
+    const date = new Date(today.getFullYear(), today.getMonth() + k, 1);
     const selected =
       showSelected &&
       value !== undefined &&
@@ -51,9 +58,9 @@ function Months({
         style={{
           borderRadius: 6,
           overflow: 'hidden',
-          marginHorizontal: 3,
           backgroundColor: selected ? selectedBackgroundColor : backgroundColor,
-          width: 85,
+          width: monthWidth,
+          marginHorizontal: monthHorizontalMargin,
         }}
       >
         <RectButton
