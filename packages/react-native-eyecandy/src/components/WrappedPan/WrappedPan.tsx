@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ViewProps } from 'react-native';
+import { StyleSheet, View, ViewProps } from 'react-native';
 
 import {
   PanGestureHandler,
@@ -13,13 +13,13 @@ import Animated, {
   withDecay,
 } from 'react-native-reanimated';
 
-export interface WrappedScrollViewProps extends AnimateProps<ViewProps> {
+export interface WrappedPanProps extends AnimateProps<ViewProps> {
   value: SharedValue<number>;
   width: number;
   height: number;
   children: React.ReactNode;
   horizontal?: boolean;
-  containerStyle?: AnimateProps<ViewProps>['style'];
+  contentContainerStyle?: ViewProps['style'];
 }
 
 function wrap(x: number, min: number, max: number) {
@@ -84,16 +84,16 @@ function Container({
   );
 }
 
-export default function WrappedScrollView({
+export default function WrappedPan({
   value,
   width,
   height,
   horizontal,
   children,
   style,
-  containerStyle,
+  contentContainerStyle,
   ...props
-}: WrappedScrollViewProps) {
+}: WrappedPanProps) {
   const childrenCount = React.Children.count(children);
 
   const onGestureEvent = useAnimatedGestureHandler<
@@ -129,7 +129,7 @@ export default function WrappedScrollView({
           index={i}
           horizontal={horizontal}
           value={value}
-          style={[StyleSheet.absoluteFill, containerStyle]}
+          style={StyleSheet.absoluteFill}
         >
           {child}
         </Container>
@@ -140,16 +140,8 @@ export default function WrappedScrollView({
 
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
-      <Animated.View
-        style={[
-          {
-            flexDirection: horizontal ? 'row' : 'column',
-          },
-          style,
-        ]}
-        {...props}
-      >
-        {wrappedChildren}
+      <Animated.View style={style} {...props}>
+        <View style={contentContainerStyle}>{wrappedChildren}</View>
       </Animated.View>
     </PanGestureHandler>
   );

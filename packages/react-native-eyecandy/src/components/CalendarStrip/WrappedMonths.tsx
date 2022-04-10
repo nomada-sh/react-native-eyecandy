@@ -6,7 +6,7 @@ import {
   useAnimatedReaction,
 } from 'react-native-reanimated';
 
-import WrappedScrollView from '../WrappedScrollView';
+import WrappedPan from '../WrappedPan';
 
 export interface WrappedMonthsProps {
   value?: Date;
@@ -75,8 +75,12 @@ function WrappedMonths({
   }
 
   return (
-    <WrappedScrollView
+    <WrappedPan
       style={{
+        height: 55,
+        justifyContent: 'center',
+      }}
+      contentContainerStyle={{
         height: 35,
       }}
       value={x}
@@ -85,7 +89,7 @@ function WrappedMonths({
       height={35}
     >
       {months}
-    </WrappedScrollView>
+    </WrappedPan>
   );
 }
 

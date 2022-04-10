@@ -42,6 +42,14 @@ export default function CalendarStrip({
           console.log(date.toLocaleString());
         }}
       />
+      <View
+        style={{
+          height: 1,
+          width,
+          backgroundColor: colors.input.default.border,
+          marginVertical: 5,
+        }}
+      />
       <WrappedDays
         onPress={onChange}
         formatDayLabel={formatDayLabel}

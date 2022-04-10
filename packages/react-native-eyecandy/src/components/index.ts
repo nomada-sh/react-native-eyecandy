@@ -107,5 +107,5 @@ export type { CheckListOptionProps } from './CheckListOption';
 export { default as CalendarStrip } from './CalendarStrip';
 export type { CalendarStripProps } from './CalendarStrip';
 
-export { default as WrappedScrollView } from './WrappedScrollView';
-export type { WrappedScrollViewProps } from './WrappedScrollView';
+export { default as WrappedPan } from './WrappedPan';
+export type { WrappedPanProps } from './WrappedPan';
