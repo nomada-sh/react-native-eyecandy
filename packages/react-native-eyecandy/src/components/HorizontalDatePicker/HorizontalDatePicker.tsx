@@ -1,17 +1,13 @@
 import React, { useRef, useState } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 
-import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import enUS, { format } from 'date-fns';
-import { RectButton } from 'react-native-gesture-handler';
 import {
   runOnJS,
   useAnimatedReaction,
   useSharedValue,
 } from 'react-native-reanimated';
 
-import { useRippleColor } from '../../hooks';
-import { Body } from '../../typography';
 import WrappedScrollView from '../WrappedScrollView';
 
 export interface HorizontalDatePickerProps {
@@ -21,6 +17,8 @@ export interface HorizontalDatePickerProps {
   value?: Date;
   onChange?: (date: Date) => void;
 }
+
+import Day from './Day';
 
 const defaultFormatDayLabel = (date: Date) => {
   return format(date, 'EEEEEE', {
@@ -41,11 +39,6 @@ export default function HorizontalDatePicker({
   value,
   onChange,
 }: HorizontalDatePickerProps) {
-  const { colors } = useTheme();
-  const selectedBackgroundColor = colors.input.default.focused.indicator;
-  const backgroundColor = colors.input.default.background;
-  const rippleColor = useRippleColor(backgroundColor).string();
-
   const { width: windowWidth } = useWindowDimensions();
 
   const onPress = (date: Date) => {
@@ -106,78 +99,30 @@ export default function HorizontalDatePicker({
       value.getDate() === date.getDate();
 
     children.push(
-      <View
+      <Day
         key={i}
-        style={{
-          flex: 1,
-          padding: 6,
+        date={date}
+        selected={selected}
+        onPress={date => {
+          onPress(date);
+          selectedWRef.current = w;
         }}
-      >
-        <View
-          style={{
-            backgroundColor: selected
-              ? selectedBackgroundColor
-              : backgroundColor,
-            flex: 1,
-            borderRadius: 6,
-            overflow: 'hidden',
-          }}
-        >
-          <RectButton
-            rippleColor={rippleColor}
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={() => {
-              onPress(date);
-              selectedWRef.current = w;
-            }}
-          >
-            <View
-              accessible
-              accessibilityRole="button"
-              style={{
-                alignItems: 'center',
-              }}
-            >
-              <Body
-                size="xlarge"
-                weight="bold"
-                customColor={selected ? 'white' : undefined}
-              >
-                {formatDay(date)}
-              </Body>
-              <Body
-                color="greyout"
-                customColor={selected ? 'white' : undefined}
-              >
-                {formatDayLabel(date)}
-              </Body>
-            </View>
-          </RectButton>
-        </View>
-      </View>,
+        formatDayLabel={formatDayLabel}
+        formatDay={formatDay}
+      />,
     );
   }
 
   return (
-    <>
-      <WrappedScrollView
-        value={x}
-        horizontal
-        size={uWidth}
-        style={{
-          height: 100,
-          // width: 100,
-          // marginLeft: 100,
-        }}
-      >
-        {children}
-      </WrappedScrollView>
-      <Body>w: {w}</Body>
-      <Body>H: {H}</Body>
-    </>
+    <WrappedScrollView
+      value={x}
+      horizontal
+      size={uWidth}
+      style={{
+        height: 100,
+      }}
+    >
+      {children}
+    </WrappedScrollView>
   );
 }
