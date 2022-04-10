@@ -10,7 +10,7 @@ import {
 
 import WrappedScrollView from '../WrappedScrollView';
 
-export interface HorizontalDatePickerProps {
+export interface CalendarStripProps {
   width?: number;
   formatDayLabel?: (date: Date) => string;
   formatDay?: (date: Date) => string;
@@ -32,13 +32,13 @@ const defaultFormatDay = (date: Date) => {
   });
 };
 
-export default function HorizontalDatePicker({
+export default function CalendarStrip({
   width: widthProp,
   formatDay = defaultFormatDay,
   formatDayLabel = defaultFormatDayLabel,
   value,
   onChange,
-}: HorizontalDatePickerProps) {
+}: CalendarStripProps) {
   const { width: windowWidth } = useWindowDimensions();
 
   const onPress = (date: Date) => {

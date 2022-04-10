@@ -135,8 +135,6 @@ export default function WrappedScrollView({
         style={[
           {
             flexDirection: horizontal ? 'row' : 'column',
-            // overflow: 'hidden',
-            // backgroundColor: 'red',
           },
           style,
         ]}
