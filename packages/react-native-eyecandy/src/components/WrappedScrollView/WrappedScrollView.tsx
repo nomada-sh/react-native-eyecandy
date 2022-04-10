@@ -15,9 +15,11 @@ import Animated, {
 
 export interface WrappedScrollViewProps extends AnimateProps<ViewProps> {
   value: SharedValue<number>;
-  size: number;
+  width: number;
+  height: number;
   children: React.ReactNode;
   horizontal?: boolean;
+  containerStyle?: AnimateProps<ViewProps>['style'];
 }
 
 function wrap(x: number, min: number, max: number) {
@@ -38,7 +40,8 @@ interface ContainerProps extends AnimateProps<ViewProps> {
   value: SharedValue<number>;
   index: number;
   count: number;
-  size: number;
+  width: number;
+  height: number;
   children: React.ReactNode;
   horizontal?: boolean;
 }
@@ -46,20 +49,23 @@ interface ContainerProps extends AnimateProps<ViewProps> {
 function Container({
   value,
   index,
-  size,
+  width,
+  height,
   children,
   style,
   horizontal,
   count,
   ...props
 }: ContainerProps) {
+  const size = horizontal ? width : height;
+
   const animatedStyle = useAnimatedStyle(() => {
     const newValue = index * size + value.value;
     const wrappedValue = wrap(newValue, -size, size * (count - 1));
 
     return {
-      width: horizontal ? size : undefined,
-      height: horizontal ? undefined : size,
+      width,
+      height,
       transform: [
         {
           translateX: horizontal ? wrappedValue : 0,
@@ -80,10 +86,12 @@ function Container({
 
 export default function WrappedScrollView({
   value,
-  size,
+  width,
+  height,
   horizontal,
   children,
   style,
+  containerStyle,
   ...props
 }: WrappedScrollViewProps) {
   const childrenCount = React.Children.count(children);
@@ -116,11 +124,12 @@ export default function WrappedScrollView({
       return (
         <Container
           count={childrenCount}
-          size={size}
+          width={width}
+          height={height}
           index={i}
           horizontal={horizontal}
           value={value}
-          style={StyleSheet.absoluteFill}
+          style={[StyleSheet.absoluteFill, containerStyle]}
         >
           {child}
         </Container>

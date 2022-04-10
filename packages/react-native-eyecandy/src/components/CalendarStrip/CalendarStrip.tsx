@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 
-import enUS, { format } from 'date-fns';
+import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import {
   runOnJS,
   useAnimatedReaction,
@@ -14,31 +14,23 @@ export interface CalendarStripProps {
   width?: number;
   formatDayLabel?: (date: Date) => string;
   formatDay?: (date: Date) => string;
+  formatMonthLabel?: (date: Date) => string;
   value?: Date;
   onChange?: (date: Date) => void;
 }
 
 import Day from './Day';
-
-const defaultFormatDayLabel = (date: Date) => {
-  return format(date, 'EEEEEE', {
-    locale: enUS,
-  });
-};
-
-const defaultFormatDay = (date: Date) => {
-  return format(date, 'dd', {
-    locale: enUS,
-  });
-};
+import Months from './Months';
 
 export default function CalendarStrip({
   width: widthProp,
-  formatDay = defaultFormatDay,
-  formatDayLabel = defaultFormatDayLabel,
+  formatDay,
+  formatDayLabel,
+  formatMonthLabel,
   value,
   onChange,
 }: CalendarStripProps) {
+  const { colors } = useTheme();
   const { width: windowWidth } = useWindowDimensions();
 
   const onPress = (date: Date) => {
@@ -60,6 +52,7 @@ export default function CalendarStrip({
 
   const initialX = -initialIndex * uWidth;
   const x = useSharedValue(initialX);
+  const monthsX = useSharedValue(0);
   const selectedWRef = useRef(0);
 
   const [w, setW] = useState(0);
@@ -73,7 +66,7 @@ export default function CalendarStrip({
     },
   );
 
-  const children: React.ReactNode[] = [];
+  const days: React.ReactNode[] = [];
   const today = new Date();
 
   for (let i = 0; i < L; i++) {
@@ -98,7 +91,7 @@ export default function CalendarStrip({
       value.getMonth() === date.getMonth() &&
       value.getDate() === date.getDate();
 
-    children.push(
+    days.push(
       <Day
         key={i}
         date={date}
@@ -114,15 +107,49 @@ export default function CalendarStrip({
   }
 
   return (
-    <WrappedScrollView
-      value={x}
-      horizontal
-      size={uWidth}
-      style={{
-        height: 100,
-      }}
-    >
-      {children}
-    </WrappedScrollView>
+    <View>
+      <WrappedScrollView
+        style={{
+          height: 45,
+        }}
+        value={monthsX}
+        horizontal
+        width={91 * 12}
+        height={35}
+      >
+        <Months
+          formatMonthLabel={formatMonthLabel}
+          month={value !== undefined ? value.getMonth() : undefined}
+          year={value !== undefined ? value.getFullYear() : undefined}
+          onPress={(month: number) => {
+            console.log('month', month);
+          }}
+        />
+        <Months
+          formatMonthLabel={formatMonthLabel}
+          month={value !== undefined ? value.getMonth() : undefined}
+          year={value !== undefined ? value.getFullYear() : undefined}
+          onPress={(month: number) => {
+            console.log('month', month);
+          }}
+        />
+      </WrappedScrollView>
+      <WrappedScrollView
+        value={x}
+        horizontal
+        width={uWidth}
+        height={100}
+        containerStyle={{
+          top: 10,
+        }}
+        style={{
+          borderTopWidth: 1,
+          borderColor: colors.input.default.border,
+          height: 120,
+        }}
+      >
+        {days}
+      </WrappedScrollView>
+    </View>
   );
 }
