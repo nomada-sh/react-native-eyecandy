@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useWindowDimensions, View } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
@@ -6,10 +6,7 @@ import enUS, { format } from 'date-fns';
 import { RectButton } from 'react-native-gesture-handler';
 import {
   runOnJS,
-  runOnUI,
-  useAnimatedProps,
   useAnimatedReaction,
-  useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
 
@@ -57,46 +54,41 @@ export default function HorizontalDatePicker({
 
   const width = widthProp !== undefined ? widthProp : windowWidth;
 
-  const childWidth = 70;
+  const uWidth = 70;
 
-  const visibleChildrenCount = Math.round(width / childWidth);
-  const visibleChildrenWidth = visibleChildrenCount * childWidth;
+  const l = Math.round(width / uWidth);
+  const lWidth = l * uWidth;
 
-  const childrenFactor = 2;
-  const fullChildrenCount = visibleChildrenCount * childrenFactor;
-  const fullChildrenWidth = fullChildrenCount * childWidth;
+  // C needs to be an odd number.
+  const C = 5;
+  const L = C * l;
 
-  // const initialIndex = Math.round(fullChildrenCount / 2);
   const initialIndex = 0;
 
-  const initialX = initialIndex * childWidth;
+  const initialX = -initialIndex * uWidth;
   const x = useSharedValue(initialX);
-  const offsetedX = useDerivedValue(() => Math.floor(-x.value + initialX));
+  const selectedWRef = useRef(0);
 
-  const [visibleWraps, setVisibleWraps] = useState(0);
+  const [w, setW] = useState(0);
+
+  const H = (w: number) => Math.floor(w / C);
 
   useAnimatedReaction(
-    () => offsetedX.value,
-    offsetedX => {
-      const visibleWraps = Math.floor(offsetedX / visibleChildrenWidth);
-      runOnJS(setVisibleWraps)(visibleWraps);
+    () => -x.value,
+    x => {
+      runOnJS(setW)(Math.floor(x / lWidth));
     },
   );
-
-  const fullWraps = Math.floor(offsetedX.value / fullChildrenWidth);
 
   const children: React.ReactNode[] = [];
   const today = new Date();
 
-  for (let i = 0; i < fullChildrenCount; i++) {
-    const j = i % visibleChildrenCount;
-    const left = Math.floor(i / visibleChildrenCount) === 0;
-
-    let startIndex = left
-      ? fullChildrenCount * visibleWraps - fullChildrenCount * fullWraps
-      : fullChildrenCount * fullWraps + fullChildrenCount / childrenFactor;
-
-    const k = j - initialIndex + startIndex;
+  for (let i = 0; i < L; i++) {
+    const f = Math.floor(i / l);
+    const li = f * l;
+    const wi = w - f;
+    const j = li + L * Math.floor((wi - H(wi)) / (C - 1));
+    const k = j + (i % l) - initialIndex;
 
     const date = new Date(
       today.getFullYear(),
@@ -105,6 +97,9 @@ export default function HorizontalDatePicker({
     );
 
     const selected =
+      (selectedWRef.current === w ||
+        selectedWRef.current === w - 1 ||
+        selectedWRef.current === w + 1) &&
       value !== undefined &&
       value.getFullYear() === date.getFullYear() &&
       value.getMonth() === date.getMonth() &&
@@ -135,7 +130,10 @@ export default function HorizontalDatePicker({
               justifyContent: 'center',
               alignItems: 'center',
             }}
-            onPress={() => onPress(date)}
+            onPress={() => {
+              onPress(date);
+              selectedWRef.current = w;
+            }}
           >
             <View
               accessible
@@ -165,15 +163,21 @@ export default function HorizontalDatePicker({
   }
 
   return (
-    <WrappedScrollView
-      value={x}
-      horizontal
-      size={childWidth}
-      style={{
-        height: 100,
-      }}
-    >
-      {children}
-    </WrappedScrollView>
+    <>
+      <WrappedScrollView
+        value={x}
+        horizontal
+        size={uWidth}
+        style={{
+          height: 100,
+          // width: 100,
+          // marginLeft: 100,
+        }}
+      >
+        {children}
+      </WrappedScrollView>
+      <Body>w: {w}</Body>
+      <Body>H: {H}</Body>
+    </>
   );
 }

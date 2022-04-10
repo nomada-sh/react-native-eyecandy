@@ -99,9 +99,15 @@ export default function WrappedScrollView({
       value.value = ctx.start + (horizontal ? e.translationX : e.translationY);
     },
     onEnd: e => {
-      value.value = withDecay({
-        velocity: horizontal ? e.velocityX : e.velocityY,
-      });
+      const v = horizontal ? e.velocityX : e.velocityY;
+      const sign = Math.sign(v);
+      const absV = Math.max(Math.abs(v), 1000);
+
+      if (Math.abs(e.velocityX) > 200)
+        value.value = withDecay({
+          velocity: sign * absV,
+          deceleration: 0.8,
+        });
     },
   });
 
@@ -129,7 +135,8 @@ export default function WrappedScrollView({
         style={[
           {
             flexDirection: horizontal ? 'row' : 'column',
-            overflow: 'hidden',
+            // overflow: 'hidden',
+            // backgroundColor: 'red',
           },
           style,
         ]}
