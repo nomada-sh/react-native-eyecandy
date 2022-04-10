@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleProp, ViewStyle } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import enUS, { format } from 'date-fns';
@@ -14,6 +14,7 @@ export interface DayProps {
   formatDayLabel?: (date: Date) => string;
   formatDay?: (date: Date) => string;
   date: Date;
+  style?: StyleProp<ViewStyle>;
 }
 
 const defaultFormatDayLabel = (date: Date) => {
@@ -34,6 +35,7 @@ export default function Day({
   formatDayLabel = defaultFormatDayLabel,
   formatDay = defaultFormatDay,
   date,
+  style,
 }: DayProps) {
   const { colors } = useTheme();
   const selectedBackgroundColor = colors.input.default.focused.indicator;
@@ -42,48 +44,44 @@ export default function Day({
 
   return (
     <View
-      style={{
-        flex: 1,
-        padding: 6,
-      }}
-    >
-      <View
-        style={{
+      style={[
+        {
           backgroundColor: selected ? selectedBackgroundColor : backgroundColor,
           flex: 1,
           borderRadius: 6,
           overflow: 'hidden',
+        },
+        style,
+      ]}
+    >
+      <RectButton
+        rippleColor={rippleColor}
+        style={{
+          flex: 1,
         }}
+        onPress={() => onPress(date)}
       >
-        <RectButton
-          rippleColor={rippleColor}
+        <View
+          accessible
+          accessibilityRole="button"
           style={{
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
           }}
-          onPress={() => onPress(date)}
         >
-          <View
-            accessible
-            accessibilityRole="button"
-            style={{
-              alignItems: 'center',
-            }}
+          <Body
+            size="xlarge"
+            weight="bold"
+            customColor={selected ? 'white' : undefined}
           >
-            <Body
-              size="xlarge"
-              weight="bold"
-              customColor={selected ? 'white' : undefined}
-            >
-              {formatDay(date)}
-            </Body>
-            <Body color="greyout" customColor={selected ? 'white' : undefined}>
-              {formatDayLabel(date)}
-            </Body>
-          </View>
-        </RectButton>
-      </View>
+            {formatDay(date)}
+          </Body>
+          <Body color="greyout" customColor={selected ? 'white' : undefined}>
+            {formatDayLabel(date)}
+          </Body>
+        </View>
+      </RectButton>
     </View>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutChangeEvent, View } from 'react-native';
+import { View } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import Color from 'color';
@@ -10,10 +10,10 @@ import { useRippleColor } from '../../hooks';
 import { Body } from '../../typography';
 
 export interface MonthsProps {
-  month?: number;
-  year?: number;
+  value?: Date;
+  showSelected?: boolean;
   formatMonthLabel?: (date: Date) => string;
-  onPress: (month: number) => void;
+  onPress: (date: Date) => void;
 }
 
 const defaultFormatMonthLabel = (date: Date) => {
@@ -23,8 +23,8 @@ const defaultFormatMonthLabel = (date: Date) => {
 };
 
 function Months({
-  month,
-  year,
+  value,
+  showSelected = true,
   formatMonthLabel = defaultFormatMonthLabel,
   onPress,
 }: MonthsProps) {
@@ -39,7 +39,11 @@ function Months({
 
   for (let i = 0; i < 12; i++) {
     const date = new Date(today.getFullYear(), i, 1);
-    const selected = i === month && year === today.getFullYear();
+    const selected =
+      showSelected &&
+      value !== undefined &&
+      value.getFullYear() === date.getFullYear() &&
+      value.getMonth() === date.getMonth();
 
     children.push(
       <View
@@ -57,7 +61,7 @@ function Months({
           style={{
             flex: 1,
           }}
-          onPress={() => onPress(i)}
+          onPress={() => onPress(date)}
         >
           <View
             accessible
@@ -96,4 +100,4 @@ function Months({
   );
 }
 
-export default React.memo(Months);
+export default Months;

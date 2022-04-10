@@ -19,7 +19,7 @@ export interface CalendarStripProps {
   onChange?: (date: Date) => void;
 }
 
-import Day from './Day';
+import Days from './Days';
 import Months from './Months';
 
 export default function CalendarStrip({
@@ -33,75 +33,83 @@ export default function CalendarStrip({
   const { colors } = useTheme();
   const { width: windowWidth } = useWindowDimensions();
 
-  const onPress = (date: Date) => {
-    if (onChange) onChange(date);
-  };
-
   const width = widthProp !== undefined ? widthProp : windowWidth;
 
-  const uWidth = 70;
+  const dayWidth = 70;
+  const dayHorizontalMargin = 6;
 
-  const l = Math.round(width / uWidth);
-  const lWidth = l * uWidth;
+  const l = Math.round(width / dayWidth);
+  const daysWidth = l * dayWidth;
 
-  // C needs to be an odd number.
-  const C = 5;
-  const L = C * l;
+  const wrappedDaysWidth = daysWidth + dayHorizontalMargin * l;
 
-  const initialIndex = 0;
+  // !C needs to be an odd number.
+  const daysC = 5;
+  const daysL = daysC * l;
 
-  const initialX = -initialIndex * uWidth;
-  const x = useSharedValue(initialX);
+  const daysX = useSharedValue(0);
   const monthsX = useSharedValue(0);
-  const selectedWRef = useRef(0);
 
-  const [w, setW] = useState(0);
+  const selectedDaysWRef = useRef(0);
+  const [daysW, setDaysW] = useState(0);
 
-  const H = (w: number) => Math.floor(w / C);
+  const daysH = (w: number) => Math.floor(w / daysC);
+
+  const onPressDay = (date: Date) => {
+    if (onChange) onChange(date);
+    selectedDaysWRef.current = daysW;
+  };
 
   useAnimatedReaction(
-    () => -x.value,
+    () => -daysX.value,
     x => {
-      runOnJS(setW)(Math.floor(x / lWidth));
+      runOnJS(setDaysW)(Math.floor(x / daysWidth));
     },
   );
 
   const days: React.ReactNode[] = [];
-  const today = new Date();
 
-  for (let i = 0; i < L; i++) {
-    const f = Math.floor(i / l);
-    const li = f * l;
-    const wi = w - f;
-    const j = li + L * Math.floor((wi - H(wi)) / (C - 1));
-    const k = j + (i % l) - initialIndex;
+  for (let f = 0; f < daysC; f++) {
+    const calculateIndex = (index: number) => {
+      const li = f * l;
+      const wi = daysW - f;
+      const j = li + daysL * Math.floor((wi - daysH(wi)) / (daysC - 1));
+      const k = j + (index % l);
+      return k;
+    };
 
-    const date = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() + k,
-    );
-
-    const selected =
-      (selectedWRef.current === w ||
-        selectedWRef.current === w - 1 ||
-        selectedWRef.current === w + 1) &&
-      value !== undefined &&
-      value.getFullYear() === date.getFullYear() &&
-      value.getMonth() === date.getMonth() &&
-      value.getDate() === date.getDate();
+    const showSelected =
+      selectedDaysWRef.current === daysW ||
+      selectedDaysWRef.current === daysW - 1 ||
+      selectedDaysWRef.current === daysW + 1;
 
     days.push(
-      <Day
-        key={i}
-        date={date}
-        selected={selected}
-        onPress={date => {
-          onPress(date);
-          selectedWRef.current = w;
-        }}
+      <Days
+        showSelected={showSelected}
+        daysToShow={l}
+        dayWidth={dayWidth}
+        dayHorizontalMargin={dayHorizontalMargin}
+        key={f}
+        calculateIndex={calculateIndex}
+        onPress={onPressDay}
         formatDayLabel={formatDayLabel}
         formatDay={formatDay}
+        value={value}
+      />,
+    );
+  }
+
+  const months: React.ReactNode[] = [];
+
+  for (let i = 0; i < 3; i++) {
+    months.push(
+      <Months
+        key={i}
+        formatMonthLabel={formatMonthLabel}
+        value={value}
+        onPress={date => {
+          console.log(date.toLocaleString());
+        }}
       />,
     );
   }
@@ -117,35 +125,20 @@ export default function CalendarStrip({
         width={91 * 12}
         height={35}
       >
-        <Months
-          formatMonthLabel={formatMonthLabel}
-          month={value !== undefined ? value.getMonth() : undefined}
-          year={value !== undefined ? value.getFullYear() : undefined}
-          onPress={(month: number) => {
-            console.log('month', month);
-          }}
-        />
-        <Months
-          formatMonthLabel={formatMonthLabel}
-          month={value !== undefined ? value.getMonth() : undefined}
-          year={value !== undefined ? value.getFullYear() : undefined}
-          onPress={(month: number) => {
-            console.log('month', month);
-          }}
-        />
+        {months}
       </WrappedScrollView>
       <WrappedScrollView
-        value={x}
+        value={daysX}
         horizontal
-        width={uWidth}
-        height={100}
+        width={wrappedDaysWidth}
+        height={85}
         containerStyle={{
-          top: 10,
+          top: 15,
         }}
         style={{
           borderTopWidth: 1,
           borderColor: colors.input.default.border,
-          height: 120,
+          height: 100,
         }}
       >
         {days}
