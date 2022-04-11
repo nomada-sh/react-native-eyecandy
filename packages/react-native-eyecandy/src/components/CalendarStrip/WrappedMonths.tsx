@@ -1,10 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-import {
-  runOnJS,
-  SharedValue,
-  useAnimatedReaction,
-} from 'react-native-reanimated';
+import { runOnJS, SharedValue } from 'react-native-reanimated';
 
 import WrappedPan from '../WrappedPan';
 
@@ -45,12 +41,15 @@ function WrappedMonths({
     wRef.current = w;
   };
 
-  useAnimatedReaction(
-    () => -x.value,
-    x => {
-      runOnJS(setW)(Math.floor(x / wrappedMonthsWidth));
-    },
-  );
+  const onActive = (x: number, _v: number) => {
+    'worklet';
+    runOnJS(setW)(Math.floor(x / wrappedMonthsWidth));
+  };
+
+  const onDecay = (x: number, _v: number) => {
+    'worklet';
+    runOnJS(setW)(Math.floor(x / wrappedMonthsWidth));
+  };
 
   const months: React.ReactNode[] = [];
 
@@ -90,6 +89,8 @@ function WrappedMonths({
       horizontal
       width={wrappedMonthsWidth}
       height={50}
+      onActive={onActive}
+      onDecay={onDecay}
     >
       {months}
     </WrappedPan>

@@ -8,11 +8,9 @@ export interface DaysProps {
   daysToShow: number;
   dayWidth: number;
   dayHorizontalMargin: number;
-  showSelected?: boolean;
   calculateIndex: (index: number) => number;
   onPress: (date: Date) => void;
   startDate: Date;
-  hide?: boolean;
 }
 
 import Day from './Day';
@@ -24,11 +22,9 @@ function Days({
   daysToShow,
   dayWidth,
   dayHorizontalMargin,
-  showSelected = true,
   calculateIndex,
   onPress,
   startDate,
-  hide,
 }: DaysProps) {
   const children: React.ReactNode[] = [];
 
@@ -42,7 +38,6 @@ function Days({
     );
 
     const selected =
-      showSelected &&
       value !== undefined &&
       value.getFullYear() === date.getFullYear() &&
       value.getMonth() === date.getMonth() &&
@@ -50,7 +45,6 @@ function Days({
 
     children.push(
       <Day
-        hide={hide}
         style={{
           width: dayWidth,
           marginHorizontal: dayHorizontalMargin,

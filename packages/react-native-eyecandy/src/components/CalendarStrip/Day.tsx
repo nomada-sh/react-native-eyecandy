@@ -15,7 +15,6 @@ export interface DayProps {
   formatDay?: (date: Date) => string;
   date: Date;
   style?: StyleProp<ViewStyle>;
-  hide?: boolean;
 }
 
 const defaultFormatDayLabel = (date: Date) => {
@@ -37,7 +36,6 @@ export default function Day({
   formatDay = defaultFormatDay,
   date,
   style,
-  hide,
 }: DayProps) {
   const { colors } = useTheme();
   const selectedBackgroundColor = colors.input.default.focused.indicator;
@@ -56,36 +54,34 @@ export default function Day({
         style,
       ]}
     >
-      {hide ? null : (
-        <RectButton
-          rippleColor={rippleColor}
+      <RectButton
+        rippleColor={rippleColor}
+        style={{
+          flex: 1,
+        }}
+        onPress={() => onPress(date)}
+      >
+        <View
+          accessible
+          accessibilityRole="button"
           style={{
             flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
-          onPress={() => onPress(date)}
         >
-          <View
-            accessible
-            accessibilityRole="button"
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+          <Body
+            size="xlarge"
+            weight="bold"
+            customColor={selected ? 'white' : undefined}
           >
-            <Body
-              size="xlarge"
-              weight="bold"
-              customColor={selected ? 'white' : undefined}
-            >
-              {formatDay(date)}
-            </Body>
-            <Body color="greyout" customColor={selected ? 'white' : undefined}>
-              {formatDayLabel(date)}
-            </Body>
-          </View>
-        </RectButton>
-      )}
+            {formatDay(date)}
+          </Body>
+          <Body color="greyout" customColor={selected ? 'white' : undefined}>
+            {formatDayLabel(date)}
+          </Body>
+        </View>
+      </RectButton>
     </View>
   );
 }

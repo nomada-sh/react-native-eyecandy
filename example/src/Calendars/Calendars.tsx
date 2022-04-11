@@ -21,6 +21,7 @@ export default function Calendars() {
         text="Today"
         onPress={() => {
           setValue(new Date());
+          ref.current?.jumpToDate(new Date());
         }}
       />
       <Button

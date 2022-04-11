@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 import { compareAsc, differenceInDays } from 'date-fns';
-import { runOnJS, SharedValue, useSharedValue } from 'react-native-reanimated';
+import { runOnJS, SharedValue } from 'react-native-reanimated';
 
 import WrappedPan from '../WrappedPan';
 
@@ -52,8 +52,6 @@ function WrappedDays({
   const L = C * l;
 
   const wRef = useRef(0);
-  // const [w, setW] = useState(0);
-  // const [hide, setHide] = useState(false);
 
   const H = (w: number) => Math.floor(w / C);
 
@@ -62,29 +60,12 @@ function WrappedDays({
     wRef.current = wraps;
   };
 
-  const prevX = useSharedValue(x.value);
-
-  // useAnimatedReaction(
-  //   () => x.value,
-  //   x => {
-  //     const diff = Math.abs(x - prevX.value);
-
-  //     if (diff <= 100) {
-  //       runOnJS(setW)(Math.floor(-x / wrappedDaysWidth));
-  //     } else {
-  //       runOnJS(setHide)(true);
-  //     }
-
-  //     prevX.value = x;
-  //   },
-  // );
-
-  const onActive = (x: number, v: number) => {
+  const onActive = (x: number, _v: number) => {
     'worklet';
     runOnJS(onChangeWraps)(Math.floor(-x / wrappedDaysWidth));
   };
 
-  const onDecay = (x: number, v: number) => {
+  const onDecay = (x: number, _v: number) => {
     'worklet';
     runOnJS(onChangeWraps)(Math.floor(-x / wrappedDaysWidth));
   };
@@ -100,16 +81,9 @@ function WrappedDays({
       return k;
     };
 
-    // const showSelected =
-    //   wRef.current === wraps ||
-    //   wRef.current === wraps - 1 ||
-    //   wRef.current === wraps + 1;
-
     days.push(
       <Days
-        // hide={hide}
         startDate={startDate}
-        // showSelected={showSelected}
         daysToShow={l}
         dayWidth={dayWidth}
         dayHorizontalMargin={dayHorizontalMargin}
