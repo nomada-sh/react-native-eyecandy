@@ -10,6 +10,7 @@ import Animated, {
   SharedValue,
   useAnimatedGestureHandler,
   useAnimatedStyle,
+  withTiming,
 } from 'react-native-reanimated';
 
 import withDecay from './withDecay';
@@ -29,6 +30,10 @@ export interface WrappedPanProps extends AnimateProps<ViewProps> {
    * @worklet
    */
   onDecay?: (value: number, velocity: number) => void;
+  /**
+   * @worklet
+   */
+  calculateExactEndValue?: (value: number, velocity: number) => number;
 }
 
 function wrap(x: number, min: number, max: number) {
@@ -103,6 +108,7 @@ export default function WrappedPan({
   contentContainerStyle,
   onActive,
   onDecay,
+  calculateExactEndValue,
   ...props
 }: WrappedPanProps) {
   const childrenCount = React.Children.count(children);
@@ -122,19 +128,25 @@ export default function WrappedPan({
     },
     onEnd: e => {
       const v = horizontal ? e.velocityX : e.velocityY;
-      // const sign = Math.sign(v);
-      // const absV = Math.max(Math.abs(v), 1000);
-      // if (Math.abs(e.velocityX) > 200)
-      //   value.value = withDecay({
-      //     velocity: sign * absV,
-      //     deceleration: 0.8,
-      //   });
 
       if (Math.abs(v) > 200)
         value.value = withDecay({
           velocity: v,
           onActive: onDecay,
+          onEnd: newValue => {
+            value.value = withTiming(
+              calculateExactEndValue
+                ? calculateExactEndValue(newValue, v)
+                : newValue,
+            );
+          },
         });
+      else
+        value.value = withTiming(
+          calculateExactEndValue
+            ? calculateExactEndValue(value.value, v)
+            : value.value,
+        );
     },
   });
 

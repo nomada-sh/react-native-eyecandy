@@ -14,6 +14,7 @@ const withDecay = ({
   velocity: initialVelocity,
   // clamp = [],
   onActive,
+  onEnd,
 }: {
   velocity: number;
   clamp?: [number?, number?];
@@ -21,6 +22,10 @@ const withDecay = ({
    * @worklet
    */
   onActive?: (x: number, velocity: number) => void;
+  /**
+   * @worklet
+   */
+  onEnd?: (x: number, velocity: number) => void;
 }) => {
   'worklet';
   return defineAnimation<DecayAnimationState>(() => {
@@ -61,7 +66,11 @@ const withDecay = ({
 
       if (onActive) onActive(state.current, state.velocity);
 
-      return Math.abs(v) < VELOCITY_EPS;
+      const finished = Math.abs(v) < VELOCITY_EPS;
+
+      if (finished && onEnd) onEnd(state.current, state.velocity);
+
+      return finished;
     };
 
     const onStart = (

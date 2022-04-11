@@ -77,6 +77,11 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
       runOnJS(onChangeWraps)(Math.floor(-x / wrappedDaysWidth));
     };
 
+    const calculateExactX = (x: number) => {
+      'worklet';
+      return Math.round(x / wrappedDayWidth) * wrappedDayWidth;
+    };
+
     useImperativeHandle(ref, () => ({
       jumpToDate: (date: Date) => {
         extraIndexOffsetRef.current = -Math.round(x.value / wrappedDayWidth);
@@ -115,6 +120,7 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
       <WrappedPan
         onActive={onActive}
         onDecay={onDecay}
+        calculateExactEndValue={calculateExactX}
         style={{
           height: 105,
           justifyContent: 'center',
