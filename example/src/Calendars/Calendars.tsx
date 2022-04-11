@@ -11,7 +11,7 @@ import {
 export default function Calendars() {
   const [value, setValue] = React.useState(new Date());
 
-  const ref = useRef<CalendarStripHandle | null>(null);
+  const ref = useRef<CalendarStripHandle>(null);
 
   return (
     <ScrollView>

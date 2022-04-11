@@ -4,7 +4,7 @@ import { useWindowDimensions, View } from 'react-native';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import { useSharedValue } from 'react-native-reanimated';
 
-import WrappedDays from './WrappedDays';
+import WrappedDays, { WrappedDaysHandle } from './WrappedDays';
 import WrappedMonths from './WrappedMonths';
 
 export interface CalendarStripProps {
@@ -41,21 +41,15 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
     const { width: windowWidth } = useWindowDimensions();
     const width = widthProp !== undefined ? widthProp : windowWidth;
 
-    const dayWidth = 60;
-    const dayHorizontalMargin = 6;
-    const wrappedDayWidth = dayWidth + 2 * dayHorizontalMargin;
+    const wrappedDaysRef = useRef<WrappedDaysHandle>(null);
 
     const daysX = useSharedValue(0);
     const [daysWraps, setDaysWraps] = useState(0);
-    const [visibleDate, setVisibleDate] = React.useState(new Date());
-
-    const extraIndexOffsetRef = useRef(0);
 
     const monthsX = useSharedValue(0);
 
     const jumpToDate = (date: Date) => {
-      extraIndexOffsetRef.current = -Math.round(daysX.value / wrappedDayWidth);
-      setVisibleDate(new Date(date));
+      wrappedDaysRef.current?.jumpToDate(date);
     };
 
     const onPressMonth = (date: Date) => {
@@ -91,11 +85,10 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
           }}
         />
         <WrappedDays
+          ref={wrappedDaysRef}
           wraps={daysWraps}
           onChangeWraps={setDaysWraps}
           startDate={startDate}
-          visibleDate={visibleDate}
-          extraIndexOffset={extraIndexOffsetRef.current}
           onPress={onChange}
           formatDayLabel={formatDayLabel}
           formatDay={formatDay}
