@@ -21,7 +21,7 @@ function WrappedMonths({
   onPress: onPressProp,
   startDate,
 }: WrappedMonthsProps) {
-  const monthWidth = 85;
+  const monthWidth = 120;
   const monthHorizontalMargin = 6;
 
   const l = 12;
@@ -43,12 +43,12 @@ function WrappedMonths({
 
   const onActive = (x: number, _v: number) => {
     'worklet';
-    runOnJS(setW)(Math.floor(x / wrappedMonthsWidth));
+    runOnJS(setW)(Math.round(-x / wrappedMonthsWidth));
   };
 
   const onDecay = (x: number, _v: number) => {
     'worklet';
-    runOnJS(setW)(Math.floor(x / wrappedMonthsWidth));
+    runOnJS(setW)(Math.round(-x / wrappedMonthsWidth));
   };
 
   const months: React.ReactNode[] = [];

@@ -15,6 +15,7 @@ export interface DayProps {
   formatDay?: (date: Date) => string;
   date: Date;
   style?: StyleProp<ViewStyle>;
+  hidden?: boolean;
 }
 
 const defaultFormatDayLabel = (date: Date) => {
@@ -30,13 +31,15 @@ const defaultFormatDay = (date: Date) => {
 };
 
 export default function Day({
-  selected,
+  selected: selectedProp,
   onPress,
   formatDayLabel = defaultFormatDayLabel,
   formatDay = defaultFormatDay,
   date,
   style,
+  hidden,
 }: DayProps) {
+  const selected = !hidden && selectedProp;
   const { colors } = useTheme();
   const selectedBackgroundColor = colors.input.default.focused.indicator;
   const backgroundColor = colors.input.default.background;

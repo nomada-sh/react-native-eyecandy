@@ -21,7 +21,7 @@ export interface MonthsProps {
 }
 
 const defaultFormatMonthLabel = (date: Date) => {
-  return format(date, 'MMMM', {
+  return format(date, 'MMMM YYY', {
     locale: enUS,
   });
 };

@@ -11,6 +11,7 @@ export interface DaysProps {
   calculateIndex: (index: number) => number;
   onPress: (date: Date) => void;
   startDate: Date;
+  hidden?: boolean;
 }
 
 import Day from './Day';
@@ -25,6 +26,7 @@ function Days({
   calculateIndex,
   onPress,
   startDate,
+  hidden,
 }: DaysProps) {
   const children: React.ReactNode[] = [];
 
@@ -45,6 +47,7 @@ function Days({
 
     children.push(
       <Day
+        hidden={hidden}
         style={{
           width: dayWidth,
           marginHorizontal: dayHorizontalMargin,

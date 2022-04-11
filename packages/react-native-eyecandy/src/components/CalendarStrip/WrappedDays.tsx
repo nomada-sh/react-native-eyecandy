@@ -23,6 +23,8 @@ export interface WrappedDaysHandle {
   jumpToDate: (date: Date) => void;
 }
 
+const MAX_WPS = 6;
+
 const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
   (
     {
@@ -38,6 +40,7 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     },
     ref,
   ) => {
+    const [hidden, setHidden] = React.useState(false);
     const [visibleDate, setVisibleDate] = React.useState(startDate);
     const extraIndexOffsetRef = useRef(0);
 
@@ -72,9 +75,12 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
       runOnJS(onChangeWraps)(Math.floor(-x / wrappedDaysWidth));
     };
 
-    const onDecay = (x: number, _v: number) => {
+    const onDecay = (x: number, v: number) => {
       'worklet';
-      runOnJS(onChangeWraps)(Math.floor(-x / wrappedDaysWidth));
+      const wps = Math.abs(-v / wrappedDaysWidth);
+      runOnJS(setHidden)(wps >= MAX_WPS);
+
+      runOnJS(onChangeWraps)(Math.round(-x / wrappedDaysWidth));
     };
 
     const calculateExactX = (x: number) => {
@@ -102,6 +108,7 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
 
       days.push(
         <Days
+          hidden={hidden}
           startDate={startDate}
           daysToShow={l}
           dayWidth={dayWidth}
