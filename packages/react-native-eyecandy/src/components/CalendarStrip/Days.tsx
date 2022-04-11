@@ -11,6 +11,8 @@ export interface DaysProps {
   showSelected?: boolean;
   calculateIndex: (index: number) => number;
   onPress: (date: Date) => void;
+  startDate: Date;
+  hide?: boolean;
 }
 
 import Day from './Day';
@@ -25,18 +27,18 @@ function Days({
   showSelected = true,
   calculateIndex,
   onPress,
+  startDate,
+  hide,
 }: DaysProps) {
-  const today = new Date();
-
   const children: React.ReactNode[] = [];
 
   for (let i = 0; i < daysToShow; i++) {
     const k = calculateIndex(i);
 
     const date = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() + k,
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate() + k,
     );
 
     const selected =
@@ -48,6 +50,7 @@ function Days({
 
     children.push(
       <Day
+        hide={hide}
         style={{
           width: dayWidth,
           marginHorizontal: dayHorizontalMargin,

@@ -10,6 +10,7 @@ import { useRippleColor } from '../../hooks';
 import { Body } from '../../typography';
 
 export interface MonthsProps {
+  startDate: Date;
   value?: Date;
   showSelected?: boolean;
   formatMonthLabel?: (date: Date) => string;
@@ -26,6 +27,7 @@ const defaultFormatMonthLabel = (date: Date) => {
 };
 
 function Months({
+  startDate,
   value,
   showSelected = true,
   formatMonthLabel = defaultFormatMonthLabel,
@@ -41,11 +43,10 @@ function Months({
   const rippleColor = useRippleColor(backgroundColor).string();
 
   const children: React.ReactNode[] = [];
-  const today = new Date();
 
   for (let i = 0; i < 12; i++) {
     const k = calculateIndex(i);
-    const date = new Date(today.getFullYear(), today.getMonth() + k, 1);
+    const date = new Date(startDate.getFullYear(), startDate.getMonth() + k, 1);
     const selected =
       showSelected &&
       value !== undefined &&

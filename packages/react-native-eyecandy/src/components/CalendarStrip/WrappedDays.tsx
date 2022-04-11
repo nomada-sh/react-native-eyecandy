@@ -1,9 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
+import id from 'date-fns/esm/locale/id/index.js';
 import {
   runOnJS,
   SharedValue,
   useAnimatedReaction,
+  useSharedValue,
 } from 'react-native-reanimated';
 
 import WrappedPan from '../WrappedPan';
@@ -15,6 +17,7 @@ export interface DaysProps {
   formatDay?: (date: Date) => string;
   width: number;
   onPress?: (date: Date) => void;
+  startDate: Date;
 }
 
 import Days from './Days';
@@ -26,6 +29,7 @@ function WrappedDays({
   formatDay,
   formatDayLabel,
   onPress: onPressProp,
+  startDate,
 }: DaysProps) {
   const dayWidth = 60;
   const dayHorizontalMargin = 6;
@@ -39,6 +43,7 @@ function WrappedDays({
 
   const wRef = useRef(0);
   const [w, setW] = useState(0);
+  const [hide, setHide] = useState(false);
 
   const H = (w: number) => Math.floor(w / C);
 
@@ -47,10 +52,20 @@ function WrappedDays({
     wRef.current = w;
   };
 
+  const prevX = useSharedValue(x.value);
+
   useAnimatedReaction(
-    () => -x.value,
+    () => x.value,
     x => {
-      runOnJS(setW)(Math.floor(x / wrappedDaysWidth));
+      const diff = Math.abs(x - prevX.value);
+
+      if (diff <= 100) {
+        runOnJS(setW)(Math.floor(-x / wrappedDaysWidth));
+      } else {
+        runOnJS(setHide)(true);
+      }
+
+      prevX.value = x;
     },
   );
 
@@ -66,10 +81,13 @@ function WrappedDays({
     };
 
     const showSelected =
-      wRef.current === w || wRef.current === w - 1 || wRef.current === w + 1;
+      !hide &&
+      (wRef.current === w || wRef.current === w - 1 || wRef.current === w + 1);
 
     days.push(
       <Days
+        hide={hide}
+        startDate={startDate}
         showSelected={showSelected}
         daysToShow={l}
         dayWidth={dayWidth}
@@ -83,6 +101,10 @@ function WrappedDays({
       />,
     );
   }
+
+  useEffect(() => {
+    setHide(false);
+  }, [w]);
 
   return (
     <WrappedPan

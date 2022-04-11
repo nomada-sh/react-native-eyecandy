@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useWindowDimensions, View } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
-import { useSharedValue } from 'react-native-reanimated';
+import { compareAsc, differenceInDays } from 'date-fns';
+import {
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
+
+import WrappedDays from './WrappedDays';
+import WrappedMonths from './WrappedMonths';
 
 export interface CalendarStripProps {
   width?: number;
@@ -13,10 +21,7 @@ export interface CalendarStripProps {
   onChange?: (date: Date) => void;
 }
 
-import WrappedDays from './WrappedDays';
-import WrappedMonths from './WrappedMonths';
-
-export default function CalendarStrip({
+function CalendarStrip({
   width: widthProp,
   formatDay,
   formatDayLabel,
@@ -27,20 +32,45 @@ export default function CalendarStrip({
   const { colors } = useTheme();
   const { width: windowWidth } = useWindowDimensions();
 
+  const today = useRef(new Date()).current;
   const width = widthProp !== undefined ? widthProp : windowWidth;
+  const dayWidth = 60;
+  const dayHorizontalMargin = 6;
+  const wrappedDayWidth = dayWidth + 2 * dayHorizontalMargin;
+  const wrappedDaysWidth = Math.round(width / dayWidth) * wrappedDayWidth;
 
   const daysX = useSharedValue(0);
   const monthsX = useSharedValue(0);
 
+  const onPressMonth = (date: Date) => {
+    let targetDate = date;
+    if (
+      value !== undefined &&
+      value.getFullYear() === date.getFullYear() &&
+      value.getMonth() === date.getMonth()
+    ) {
+      targetDate = value;
+    }
+
+    const diff = Math.abs(differenceInDays(targetDate, today));
+    const direction = compareAsc(targetDate, today);
+
+    const newDaysX =
+      -direction * (diff + (direction > 0 ? 1 : 0)) * wrappedDayWidth;
+    // daysX.value = withTiming(newDaysX, { duration: 300 });
+    daysX.value = withSpring(newDaysX, {
+      damping: 20,
+    });
+  };
+
   return (
     <View>
       <WrappedMonths
+        startDate={today}
         x={monthsX}
         formatMonthLabel={formatMonthLabel}
         value={value}
-        onPress={date => {
-          console.log(date.toLocaleString());
-        }}
+        onPress={onPressMonth}
       />
       <View
         style={{
@@ -51,6 +81,7 @@ export default function CalendarStrip({
         }}
       />
       <WrappedDays
+        startDate={today}
         onPress={onChange}
         formatDayLabel={formatDayLabel}
         formatDay={formatDay}
@@ -61,3 +92,5 @@ export default function CalendarStrip({
     </View>
   );
 }
+
+export default React.memo(CalendarStrip);

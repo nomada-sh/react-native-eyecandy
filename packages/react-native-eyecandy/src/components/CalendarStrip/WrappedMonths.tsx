@@ -13,6 +13,7 @@ export interface WrappedMonthsProps {
   x: SharedValue<number>;
   formatMonthLabel?: (date: Date) => string;
   onPress?: (date: Date) => void;
+  startDate: Date;
 }
 
 import Months from './Months';
@@ -22,6 +23,7 @@ function WrappedMonths({
   value,
   formatMonthLabel,
   onPress: onPressProp,
+  startDate,
 }: WrappedMonthsProps) {
   const monthWidth = 85;
   const monthHorizontalMargin = 6;
@@ -63,6 +65,7 @@ function WrappedMonths({
 
     months.push(
       <Months
+        startDate={startDate}
         calculateIndex={calculateIndex}
         monthHorizontalMargin={monthHorizontalMargin}
         monthWidth={monthWidth}
