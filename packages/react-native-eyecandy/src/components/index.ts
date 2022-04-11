@@ -105,7 +105,7 @@ export { default as CheckListOption } from './CheckListOption';
 export type { CheckListOptionProps } from './CheckListOption';
 
 export { default as CalendarStrip } from './CalendarStrip';
-export type { CalendarStripProps } from './CalendarStrip';
+export type { CalendarStripProps, CalendarStripHandle } from './CalendarStrip';
 
 export { default as WrappedPan } from './WrappedPan';
 export type { WrappedPanProps } from './WrappedPan';

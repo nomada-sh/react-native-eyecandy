@@ -10,8 +10,9 @@ import Animated, {
   SharedValue,
   useAnimatedGestureHandler,
   useAnimatedStyle,
-  withDecay,
 } from 'react-native-reanimated';
+
+import withDecay from './withDecay';
 
 export interface WrappedPanProps extends AnimateProps<ViewProps> {
   value: SharedValue<number>;
@@ -20,6 +21,14 @@ export interface WrappedPanProps extends AnimateProps<ViewProps> {
   children: React.ReactNode;
   horizontal?: boolean;
   contentContainerStyle?: ViewProps['style'];
+  /**
+   * @worklet
+   */
+  onActive?: (value: number, velocity: number) => void;
+  /**
+   * @worklet
+   */
+  onDecay?: (value: number, velocity: number) => void;
 }
 
 function wrap(x: number, min: number, max: number) {
@@ -92,6 +101,8 @@ export default function WrappedPan({
   children,
   style,
   contentContainerStyle,
+  onActive,
+  onDecay,
   ...props
 }: WrappedPanProps) {
   const childrenCount = React.Children.count(children);
@@ -104,17 +115,25 @@ export default function WrappedPan({
       ctx.start = value.value;
     },
     onActive: (e, ctx) => {
+      const velocity = horizontal ? e.velocityX : e.velocityY;
       value.value = ctx.start + (horizontal ? e.translationX : e.translationY);
+
+      if (onActive) onActive(value.value, velocity);
     },
     onEnd: e => {
       const v = horizontal ? e.velocityX : e.velocityY;
-      const sign = Math.sign(v);
-      const absV = Math.max(Math.abs(v), 1000);
+      // const sign = Math.sign(v);
+      // const absV = Math.max(Math.abs(v), 1000);
+      // if (Math.abs(e.velocityX) > 200)
+      //   value.value = withDecay({
+      //     velocity: sign * absV,
+      //     deceleration: 0.8,
+      //   });
 
-      if (Math.abs(e.velocityX) > 200)
+      if (Math.abs(v) > 200)
         value.value = withDecay({
-          velocity: sign * absV,
-          deceleration: 0.8,
+          velocity: v,
+          onActive: onDecay,
         });
     },
   });

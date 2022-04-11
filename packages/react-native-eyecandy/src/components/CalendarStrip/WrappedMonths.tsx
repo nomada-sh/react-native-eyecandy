@@ -89,7 +89,7 @@ function WrappedMonths({
       value={x}
       horizontal
       width={wrappedMonthsWidth}
-      height={35}
+      height={50}
     >
       {months}
     </WrappedPan>

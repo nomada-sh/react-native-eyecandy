@@ -1,15 +1,40 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ScrollView } from 'react-native';
 
-import { Body, CalendarStrip } from '@nomada-sh/react-native-eyecandy';
+import {
+  Body,
+  Button,
+  CalendarStrip,
+  CalendarStripHandle,
+} from '@nomada-sh/react-native-eyecandy';
 
 export default function Calendars() {
   const [value, setValue] = React.useState(new Date());
 
+  const ref = useRef<CalendarStripHandle | null>(null);
+
   return (
     <ScrollView>
-      <CalendarStrip value={value} onChange={setValue} />
+      <CalendarStrip ref={ref} value={value} onChange={setValue} />
       <Body>{value.toLocaleDateString()}</Body>
+      <Button
+        text="Today"
+        onPress={() => {
+          setValue(new Date());
+        }}
+      />
+      <Button
+        text="Jump to today"
+        onPress={() => {
+          ref.current?.jumpToDate(new Date());
+        }}
+      />
+      <Button
+        text="Jump to selected"
+        onPress={() => {
+          ref.current?.jumpToDate(value);
+        }}
+      />
     </ScrollView>
   );
 }

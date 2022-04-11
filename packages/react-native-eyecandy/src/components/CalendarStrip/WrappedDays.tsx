@@ -1,94 +1,115 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
-import id from 'date-fns/esm/locale/id/index.js';
-import {
-  runOnJS,
-  SharedValue,
-  useAnimatedReaction,
-  useSharedValue,
-} from 'react-native-reanimated';
+import { compareAsc, differenceInDays } from 'date-fns';
+import { runOnJS, SharedValue, useSharedValue } from 'react-native-reanimated';
 
 import WrappedPan from '../WrappedPan';
+
+import Days from './Days';
 
 export interface DaysProps {
   value?: Date;
   x: SharedValue<number>;
+  wraps: number;
+  onChangeWraps: (wraps: number) => void;
   formatDayLabel?: (date: Date) => string;
   formatDay?: (date: Date) => string;
   width: number;
   onPress?: (date: Date) => void;
   startDate: Date;
+  visibleDate: Date;
+  extraIndexOffset?: number;
 }
-
-import Days from './Days';
 
 function WrappedDays({
   x,
+  wraps,
+  onChangeWraps,
   width,
   value,
   formatDay,
   formatDayLabel,
   onPress: onPressProp,
   startDate,
+  visibleDate,
+  extraIndexOffset = 0,
 }: DaysProps) {
   const dayWidth = 60;
   const dayHorizontalMargin = 6;
 
   const l = Math.round(width / dayWidth);
-  const wrappedDaysWidth = l * (dayWidth + 2 * dayHorizontalMargin);
+  const wrappedDayWidth = dayWidth + 2 * dayHorizontalMargin;
+  const wrappedDaysWidth = l * wrappedDayWidth;
+
+  let indexOffset =
+    compareAsc(startDate, visibleDate) *
+    Math.abs(differenceInDays(startDate, visibleDate));
+  if (indexOffset < 0) indexOffset -= 1;
+  indexOffset += extraIndexOffset;
 
   // !!C needs to be an odd number.
   const C = 5;
   const L = C * l;
 
   const wRef = useRef(0);
-  const [w, setW] = useState(0);
-  const [hide, setHide] = useState(false);
+  // const [w, setW] = useState(0);
+  // const [hide, setHide] = useState(false);
 
   const H = (w: number) => Math.floor(w / C);
 
   const onPress = (date: Date) => {
     if (onPressProp) onPressProp(date);
-    wRef.current = w;
+    wRef.current = wraps;
   };
 
   const prevX = useSharedValue(x.value);
 
-  useAnimatedReaction(
-    () => x.value,
-    x => {
-      const diff = Math.abs(x - prevX.value);
+  // useAnimatedReaction(
+  //   () => x.value,
+  //   x => {
+  //     const diff = Math.abs(x - prevX.value);
 
-      if (diff <= 100) {
-        runOnJS(setW)(Math.floor(-x / wrappedDaysWidth));
-      } else {
-        runOnJS(setHide)(true);
-      }
+  //     if (diff <= 100) {
+  //       runOnJS(setW)(Math.floor(-x / wrappedDaysWidth));
+  //     } else {
+  //       runOnJS(setHide)(true);
+  //     }
 
-      prevX.value = x;
-    },
-  );
+  //     prevX.value = x;
+  //   },
+  // );
+
+  const onActive = (x: number, v: number) => {
+    'worklet';
+    runOnJS(onChangeWraps)(Math.floor(-x / wrappedDaysWidth));
+  };
+
+  const onDecay = (x: number, v: number) => {
+    'worklet';
+    runOnJS(onChangeWraps)(Math.floor(-x / wrappedDaysWidth));
+  };
 
   const days: React.ReactNode[] = [];
 
   for (let f = 0; f < C; f++) {
     const calculateIndex = (index: number) => {
       const li = f * l;
-      const wi = w - f;
+      const wi = wraps - f;
       const j = li + L * Math.floor((wi - H(wi)) / (C - 1));
-      const k = j + (index % l);
+      const k = j + (index % l) - indexOffset;
       return k;
     };
 
-    const showSelected =
-      !hide &&
-      (wRef.current === w || wRef.current === w - 1 || wRef.current === w + 1);
+    // const showSelected =
+    //   wRef.current === wraps ||
+    //   wRef.current === wraps - 1 ||
+    //   wRef.current === wraps + 1;
 
     days.push(
       <Days
-        hide={hide}
+        // hide={hide}
         startDate={startDate}
-        showSelected={showSelected}
+        // showSelected={showSelected}
         daysToShow={l}
         dayWidth={dayWidth}
         dayHorizontalMargin={dayHorizontalMargin}
@@ -102,12 +123,10 @@ function WrappedDays({
     );
   }
 
-  useEffect(() => {
-    setHide(false);
-  }, [w]);
-
   return (
     <WrappedPan
+      onActive={onActive}
+      onDecay={onDecay}
       style={{
         height: 105,
         justifyContent: 'center',
