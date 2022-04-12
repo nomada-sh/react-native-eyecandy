@@ -59,9 +59,9 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
 
     // !!C needs to be an odd number.
     const C = 5;
-    const L = C * l;
+    // const L = C * l;
 
-    const H = (w: number) => Math.floor(w / C);
+    // const H = (w: number) => Math.floor(w / C);
 
     const calculateWraps = (x: number) => {
       'worklet';
