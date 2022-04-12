@@ -47,6 +47,7 @@ function Days({
 
     children.push(
       <Day
+        index={k}
         hidden={hidden}
         style={{
           width: dayWidth,

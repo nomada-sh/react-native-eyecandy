@@ -1,7 +1,13 @@
-import React, { useImperativeHandle, useRef } from 'react';
+import React, { useImperativeHandle, useRef, useState } from 'react';
+import { View } from 'react-native';
 
 import { compareAsc, differenceInDays } from 'date-fns';
-import { runOnJS, SharedValue } from 'react-native-reanimated';
+import {
+  runOnJS,
+  SharedValue,
+  useAnimatedReaction,
+  useSharedValue,
+} from 'react-native-reanimated';
 
 import WrappedPan from '../WrappedPan';
 
@@ -9,9 +15,6 @@ import Days from './Days';
 
 export interface WrappedDaysProps {
   value?: Date;
-  x: SharedValue<number>;
-  wraps: number;
-  onChangeWraps: (wraps: number) => void;
   formatDayLabel?: (date: Date) => string;
   formatDay?: (date: Date) => string;
   width: number;
@@ -23,14 +26,9 @@ export interface WrappedDaysHandle {
   jumpToDate: (date: Date) => void;
 }
 
-const MAX_WPS = 6;
-
 const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
   (
     {
-      x,
-      wraps,
-      onChangeWraps,
       width,
       value,
       formatDay,
@@ -40,7 +38,6 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     },
     ref,
   ) => {
-    const [hidden, setHidden] = React.useState(false);
     const [visibleDate, setVisibleDate] = React.useState(startDate);
     const extraIndexOffsetRef = useRef(0);
 
@@ -50,6 +47,10 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     const l = Math.round(width / dayWidth);
     const wrappedDayWidth = dayWidth + 2 * dayHorizontalMargin;
     const wrappedDaysWidth = l * wrappedDayWidth;
+
+    const offsetX = -2 * wrappedDaysWidth;
+    const x = useSharedValue(0);
+    const [w, setW] = useState(0);
 
     let indexOffset =
       compareAsc(startDate, visibleDate) *
@@ -61,27 +62,24 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     const C = 5;
     const L = C * l;
 
-    const wRef = useRef(0);
-
     const H = (w: number) => Math.floor(w / C);
+
+    const calculateWraps = (x: number) => {
+      'worklet';
+      return Math.floor(-x / wrappedDaysWidth) + 0;
+    };
 
     const onPress = (date: Date) => {
       if (onPressProp) onPressProp(date);
-      wRef.current = wraps;
     };
 
-    const onActive = (x: number, _v: number) => {
-      'worklet';
-      runOnJS(onChangeWraps)(Math.floor(-x / wrappedDaysWidth));
-    };
-
-    const onDecay = (x: number, v: number) => {
-      'worklet';
-      const wps = Math.abs(-v / wrappedDaysWidth);
-      runOnJS(setHidden)(wps >= MAX_WPS);
-
-      runOnJS(onChangeWraps)(Math.round(-x / wrappedDaysWidth));
-    };
+    useAnimatedReaction(
+      () => x.value,
+      x => {
+        const newWraps = calculateWraps(x);
+        runOnJS(setW)(newWraps);
+      },
+    );
 
     const calculateExactX = (x: number) => {
       'worklet';
@@ -97,18 +95,31 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
 
     const days: React.ReactNode[] = [];
 
+    const W = (w: number) => {
+      if (w > -3 && w < 3) return 0;
+
+      if (w >= 3) return C * Math.floor((w + 2) / 5);
+
+      return -C * Math.floor((-w + 2) / 5);
+    };
+
     for (let f = 0; f < C; f++) {
+      // const calculateIndex = (index: number) => {
+      //   const li = f * l;
+      //   const wi = wraps - f;
+      //   const j = li + L * Math.floor((wi - H(wi)) / (C - 1));
+      //   const k = j + (index % l) - indexOffset;
+      //   return k;
+      // };
+
       const calculateIndex = (index: number) => {
-        const li = f * l;
-        const wi = wraps - f;
-        const j = li + L * Math.floor((wi - H(wi)) / (C - 1));
-        const k = j + (index % l) - indexOffset;
-        return k;
+        const fi = f - 2;
+        const j = l * (W(w - fi) + fi);
+        return j + index - indexOffset;
       };
 
       days.push(
         <Days
-          hidden={hidden}
           startDate={startDate}
           daysToShow={l}
           dayWidth={dayWidth}
@@ -124,24 +135,27 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     }
 
     return (
-      <WrappedPan
-        onActive={onActive}
-        onDecay={onDecay}
-        calculateExactEndValue={calculateExactX}
-        style={{
-          height: 105,
-          justifyContent: 'center',
-        }}
-        contentContainerStyle={{
-          height: 85,
-        }}
-        value={x}
-        horizontal
-        width={wrappedDaysWidth}
-        height={85}
-      >
-        {days}
-      </WrappedPan>
+      <View>
+        {/* {days} */}
+        <WrappedPan
+          // disableDecay
+          offset={offsetX}
+          calculateExactEndValue={calculateExactX}
+          style={{
+            height: 105,
+            justifyContent: 'center',
+          }}
+          contentContainerStyle={{
+            height: 85,
+          }}
+          value={x}
+          horizontal
+          width={wrappedDaysWidth}
+          height={85}
+        >
+          {days}
+        </WrappedPan>
+      </View>
     );
   },
 );

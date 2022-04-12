@@ -6,7 +6,7 @@ interface DecayAnimationState extends PhysicsAnimationState {
 }
 
 const VELOCITY_EPS = 1;
-const DECELERATION = 0.997;
+const DECELERATION = 0.998;
 const SLOPE_FACTOR = 0.1;
 const VELOCITY_FACTOR = 0.5;
 

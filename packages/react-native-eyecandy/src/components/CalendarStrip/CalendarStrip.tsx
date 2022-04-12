@@ -1,8 +1,7 @@
-import React, { useImperativeHandle, useRef, useState } from 'react';
+import React, { useImperativeHandle, useRef } from 'react';
 import { useWindowDimensions, View } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
-import { useSharedValue } from 'react-native-reanimated';
 
 import WrappedDays, { WrappedDaysHandle } from './WrappedDays';
 import WrappedMonths from './WrappedMonths';
@@ -43,11 +42,6 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
 
     const wrappedDaysRef = useRef<WrappedDaysHandle>(null);
 
-    const daysX = useSharedValue(0);
-    const [daysWraps, setDaysWraps] = useState(0);
-
-    const monthsX = useSharedValue(0);
-
     const jumpToDate = (date: Date) => {
       wrappedDaysRef.current?.jumpToDate(date);
     };
@@ -71,7 +65,6 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
       <View>
         <WrappedMonths
           startDate={startDate}
-          x={monthsX}
           formatMonthLabel={formatMonthLabel}
           value={value}
           onPress={onPressMonth}
@@ -86,15 +79,12 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
         />
         <WrappedDays
           ref={wrappedDaysRef}
-          wraps={daysWraps}
-          onChangeWraps={setDaysWraps}
           startDate={startDate}
           onPress={onChange}
           formatDayLabel={formatDayLabel}
           formatDay={formatDay}
           value={value}
           width={width}
-          x={daysX}
         />
       </View>
     );

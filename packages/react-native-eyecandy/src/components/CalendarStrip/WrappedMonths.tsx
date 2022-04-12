@@ -1,31 +1,36 @@
 import React, { useRef, useState } from 'react';
 
-import { runOnJS, SharedValue } from 'react-native-reanimated';
+import {
+  runOnJS,
+  useAnimatedReaction,
+  useSharedValue,
+} from 'react-native-reanimated';
 
 import WrappedPan from '../WrappedPan';
 
+import Months from './Months';
+
 export interface WrappedMonthsProps {
   value?: Date;
-  x: SharedValue<number>;
   formatMonthLabel?: (date: Date) => string;
   onPress?: (date: Date) => void;
   startDate: Date;
 }
 
-import Months from './Months';
-
 function WrappedMonths({
-  x,
   value,
   formatMonthLabel,
   onPress: onPressProp,
   startDate,
 }: WrappedMonthsProps) {
+  const x = useSharedValue(0);
+
   const monthWidth = 120;
   const monthHorizontalMargin = 6;
 
   const l = 12;
-  const wrappedMonthsWidth = l * (monthWidth + 2 * monthHorizontalMargin);
+  const wrappedMonthWidth = monthWidth + 2 * monthHorizontalMargin;
+  const wrappedMonthsWidth = l * wrappedMonthWidth;
 
   // !!C needs to be an odd number.
   const C = 3;
@@ -41,15 +46,23 @@ function WrappedMonths({
     wRef.current = w;
   };
 
-  const onActive = (x: number, _v: number) => {
+  const calculateWraps = (x: number) => {
     'worklet';
-    runOnJS(setW)(Math.round(-x / wrappedMonthsWidth));
+    return Math.floor(-x / wrappedMonthsWidth) + 0;
   };
 
-  const onDecay = (x: number, _v: number) => {
+  const calculateExactX = (x: number) => {
     'worklet';
-    runOnJS(setW)(Math.round(-x / wrappedMonthsWidth));
+    return Math.round(x / wrappedMonthWidth) * wrappedMonthWidth;
   };
+
+  useAnimatedReaction(
+    () => x.value,
+    x => {
+      const newWraps = calculateWraps(x);
+      runOnJS(setW)(newWraps);
+    },
+  );
 
   const months: React.ReactNode[] = [];
 
@@ -89,8 +102,7 @@ function WrappedMonths({
       horizontal
       width={wrappedMonthsWidth}
       height={50}
-      onActive={onActive}
-      onDecay={onDecay}
+      calculateExactEndValue={calculateExactX}
     >
       {months}
     </WrappedPan>

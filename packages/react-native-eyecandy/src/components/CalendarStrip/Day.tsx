@@ -16,6 +16,7 @@ export interface DayProps {
   date: Date;
   style?: StyleProp<ViewStyle>;
   hidden?: boolean;
+  index: number;
 }
 
 const defaultFormatDayLabel = (date: Date) => {

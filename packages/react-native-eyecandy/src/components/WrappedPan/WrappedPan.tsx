@@ -22,6 +22,7 @@ export interface WrappedPanProps extends AnimateProps<ViewProps> {
   children: React.ReactNode;
   horizontal?: boolean;
   contentContainerStyle?: ViewProps['style'];
+  disableDecay?: boolean;
   /**
    * @worklet
    */
@@ -34,6 +35,7 @@ export interface WrappedPanProps extends AnimateProps<ViewProps> {
    * @worklet
    */
   calculateExactEndValue?: (value: number, velocity: number) => number;
+  offset?: number;
 }
 
 function wrap(x: number, min: number, max: number) {
@@ -58,6 +60,7 @@ interface ContainerProps extends AnimateProps<ViewProps> {
   height: number;
   children: React.ReactNode;
   horizontal?: boolean;
+  offset?: number;
 }
 
 function Container({
@@ -69,13 +72,14 @@ function Container({
   style,
   horizontal,
   count,
+  offset = 0,
   ...props
 }: ContainerProps) {
   const size = horizontal ? width : height;
 
   const animatedStyle = useAnimatedStyle(() => {
     const newValue = index * size + value.value;
-    const wrappedValue = wrap(newValue, -size, size * (count - 1));
+    const wrappedValue = wrap(newValue + offset, -size, size * (count - 1));
 
     return {
       width,
@@ -109,6 +113,8 @@ export default function WrappedPan({
   onActive,
   onDecay,
   calculateExactEndValue,
+  disableDecay = false,
+  offset,
   ...props
 }: WrappedPanProps) {
   const childrenCount = React.Children.count(children);
@@ -129,7 +135,7 @@ export default function WrappedPan({
     onEnd: e => {
       const v = horizontal ? e.velocityX : e.velocityY;
 
-      if (Math.abs(v) > 200)
+      if (Math.abs(v) > 200 && !disableDecay)
         value.value = withDecay({
           velocity: v,
           onActive: onDecay,
@@ -141,12 +147,13 @@ export default function WrappedPan({
             );
           },
         });
-      else
+      else {
         value.value = withTiming(
           calculateExactEndValue
             ? calculateExactEndValue(value.value, v)
             : value.value,
         );
+      }
     },
   });
 
@@ -161,6 +168,7 @@ export default function WrappedPan({
           horizontal={horizontal}
           value={value}
           style={StyleSheet.absoluteFill}
+          offset={offset}
         >
           {child}
         </Container>
