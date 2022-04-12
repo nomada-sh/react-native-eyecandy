@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { compareAsc, differenceInDays } from 'date-fns';
 import {
   runOnJS,
-  SharedValue,
   useAnimatedReaction,
   useSharedValue,
 } from 'react-native-reanimated';
@@ -41,6 +40,12 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     const [visibleDate, setVisibleDate] = React.useState(startDate);
     const extraIndexOffsetRef = useRef(0);
 
+    let indexOffset =
+      compareAsc(startDate, visibleDate) *
+      Math.abs(differenceInDays(startDate, visibleDate));
+    if (indexOffset < 0) indexOffset -= 1;
+    indexOffset += extraIndexOffsetRef.current;
+
     const dayWidth = 60;
     const dayHorizontalMargin = 6;
 
@@ -51,12 +56,6 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     const offsetX = -2 * wrappedDaysWidth;
     const x = useSharedValue(0);
     const [w, setW] = useState(0);
-
-    let indexOffset =
-      compareAsc(startDate, visibleDate) *
-      Math.abs(differenceInDays(startDate, visibleDate));
-    if (indexOffset < 0) indexOffset -= 1;
-    indexOffset += extraIndexOffsetRef.current;
 
     // !!C needs to be an odd number.
     const C = 5;

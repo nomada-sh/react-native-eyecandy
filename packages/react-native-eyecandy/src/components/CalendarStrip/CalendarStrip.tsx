@@ -4,7 +4,7 @@ import { useWindowDimensions, View } from 'react-native';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
 import WrappedDays, { WrappedDaysHandle } from './WrappedDays';
-import WrappedMonths from './WrappedMonths';
+import WrappedMonths, { WrappedMonthsHandle } from './WrappedMonths';
 
 export interface CalendarStripProps {
   width?: number;
@@ -41,9 +41,19 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
     const width = widthProp !== undefined ? widthProp : windowWidth;
 
     const wrappedDaysRef = useRef<WrappedDaysHandle>(null);
+    const wrappedMonthsRef = useRef<WrappedMonthsHandle>(null);
+
+    const daysJumpToDate = (date: Date) => {
+      wrappedDaysRef.current?.jumpToDate(date);
+    };
+
+    const monthsJumpToDate = (date: Date) => {
+      wrappedMonthsRef.current?.jumpToDate(date);
+    };
 
     const jumpToDate = (date: Date) => {
-      wrappedDaysRef.current?.jumpToDate(date);
+      daysJumpToDate(date);
+      monthsJumpToDate(date);
     };
 
     const onPressMonth = (date: Date) => {
@@ -54,7 +64,13 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
           ? value
           : date;
 
-      jumpToDate(targetDate);
+      daysJumpToDate(targetDate);
+    };
+
+    const onPressDay = (date: Date) => {
+      onChange(date);
+
+      monthsJumpToDate(date);
     };
 
     useImperativeHandle(ref, () => ({
@@ -64,6 +80,7 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
     return (
       <View>
         <WrappedMonths
+          ref={wrappedMonthsRef}
           startDate={startDate}
           formatMonthLabel={formatMonthLabel}
           value={value}
@@ -80,7 +97,7 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
         <WrappedDays
           ref={wrappedDaysRef}
           startDate={startDate}
-          onPress={onChange}
+          onPress={onPressDay}
           formatDayLabel={formatDayLabel}
           formatDay={formatDay}
           value={value}
