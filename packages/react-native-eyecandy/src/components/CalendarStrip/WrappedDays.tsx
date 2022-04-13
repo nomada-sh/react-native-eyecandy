@@ -1,5 +1,9 @@
-import React, { useImperativeHandle, useRef, useState } from 'react';
-import { View } from 'react-native';
+import React, {
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 
 import { compareAsc, differenceInDays } from 'date-fns';
 import {
@@ -19,10 +23,18 @@ export interface WrappedDaysProps {
   width: number;
   onPress?: (date: Date) => void;
   startDate: Date;
+  onMonthChange?: (date: Date) => void;
 }
 
 export interface WrappedDaysHandle {
   jumpToDate: (date: Date) => void;
+}
+
+function daysDifference(endDate: Date, startDate: Date) {
+  return (
+    compareAsc(endDate, startDate) *
+    Math.abs(differenceInDays(endDate, startDate))
+  );
 }
 
 const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
@@ -34,17 +46,15 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
       formatDayLabel,
       onPress: onPressProp,
       startDate,
+      onMonthChange,
     },
     ref,
   ) => {
     const [visibleDate, setVisibleDate] = React.useState(startDate);
-    const extraIndexOffsetRef = useRef(0);
+    const jumpToDayIndexOffset = useSharedValue(0);
 
-    let indexOffset =
-      compareAsc(startDate, visibleDate) *
-      Math.abs(differenceInDays(startDate, visibleDate));
-    if (indexOffset < 0) indexOffset -= 1;
-    indexOffset += extraIndexOffsetRef.current;
+    const indexOffset =
+      daysDifference(visibleDate, startDate) - jumpToDayIndexOffset.value;
 
     const dayWidth = 60;
     const dayHorizontalMargin = 6;
@@ -56,12 +66,18 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     const offsetX = -2 * wrappedDaysWidth;
     const x = useSharedValue(0);
     const [w, setW] = useState(0);
+    const currentDateRef = useRef(startDate);
 
     // !!C needs to be an odd number.
     const C = 5;
     // const L = C * l;
 
     // const H = (w: number) => Math.floor(w / C);
+
+    const calculateExactX = (x: number) => {
+      'worklet';
+      return Math.round(x / wrappedDayWidth) * wrappedDayWidth;
+    };
 
     const calculateWraps = (x: number) => {
       'worklet';
@@ -72,22 +88,45 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
       if (onPressProp) onPressProp(date);
     };
 
+    // const onIndexChange = useCallback(
+    //   (index: number) => {
+    //     const date = new Date(
+    //       startDate.getFullYear(),
+    //       startDate.getMonth(),
+    //       startDate.getDate() + index,
+    //     );
+
+    //     if (
+    //       currentDateRef.current.getFullYear() !== date.getFullYear() ||
+    //       currentDateRef.current.getMonth() !== date.getMonth()
+    //     ) {
+    //       currentDateRef.current = new Date(
+    //         date.getFullYear(),
+    //         date.getMonth(),
+    //         1,
+    //       );
+    //       if (onMonthChange) onMonthChange(currentDateRef.current);
+    //     }
+    //   },
+    //   [onMonthChange, startDate],
+    // );
+
     useAnimatedReaction(
       () => x.value,
       x => {
-        const newWraps = calculateWraps(x);
-        runOnJS(setW)(newWraps);
-      },
-    );
+        // const i = Math.floor(-x / wrappedDayWidth) + indexOffset + 0;
+        // runOnJS(onIndexChange)(i);
 
-    const calculateExactX = (x: number) => {
-      'worklet';
-      return Math.round(x / wrappedDayWidth) * wrappedDayWidth;
-    };
+        const newW = calculateWraps(x);
+        runOnJS(setW)(newW);
+      },
+      [],
+      // [wrappedDayWidth, indexOffset, onIndexChange],
+    );
 
     useImperativeHandle(ref, () => ({
       jumpToDate: (date: Date) => {
-        extraIndexOffsetRef.current = -Math.round(x.value / wrappedDayWidth);
+        jumpToDayIndexOffset.value = -Math.floor(x.value / wrappedDayWidth) + 0;
         setVisibleDate(new Date(date));
       },
     }));
@@ -95,6 +134,7 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     const days: React.ReactNode[] = [];
 
     const W = (w: number) => {
+      'worklet';
       if (w > -3 && w < 3) return 0;
 
       if (w >= 3) return C * Math.floor((w + 2) / 5);
@@ -114,7 +154,7 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
       const calculateIndex = (index: number) => {
         const fi = f - 2;
         const j = l * (W(w - fi) + fi);
-        return j + index - indexOffset;
+        return j + index + indexOffset;
       };
 
       days.push(
@@ -134,27 +174,23 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     }
 
     return (
-      <View>
-        {/* {days} */}
-        <WrappedPan
-          // disableDecay
-          offset={offsetX}
-          calculateExactEndValue={calculateExactX}
-          style={{
-            height: 105,
-            justifyContent: 'center',
-          }}
-          contentContainerStyle={{
-            height: 85,
-          }}
-          value={x}
-          horizontal
-          width={wrappedDaysWidth}
-          height={85}
-        >
-          {days}
-        </WrappedPan>
-      </View>
+      <WrappedPan
+        offset={offsetX}
+        calculateExactEndValue={calculateExactX}
+        style={{
+          height: 105,
+          justifyContent: 'center',
+        }}
+        contentContainerStyle={{
+          height: 85,
+        }}
+        value={x}
+        horizontal
+        width={wrappedDaysWidth}
+        height={85}
+      >
+        {days}
+      </WrappedPan>
     );
   },
 );

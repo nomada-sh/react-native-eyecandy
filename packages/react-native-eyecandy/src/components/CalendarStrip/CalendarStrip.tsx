@@ -16,7 +16,12 @@ export interface CalendarStripProps {
   startDate?: Date;
 }
 
-const defaultStartDate = new Date();
+const today = new Date();
+const defaultStartDate = new Date(
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate(),
+);
 
 export interface CalendarStripHandle {
   jumpToDate: (date: Date) => void;
@@ -51,6 +56,10 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
       wrappedMonthsRef.current?.jumpToDate(date);
     };
 
+    const monthsScrollToDate = (date: Date) => {
+      wrappedMonthsRef.current?.scrollToDate(date);
+    };
+
     const jumpToDate = (date: Date) => {
       daysJumpToDate(date);
       monthsJumpToDate(date);
@@ -65,12 +74,6 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
           : date;
 
       daysJumpToDate(targetDate);
-    };
-
-    const onPressDay = (date: Date) => {
-      onChange(date);
-
-      monthsJumpToDate(date);
     };
 
     useImperativeHandle(ref, () => ({
@@ -96,8 +99,9 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
         />
         <WrappedDays
           ref={wrappedDaysRef}
+          onMonthChange={monthsScrollToDate}
           startDate={startDate}
-          onPress={onPressDay}
+          onPress={onChange}
           formatDayLabel={formatDayLabel}
           formatDay={formatDay}
           value={value}

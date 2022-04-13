@@ -5,6 +5,7 @@ import {
   runOnJS,
   useAnimatedReaction,
   useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 
 import WrappedPan from '../WrappedPan';
@@ -13,6 +14,7 @@ import Months from './Months';
 
 export interface WrappedMonthsHandle {
   jumpToDate: (date: Date) => void;
+  scrollToDate: (date: Date) => void;
 }
 
 export interface WrappedMonthsProps {
@@ -20,6 +22,13 @@ export interface WrappedMonthsProps {
   formatMonthLabel?: (date: Date) => string;
   onPress?: (date: Date) => void;
   startDate: Date;
+}
+
+function monthsDifference(endDate: Date, startDate: Date) {
+  return (
+    compareAsc(endDate, startDate) *
+    Math.abs(differenceInMonths(endDate, startDate))
+  );
 }
 
 const WrappedMonths = React.forwardRef<WrappedMonthsHandle, WrappedMonthsProps>(
@@ -45,9 +54,7 @@ const WrappedMonths = React.forwardRef<WrappedMonthsHandle, WrappedMonthsProps>(
     const extraIndexOffsetRef = useRef(0);
 
     const indexOffset =
-      compareAsc(startDate, visibleDate) *
-        Math.abs(differenceInMonths(startDate, visibleDate)) +
-      extraIndexOffsetRef.current;
+      monthsDifference(visibleDate, startDate) - extraIndexOffsetRef.current;
 
     const x = useSharedValue(0);
 
@@ -62,14 +69,12 @@ const WrappedMonths = React.forwardRef<WrappedMonthsHandle, WrappedMonthsProps>(
     const C = 3;
     const L = C * l;
 
-    const wRef = useRef(0);
     const [w, setW] = useState(0);
 
     const H = (w: number) => Math.floor(w / C);
 
     const onPress = (date: Date) => {
       if (onPressProp) onPressProp(date);
-      wRef.current = w;
     };
 
     const calculateWraps = (x: number) => {
@@ -92,8 +97,13 @@ const WrappedMonths = React.forwardRef<WrappedMonthsHandle, WrappedMonthsProps>(
 
     useImperativeHandle(ref, () => ({
       jumpToDate: (date: Date) => {
-        extraIndexOffsetRef.current = -Math.round(x.value / wrappedMonthWidth);
+        extraIndexOffsetRef.current = -Math.floor(x.value / wrappedMonthWidth);
         setVisibleDate(new Date(date.getFullYear(), date.getMonth(), 1));
+      },
+      scrollToDate: (date: Date) => {
+        // const diff = monthsDifference(date, startDate);
+        // const newX = -diff * wrappedMonthWidth;
+        // x.value = withTiming(newX);
       },
     }));
 
@@ -104,7 +114,7 @@ const WrappedMonths = React.forwardRef<WrappedMonthsHandle, WrappedMonthsProps>(
         const li = f * l;
         const wi = w - f;
         const j = li + L * Math.floor((wi - H(wi)) / (C - 1));
-        const k = j + (index % l) - indexOffset;
+        const k = j + (index % l) + indexOffset;
         return k;
       };
 

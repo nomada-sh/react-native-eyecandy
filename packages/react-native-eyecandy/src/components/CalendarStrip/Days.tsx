@@ -1,6 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import Day from './Day';
+
 export interface DaysProps {
   value?: Date;
   formatDayLabel?: (date: Date) => string;
@@ -13,8 +15,6 @@ export interface DaysProps {
   startDate: Date;
   hidden?: boolean;
 }
-
-import Day from './Day';
 
 function Days({
   value,

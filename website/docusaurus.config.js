@@ -25,7 +25,7 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/nomada-sh/react-native-eyecandy-website/tree/main/docs',
+            'https://github.com/nomada-sh/react-native-eyecandy/tree/main/website',
           remarkPlugins: [
             [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
           ],
@@ -34,7 +34,7 @@ const config = {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/nomada-sh/react-native-eyecandy-website/tree/main/blog',
+            'https://github.com/nomada-sh/react-native-eyecandy/tree/main/website',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

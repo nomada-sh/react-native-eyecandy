@@ -26,6 +26,10 @@ export interface WrappedPanProps extends AnimateProps<ViewProps> {
   /**
    * @worklet
    */
+  onStart?: () => void;
+  /**
+   * @worklet
+   */
   onActive?: (value: number, velocity: number) => void;
   /**
    * @worklet
@@ -48,7 +52,7 @@ function wrap(x: number, min: number, max: number) {
   return r;
 }
 
-type Context = {
+export type Context = {
   start: number;
 };
 
@@ -112,6 +116,7 @@ export default function WrappedPan({
   contentContainerStyle,
   onActive,
   onDecay,
+  onStart,
   calculateExactEndValue,
   disableDecay = false,
   offset,
@@ -125,6 +130,7 @@ export default function WrappedPan({
   >({
     onStart: (e, ctx) => {
       ctx.start = value.value;
+      if (onStart) onStart();
     },
     onActive: (e, ctx) => {
       const velocity = horizontal ? e.velocityX : e.velocityY;

@@ -39,6 +39,7 @@ export default function Day({
   date,
   style,
   hidden,
+  index,
 }: DayProps) {
   const selected = !hidden && selectedProp;
   const { colors } = useTheme();
@@ -83,6 +84,9 @@ export default function Day({
           </Body>
           <Body color="greyout" customColor={selected ? 'white' : undefined}>
             {formatDayLabel(date)}
+          </Body>
+          <Body color="greyout" customColor={selected ? 'white' : undefined}>
+            {index}
           </Body>
         </View>
       </RectButton>
