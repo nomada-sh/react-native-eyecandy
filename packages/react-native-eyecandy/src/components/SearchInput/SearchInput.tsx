@@ -55,7 +55,7 @@ function SearchInput({
           color="primary"
           inverse
           text={cancelButtonText}
-          buttonStyle={styles.cancelButton}
+          pressableStyle={styles.cancelButton}
           onPress={() => onPressCancel?.()}
         />
       ) : null}

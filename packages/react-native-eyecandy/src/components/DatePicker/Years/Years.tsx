@@ -63,7 +63,7 @@ function Years({ onPressBack, year, maxYears, onPressYear }: YearsProps) {
           >
             <Button
               onPress={() => onPressYear(y)}
-              buttonStyle={{
+              pressableStyle={{
                 height: 50,
               }}
               color={year === y ? 'primary' : 'default'}

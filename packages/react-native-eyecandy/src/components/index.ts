@@ -1,5 +1,5 @@
-export { default as BaseButton } from './BaseButton';
-export type { BaseButtonProps } from './BaseButton';
+export { default as ButtonBase } from './ButtonBase';
+export type { ButtonBaseProps } from './ButtonBase';
 
 export { default as Button } from './Button';
 export type { ButtonProps } from './Button';

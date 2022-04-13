@@ -1,0 +1,96 @@
+---
+id: iconbutton
+title: IconButton
+---
+
+## Import
+
+```jsx
+import { IconButton } from '@nomada-sh/react-native-eyecandy';
+```
+
+## Example
+
+## Props
+
+### [BaseButton Props](buttonbase#props)
+
+Inherits [BaseButton Props](buttonbase#props)
+
+---
+
+### `icon`
+
+Component to render as icon, can be a React Component (e.g. `Icon`), or a React Element (e.g. `<Icon />`).
+
+When passing a React Component:
+
+```jsx
+<IconButton icon={Plus} />
+```
+
+or
+
+```jsx
+<IconButton
+  icon={({ size, color, style }) => (
+    <Plus size={size} stroke={stroke} style={style} {...otherProps} />
+  )}
+/>
+```
+
+and when passing a React Element:
+
+```jsx
+<IconButton icon={<Plus size={32} {...otherProps} />} />
+```
+
+| Type               |
+| ------------------ |
+| component, element |
+
+---
+
+### `size`
+
+This sets the width and height of the container view.
+
+| Type   | Default |
+| ------ | ------- |
+| number | `56`    |
+
+---
+
+### `iconSize`
+
+This sets the width and height of the icon. When not set, the icon will be automatically sized according to the container view.
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `iconColor`
+
+The icon color will be the foreground color set with the [`color`](buttonbase#color) prop unless explicitly set.
+
+| Type   |
+| ------ |
+| string |
+
+---
+
+### `iconStyle`
+
+| Type       |
+| ---------- |
+| View Style |
+
+---
+
+### `variant`
+
+| Type                                     | Default     |
+| ---------------------------------------- | ----------- |
+| [ButtonBase variant](buttonbase#variant) | `'rounded'` |

@@ -10,7 +10,7 @@ const getDividerColors: GetThemeColors<ThemeDividerColors> = options => {
 
   return mergeColors({
     ...options,
-    defaultColors: defaultColors,
+    defaultColors,
   });
 };
 

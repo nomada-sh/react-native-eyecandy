@@ -1,0 +1,158 @@
+---
+id: buttonbase
+title: ButtonBase
+---
+
+## Import
+
+```jsx
+import { ButtonBase } from '@nomada-sh/react-native-eyecandy';
+```
+
+## Example
+
+## Props
+
+### [Pressable Props](https://reactnative.dev/docs/pressable#props)
+
+Inherits [Pressable Props](https://reactnative.dev/docs/pressable#props).
+
+---
+
+### `style`
+
+These styles will be applied to the container view.
+
+| Type       |
+| ---------- |
+| View Style |
+
+---
+
+### `pressableStyle`
+
+These styles will be applied to the pressable view.
+
+| Type       |
+| ---------- |
+| View Style |
+
+---
+
+### `styles`
+
+This styles are applied after [`pressableStyle`](#pressableStyle) and [`style`](#style).
+
+| Type   |
+| ------ |
+| object |
+
+#### Properties
+
+| Name        | Type       | Required | Description                                         |
+| ----------- | ---------- | -------- | --------------------------------------------------- |
+| `container` | View Style | No       | These styles will be applied to the container view. |
+| `pressable` | View Style | No       | These styles will be applied to the pressable view. |
+
+---
+
+### `color`
+
+This defines the background and foreground colors of the button. The color will change based on the theme (dark or light) if set to `'default'`.
+
+| Type                                        | Default     |
+| ------------------------------------------- | ----------- |
+| `'default'` or `'primary'` or `'secondary'` | `'default'` |
+
+---
+
+### `inverse`
+
+If `true`, inverts the background and foreground colors set with the [`color`](#color) prop.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `variant`
+
+This defines the variant, or look, of the component to use.
+
+Possible values:
+
+- `'default'` will add squared corners to the button.
+- `'rounded'` will add rounded corners to the button.
+
+| Type                       | Default     |
+| -------------------------- | ----------- |
+| `'default'` or `'rounded'` | `'default'` |
+
+---
+
+### `fullWidth`
+
+If set to `true`, the button will expand to fill the width of its container.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `true`  |
+
+---
+
+### `height`
+
+This defines the height of the button.
+
+| Type   | Default |
+| ------ | ------- |
+| number | `56`    |
+
+---
+
+### `transparent`
+
+If `true`, the background color set with the [`color`](#color) prop will be transparent.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `outlined`
+
+If `true`, adds a border of the same color as the foreground color set with the [`color`](#color) prop.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `loading`
+
+If `true`, shows a loading spinner on top of button content.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `hideDisabledOverlay`
+
+If `true`, the disabled overlay will not be shown on the button when disabled.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+### `disableHapticFeedback`
+
+If `true`, the button will not trigger a haptic feedback on press.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |

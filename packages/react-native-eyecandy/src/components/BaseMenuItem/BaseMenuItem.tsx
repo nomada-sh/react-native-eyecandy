@@ -64,9 +64,10 @@ function BaseMenuItem({
       <View style={styles.content}>
         {icon && (
           <IconButton
-            variant="transparent-rounded"
+            variant="rounded"
+            transparent
             style={styles.icon}
-            buttonStyle={{
+            pressableStyle={{
               backgroundColor: iconBackgroundColor,
             }}
             icon={icon}

@@ -25,7 +25,7 @@ const getTextColors: GetThemeColors<ThemeTextColors> = options => {
 
   return mergeColors({
     ...options,
-    defaultColors: defaultColors,
+    defaultColors,
   });
 };
 

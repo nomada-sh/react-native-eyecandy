@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { ChevronRight } from '@nomada-sh/react-native-eyecandy-icons';
@@ -6,26 +6,28 @@ import { useTheme, useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
 import { usePressableStyles } from '../../hooks';
 import { Body } from '../../typography';
-import BaseButton, { BaseButtonProps } from '../BaseButton';
+import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 
-export interface LinkButtonProps extends BaseButtonProps {
-  icon?: FC<{
-    size?: number;
-    stroke?: string;
-    style?: StyleProp<ViewStyle>;
-  }>;
+interface IconProps {
+  size?: number;
+  stroke?: string;
+  style?: StyleProp<ViewStyle>;
+}
+
+export interface LinkButtonProps extends ButtonBaseProps {
+  icon?: React.ComponentType<IconProps> | React.ReactElement<IconProps>;
   text: string;
-  showChevron?: boolean;
+  showChevronRight?: boolean;
   bold?: boolean;
   focused?: boolean;
 }
 
 function LinkButton({
   text,
-  icon,
-  buttonStyle,
+  icon: Icon,
+  pressableStyle,
   color = 'default',
-  showChevron = true,
+  showChevronRight = true,
   bold,
   focused,
   ...props
@@ -33,11 +35,9 @@ function LinkButton({
   const { palette } = useTheme();
   const colors = useColors(c => c.button[color]);
 
-  const Icon = icon;
-
   const buttonStyles = usePressableStyles([
     styles.button,
-    buttonStyle,
+    pressableStyle,
     {
       borderColor: focused ? palette.primary[500] : colors.background,
     },
@@ -48,18 +48,24 @@ function LinkButton({
     fontWeight: bold ? 'bold' : 'normal',
   };
 
+  const children = Icon ? (
+    React.isValidElement(Icon) ? (
+      Icon
+    ) : (
+      <Icon
+        style={styles.icon}
+        size={20}
+        stroke={focused ? palette.primary[500] : (textStyle.color as string)}
+      />
+    )
+  ) : null;
+
   return (
-    <BaseButton color={color} buttonStyle={buttonStyles} {...props}>
-      {Icon ? (
-        <Icon
-          style={styles.icon}
-          size={20}
-          stroke={focused ? palette.primary[500] : (textStyle.color as string)}
-        />
-      ) : null}
+    <ButtonBase color={color} pressableStyle={buttonStyles} {...props}>
+      {children}
       <Body style={[textStyle, styles.text]}>{text}</Body>
-      {showChevron ? <ChevronRight color="greyout" size={20} /> : null}
-    </BaseButton>
+      {showChevronRight ? <ChevronRight color="greyout" size={20} /> : null}
+    </ButtonBase>
   );
 }
 

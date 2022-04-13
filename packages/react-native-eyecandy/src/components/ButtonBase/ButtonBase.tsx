@@ -7,6 +7,7 @@ import {
   StyleProp,
   View,
   ViewStyle,
+  StyleSheet,
 } from 'react-native';
 
 import type { ThemeButtonColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
@@ -16,7 +17,7 @@ import { usePressableStyles } from '../../hooks';
 
 import useStyles from './useStyles';
 
-export interface BaseButtonProps extends PressableProps {
+export interface ButtonBaseProps extends PressableProps {
   children?: ReactNode;
   /**
    * Container view style.
@@ -25,7 +26,7 @@ export interface BaseButtonProps extends PressableProps {
   /**
    * Pressable style.
    */
-  buttonStyle?: PressableProps['style'];
+  pressableStyle?: PressableProps['style'];
   inverse?: boolean;
   color?: ThemeButtonColorChoices;
   styles?: {
@@ -38,17 +39,20 @@ export interface BaseButtonProps extends PressableProps {
      */
     button?: PressableProps['style'];
   };
-  variant?: 'default' | 'outlined' | 'rounded' | 'transparent-rounded';
+  variant?: 'default' | 'rounded';
   height?: number;
   fullwidth?: boolean;
   loading?: boolean;
   hideDisabledOverlay?: boolean;
+  transparent?: boolean;
+  outlined?: boolean;
+  disableHapticFeedback?: boolean;
 }
 
-function BaseButton({
+function ButtonBase({
   children,
   style,
-  buttonStyle,
+  pressableStyle,
   inverse,
   color,
   variant,
@@ -59,8 +63,11 @@ function BaseButton({
   styles: customStyles = {},
   hideDisabledOverlay,
   onPress: onPressProp,
+  transparent,
+  outlined,
+  disableHapticFeedback = false,
   ...props
-}: BaseButtonProps) {
+}: ButtonBaseProps) {
   const disabled = disabledProp || loading;
 
   const styles = useStyles({
@@ -70,20 +77,23 @@ function BaseButton({
     height,
     disabled,
     fullwidth,
+    transparent,
+    outlined,
   });
 
   const getButtonStyle = usePressableStyles([
-    styles.button,
-    buttonStyle,
+    styles.pressable,
+    pressableStyle,
     customStyles.button,
   ]);
 
   const onPress = useCallback(
     (e: GestureResponderEvent) => {
-      ReactNativeHapticFeedback.trigger('impactMedium');
+      if (!disableHapticFeedback)
+        ReactNativeHapticFeedback.trigger('impactMedium');
       onPressProp?.(e);
     },
-    [onPressProp],
+    [disableHapticFeedback, onPressProp],
   );
 
   return (
@@ -111,4 +121,4 @@ function BaseButton({
   );
 }
 
-export default BaseButton;
+export default ButtonBase;

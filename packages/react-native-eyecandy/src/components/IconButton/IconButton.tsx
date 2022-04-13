@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
+import React from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
 import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
-import BaseButton, { BaseButtonProps } from '../BaseButton';
+import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 
 interface IconProps {
   size: number;
@@ -11,8 +11,8 @@ interface IconProps {
   style?: StyleProp<ViewStyle>;
 }
 
-export interface IconButtonProps extends BaseButtonProps {
-  icon?: FC<IconProps>;
+export interface IconButtonProps extends ButtonBaseProps {
+  icon?: React.ComponentType<IconProps> | React.ReactElement<any>;
   size?: number;
   iconSize?: number;
   iconColor?: string;
@@ -33,15 +33,23 @@ function IconButton({
 }: IconButtonProps) {
   const { foreground, background } = useColors(c => c.button[color]);
 
-  const iconSize = iconSizeProp ?? size * 0.4;
+  const iconSize = iconSizeProp ?? Math.round(size * 0.4);
   const iconColor = iconColorProp
     ? iconColorProp
     : inverse
     ? background
     : foreground;
 
+  const children = Icon ? (
+    React.isValidElement(Icon) ? (
+      Icon
+    ) : (
+      <Icon size={iconSize} stroke={iconColor} style={iconStyle} />
+    )
+  ) : null;
+
   return (
-    <BaseButton
+    <ButtonBase
       style={[
         {
           width: size,
@@ -55,10 +63,8 @@ function IconButton({
       variant={variant}
       {...props}
     >
-      {Icon ? (
-        <Icon size={iconSize} stroke={iconColor} style={iconStyle} />
-      ) : null}
-    </BaseButton>
+      {children}
+    </ButtonBase>
   );
 }
 

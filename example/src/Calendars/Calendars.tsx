@@ -18,7 +18,9 @@ export default function Calendars() {
       <CalendarStrip ref={ref} value={value} onChange={setValue} />
       <Body>{value.toLocaleDateString()}</Body>
       <Button
+        variant="rounded"
         text="Today"
+        color="primary"
         onPress={() => {
           setValue(new Date());
           ref.current?.jumpToDate(new Date());

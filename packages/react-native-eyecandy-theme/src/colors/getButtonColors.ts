@@ -13,11 +13,15 @@ const getButtonColors: GetThemeColors<ThemeButtonColors> = options => {
       background: palette.primary['500'],
       foreground: palette.primary['100'],
     },
+    secondary: {
+      background: palette.secondary['500'],
+      foreground: palette.secondary['100'],
+    },
   };
 
   return mergeColors({
     ...options,
-    defaultColors: defaultColors,
+    defaultColors,
   });
 };
 

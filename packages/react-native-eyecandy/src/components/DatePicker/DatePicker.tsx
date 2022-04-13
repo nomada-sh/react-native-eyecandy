@@ -131,7 +131,7 @@ function DatePicker({
         icon={CalendarEvent}
         onPress={onPress}
         text={formattedDate}
-        showChevron={false}
+        showChevronRight={false}
         bold
         focused={visible}
       />

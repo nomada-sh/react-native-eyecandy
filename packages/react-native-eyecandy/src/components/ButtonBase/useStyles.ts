@@ -15,27 +15,38 @@ export default function useStyles({
   height = 56,
   disabled,
   fullwidth = true,
+  transparent = false,
+  outlined = false,
 }: {
   color?: ThemeButtonColorChoices;
   inverse?: boolean;
-  variant?: 'default' | 'outlined' | 'rounded' | 'transparent-rounded';
+  variant?: 'default' | 'rounded';
   height?: number;
   disabled?: boolean | null;
   fullwidth?: boolean;
+  transparent?: boolean;
+  outlined?: boolean;
 }) {
   const colors = useColors(c => c.button);
   const { background, foreground } = colors[color];
 
-  const borderRadius = /([a-z]+-)?rounded$/.test(variant) ? height / 2 : 12;
+  let borderWidth = 0;
+  let borderColor = undefined;
+  const borderRadius = variant === 'rounded' ? height / 2 : 12;
 
   let backgroundColor = Color(inverse ? foreground : background).rgb();
 
-  const rippleColor = getRippleColor(backgroundColor);
+  const rippleColor = getRippleColor(backgroundColor).string();
 
   let disabledColor = backgroundColor.fade(0.4);
 
-  if (/^transparent(-[a-z]+)?/.test(variant))
+  if (outlined) {
+    borderWidth = 1;
+    borderColor = inverse ? background : foreground;
     backgroundColor = backgroundColor.alpha(0);
+  }
+
+  if (transparent) backgroundColor = backgroundColor.alpha(0);
 
   return StyleSheet.create({
     container: {
@@ -43,8 +54,10 @@ export default function useStyles({
       borderRadius,
       overflow: 'hidden',
       width: fullwidth ? '100%' : undefined,
+      borderWidth,
+      borderColor,
     },
-    button: {
+    pressable: {
       flex: 1,
       borderRadius,
       backgroundColor: backgroundColor.string(),
@@ -52,7 +65,7 @@ export default function useStyles({
       alignItems: 'center',
     },
     ripple: {
-      color: rippleColor.string(),
+      color: rippleColor,
     },
     disabled: {
       backgroundColor: disabled ? disabledColor.string() : undefined,

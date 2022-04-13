@@ -32,7 +32,7 @@ const getInputColors: GetThemeColors<ThemeInputColors> = options => {
 
   return mergeColors({
     ...options,
-    defaultColors: defaultColors,
+    defaultColors,
   });
 };
 

@@ -37,7 +37,7 @@ const getDividerColors: GetThemeColors<ThemeBadgeColors> = options => {
 
   return mergeColors({
     ...options,
-    defaultColors: defaultColors,
+    defaultColors,
   });
 };
 
