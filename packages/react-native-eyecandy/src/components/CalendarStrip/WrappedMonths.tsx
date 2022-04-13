@@ -1,12 +1,7 @@
 import React, { useImperativeHandle, useRef, useState } from 'react';
 
 import { compareAsc, differenceInMonths } from 'date-fns';
-import {
-  runOnJS,
-  useAnimatedReaction,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import { runOnJS, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import WrappedPan from '../WrappedPan';
 
@@ -25,9 +20,11 @@ export interface WrappedMonthsProps {
 }
 
 function monthsDifference(endDate: Date, startDate: Date) {
+  const targetDate = new Date(endDate.getFullYear(), endDate.getMonth(), 1);
+
   return (
-    compareAsc(endDate, startDate) *
-    Math.abs(differenceInMonths(endDate, startDate))
+    compareAsc(targetDate, startDate) *
+    Math.abs(differenceInMonths(targetDate, startDate))
   );
 }
 
@@ -50,11 +47,7 @@ const WrappedMonths = React.forwardRef<WrappedMonthsHandle, WrappedMonthsProps>(
       );
 
     const startDate = startDateRef.current;
-    const [visibleDate, setVisibleDate] = React.useState(startDate);
-    const extraIndexOffsetRef = useRef(0);
-
-    const indexOffset =
-      monthsDifference(visibleDate, startDate) - extraIndexOffsetRef.current;
+    const [indexOffset, setIndexOffset] = useState(0);
 
     const x = useSharedValue(0);
 
@@ -87,23 +80,27 @@ const WrappedMonths = React.forwardRef<WrappedMonthsHandle, WrappedMonthsProps>(
       return Math.round(x / wrappedMonthWidth) * wrappedMonthWidth;
     };
 
-    useAnimatedReaction(
-      () => x.value,
-      x => {
-        const newWraps = calculateWraps(x);
-        runOnJS(setW)(newWraps);
-      },
-    );
+    const onMoving = (x: number) => {
+      'worklet';
+
+      const newWraps = calculateWraps(x);
+      runOnJS(setW)(newWraps);
+    };
 
     useImperativeHandle(ref, () => ({
       jumpToDate: (date: Date) => {
-        extraIndexOffsetRef.current = -Math.floor(x.value / wrappedMonthWidth);
-        setVisibleDate(new Date(date.getFullYear(), date.getMonth(), 1));
+        const jumpToDateIndexOffset =
+          -Math.floor(x.value / wrappedMonthWidth) + 0;
+
+        const newIndexOffset =
+          monthsDifference(date, startDate) - jumpToDateIndexOffset;
+
+        setIndexOffset(newIndexOffset);
       },
       scrollToDate: (date: Date) => {
-        // const diff = monthsDifference(date, startDate);
-        // const newX = -diff * wrappedMonthWidth;
-        // x.value = withTiming(newX);
+        const newIndex = monthsDifference(date, startDate) - indexOffset;
+        const newX = -newIndex * wrappedMonthWidth;
+        x.value = withTiming(newX);
       },
     }));
 
@@ -134,6 +131,7 @@ const WrappedMonths = React.forwardRef<WrappedMonthsHandle, WrappedMonthsProps>(
 
     return (
       <WrappedPan
+        onMoving={onMoving}
         style={{
           height: 55,
           justifyContent: 'center',

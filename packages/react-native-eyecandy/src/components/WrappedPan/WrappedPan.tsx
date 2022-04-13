@@ -14,6 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import withDecay from './withDecay';
+import withWrapper from './withWrapper';
 
 export interface WrappedPanProps extends AnimateProps<ViewProps> {
   value: SharedValue<number>;
@@ -23,21 +24,7 @@ export interface WrappedPanProps extends AnimateProps<ViewProps> {
   horizontal?: boolean;
   contentContainerStyle?: ViewProps['style'];
   disableDecay?: boolean;
-  /**
-   * @worklet
-   */
-  onStart?: () => void;
-  /**
-   * @worklet
-   */
-  onActive?: (value: number, velocity: number) => void;
-  /**
-   * @worklet
-   */
-  onDecay?: (value: number, velocity: number) => void;
-  /**
-   * @worklet
-   */
+  onMoving?: (value: number) => void;
   calculateExactEndValue?: (value: number, velocity: number) => number;
   offset?: number;
 }
@@ -114,9 +101,7 @@ export default function WrappedPan({
   children,
   style,
   contentContainerStyle,
-  onActive,
-  onDecay,
-  onStart,
+  onMoving,
   calculateExactEndValue,
   disableDecay = false,
   offset,
@@ -130,35 +115,33 @@ export default function WrappedPan({
   >({
     onStart: (e, ctx) => {
       ctx.start = value.value;
-      if (onStart) onStart();
     },
     onActive: (e, ctx) => {
-      const velocity = horizontal ? e.velocityX : e.velocityY;
       value.value = ctx.start + (horizontal ? e.translationX : e.translationY);
-
-      if (onActive) onActive(value.value, velocity);
+      onMoving && onMoving(value.value);
     },
     onEnd: e => {
       const v = horizontal ? e.velocityX : e.velocityY;
 
+      const onEnd = (newValue: number) => {
+        const endValue = calculateExactEndValue
+          ? calculateExactEndValue(newValue, v)
+          : newValue;
+
+        value.value = withWrapper(withTiming(endValue), state => {
+          'worklet';
+          onMoving && onMoving(state.current);
+        });
+      };
+
       if (Math.abs(v) > 200 && !disableDecay)
         value.value = withDecay({
           velocity: v,
-          onActive: onDecay,
-          onEnd: newValue => {
-            value.value = withTiming(
-              calculateExactEndValue
-                ? calculateExactEndValue(newValue, v)
-                : newValue,
-            );
-          },
+          onMoving,
+          onEnd,
         });
       else {
-        value.value = withTiming(
-          calculateExactEndValue
-            ? calculateExactEndValue(value.value, v)
-            : value.value,
-        );
+        onEnd(value.value);
       }
     },
   });

@@ -1,16 +1,7 @@
-import React, {
-  useCallback,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 
 import { compareAsc, differenceInDays } from 'date-fns';
-import {
-  runOnJS,
-  useAnimatedReaction,
-  useSharedValue,
-} from 'react-native-reanimated';
+import { runOnJS, useSharedValue } from 'react-native-reanimated';
 
 import WrappedPan from '../WrappedPan';
 
@@ -50,11 +41,7 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     },
     ref,
   ) => {
-    const [visibleDate, setVisibleDate] = React.useState(startDate);
-    const jumpToDayIndexOffset = useSharedValue(0);
-
-    const indexOffset =
-      daysDifference(visibleDate, startDate) - jumpToDayIndexOffset.value;
+    const [indexOffset, setIndexOffset] = React.useState(0);
 
     const dayWidth = 60;
     const dayHorizontalMargin = 6;
@@ -88,46 +75,39 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
       if (onPressProp) onPressProp(date);
     };
 
-    // const onIndexChange = useCallback(
-    //   (index: number) => {
-    //     const date = new Date(
-    //       startDate.getFullYear(),
-    //       startDate.getMonth(),
-    //       startDate.getDate() + index,
-    //     );
+    const onIndexChange = (index: number) => {
+      const date = new Date(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate() + index,
+      );
 
-    //     if (
-    //       currentDateRef.current.getFullYear() !== date.getFullYear() ||
-    //       currentDateRef.current.getMonth() !== date.getMonth()
-    //     ) {
-    //       currentDateRef.current = new Date(
-    //         date.getFullYear(),
-    //         date.getMonth(),
-    //         1,
-    //       );
-    //       if (onMonthChange) onMonthChange(currentDateRef.current);
-    //     }
-    //   },
-    //   [onMonthChange, startDate],
-    // );
+      if (
+        currentDateRef.current.getFullYear() !== date.getFullYear() ||
+        currentDateRef.current.getMonth() !== date.getMonth()
+      ) {
+        currentDateRef.current = date;
+        if (onMonthChange) onMonthChange(currentDateRef.current);
+      }
+    };
 
-    useAnimatedReaction(
-      () => x.value,
-      x => {
-        // const i = Math.floor(-x / wrappedDayWidth) + indexOffset + 0;
-        // runOnJS(onIndexChange)(i);
+    const onMoving = (x: number) => {
+      'worklet';
+      const i = Math.floor(-x / wrappedDayWidth) + indexOffset + 0;
+      runOnJS(onIndexChange)(i);
 
-        const newW = calculateWraps(x);
-        runOnJS(setW)(newW);
-      },
-      [],
-      // [wrappedDayWidth, indexOffset, onIndexChange],
-    );
+      const newW = calculateWraps(x);
+      runOnJS(setW)(newW);
+    };
 
     useImperativeHandle(ref, () => ({
       jumpToDate: (date: Date) => {
-        jumpToDayIndexOffset.value = -Math.floor(x.value / wrappedDayWidth) + 0;
-        setVisibleDate(new Date(date));
+        const jumpToDayIndexOffset = -Math.floor(x.value / wrappedDayWidth) + 0;
+
+        const newIndexOffset =
+          daysDifference(date, startDate) - jumpToDayIndexOffset;
+
+        setIndexOffset(newIndexOffset);
       },
     }));
 
@@ -175,6 +155,7 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
 
     return (
       <WrappedPan
+        onMoving={onMoving}
         offset={offsetX}
         calculateExactEndValue={calculateExactX}
         style={{

@@ -12,20 +12,15 @@ const VELOCITY_FACTOR = 0.5;
 
 const withDecay = ({
   velocity: initialVelocity,
-  // clamp = [],
-  onActive,
+  onMoving,
   onEnd,
 }: {
   velocity: number;
-  clamp?: [number?, number?];
   /**
    * @worklet
    */
-  onActive?: (x: number, velocity: number) => void;
-  /**
-   * @worklet
-   */
-  onEnd?: (x: number, velocity: number) => void;
+  onMoving?: (x: number) => void;
+  onEnd?: (x: number) => void;
 }) => {
   'worklet';
   return defineAnimation<DecayAnimationState>(() => {
@@ -45,30 +40,11 @@ const withDecay = ({
       state.current = x;
       state.lastTimestamp = now;
 
-      // let clampFinished = false;
-
-      // if (clamp) {
-      //   const min = clamp[0];
-      //   const max = clamp[1];
-
-      //   if (min !== undefined && initialVelocity < 0 && state.current <= min) {
-      //     state.current = min;
-      //     clampFinished = true;
-      //   } else if (
-      //     max !== undefined &&
-      //     initialVelocity > 0 &&
-      //     state.current >= max
-      //   ) {
-      //     state.current = max;
-      //     clampFinished = true;
-      //   }
-      // }
-
-      if (onActive) onActive(state.current, state.velocity);
+      onMoving && onMoving(state.current);
 
       const finished = Math.abs(v) < VELOCITY_EPS;
 
-      if (finished && onEnd) onEnd(state.current, state.velocity);
+      if (finished && onEnd) onEnd(state.current);
 
       return finished;
     };
