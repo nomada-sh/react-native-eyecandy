@@ -25,7 +25,7 @@ const defaultStartDate = new Date(
 
 export interface CalendarStripHandle {
   jumpToDate: (date: Date) => void;
-  scrollToMonth: (date: Date) => void;
+  scrollToMonth: (date: Date, minMonthDiff?: number) => void;
 }
 
 const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
@@ -57,8 +57,8 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
       wrappedMonthsRef.current?.jumpToDate(date);
     };
 
-    const scrollToMonth = (date: Date) => {
-      wrappedMonthsRef.current?.scrollToDate(date);
+    const scrollToMonth = (date: Date, minMonthDiff: number = 2) => {
+      wrappedMonthsRef.current?.scrollToDate(date, minMonthDiff);
     };
 
     const jumpToDate = (date: Date) => {

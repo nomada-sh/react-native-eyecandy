@@ -9,7 +9,7 @@ import Months from './Months';
 
 export interface WrappedMonthsHandle {
   jumpToDate: (date: Date) => void;
-  scrollToDate: (date: Date) => void;
+  scrollToDate: (date: Date, minIndexDiff?: number) => void;
 }
 
 export interface WrappedMonthsProps {
@@ -47,6 +47,7 @@ const WrappedMonths = React.forwardRef<WrappedMonthsHandle, WrappedMonthsProps>(
       );
 
     const startDate = startDateRef.current;
+    const currentIndexRef = useRef(0);
     const [indexOffset, setIndexOffset] = useState(0);
 
     const x = useSharedValue(0);
@@ -97,8 +98,16 @@ const WrappedMonths = React.forwardRef<WrappedMonthsHandle, WrappedMonthsProps>(
 
         setIndexOffset(newIndexOffset);
       },
-      scrollToDate: (date: Date) => {
+      scrollToDate: (date: Date, minIndexDiff?: number) => {
+        currentIndexRef.current = -Math.floor(x.value / wrappedMonthWidth) + 0;
+
+        const currentIndex = currentIndexRef.current;
         const newIndex = monthsDifference(date, startDate) - indexOffset;
+
+        const indexDiff = Math.abs(newIndex - currentIndex);
+        if (minIndexDiff !== undefined && indexDiff > minIndexDiff) return;
+
+        currentIndexRef.current = newIndex;
         const newX = -newIndex * wrappedMonthWidth;
         x.value = withTiming(newX);
       },
