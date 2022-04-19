@@ -13,7 +13,6 @@ export interface DaysProps {
   calculateIndex: (index: number) => number;
   onPress: (date: Date) => void;
   startDate: Date;
-  hidden?: boolean;
 }
 
 function Days({
@@ -26,8 +25,8 @@ function Days({
   calculateIndex,
   onPress,
   startDate,
-  hidden,
 }: DaysProps) {
+  const now = new Date();
   const children: React.ReactNode[] = [];
 
   for (let i = 0; i < daysToShow; i++) {
@@ -45,10 +44,14 @@ function Days({
       value.getMonth() === date.getMonth() &&
       value.getDate() === date.getDate();
 
+    const today =
+      now.getFullYear() === date.getFullYear() &&
+      now.getMonth() === date.getMonth() &&
+      now.getDate() === date.getDate();
+
     children.push(
       <Day
         index={k}
-        hidden={hidden}
         style={{
           width: dayWidth,
           marginHorizontal: dayHorizontalMargin,
@@ -57,6 +60,7 @@ function Days({
         key={i}
         date={date}
         selected={selected}
+        today={today}
         onPress={onPress}
         formatDayLabel={formatDayLabel}
         formatDay={formatDay}

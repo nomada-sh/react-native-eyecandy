@@ -3,6 +3,8 @@ import { useWindowDimensions, View } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
+import Button from '../Button';
+
 import WrappedDays, { WrappedDaysHandle } from './WrappedDays';
 import WrappedMonths, { WrappedMonthsHandle } from './WrappedMonths';
 
@@ -77,6 +79,14 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
       jumpToDay(targetDate);
     };
 
+    const jumpToToday = () => {
+      jumpToDate(new Date());
+    };
+
+    const jumpToSelected = () => {
+      jumpToDate(value);
+    };
+
     useImperativeHandle(ref, () => ({
       jumpToDate,
       scrollToMonth,
@@ -109,6 +119,34 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
           value={value}
           width={width}
         />
+        <View
+          style={{
+            marginTop: 15,
+            flexDirection: 'row',
+          }}
+        >
+          <Button
+            variant="rounded"
+            style={{
+              flex: 1,
+              height: 40,
+              marginHorizontal: 5,
+            }}
+            text="Today"
+            fullwidth={false}
+            onPress={jumpToToday}
+          />
+          <Button
+            variant="rounded"
+            style={{
+              flex: 1,
+              height: 40,
+            }}
+            text="Selected"
+            fullwidth={false}
+            onPress={jumpToSelected}
+          />
+        </View>
       </View>
     );
   },

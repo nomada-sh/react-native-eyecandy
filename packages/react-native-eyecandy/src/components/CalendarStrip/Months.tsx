@@ -12,7 +12,6 @@ import { Body } from '../../typography';
 export interface MonthsProps {
   startDate: Date;
   value?: Date;
-  showSelected?: boolean;
   formatMonthLabel?: (date: Date) => string;
   onPress: (date: Date) => void;
   monthWidth: number;
@@ -29,18 +28,20 @@ const defaultFormatMonthLabel = (date: Date) => {
 function Months({
   startDate,
   value,
-  showSelected = true,
   formatMonthLabel = defaultFormatMonthLabel,
   onPress,
   monthHorizontalMargin,
   monthWidth,
   calculateIndex,
 }: MonthsProps) {
-  const { colors } = useTheme();
+  const { dark, palette, colors } = useTheme();
   const selectedTextColor = colors.input.default.focused.indicator;
   const selectedBackgroundColor = Color(selectedTextColor).alpha(0.1).string();
   const backgroundColor = colors.background.default.container;
+  const todayTextColor = dark ? palette.primary[400] : palette.primary[500];
   const rippleColor = useRippleColor(backgroundColor).string();
+
+  const now = new Date();
 
   const children: React.ReactNode[] = [];
 
@@ -48,10 +49,13 @@ function Months({
     const k = calculateIndex(i);
     const date = new Date(startDate.getFullYear(), startDate.getMonth() + k, 1);
     const selected =
-      showSelected &&
       value !== undefined &&
       value.getFullYear() === date.getFullYear() &&
       value.getMonth() === date.getMonth();
+
+    const today =
+      now.getFullYear() === date.getFullYear() &&
+      now.getMonth() === date.getMonth();
 
     children.push(
       <View
@@ -86,7 +90,13 @@ function Months({
                 marginHorizontal: 6,
               }}
               key={i}
-              customColor={selected ? selectedTextColor : undefined}
+              customColor={
+                selected
+                  ? selectedTextColor
+                  : today
+                  ? todayTextColor
+                  : undefined
+              }
             >
               {formatMonthLabel(date)}
             </Body>

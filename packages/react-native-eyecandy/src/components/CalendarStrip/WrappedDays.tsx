@@ -159,8 +159,8 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
         offset={offsetX}
         calculateExactEndValue={calculateExactX}
         style={{
-          height: 105,
-          justifyContent: 'center',
+          height: 95,
+          justifyContent: 'flex-end',
         }}
         contentContainerStyle={{
           height: 85,

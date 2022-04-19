@@ -15,8 +15,8 @@ export interface DayProps {
   formatDay?: (date: Date) => string;
   date: Date;
   style?: StyleProp<ViewStyle>;
-  hidden?: boolean;
   index: number;
+  today?: boolean;
 }
 
 const defaultFormatDayLabel = (date: Date) => {
@@ -32,18 +32,18 @@ const defaultFormatDay = (date: Date) => {
 };
 
 export default function Day({
-  selected: selectedProp,
+  selected,
   onPress,
   formatDayLabel = defaultFormatDayLabel,
   formatDay = defaultFormatDay,
   date,
   style,
-  hidden,
+  today,
 }: DayProps) {
-  const selected = !hidden && selectedProp;
-  const { colors } = useTheme();
+  const { dark, colors, palette } = useTheme();
   const selectedBackgroundColor = colors.input.default.focused.indicator;
   const backgroundColor = colors.input.default.background;
+  const todayTextColor = dark ? palette.primary[400] : palette.primary[500];
   const rippleColor = useRippleColor(backgroundColor).string();
 
   return (
@@ -77,11 +77,18 @@ export default function Day({
           <Body
             size="xlarge"
             weight="bold"
-            customColor={selected ? 'white' : undefined}
+            customColor={
+              selected ? 'white' : today ? todayTextColor : undefined
+            }
           >
             {formatDay(date)}
           </Body>
-          <Body color="greyout" customColor={selected ? 'white' : undefined}>
+          <Body
+            color="greyout"
+            customColor={
+              selected ? 'white' : today ? todayTextColor : undefined
+            }
+          >
             {formatDayLabel(date)}
           </Body>
         </View>

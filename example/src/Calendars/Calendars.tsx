@@ -15,7 +15,9 @@ export default function Calendars() {
   return (
     <ScrollView>
       <CalendarStrip ref={ref} value={value} onChange={setValue} />
-      <Body>{value.toLocaleDateString()}</Body>
+      <Body weight="bold" size="xlarge">
+        {value.toString()}
+      </Body>
       <Button
         variant="rounded"
         text="Today"
