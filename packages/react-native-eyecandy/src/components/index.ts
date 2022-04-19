@@ -19,9 +19,6 @@ export type { SwitchProps } from './Switch';
 export { default as RadioButton } from './RadioButton';
 export type { RadioButtonProps as CheckProps } from './RadioButton';
 
-export { default as TextInputV1 } from './TextInputV1';
-export type { TextInputProps as TextInputV1Props } from './TextInputV1';
-
 export { default as TextInputErrors } from './TextInputErrors';
 export type { TextInputErrorsProps } from './TextInputErrors';
 
