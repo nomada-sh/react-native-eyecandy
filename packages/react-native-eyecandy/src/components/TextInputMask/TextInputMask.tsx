@@ -14,7 +14,7 @@ export interface TextInputMaskHandle {
 
 export interface TextInputMaskProps
   extends TextInputContainerProps,
-    MaskInputProps {}
+    Omit<MaskInputProps, 'style'> {}
 
 const TextInputMask = React.forwardRef<TextInputMaskHandle, TextInputMaskProps>(
   (props, ref) => {

@@ -8,6 +8,9 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
+import { EyeCheck, EyeOff } from '@nomada-sh/react-native-eyecandy-icons';
+
+import useSecureTextEntry from './useSecureTextEntry';
 import useTextInputTheme, {
   UseThemeInputThemeProps,
 } from './useTextInputTheme';
@@ -26,6 +29,8 @@ interface TextInputProps {
   onFocus?: (e: any) => void;
   onBlur?: (e: any) => void;
   placeholder?: string;
+  secureTextEntry?: boolean;
+  selectionColor?: string;
 }
 
 interface IconProps {
@@ -36,24 +41,30 @@ interface IconProps {
 interface IconTouchableProps {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
-  icon?: React.FC<IconProps>;
+  icon?: React.ComponentType<IconProps> | React.ReactElement<any>;
   color: string;
 }
 
 export interface TextInputContainerProps extends UseThemeInputThemeProps {
+  style?: StyleProp<ViewStyle>;
   styles?: Styles;
   fullWidth?: boolean;
   inputLeft?: React.ReactNode;
   inputRight?: React.ReactNode;
-  iconLeft?: React.FC<IconProps>;
+  iconLeft?: React.ComponentType<IconProps> | React.ReactElement<any>;
   onPressIconLeft?: () => void;
-  iconRight?: React.FC<IconProps>;
+  iconRight?: React.ComponentType<IconProps> | React.ReactElement<any>;
   onPressIconRight?: () => void;
   focusOnLeftIconPress?: boolean;
   focusOnRightIconPress?: boolean;
   inputPaddingLeft?: number;
   inputPaddingRight?: number;
   required?: boolean;
+  marginBottom?: number;
+  marginTop?: number;
+  showSecureTextEntryToggle?: boolean;
+  secureTextEntry?: boolean;
+  onSecureTextEntryChange?: (secureTextEntry: boolean) => void;
 }
 
 const defaultStyles: Styles = {};
@@ -66,16 +77,21 @@ function IconTouchable({
 }: IconTouchableProps) {
   if (!Icon) return null;
 
+  const icon = React.isValidElement(Icon) ? (
+    Icon
+  ) : (
+    <Icon size={20} stroke={color} />
+  );
+
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <View style={[styles.iconContainer, style]}>
-        <Icon size={20} stroke={color} />
-      </View>
+      <View style={[styles.iconContainer, style]}>{icon}</View>
     </TouchableWithoutFeedback>
   );
 }
 
 function TextInputContainer({
+  style,
   fullWidth = true,
   styles: customStyles = defaultStyles,
   children,
@@ -93,6 +109,11 @@ function TextInputContainer({
   inputPaddingLeft: inputPaddingLeftProp,
   inputPaddingRight: inputPaddingRightProp,
   required,
+  marginBottom,
+  marginTop,
+  showSecureTextEntryToggle,
+  secureTextEntry: secureTextEntryProp,
+  onSecureTextEntryChange,
 }: TextInputContainerProps & {
   children?: React.ReactElement<TextInputProps>;
   focus: () => void;
@@ -103,7 +124,8 @@ function TextInputContainer({
   if (inputPaddingLeftProp !== undefined)
     inputPaddingLeft = inputPaddingLeftProp;
 
-  let inputPaddingRight = iconRight ? 0 : inputHorizontalPadding;
+  let inputPaddingRight =
+    iconRight || showSecureTextEntryToggle ? 0 : inputHorizontalPadding;
 
   if (inputPaddingRightProp !== undefined)
     inputPaddingRight = inputPaddingRightProp;
@@ -118,6 +140,8 @@ function TextInputContainer({
       width: fullWidth ? '100%' : undefined,
       backgroundColor: theme.backgroundColor,
       borderColor: theme.borderColor,
+      marginTop,
+      marginBottom,
     },
     input: {
       color: theme.textColor,
@@ -126,6 +150,11 @@ function TextInputContainer({
       paddingRight: inputPaddingRight,
     },
   });
+
+  const { secureTextEntry, onPressSecureTextEntryToggle } = useSecureTextEntry(
+    secureTextEntryProp,
+    onSecureTextEntryChange,
+  );
 
   const injectedChildren = React.Children.map(children, child => {
     if (React.isValidElement(child)) {
@@ -148,6 +177,8 @@ function TextInputContainer({
           if (child.props.onBlur) child.props.onBlur(e);
         },
         placeholder: required ? `${placeholder} *` : placeholder,
+        secureTextEntry,
+        selectionColor: child.props.selectionColor ?? theme.selectionColor,
       });
     }
 
@@ -165,7 +196,7 @@ function TextInputContainer({
   };
 
   return (
-    <View style={[styles.root, dynamicStyles.root, customStyles.root]}>
+    <View style={[styles.root, dynamicStyles.root, customStyles.root, style]}>
       {/* Left Icon */}
       <IconTouchable
         onPress={handlePressIconLeft}
@@ -189,6 +220,16 @@ function TextInputContainer({
         icon={iconRight}
         color={theme.iconColor}
       />
+
+      {/* Secure Text Entry Toggle */}
+      {showSecureTextEntryToggle ? (
+        <IconTouchable
+          onPress={onPressSecureTextEntryToggle}
+          style={[styles.rightIconContainer, customStyles.rightIconContainer]}
+          icon={secureTextEntry ? EyeOff : EyeCheck}
+          color={theme.iconColor}
+        />
+      ) : null}
     </View>
   );
 }

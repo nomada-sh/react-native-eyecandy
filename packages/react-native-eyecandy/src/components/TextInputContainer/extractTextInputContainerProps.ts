@@ -19,6 +19,12 @@ export default function extractTextInputContainerProps<P>(
     inputPaddingLeft,
     inputPaddingRight,
     required,
+    marginBottom,
+    marginTop,
+    showSecureTextEntryToggle,
+    onSecureTextEntryChange,
+    secureTextEntry,
+    style,
     ...inputProps
   } = props;
 
@@ -39,6 +45,12 @@ export default function extractTextInputContainerProps<P>(
       inputPaddingLeft,
       inputPaddingRight,
       required,
+      marginBottom,
+      marginTop,
+      showSecureTextEntryToggle,
+      onSecureTextEntryChange,
+      secureTextEntry,
+      style,
     } as TextInputContainerProps,
     inputProps as P,
   ];

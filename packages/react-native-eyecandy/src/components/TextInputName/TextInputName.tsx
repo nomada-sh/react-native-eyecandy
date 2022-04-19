@@ -7,10 +7,12 @@ import TextInput, { TextInputProps } from '../TextInput';
 function InputName(props: TextInputProps) {
   return (
     <TextInput
+      required
+      iconLeft={User}
+      autoCorrect={false}
       autoCapitalize="none"
-      placeholder="Name"
       autoComplete="name"
-      startIcon={User}
+      placeholder="Name"
       {...props}
     />
   );

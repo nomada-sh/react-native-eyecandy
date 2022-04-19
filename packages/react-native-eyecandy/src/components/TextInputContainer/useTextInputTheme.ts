@@ -12,6 +12,7 @@ export type Theme = {
   textSize: number;
   placeholderTextColor: string;
   iconColor: string;
+  selectionColor: string;
 };
 
 export type UseThemeInputThemeProps = {
@@ -44,6 +45,7 @@ export default function useTextInputTheme({
   const placeholderTextColor = colors.placeholder;
   const borderColor = focused ? colors.focused.indicator : colors.border;
   const iconColor = focused ? borderColor : textColor;
+  const selectionColor = colors.focused.indicator;
 
   return {
     setFocused,
@@ -54,6 +56,7 @@ export default function useTextInputTheme({
       textSize: fontSize.medium,
       placeholderTextColor,
       iconColor,
+      selectionColor,
     },
   };
 }

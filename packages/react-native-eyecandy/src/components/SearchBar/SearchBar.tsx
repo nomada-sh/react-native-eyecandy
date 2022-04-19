@@ -6,14 +6,13 @@ import { Search, Filter } from '@nomada-sh/react-native-eyecandy-icons';
 import Button from '../Button';
 import TextInput, { TextInputProps } from '../TextInput';
 
-export interface SearchInputProps
-  extends Omit<TextInputProps, 'onPressAction'> {
+export interface SearchBarProps extends Omit<TextInputProps, 'onPressAction'> {
   cancelButtonText?: string;
   onPressCancel?: () => void;
-  onPressFilter?: TextInputProps['onPressAction'];
+  onPressFilter?: TextInputProps['onPressIconRight'];
 }
 
-function SearchInput({
+function SearchBar({
   style,
   value,
   cancelButtonText = 'Cancel',
@@ -21,14 +20,16 @@ function SearchInput({
   onPressFilter,
   onFocus,
   onBlur,
+  onChangeText,
   ...props
-}: SearchInputProps) {
+}: SearchBarProps) {
   const [focused, setFocused] = useState(false);
-  const shouldRenderCancelButton = focused && value && value.length > 0;
+  const [cancelButtonVisible, setCancelButtonVisible] = useState(false);
 
   return (
     <View style={[styles.container, style]}>
       <TextInput
+        fullWidth={false}
         onFocus={e => {
           setFocused(true);
           onFocus?.(e);
@@ -37,19 +38,23 @@ function SearchInput({
           setFocused(false);
           onBlur?.(e);
         }}
+        onChangeText={text => {
+          setCancelButtonVisible(text.length > 0);
+          onChangeText?.(text);
+        }}
         value={value}
-        startIcon={Search}
-        endIcon={Filter}
-        onPressAction={onPressFilter}
+        iconLeft={Search}
+        iconRight={Filter}
+        onPressIconRight={onPressFilter}
         style={[
           styles.inputContainer,
           {
-            marginEnd: shouldRenderCancelButton ? 8 : 0,
+            marginEnd: cancelButtonVisible ? 8 : 0,
           },
         ]}
         {...props}
       />
-      {shouldRenderCancelButton ? (
+      {focused && cancelButtonVisible ? (
         <Button
           fullwidth={false}
           color="primary"
@@ -76,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchInput;
+export default SearchBar;

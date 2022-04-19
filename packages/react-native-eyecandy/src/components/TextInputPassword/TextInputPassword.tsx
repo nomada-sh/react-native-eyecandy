@@ -4,19 +4,20 @@ import { Lock } from '@nomada-sh/react-native-eyecandy-icons';
 
 import TextInput, { TextInputProps } from '../TextInput';
 
-function InputPassword(props: TextInputProps) {
+function TextInputPassword(props: TextInputProps) {
   return (
     <TextInput
+      required
+      iconLeft={Lock}
+      autoCorrect={false}
       autoCapitalize="none"
       autoComplete="password"
-      autoCorrect={false}
       placeholder="Password"
       showSecureTextEntryToggle
       secureTextEntry
-      startIcon={Lock}
       {...props}
     />
   );
 }
 
-export default InputPassword;
+export default TextInputPassword;

@@ -4,18 +4,19 @@ import { Mail } from '@nomada-sh/react-native-eyecandy-icons';
 
 import TextInput, { TextInputProps } from '../TextInput';
 
-function InputEmail(props: TextInputProps) {
+function TextInputEmail(props: TextInputProps) {
   return (
     <TextInput
       required
-      autoCapitalize="none"
-      keyboardType="email-address"
+      iconLeft={Mail}
       placeholder="Email"
+      keyboardType="email-address"
+      autoCapitalize="none"
       autoComplete="email"
-      startIcon={Mail}
+      autoCorrect={false}
       {...props}
     />
   );
 }
 
-export default InputEmail;
+export default TextInputEmail;

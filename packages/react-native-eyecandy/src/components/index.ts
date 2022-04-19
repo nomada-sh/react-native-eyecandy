@@ -19,21 +19,34 @@ export type { SwitchProps } from './Switch';
 export { default as RadioButton } from './RadioButton';
 export type { RadioButtonProps as CheckProps } from './RadioButton';
 
-export { default as TextInput } from './TextInput';
-export type { TextInputProps } from './TextInput';
+export { default as TextInputV1 } from './TextInputV1';
+export type { TextInputProps as TextInputV1Props } from './TextInputV1';
 
 export { default as TextInputErrors } from './TextInputErrors';
 export type { TextInputErrorsProps } from './TextInputErrors';
 
-export { default as InputEmail } from './InputEmail';
-export { default as InputPassword } from './InputPassword';
-export { default as InputName } from './InputName';
+export { default as TextInputMask } from './TextInputMask';
+export type { TextInputMaskProps } from './TextInputMask';
+
+export { default as TextInput } from './TextInput';
+export type { TextInputProps } from './TextInput';
+
+export { default as TextInputContainer } from './TextInputContainer';
+export type { TextInputContainerProps } from './TextInputContainer';
+
+export { default as PhoneTextInput } from './PhoneTextInput';
+export type { PhoneTextInputProps } from './PhoneTextInput';
+
+export { default as TextInputEmail } from './TextInputEmail';
+export { default as TextInputPassword } from './TextInputPassword';
+export { default as TextInputName } from './TextInputName';
+export { default as TextInputUsername } from './TextInputUsername';
 
 export { default as CodeInput } from './CodeInput';
 export type { CodeInputProps } from './CodeInput';
 
-export { default as SearchInput } from './SearchInput';
-export type { SearchInputProps } from './SearchInput';
+export { default as SearchBar } from './SearchBar';
+export type { SearchBarProps } from './SearchBar';
 
 export { default as Avatar } from './Avatar';
 export type { AvatarProps } from './Avatar';
@@ -79,18 +92,6 @@ export type { RadioGroupItemProps } from './RadioGroupItem';
 
 export { default as Badge } from './Badge';
 export type { BadgeProps } from './Badge';
-
-export { default as TextInputMask } from './TextInputMask';
-export type { TextInputMaskProps } from './TextInputMask';
-
-export { default as TextInputV2 } from './TextInputV2';
-export type { TextInputV2Props } from './TextInputV2';
-
-export { default as TextInputContainer } from './TextInputContainer';
-export type { TextInputContainerProps } from './TextInputContainer';
-
-export { default as PhoneTextInput } from './PhoneTextInput';
-export type { PhoneTextInputProps } from './PhoneTextInput';
 
 export { default as LineValueSelector } from './LineValueSelector';
 export type { LineValueSelectorProps } from './LineValueSelector';

@@ -6,7 +6,7 @@ import {
   BottomSheet,
   BottomSheetSwipeConfirmation,
   Button,
-  TextInputV2,
+  TextInput,
 } from '@nomada-sh/react-native-eyecandy';
 
 export default function BottomSheets() {
@@ -16,7 +16,7 @@ export default function BottomSheets() {
 
   return (
     <ScrollView>
-      <TextInputV2
+      <TextInput
         defaultValue={`${height}`}
         onChangeText={text => {
           if (text !== '' && !Number.isNaN(Number(text)))
