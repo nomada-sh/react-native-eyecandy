@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 import { Body } from '../../typography';
-import BottomSheet, { BottomSheetProps } from '../BottomSheetV2';
+import BottomSheet, { BottomSheetProps } from '../BottomSheet';
 import SwipeButton from '../SwipeButton';
 
 export interface BottomSheetSwipeConfirmationProps extends BottomSheetProps {

@@ -1,99 +1,105 @@
-import React, { useEffect, useImperativeHandle, useRef } from 'react';
-import { Platform, StyleProp, ViewStyle } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import {
+  Modal,
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 
-import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
+import { useUpdateEffect } from 'react-use';
 
-import RBSheet, { RBSheetProps } from './RBSheet';
+import Content from './Content';
 
-export interface BottomSheetProps extends RBSheetProps {
-  ref?: React.Ref<RBSheet>;
+export interface BottomSheetProps {
   children?: React.ReactNode;
-  style?: StyleProp<ViewStyle>;
   visible?: boolean;
+  height: number;
+  handleHeight?: number;
+  onClose?: () => void;
+  contentStyle?: StyleProp<ViewStyle>;
+  handleStyle?: StyleProp<ViewStyle>;
+  testID?: string;
+  disableAnimations?: boolean;
 }
 
-export type BottomSheetHandle = {
-  open: () => void;
-  close: () => void;
-};
+function BottomSheet({
+  children,
+  visible = false,
+  height,
+  handleHeight = 40,
+  onClose,
+  contentStyle,
+  handleStyle,
+  testID,
+  disableAnimations,
+}: BottomSheetProps) {
+  const [modalVisible, setModalVisible] = useState<boolean | undefined>(
+    visible,
+  );
 
-const DARK_MASK_COLOR = 'rgba(0, 0, 0, 0.75)',
-  LIGHT_MASK_COLOR = 'rgba(0, 0, 0, 0.5)';
+  const setModalInvisible = useCallback(() => {
+    setModalVisible(false);
+  }, []);
 
-const BottomSheet = React.forwardRef<BottomSheetHandle, BottomSheetProps>(
-  ({ style, visible, customStyles, ...props }, forwardedRef?) => {
-    // TODO: Create BottomSheet colors.
-    const { dark, background, divider } = useTheme(t => ({
-      dark: t.dark,
-      background: t.colors.background.default,
-      divider: t.colors.divider.default,
-    }));
+  useUpdateEffect(() => {
+    if (visible) setModalVisible(visible);
+  }, [visible]);
 
-    const ref = useRef<RBSheet>(null);
+  return (
+    <Modal
+      testID={testID ? `${testID}-modal` : undefined}
+      animationType={disableAnimations ? 'none' : 'fade'}
+      visible={modalVisible}
+      statusBarTranslucent
+      transparent
+      onRequestClose={onClose}
+    >
+      <View
+        testID={testID ? `${testID}-container` : undefined}
+        style={styles.container}
+      >
+        <TouchableWithoutFeedback
+          testID={testID ? `${testID}-mask` : undefined}
+          onPress={onClose}
+        >
+          <View style={styles.mask} />
+        </TouchableWithoutFeedback>
+        <View
+          style={{
+            height: height + handleHeight,
+          }}
+          testID={testID ? `${testID}-content-container` : undefined}
+        >
+          <Content
+            disableAnimations={disableAnimations}
+            testID={testID ? `${testID}-content` : undefined}
+            style={contentStyle}
+            handleStyle={handleStyle}
+            handleHeight={handleHeight}
+            height={height}
+            visible={visible}
+            onDismiss={onClose}
+            onClose={setModalInvisible}
+          >
+            {children}
+          </Content>
+        </View>
+      </View>
+    </Modal>
+  );
+}
 
-    useImperativeHandle(forwardedRef, () => ({
-      open: () => ref.current?.open(),
-      close: () => ref.current?.close(),
-    }));
-
-    useEffect(() => {
-      if (visible) {
-        ref.current?.open();
-      } else {
-        ref.current?.close();
-      }
-    }, [visible]);
-
-    return (
-      <RBSheet
-        customStyles={{
-          wrapper: [
-            {
-              backgroundColor: dark ? DARK_MASK_COLOR : LIGHT_MASK_COLOR,
-            },
-            customStyles.wrapper,
-          ],
-          container: [
-            {
-              backgroundColor: background.container,
-              borderTopLeftRadius: 32,
-              borderTopRightRadius: 32,
-              padding: 20,
-              paddingTop: 0,
-            },
-            customStyles.container,
-            style,
-          ],
-          draggableIcon: [
-            {
-              backgroundColor: divider,
-              width: 64,
-              marginBottom: 20,
-            },
-            customStyles.draggableIcon,
-          ],
-        }}
-        {...props}
-        ref={ref}
-      />
-    );
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
-);
-
-BottomSheet.defaultProps = {
-  closeOnDragDown: true,
-  animationType: 'none',
-  height: 260,
-  minClosingHeight: 0,
-  openDuration: 300,
-  closeDuration: 200,
-  dragFromTopOnly: false,
-  closeOnPressMask: true,
-  closeOnPressBack: true,
-  keyboardAvoidingViewEnabled: Platform.OS === 'ios',
-  customStyles: {},
-  onClose: () => {},
-  onOpen: () => {},
-};
+  mask: {
+    flex: 1,
+  },
+});
 
 export default BottomSheet;

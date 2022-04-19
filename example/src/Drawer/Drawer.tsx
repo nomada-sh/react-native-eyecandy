@@ -5,6 +5,7 @@ import { useTheme as useEyecandyTheme } from '@nomada-sh/react-native-eyecandy-t
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Avatars from '../Avatars';
+import BottomSheets from '../BottomSheets';
 import Calendars from '../Calendars';
 import CheckLists from '../CheckLists';
 import LineValueSelectors from '../LineValueSelectors';
@@ -19,7 +20,7 @@ export default function Drawer() {
 
   return (
     <Navigator
-      initialRouteName="Calendars"
+      initialRouteName="BottomSheets"
       screenOptions={{
         headerTintColor: colors.text.default.normal,
         headerRight: () => <Switch value={dark} onValueChange={setDark} />,
@@ -31,6 +32,7 @@ export default function Drawer() {
       <Screen name="CheckLists" component={CheckLists} />
       <Screen name="Calendars" component={Calendars} />
       <Screen name="Avatars" component={Avatars} />
+      <Screen name="BottomSheets" component={BottomSheets} />
     </Navigator>
   );
 }

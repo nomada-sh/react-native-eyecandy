@@ -14,7 +14,7 @@ import {
 import type { Locale } from 'date-fns';
 import en from 'date-fns/locale/en-US';
 
-import BottomSheet from '../BottomSheetV2';
+import BottomSheet from '../BottomSheet';
 import Button from '../Button';
 // TODO: Create Button with input styles.
 import IconButton from '../IconButton';

@@ -59,14 +59,11 @@ export type { MenuItemSwitchProps } from './MenuItemSwitch';
 export { default as Select } from './Select';
 export type { SelectProps, Item as SelectItem } from './Select';
 
-export { default as BottomSheet } from './BottomSheet';
-export type { BottomSheetProps, BottomSheetHandle } from './BottomSheet';
-
 export { default as BottomSheetSwipeConfirmation } from './BottomSheetSwipeConfirmation';
 export type { BottomSheetSwipeConfirmationProps } from './BottomSheetSwipeConfirmation';
 
-export { default as BottomSheetV2 } from './BottomSheetV2';
-export type { BottomSheetProps as BottomSheetPropsV2 } from './BottomSheetV2';
+export { default as BottomSheet } from './BottomSheet';
+export type { BottomSheetProps } from './BottomSheet';
 
 export { default as DatePicker } from './DatePicker';
 export type { DatePickerProps } from './DatePicker';

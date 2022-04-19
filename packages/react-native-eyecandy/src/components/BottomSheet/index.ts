@@ -1,4 +1,2 @@
-import BottomSheet from './BottomSheet';
-
+export { default } from './BottomSheet';
 export * from './BottomSheet';
-export default BottomSheet;
