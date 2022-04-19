@@ -77,18 +77,11 @@ export default function Day({
           <Body
             size="xlarge"
             weight="bold"
-            customColor={
-              selected ? 'white' : today ? todayTextColor : undefined
-            }
+            color={selected ? 'white' : today ? todayTextColor : undefined}
           >
             {formatDay(date)}
           </Body>
-          <Body
-            color="greyout"
-            customColor={
-              selected ? 'white' : today ? todayTextColor : undefined
-            }
-          >
+          <Body color={selected ? 'white' : today ? todayTextColor : 'greyout'}>
             {formatDayLabel(date)}
           </Body>
         </View>

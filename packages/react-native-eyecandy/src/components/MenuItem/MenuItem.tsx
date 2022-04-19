@@ -15,12 +15,7 @@ export interface MenuItemProps extends Omit<BaseMenuItemProps, 'children'> {
 function MenuItem({ textColor, text, hideArrow, ...props }: MenuItemProps) {
   return (
     <BaseMenuItem {...props}>
-      <Body
-        style={styles.text}
-        weight="bold"
-        size="medium"
-        customColor={textColor}
-      >
+      <Body style={styles.text} weight="bold" size="medium" color={textColor}>
         {text}
       </Body>
       {hideArrow ? null : <ChevronRight size={16} color="greyout" />}

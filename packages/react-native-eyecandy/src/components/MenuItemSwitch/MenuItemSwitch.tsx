@@ -22,12 +22,7 @@ function MenuItemSwitch({
 }: MenuItemSwitchProps) {
   return (
     <BaseMenuItem {...props}>
-      <Body
-        style={styles.text}
-        weight="bold"
-        size="medium"
-        customColor={textColor}
-      >
+      <Body style={styles.text} weight="bold" size="medium" color={textColor}>
         {text}
       </Body>
       <Switch value={value} onValueChange={onValueChange} />

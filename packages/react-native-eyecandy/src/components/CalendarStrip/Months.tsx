@@ -90,7 +90,7 @@ function Months({
                 marginHorizontal: 6,
               }}
               key={i}
-              customColor={
+              color={
                 selected
                   ? selectedTextColor
                   : today

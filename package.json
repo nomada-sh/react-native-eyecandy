@@ -25,7 +25,8 @@
     "lint:fix:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons lint:fix",
     "lint:fix:components": "yarn workspace @nomada-sh/react-native-eyecandy lint:fix",
     "lint:fix:example": "yarn workspace example lint:fix",
-    "lint:fix": "yarn lint:fix:theme && yarn lint:fix:icons && yarn lint:fix:components && yarn lint:fix:example"
+    "lint:fix": "yarn lint:fix:theme && yarn lint:fix:icons && yarn lint:fix:components && yarn lint:fix:example",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.16.0",

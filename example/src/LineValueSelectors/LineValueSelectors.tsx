@@ -124,7 +124,7 @@ export default function TextInputs() {
           >
             <Body
               size="xlarge"
-              customColor="white"
+              color="white"
               weight="bold"
               style={{
                 marginBottom: 20,
@@ -132,7 +132,7 @@ export default function TextInputs() {
             >
               Lorem ipsum dolor
             </Body>
-            <Body customColor="white">
+            <Body color="white">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </Body>
           </View>

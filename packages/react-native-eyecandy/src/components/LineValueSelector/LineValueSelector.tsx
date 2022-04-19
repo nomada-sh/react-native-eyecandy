@@ -219,7 +219,7 @@ function LineValueSelector({
       <Body
         key={`numbers-left-${i}`}
         weight="bold"
-        customColor={ticksColor}
+        color={ticksColor}
         style={{
           position: 'absolute',
           width: 50,
@@ -255,7 +255,7 @@ function LineValueSelector({
       <Body
         weight="bold"
         key={`numbers-right-${i}`}
-        customColor={ticksColor}
+        color={ticksColor}
         style={{
           position: 'absolute',
           width: 50,

@@ -12,4 +12,4 @@ export { default as H5 } from './H5';
 export { default as H6 } from './H6';
 
 export { default as Body } from './Body';
-export type { BodyProps as BodyProps } from './Body';
+export type { BodyProps } from './Body';
