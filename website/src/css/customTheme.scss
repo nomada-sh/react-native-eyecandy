@@ -1,0 +1,287 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-code-font-size: 95%;
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+[data-theme='dark'] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Labels */
+
+.label {
+  display: inline-block;
+  position: relative;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+  padding: 2px 12px;
+  border-radius: 0 2px 2px 0;
+
+  /* Label sharp end */
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -12px;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 12px 12px 12px 0;
+  }
+
+  /* Label skeuomorphic hole */
+  &:after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background: #fff;
+  }
+
+  /* Basic label */
+  &.basic {
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 2px;
+
+    &:before,
+    &:after {
+      display: none;
+    }
+  }
+
+  /* Label variants */
+  &.android {
+    background: #a4c936;
+
+    &:before {
+      border-right-color: #a4c936;
+    }
+  }
+
+  &.ios {
+    background: #222;
+
+    &:before {
+      border-right-color: #222;
+    }
+  }
+
+  &.tv {
+    background: #6170af;
+
+    &:before {
+      border-right-color: #6170af;
+    }
+  }
+
+  &.required {
+    margin-left: 0;
+    margin-right: 16px;
+    color: #fa5035;
+    border-color: #fa5035;
+  }
+}
+
+html[data-theme='dark'] .label {
+  color: var(--text);
+
+  &:after {
+    background: var(--ifm-background-color);
+  }
+
+  &.ios {
+    background: #fff;
+
+    &:before {
+      border-right-color: #fff;
+    }
+  }
+
+  &.required {
+    color: #fa5035;
+  }
+}
+
+/* Label inside other tags */
+
+h2 .label {
+  top: -6px;
+  margin-left: 12px;
+  padding: 3px 12px;
+}
+
+h3 .label {
+  top: -3px;
+  margin-left: 22px;
+  line-height: 20px;
+}
+
+td .label {
+  padding: 0 8px 0 10px;
+  font-size: 0.7rem;
+  margin-left: 14px;
+
+  &:before {
+    left: -8px;
+    border-width: 10px 8px 10px 0;
+  }
+
+  &:after {
+    top: 8px;
+  }
+
+  &.required {
+    margin-left: 8px;
+    letter-spacing: 0.02rem;
+    padding: 0 6px;
+    border-width: 1px;
+    margin-right: 0;
+  }
+
+  &.two-lines {
+    margin-left: 0;
+    margin-top: 5px;
+
+    &.ios,
+    &.android,
+    &.tv {
+      margin-left: 8px;
+    }
+  }
+}
+
+/* Label as dot in the right sidebar */
+
+.table-of-contents .label {
+  position: absolute;
+  padding: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  margin-left: 4px;
+  margin-top: 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  color: transparent;
+  float: initial;
+
+  &.required {
+    position: initial;
+    margin-left: 0;
+    margin-right: 6px;
+    border-width: 3px;
+    background: #fa5035;
+  }
+
+  /* Second dot shift */
+  &:nth-child(3) {
+    margin-left: 13px;
+  }
+}
+
+.markdown {
+  table {
+    border-collapse: collapse;
+    display: table;
+    margin: 20px 0;
+    width: 100%;
+
+    thead tr {
+      background-color: var(--divider);
+      border: 0;
+    }
+
+    tr th {
+      text-transform: uppercase;
+      padding: 6px 10px;
+      font-size: 0.7rem;
+      text-align: left;
+    }
+
+    tr td {
+      font-size: 90%;
+      line-height: 1.3em;
+      padding: 10px;
+      text-align: left;
+
+      code {
+        display: inline-block;
+        line-height: 1.2em;
+        vertical-align: top;
+      }
+
+      ul {
+        margin: 8px 0 0 0;
+        padding: 4px 0 4px 20px;
+      }
+    }
+
+    hr {
+      margin: 12px 0;
+    }
+
+    .wideColumn {
+      width: 128px;
+    }
+
+    .widerColumn {
+      width: 180px;
+    }
+
+    .table-heading {
+      font-weight: var(--ifm-table-head-font-weight);
+      border-bottom: 2px solid var(--ifm-table-border-color);
+    }
+
+    div[class^='codeBlockContainer'] {
+      &,
+      & pre {
+        margin-bottom: 0;
+      }
+
+      pre code {
+        padding: 12px 16px;
+        white-space: break-spaces;
+      }
+
+      button {
+        display: none;
+      }
+    }
+  }
+}

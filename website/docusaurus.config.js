@@ -15,7 +15,7 @@ const config = {
   favicon: 'img/favicon.ico',
   organizationName: 'nomada-sh', // Usually your GitHub org/user name.
   projectName: 'react-native-eyecandy', // Usually your repo name.
-
+  plugins: ['docusaurus-plugin-sass'],
   presets: [
     [
       'classic',
@@ -37,7 +37,7 @@ const config = {
             'https://github.com/nomada-sh/react-native-eyecandy/tree/main/website',
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve('./src/css/customTheme.scss'),
         },
       }),
     ],

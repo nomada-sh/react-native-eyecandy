@@ -131,8 +131,9 @@ function Content({
       onGestureEvent={onGestureEvent}
       enabled={!disableAnimations}
     >
-      <Animated.View style={containerStyle} testID={testID}>
+      <Animated.View style={containerStyle}>
         <View
+          testID={testID ? `${testID}-handle` : undefined}
           style={{
             height: handleHeight,
             width: '100%',
@@ -153,6 +154,7 @@ function Content({
           />
         </View>
         <View
+          testID={testID}
           style={[
             {
               flex: 1,

@@ -70,11 +70,10 @@ function BottomSheet({
           style={{
             height: height + handleHeight,
           }}
-          testID={testID ? `${testID}-content-container` : undefined}
         >
           <Content
             disableAnimations={disableAnimations}
-            testID={testID ? `${testID}-content` : undefined}
+            testID={testID}
             style={contentStyle}
             handleStyle={handleStyle}
             handleHeight={handleHeight}
