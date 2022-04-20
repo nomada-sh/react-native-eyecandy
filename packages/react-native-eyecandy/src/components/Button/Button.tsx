@@ -1,23 +1,25 @@
 import React from 'react';
+import { TextStyle, StyleProp } from 'react-native';
 
 import { Body } from '../../typography';
-import BaseButton, { BaseButtonProps } from '../BaseButton';
+import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 
 import useStyles from './useStyles';
 
-export interface ButtonProps extends Omit<BaseButtonProps, 'children'> {
-  text: string;
+export interface ButtonProps extends Omit<ButtonBaseProps, 'children'> {
+  text?: string;
+  textStyle?: StyleProp<TextStyle>;
 }
 
-function Button({ text, color, inverse, ...props }: ButtonProps) {
+function Button({ text, color, inverse, textStyle, ...props }: ButtonProps) {
   const styles = useStyles({ color, inverse });
 
   return (
-    <BaseButton color={color} inverse={inverse} {...props}>
-      <Body weight="bold" size="large" style={styles.text}>
+    <ButtonBase color={color} inverse={inverse} {...props}>
+      <Body weight="bold" size="large" style={[styles.text, textStyle]}>
         {text}
       </Body>
-    </BaseButton>
+    </ButtonBase>
   );
 }
 

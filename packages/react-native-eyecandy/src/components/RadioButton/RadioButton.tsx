@@ -5,20 +5,20 @@ import {
   StyleProp,
   ViewStyle,
   StyleSheet,
+  TouchableWithoutFeedbackProps,
 } from 'react-native';
 
 import { Check } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import Color from 'color';
 
-export interface RadioButtonProps {
+export interface RadioButtonProps extends TouchableWithoutFeedbackProps {
   value?: boolean;
   onValueChange?: (checked: boolean) => void;
   style?: StyleProp<ViewStyle>;
   color?: string;
   size?: number;
   label?: string;
-  disabled?: boolean;
 }
 
 function RadioButton({
@@ -26,7 +26,8 @@ function RadioButton({
   size = 32,
   style,
   onValueChange,
-  disabled,
+  onPress,
+  ...props
 }: RadioButtonProps) {
   const { palette, dark } = useTheme();
 
@@ -37,8 +38,11 @@ function RadioButton({
 
   return (
     <TouchableWithoutFeedback
-      disabled={disabled}
-      onPress={() => onValueChange?.(!value)}
+      onPress={e => {
+        onValueChange?.(!value);
+        onPress?.(e);
+      }}
+      {...props}
     >
       <View
         style={[

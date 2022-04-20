@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 
 import {
@@ -15,13 +14,9 @@ export default function useStyles({
 }) {
   const { background, foreground } = useColors(c => c.button[color]);
 
-  return useMemo(
-    () =>
-      StyleSheet.create({
-        text: {
-          color: inverse ? background : foreground,
-        },
-      }),
-    [inverse, background, foreground],
-  );
+  return StyleSheet.create({
+    text: {
+      color: inverse ? background : foreground,
+    },
+  });
 }

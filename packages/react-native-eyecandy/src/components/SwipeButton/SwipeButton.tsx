@@ -158,7 +158,7 @@ function SwipeButton({
         backgroundColor: colors.background,
       }}
     >
-      <Body testID={`${testID}-title`} customColor="white">
+      <Body testID={`${testID}-title`} color="white">
         {title}
       </Body>
       <Animated.View

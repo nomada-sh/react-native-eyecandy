@@ -1,0 +1,163 @@
+import React, { useImperativeHandle, useRef, useState } from 'react';
+
+import { compareAsc, differenceInMonths } from 'date-fns';
+import { runOnJS, useSharedValue, withTiming } from 'react-native-reanimated';
+
+import WrappedPan from '../WrappedPan';
+
+import Months from './Months';
+
+export interface WrappedMonthsHandle {
+  jumpToDate: (date: Date) => void;
+  scrollToDate: (date: Date, minIndexDiff?: number) => void;
+}
+
+export interface WrappedMonthsProps {
+  value?: Date;
+  formatMonthLabel?: (date: Date) => string;
+  onPress?: (date: Date) => void;
+  startDate: Date;
+}
+
+function monthsDifference(endDate: Date, startDate: Date) {
+  const targetDate = new Date(endDate.getFullYear(), endDate.getMonth(), 1);
+
+  return (
+    compareAsc(targetDate, startDate) *
+    Math.abs(differenceInMonths(targetDate, startDate))
+  );
+}
+
+const WrappedMonths = React.forwardRef<WrappedMonthsHandle, WrappedMonthsProps>(
+  (
+    { value, formatMonthLabel, onPress: onPressProp, startDate: startDateProp },
+    ref,
+  ) => {
+    const startDateRef = useRef(
+      new Date(startDateProp.getFullYear(), startDateProp.getMonth(), 1),
+    );
+    if (
+      startDateProp.getMonth() !== startDateRef.current.getMonth() ||
+      startDateProp.getFullYear() !== startDateRef.current.getFullYear()
+    )
+      startDateRef.current = new Date(
+        startDateProp.getFullYear(),
+        startDateProp.getMonth(),
+        1,
+      );
+
+    const startDate = startDateRef.current;
+    const currentIndexRef = useRef(0);
+    const [indexOffset, setIndexOffset] = useState(0);
+
+    const x = useSharedValue(0);
+
+    const monthWidth = 120;
+    const monthHorizontalMargin = 6;
+
+    const l = 12;
+    const wrappedMonthWidth = monthWidth + 2 * monthHorizontalMargin;
+    const wrappedMonthsWidth = l * wrappedMonthWidth;
+
+    // !!C needs to be an odd number.
+    const C = 3;
+    const L = C * l;
+
+    const [w, setW] = useState(0);
+
+    const H = (w: number) => Math.floor(w / C);
+
+    const onPress = (date: Date) => {
+      if (onPressProp) onPressProp(date);
+    };
+
+    const calculateWraps = (x: number) => {
+      'worklet';
+      return Math.floor(-x / wrappedMonthsWidth) + 0;
+    };
+
+    const calculateExactX = (x: number) => {
+      'worklet';
+      return Math.round(x / wrappedMonthWidth) * wrappedMonthWidth;
+    };
+
+    const onMoving = (x: number) => {
+      'worklet';
+
+      const newWraps = calculateWraps(x);
+      runOnJS(setW)(newWraps);
+    };
+
+    useImperativeHandle(ref, () => ({
+      jumpToDate: (date: Date) => {
+        const jumpToDateIndexOffset =
+          -Math.floor(x.value / wrappedMonthWidth) + 0;
+
+        const newIndexOffset =
+          monthsDifference(date, startDate) - jumpToDateIndexOffset;
+
+        setIndexOffset(newIndexOffset);
+      },
+      scrollToDate: (date: Date, minIndexDiff?: number) => {
+        currentIndexRef.current = -Math.floor(x.value / wrappedMonthWidth) + 0;
+
+        const currentIndex = currentIndexRef.current;
+        const newIndex = monthsDifference(date, startDate) - indexOffset;
+
+        const indexDiff = Math.abs(newIndex - currentIndex);
+        if (minIndexDiff !== undefined && indexDiff > minIndexDiff) return;
+
+        currentIndexRef.current = newIndex;
+        const newX = -newIndex * wrappedMonthWidth;
+        x.value = withTiming(newX);
+      },
+    }));
+
+    const months: React.ReactNode[] = [];
+
+    for (let f = 0; f < C; f++) {
+      const calculateIndex = (index: number) => {
+        const li = f * l;
+        const wi = w - f;
+        const j = li + L * Math.floor((wi - H(wi)) / (C - 1));
+        const k = j + (index % l) + indexOffset;
+        return k;
+      };
+
+      months.push(
+        <Months
+          startDate={startDate}
+          calculateIndex={calculateIndex}
+          monthHorizontalMargin={monthHorizontalMargin}
+          monthWidth={monthWidth}
+          key={f}
+          formatMonthLabel={formatMonthLabel}
+          value={value}
+          onPress={onPress}
+        />,
+      );
+    }
+
+    return (
+      <WrappedPan
+        onMoving={onMoving}
+        style={{
+          height: 55,
+          justifyContent: 'center',
+        }}
+        contentContainerStyle={{
+          height: 35,
+        }}
+        value={x}
+        horizontal
+        width={wrappedMonthsWidth}
+        height={50}
+        calculateExactEndValue={calculateExactX}
+      >
+        {months}
+      </WrappedPan>
+    );
+  },
+);
+
+export default WrappedMonths;

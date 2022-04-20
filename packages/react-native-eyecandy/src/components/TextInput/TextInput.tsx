@@ -1,113 +1,147 @@
-import React from 'react';
-import {
-  TextInput as TextInputBase,
-  View,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import React, { useImperativeHandle, useRef, useState } from 'react';
+import { View, TextInput as RNTextInput } from 'react-native';
 
 import { EyeCheck, EyeOff } from '@nomada-sh/react-native-eyecandy-icons';
 
-import TextInputErrors from '../TextInputErrors';
-
-import type { TextInputProps } from './typings';
+import IconTouchable from './IconTouchable';
+import styles from './styles';
+import { TextInputStyles, TextInputProps, TextInputHandle } from './types';
+import useSecureTextEntry from './useSecureTextEntry';
 import useStyles from './useStyles';
-import useTextInput from './useTextInput';
 
-export default function TextInput({
-  startIcon: StartIcon,
-  endIcon: EndIcon,
-  onPressAction,
-  style,
-  inputStyle,
-  secureTextEntry: secureTextEntryProp,
-  showSecureTextEntryToggle,
-  onSecureTextEntryChange = () => {},
-  color = 'default',
-  value,
-  defaultValue,
-  onFocus: onFocus,
-  onBlur: onBlur,
-  inputRef: inputRefProp,
-  error,
-  errors,
-  required,
-  fullWidth,
-  placeholder: placeholderProp,
-  ...props
-}: TextInputProps) {
-  const {
-    inputRef,
-    focused,
-    handleBlur,
-    handleFocus,
-    onPressIcon,
-    onPressSecureTextEntryToggle,
-    secureTextEntry,
-    hasError,
-    placeholder,
-  } = useTextInput({
-    onBlur,
-    onFocus,
-    onSecureTextEntryChange,
-    secureTextEntry: secureTextEntryProp,
-    inputRef: inputRefProp,
-    error,
-    errors,
-    required,
-    placeholder: placeholderProp,
-  });
+const DEFAULT_CUSTOM_STYLES: TextInputStyles = {};
 
-  const { styles, keyboardAppearance, renderIcon } = useStyles({
-    color,
-    focused,
-    widthPaddingStart: StartIcon === undefined,
-    widthPaddingEnd: !showSecureTextEntryToggle && EndIcon === undefined,
-    value: value ?? defaultValue,
-    hasError,
-    fullWidth,
-  });
+const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
+  (props, ref) => {
+    const inputRef = useRef<RNTextInput>(null);
+    const [focused, setFocused] = useState(false);
 
-  return (
-    <View style={[styles.container, style]}>
-      <View style={styles.inputContainer}>
-        {StartIcon ? (
-          <TouchableWithoutFeedback onPress={() => onPressIcon()}>
-            <View style={styles.iconContainer}>{renderIcon(StartIcon)}</View>
-          </TouchableWithoutFeedback>
-        ) : null}
-        <TextInputBase
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+    const focus = () => {
+      if (inputRef.current) inputRef.current.focus();
+    };
+
+    const blur = () => {
+      if (inputRef.current) inputRef.current.blur();
+    };
+
+    const clear = () => {
+      if (inputRef.current) inputRef.current.clear();
+    };
+
+    const isFocused = () => {
+      if (inputRef.current) return inputRef.current.isFocused();
+      return false;
+    };
+
+    useImperativeHandle(ref, () => ({
+      focus,
+      blur,
+      clear,
+      isFocused,
+    }));
+
+    const {
+      styles: customStyles = DEFAULT_CUSTOM_STYLES,
+      focusOnLeftIconPress = true,
+      placeholder = '',
+      style,
+      onPressIconLeft,
+      onPressIconRight,
+      focusOnRightIconPress,
+      iconLeft,
+      iconRight,
+      inputLeft,
+      inputRight,
+      showSecureTextEntryToggle,
+      required,
+      onFocus,
+      onBlur,
+      ...inputProps
+    } = props;
+
+    const dynamicStyles = useStyles({
+      ...props,
+      removeDefaultLeftPadding: iconLeft !== undefined,
+      removeDefaultRightPadding:
+        iconRight !== undefined || showSecureTextEntryToggle,
+      focused,
+    });
+
+    const { secureTextEntry, onPressSecureTextEntryToggle } =
+      useSecureTextEntry(props);
+
+    const handlePressIconLeft = () => {
+      if (onPressIconLeft) onPressIconLeft();
+      if (focusOnLeftIconPress) focus();
+    };
+
+    const handlePressIconRight = () => {
+      if (onPressIconRight) onPressIconRight();
+      if (focusOnRightIconPress) focus();
+    };
+
+    return (
+      <View
+        style={[
+          styles.container,
+          dynamicStyles.container,
+          customStyles.container,
+          style,
+        ]}
+      >
+        {/* Left Icon */}
+        <IconTouchable
+          onPress={handlePressIconLeft}
+          style={[styles.leftIconContainer, customStyles.leftIconContainer]}
+          icon={iconLeft}
+          color={dynamicStyles.icon.color}
+        />
+
+        {/* Left Component */}
+        {inputLeft}
+
+        <RNTextInput
+          disableFullscreenUI
+          placeholder={required ? `${placeholder} *` : placeholder}
+          selectionColor={dynamicStyles.selection.color}
+          placeholderTextColor={dynamicStyles.placeholder.color}
+          style={[styles.input, dynamicStyles.input, customStyles.input]}
+          {...inputProps}
+          onFocus={e => {
+            setFocused(true);
+            if (onFocus) onFocus(e);
+          }}
+          onBlur={e => {
+            setFocused(false);
+            if (onBlur) onBlur(e);
+          }}
           secureTextEntry={secureTextEntry}
           ref={inputRef}
-          placeholderTextColor={styles.inputPlaceholder.color}
-          placeholder={placeholder}
-          value={value}
-          defaultValue={defaultValue}
-          style={[styles.input, inputStyle]}
-          keyboardAppearance={keyboardAppearance}
-          disableFullscreenUI
-          {...props}
         />
-        {EndIcon ? (
-          <TouchableWithoutFeedback onPress={() => onPressAction?.()}>
-            <View style={styles.iconContainer}>{renderIcon(EndIcon)}</View>
-          </TouchableWithoutFeedback>
-        ) : null}
+
+        {/* Right Component */}
+        {inputRight}
+
+        {/* Right Icon */}
+        <IconTouchable
+          onPress={handlePressIconRight}
+          style={[styles.rightIconContainer, customStyles.rightIconContainer]}
+          icon={iconRight}
+          color={dynamicStyles.icon.color}
+        />
+
+        {/* Secure Text Entry Toggle */}
         {showSecureTextEntryToggle ? (
-          <TouchableWithoutFeedback
-            onPress={() => onPressSecureTextEntryToggle()}
-          >
-            <View style={styles.iconContainer}>
-              {renderIcon(
-                secureTextEntry ? EyeOff : EyeCheck,
-                styles.inputPlaceholder.color,
-              )}
-            </View>
-          </TouchableWithoutFeedback>
+          <IconTouchable
+            onPress={onPressSecureTextEntryToggle}
+            style={[styles.rightIconContainer, customStyles.rightIconContainer]}
+            icon={secureTextEntry ? EyeOff : EyeCheck}
+            color={dynamicStyles.icon.color}
+          />
         ) : null}
       </View>
-      <TextInputErrors error={error} errors={errors} />
-    </View>
-  );
-}
+    );
+  },
+);
+
+export default TextInput;

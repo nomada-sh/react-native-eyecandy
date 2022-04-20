@@ -14,7 +14,7 @@ const getButtonColors: GetThemeColors<ThemeBackgroundColors> = options => {
 
   return mergeColors({
     ...options,
-    defaultColors: defaultColors,
+    defaultColors,
   });
 };
 

@@ -6,17 +6,19 @@ import {
 } from 'react-native';
 
 import {
-  useColors,
   ThemeTextColorsChoices,
+  useTheme,
 } from '@nomada-sh/react-native-eyecandy-theme';
+import Color from 'color';
+
+import { isThemeTextColorsChoices } from '../../utils';
 
 export interface TextProps extends TextBaseProps {
   weight?: TextStyle['fontWeight'] | 'semibold' | 'medium' | 'regular';
   size?: TextStyle['fontSize'];
   align?: TextStyle['textAlign'];
   contrast?: boolean;
-  color?: ThemeTextColorsChoices;
-  customColor?: string;
+  color?: ThemeTextColorsChoices | string;
 }
 
 function Text({
@@ -25,20 +27,19 @@ function Text({
   size = 14,
   contrast = false,
   color = 'default',
-  customColor,
   align,
   ...props
 }: TextProps) {
-  const colors = useColors(c => c.text[color]);
+  const { colors } = useTheme();
 
-  let textColor: string = colors.normal;
+  let textColor: string = isThemeTextColorsChoices(color)
+    ? colors.text[color].normal
+    : color;
 
-  if (customColor) {
-    textColor = customColor;
-  }
-  if (contrast) {
-    textColor = colors.contrast;
-  }
+  if (contrast)
+    textColor = isThemeTextColorsChoices(color)
+      ? colors.text[color].contrast
+      : Color(color).negate().string();
 
   let fontWeight: TextStyle['fontWeight'];
 

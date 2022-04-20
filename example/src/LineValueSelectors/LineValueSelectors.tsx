@@ -4,7 +4,7 @@ import { View, ScrollView, useWindowDimensions } from 'react-native';
 import {
   Body,
   Button,
-  TextInputV2,
+  TextInput,
   LineValueSelector,
   useLineValueSelector,
 } from '@nomada-sh/react-native-eyecandy';
@@ -38,19 +38,19 @@ export default function TextInputs() {
       }}
     >
       <View>
-        <TextInputV2
+        <TextInput
           defaultValue={String(min)}
           onChangeText={text => {
             if (!Number.isNaN(Number(text))) setMin(Number(text));
           }}
         />
-        <TextInputV2
+        <TextInput
           defaultValue={String(max)}
           onChangeText={text => {
             if (!Number.isNaN(Number(text))) setMax(Number(text));
           }}
         />
-        <TextInputV2
+        <TextInput
           defaultValue={String(increment)}
           onChangeText={text => {
             if (!Number.isNaN(Number(text))) setIncrement(Number(text));
@@ -124,7 +124,7 @@ export default function TextInputs() {
           >
             <Body
               size="xlarge"
-              customColor="white"
+              color="white"
               weight="bold"
               style={{
                 marginBottom: 20,
@@ -132,7 +132,7 @@ export default function TextInputs() {
             >
               Lorem ipsum dolor
             </Body>
-            <Body customColor="white">
+            <Body color="white">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </Body>
           </View>

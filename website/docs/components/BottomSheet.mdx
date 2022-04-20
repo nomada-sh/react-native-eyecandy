@@ -1,0 +1,92 @@
+---
+id: bottomsheet
+title: BottomSheet
+---
+
+## Import
+
+```jsx
+import { BottomSheet } from '@nomada-sh/react-native-eyecandy';
+```
+
+## Example
+
+## Props
+
+### <div class="label required basic">Required</div>**`height`**
+
+Height of the bottom sheet.
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `handleHeight`
+
+Height of the bottom sheet handle.
+
+| Type   | Default |
+| ------ | ------- |
+| number | `40`    |
+
+---
+
+### `visible`
+
+If `true`, the bottom sheet is visible.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `onClose`
+
+Callback function to be called when the bottom sheet is closed.
+
+| Type     |
+| -------- |
+| function |
+
+---
+
+### `contentStyle`
+
+These styles will be applied to the bottom sheet content view.
+
+| Type       |
+| ---------- |
+| View Style |
+
+---
+
+### `handleStyle`
+
+These styles will be applied to the bottom sheet handle view.
+
+| Type       |
+| ---------- |
+| View Style |
+
+---
+
+### `disableAnimations`
+
+Disable opening and closing animations, useful for testing.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `testID`
+
+Used to locate bottom sheet views in end-to-end tests.
+
+| Type   |
+| ------ |
+| string |

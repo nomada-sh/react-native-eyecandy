@@ -14,7 +14,7 @@ const getSwitchColors: GetThemeColors<ThemeSwitchColors> = options => {
 
   return mergeColors({
     ...options,
-    defaultColors: defaultColors,
+    defaultColors,
   });
 };
 
