@@ -49,6 +49,7 @@ export interface TextInputContainerProps extends UseThemeInputThemeProps {
   style?: StyleProp<ViewStyle>;
   styles?: Styles;
   fullWidth?: boolean;
+  height?: number;
   inputLeft?: React.ReactNode;
   inputRight?: React.ReactNode;
   iconLeft?: React.ComponentType<IconProps> | React.ReactElement<any>;
@@ -92,28 +93,29 @@ function IconTouchable({
 
 function TextInputContainer({
   style,
-  fullWidth = true,
   styles: customStyles = defaultStyles,
-  children,
-  inputLeft,
-  inputRight,
+  fullWidth = true,
+  color,
+  error: withError,
+  height = 56,
   iconLeft,
   onPressIconLeft,
   iconRight,
   onPressIconRight,
-  color,
-  error: withError,
-  focus,
   focusOnLeftIconPress = true,
-  focusOnRightIconPress,
+  focusOnRightIconPress = false,
+  required,
+  inputLeft,
+  inputRight,
   inputPaddingLeft: inputPaddingLeftProp,
   inputPaddingRight: inputPaddingRightProp,
-  required,
   marginBottom,
   marginTop,
   showSecureTextEntryToggle,
   secureTextEntry: secureTextEntryProp,
   onSecureTextEntryChange,
+  focus,
+  children,
 }: TextInputContainerProps & {
   children?: React.ReactElement<TextInputProps>;
   focus: () => void;
@@ -142,6 +144,7 @@ function TextInputContainer({
       borderColor: theme.borderColor,
       marginTop,
       marginBottom,
+      height,
     },
     input: {
       color: theme.textColor,
@@ -196,7 +199,7 @@ function TextInputContainer({
   };
 
   return (
-    <View style={[styles.root, dynamicStyles.root, customStyles.root, style]}>
+    <View style={[styles.root, dynamicStyles.root, style, customStyles.root]}>
       {/* Left Icon */}
       <IconTouchable
         onPress={handlePressIconLeft}
@@ -236,7 +239,6 @@ function TextInputContainer({
 
 const styles = StyleSheet.create({
   root: {
-    height: 56,
     borderWidth: 1,
     borderRadius: 12,
     overflow: 'hidden',

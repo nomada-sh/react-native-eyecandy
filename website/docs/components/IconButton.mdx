@@ -21,33 +21,9 @@ Inherits [BaseButton Props](buttonbase#props)
 
 ### `icon`
 
-Component to render as icon, can be a React Component (e.g. `Icon`), or a React Element (e.g. `<Icon />`).
-
-When passing a React Component:
-
-```jsx
-<IconButton icon={Plus} />
-```
-
-or
-
-```jsx
-<IconButton
-  icon={({ size, color, style }) => (
-    <Plus size={size} stroke={stroke} style={style} {...otherProps} />
-  )}
-/>
-```
-
-and when passing a React Element:
-
-```jsx
-<IconButton icon={<Plus size={32} {...otherProps} />} />
-```
-
-| Type               |
-| ------------------ |
-| component, element |
+| Type                      |
+| ------------------------- |
+| [Icon](../props/iconprops) |
 
 ---
 
