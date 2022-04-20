@@ -13,7 +13,7 @@ import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import { useRippleColor } from '../../hooks';
 import IconButton, { IconButtonProps } from '../IconButton';
 
-export interface BaseMenuItemProps {
+export interface MenuItemBaseProps {
   style?: StyleProp<ViewStyle>;
   icon?: IconButtonProps['icon'];
   iconColor?: string;
@@ -24,7 +24,7 @@ export interface BaseMenuItemProps {
   testID?: string;
 }
 
-function BaseMenuItem({
+function MenuItemBase({
   style,
   icon,
   iconColor,
@@ -33,7 +33,7 @@ function BaseMenuItem({
   onPress: onPressProp,
   children,
   testID,
-}: BaseMenuItemProps) {
+}: MenuItemBaseProps) {
   const { background, divider } = useColors(c => ({
     background: c.background.default,
     divider: c.divider.default,
@@ -115,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BaseMenuItem;
+export default MenuItemBase;
