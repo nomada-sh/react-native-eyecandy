@@ -6,7 +6,8 @@ import { Search, Filter } from '@nomada-sh/react-native-eyecandy-icons';
 import Button from '../Button';
 import TextInput, { TextInputProps } from '../TextInput';
 
-export interface SearchBarProps extends Omit<TextInputProps, 'onPressAction'> {
+export interface SearchBarProps
+  extends Omit<TextInputProps, 'onPressIconRight'> {
   cancelButtonText?: string;
   onPressCancel?: () => void;
   onPressFilter?: TextInputProps['onPressIconRight'];
