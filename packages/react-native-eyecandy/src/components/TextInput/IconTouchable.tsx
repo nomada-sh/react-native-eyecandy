@@ -6,12 +6,12 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { TextInputIconProps } from './types';
+import { IconProps } from '@nomada-sh/react-native-eyecandy-icons';
 
 export interface IconTouchableProps {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
-  icon?: React.ComponentType<TextInputIconProps> | React.ReactElement<any>;
+  icon?: React.ComponentType<IconProps> | React.ReactElement<any>;
   color: string;
 }
 

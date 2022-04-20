@@ -1,21 +1,25 @@
 ---
-id: textinputcontainer
-title: TextInputContainer
+id: textinput
+title: TextInput
 ---
 
 ## Import
 
 ```jsx
-import { TextInputContainer } from '@nomada-sh/react-native-eyecandy';
+import { TextInput } from '@nomada-sh/react-native-eyecandy';
 ```
 
 ## Example
 
 ## Props
 
+### [TextInput Props](https://reactnative.dev/docs/textinput#props)
+
+Inherits [TextInput Props](https://reactnative.dev/docs/textinput#props).
+
 ### `style`
 
-These styles will be applied to the root view.
+These styles will be applied to the input container view.
 
 | Type       |
 | ---------- |
@@ -33,7 +37,7 @@ These styles will be applied to the root view.
 
 | Name                 | Type       | Required | Description                                                    |
 | -------------------- | ---------- | -------- | -------------------------------------------------------------- |
-| `root`               | View Style | No       | These styles will be applied to the root view.                 |
+| `container`          | View Style | No       | These styles will be applied to the input container view.      |
 | `input`              | Text Style | No       | These styles will be applied to the input view.                |
 | `iconContainer`      | View Style | No       | These styles will be applied to the icon container view.       |
 | `leftIconContainer`  | View Style | No       | These styles will be applied to the left icon container view.  |
@@ -85,9 +89,9 @@ This defines the height of the input.
 
 Renders an icon on the left side of the input.
 
-| Type                      |
-| ------------------------- |
-| [Icon](../props/iconprops) |
+| Type             |
+| ---------------- |
+| [Icon](../icons) |
 
 ---
 
@@ -115,9 +119,9 @@ If `true`, the input will be focused when the left icon is pressed.
 
 Render an icon on the right side of the input.
 
-| Type                      |
-| ------------------------- |
-| [Icon](../props/iconprops) |
+| Type             |
+| ---------------- |
+| [Icon](../icons) |
 
 ---
 
@@ -138,3 +142,117 @@ If `true`, the input will be focused when the right icon is pressed.
 | Type    | Default |
 | ------- | ------- |
 | boolean | `false` |
+
+---
+
+### `inputLeft`
+
+Renders any React Node on the left side of the input (after [`iconLeft`](#iconleft)).
+
+| Type |
+| ---- |
+| node |
+
+---
+
+### `inputRight`
+
+Renders any React Node on the right side of the input (before [`iconRight`](#iconright)).
+
+| Type |
+| ---- |
+| node |
+
+---
+
+### `required`
+
+If `true`, adds an asterisk to end of the input placeholder.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `inputPaddingLeft`
+
+Left input padding, overrides the default padding.
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `inputPaddingRight`
+
+Right input padding, overrides the default padding.
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `inputDefaultHorizontalPadding`
+
+Default horizontal input padding used when no icons are present.
+
+| Type   | Default |
+| ------ | ------- |
+| number | `16`    |
+
+---
+
+### `marginTop`
+
+Top margin applied to the input container view.
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `marginBottom`
+
+Bottom margin applied to the input container view.
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `showSecureTextEntryToggle`
+
+If `true`, a toggle button will be rendered on the right side of the input (after [`rightIcon`](#righticon)). Used to toggle between secure and non-secure text entry.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `secureTextEntry`
+
+If `true`, the input will be in secure text entry mode.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `onSecureTextEntryChange`
+
+```js
+onSecureTextEntryChange(secureTextEntry: boolean);
+```
+
+Callback function that is called when the secure text entry toggle icon is pressed.
+
+| Type     |
+| -------- |
+| function |

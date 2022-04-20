@@ -1,21 +1,18 @@
 import React from 'react';
-import { StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle } from 'react-native';
 
-import { ChevronRight } from '@nomada-sh/react-native-eyecandy-icons';
+import {
+  ChevronRight,
+  IconProps,
+} from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme, useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
 import { usePressableStyles } from '../../hooks';
 import { Body } from '../../typography';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 
-interface IconProps {
-  size?: number;
-  stroke?: string;
-  style?: StyleProp<ViewStyle>;
-}
-
 export interface LinkButtonProps extends ButtonBaseProps {
-  icon?: React.ComponentType<IconProps> | React.ReactElement<IconProps>;
+  icon?: React.ComponentType<IconProps> | React.ReactElement<any>;
   text: string;
   showChevronRight?: boolean;
   bold?: boolean;

@@ -1,31 +1,34 @@
 import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 
 import {
   useColors,
   ThemeTextColorsChoices,
 } from '@nomada-sh/react-native-eyecandy-theme';
-import Svg, { SvgProps } from 'react-native-svg';
+import Svg from 'react-native-svg';
 
-export interface IconProps extends Omit<SvgProps, 'color'> {
+export interface IconProps {
   size?: number;
   color?: ThemeTextColorsChoices;
   filled?: boolean;
-  // TODO: Verify that this is the correct type.
+  stroke?: string;
+  fill?: string;
   children?: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
 export default function Icon({
   size = 24,
-  stroke: strokeProp,
-  fill: fillProp,
   color = 'default',
+  stroke,
+  fill,
   filled,
   ...props
 }: IconProps) {
   const colors = useColors(c => c.text);
 
-  const stroke = strokeProp || colors[color].normal;
-  const fill = fillProp || (filled ? stroke : undefined);
+  const s = stroke ?? colors[color].normal;
+  const f = fill ?? (filled ? s : undefined);
 
   return (
     <Svg
@@ -34,8 +37,8 @@ export default function Icon({
       width={size}
       height={size}
       fill="none"
-      stroke={stroke}
-      color={fill}
+      stroke={s}
+      color={f}
       {...props}
     />
   );

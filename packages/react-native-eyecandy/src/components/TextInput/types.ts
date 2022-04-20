@@ -5,12 +5,8 @@ import {
   TextInputProps as RNTextInputProps,
 } from 'react-native';
 
+import { IconProps } from '@nomada-sh/react-native-eyecandy-icons';
 import { ThemeInputColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
-
-export interface TextInputIconProps {
-  size: number;
-  stroke: string;
-}
 
 export type TextInputStyles = {
   container?: StyleProp<ViewStyle>;
@@ -43,9 +39,9 @@ export interface TextInputBaseProps
     TextInputSecureTextEntryProps {
   style?: StyleProp<ViewStyle>;
   styles?: TextInputStyles;
-  iconLeft?: React.ComponentType<TextInputIconProps> | React.ReactElement<any>;
+  iconLeft?: React.ComponentType<IconProps> | React.ReactElement<any>;
   onPressIconLeft?: () => void;
-  iconRight?: React.ComponentType<TextInputIconProps> | React.ReactElement<any>;
+  iconRight?: React.ComponentType<IconProps> | React.ReactElement<any>;
   onPressIconRight?: () => void;
   focusOnLeftIconPress?: boolean;
   focusOnRightIconPress?: boolean;

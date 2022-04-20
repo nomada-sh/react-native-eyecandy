@@ -1,3 +1,6 @@
+export { default as Icon } from './Icon';
+export { IconProps } from './Icon';
+
 export { default as Lock } from './Lock';
 export { default as Edit } from './Edit';
 export { default as Camera } from './Camera';
