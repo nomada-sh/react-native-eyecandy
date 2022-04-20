@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   StyleProp,
   StyleSheet,
   View,
   ViewStyle,
   Keyboard,
-  TextInput as TextInputBase,
+  TextInput as RNTextInput,
 } from 'react-native';
 
 import Cell from './Cell';
@@ -16,42 +16,42 @@ export interface CodeInputProps {
   length: number;
   style?: StyleProp<ViewStyle>;
   size?: number;
+  marginBottom?: number;
+  marginTop?: number;
 }
 
 function CodeInput({
-  onFinish,
   dimissKeyboardOnFinish = true,
+  onFinish,
   length,
   style,
   size,
+  marginBottom,
+  marginTop,
 }: CodeInputProps) {
-  const inputRef = useRef<TextInputBase | null>(null);
+  const inputRef = useRef<RNTextInput | null>(null);
   const [code, setCode] = useState('');
   const [focused, setFocused] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(0);
-  const finished = useMemo(() => code.length === length, [code, length]);
+  const finished = code.length === length;
 
-  const cells = useMemo(() => {
-    const newCells = [];
+  const cells = [];
 
-    for (let i = 0; i < length; i++) {
-      newCells.push(
-        <Cell
-          key={i}
-          index={i}
-          value={code[i]}
-          size={size}
-          onPress={index => {
-            inputRef.current?.focus();
-            setCode(code.substring(0, index));
-          }}
-          focused={focused && focusedIndex === i}
-        />,
-      );
-    }
-
-    return newCells;
-  }, [length, code, size, focused, focusedIndex]);
+  for (let i = 0; i < length; i++) {
+    cells.push(
+      <Cell
+        key={i}
+        index={i}
+        value={code[i]}
+        size={size}
+        onPress={index => {
+          inputRef.current?.focus();
+          setCode(code.substring(0, index));
+        }}
+        focused={focused && focusedIndex === i}
+      />,
+    );
+  }
 
   useEffect(() => {
     setCode('');
@@ -83,9 +83,18 @@ function CodeInput({
   }, [focused]);
 
   return (
-    <View style={[styles.container, style]}>
+    <View
+      style={[
+        styles.container,
+        {
+          marginBottom,
+          marginTop,
+        },
+        style,
+      ]}
+    >
       {cells}
-      <TextInputBase
+      <RNTextInput
         keyboardType="numeric"
         ref={inputRef}
         autoCorrect={false}
@@ -94,9 +103,7 @@ function CodeInput({
         maxLength={length + 1}
         value={code}
         onChangeText={text => {
-          if (!/^\d*$/.test(text)) {
-            return;
-          }
+          if (!/^\d*$/.test(text)) return;
 
           const newCode = text.substring(
             0,
