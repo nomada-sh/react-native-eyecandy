@@ -2237,6 +2237,23 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@nomada-sh/react-native-eyecandy@^2.1.10":
+  version "2.1.18"
+  resolved "https://registry.yarnpkg.com/@nomada-sh/react-native-eyecandy/-/react-native-eyecandy-2.1.18.tgz#c008c47648990fee6ba458a4e0f4566924f6d932"
+  integrity sha512-vtHloUQQGfzOHljfRRJlmryZGdixhq5dnEjm1Um9V0rjJ2Uig0M16wpXk8Y6ReONt1RF8jFz19u1xlcS9RNRbg==
+  dependencies:
+    "@nomada-sh/react-native-eyecandy-icons" "^1.0.5"
+    "@nomada-sh/react-native-eyecandy-theme" "^1.0.3"
+    calendar-base "^1.1.1"
+    color "^4.2.0"
+    date-fns "^2.28.0"
+    react-native-country-picker-modal "^2.0.0"
+    react-native-mask-input "^1.2.0"
+    react-native-picker-select "^8.0.4"
+    react-native-redash "^16.2.3"
+    react-use "^17.3.2"
+    rn-swipe-button "^1.3.6"
+
 "@polka/url@^1.0.0-next.20":
   version "1.0.0-next.21"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
@@ -3616,9 +3633,9 @@ async-limiter@~1.0.0:
   integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
 
 async@^2.4.0, async@^2.6.2:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/async/-/async-2.6.3.tgz#d72625e2344a3656e3a3ad4fa749fa83299d82ff"
-  integrity sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
+  version "2.6.4"
+  resolved "https://registry.yarnpkg.com/async/-/async-2.6.4.tgz#706b7ff6084664cd7eae713f6f965433b5504221"
+  integrity sha512-mzo5dfJYwAn29PeiJ0zvwTo04zj8HDJj0Mn8TD7sno7q12prdbnasKJHhkm2c1LgrhlJ0teaea8860oxi51mGA==
   dependencies:
     lodash "^4.17.14"
 
