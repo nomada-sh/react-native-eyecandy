@@ -1,0 +1,258 @@
+---
+id: maskedtextinput
+title: MaskedTextInput
+---
+
+## Import
+
+```jsx
+import { MaskedTextInput } from '@nomada-sh/react-native-eyecandy';
+```
+
+## Example
+
+## Props
+
+### [MaskInput Props](https://github.com/CaioQuirinoMedeiros/react-native-mask-input#props)
+
+Inherits [MaskInput Props](https://github.com/CaioQuirinoMedeiros/react-native-mask-input#props).
+
+### `style`
+
+These styles will be applied to the input container view.
+
+| Type       |
+| ---------- |
+| View Style |
+
+---
+
+### `styles`
+
+| Type   |
+| ------ |
+| object |
+
+#### Properties
+
+| Name                 | Type       | Required | Description                                                    |
+| -------------------- | ---------- | -------- | -------------------------------------------------------------- |
+| `container`          | View Style | No       | These styles will be applied to the input container view.      |
+| `input`              | Text Style | No       | These styles will be applied to the input view.                |
+| `iconContainer`      | View Style | No       | These styles will be applied to the icon container view.       |
+| `leftIconContainer`  | View Style | No       | These styles will be applied to the left icon container view.  |
+| `rightIconContainer` | View Style | No       | These styles will be applied to the right icon container view. |
+
+---
+
+### `fullWidth`
+
+If set to `true`, the input will expand to fill the width of its parent.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `true`  |
+
+---
+
+### `color`
+
+This defines the theme colors of the input. The colors will change based on the theme (dark or light) if set to `'default'`.
+
+| Type                     | Default     |
+| ------------------------ | ----------- |
+| `'default'` or `'error'` | `'default'` |
+
+---
+
+### `error`
+
+If `true`, the input will be in an error state.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `height`
+
+This defines the height of the input.
+
+| Type   | Default |
+| ------ | ------- |
+| number | `56`    |
+
+---
+
+### `iconLeft`
+
+Renders an icon on the left side of the input.
+
+| Type             |
+| ---------------- |
+| [Icon](../icons) |
+
+---
+
+### `onPressIconLeft`
+
+Callback function that is called when the left icon is pressed.
+
+| Type     |
+| -------- |
+| function |
+
+---
+
+### `focusOnLeftIconPress`
+
+If `true`, the input will be focused when the left icon is pressed.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `true`  |
+
+---
+
+### `iconRight`
+
+Render an icon on the right side of the input.
+
+| Type             |
+| ---------------- |
+| [Icon](../icons) |
+
+---
+
+### `onPressIconRight`
+
+Callback function that is called when the right icon is pressed.
+
+| Type     |
+| -------- |
+| function |
+
+---
+
+### `focusOnRightIconPress`
+
+If `true`, the input will be focused when the right icon is pressed.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `inputLeft`
+
+Renders any React Node on the left side of the input (after [`iconLeft`](#iconleft)).
+
+| Type |
+| ---- |
+| node |
+
+---
+
+### `inputRight`
+
+Renders any React Node on the right side of the input (before [`iconRight`](#iconright)).
+
+| Type |
+| ---- |
+| node |
+
+---
+
+### `required`
+
+If `true`, adds an asterisk to end of the input placeholder.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `inputPaddingLeft`
+
+Left input padding, overrides the default padding.
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `inputPaddingRight`
+
+Right input padding, overrides the default padding.
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `inputDefaultHorizontalPadding`
+
+Default horizontal input padding used when no icons are present.
+
+| Type   | Default |
+| ------ | ------- |
+| number | `16`    |
+
+---
+
+### `marginTop`
+
+Top margin applied to the input container view.
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `marginBottom`
+
+Bottom margin applied to the input container view.
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `showSecureTextEntryToggle`
+
+If `true`, a toggle button will be rendered on the right side of the input (after [`rightIcon`](#righticon)). Used to toggle between secure and non-secure text entry.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `secureTextEntry`
+
+If `true`, the input will be in secure text entry mode.
+
+| Type    | Default |
+| ------- | ------- |
+| boolean | `false` |
+
+---
+
+### `onSecureTextEntryChange`
+
+```js
+onSecureTextEntryChange(secureTextEntry: boolean);
+```
+
+Callback function that is called when the secure text entry toggle icon is pressed.
+
+| Type     |
+| -------- |
+| function |

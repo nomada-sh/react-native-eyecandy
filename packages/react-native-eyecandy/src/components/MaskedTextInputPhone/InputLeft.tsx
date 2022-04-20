@@ -9,15 +9,10 @@ import CountryPicker, {
   DARK_THEME,
   DEFAULT_THEME,
 } from 'react-native-country-picker-modal';
-import { Masks } from 'react-native-mask-input';
 
 import { Body } from '../../typography';
-import TextInputMask, {
-  TextInputMaskHandle,
-  TextInputMaskProps,
-} from '../TextInputMask';
 
-interface InputLeftProps {
+export interface InputLeftProps {
   onChange: (country: Country) => void;
   countryCode: CountryCode;
   callingCode?: string;
@@ -72,47 +67,4 @@ const InputLeft = ({ onChange, countryCode, callingCode }: InputLeftProps) => {
   );
 };
 
-export interface TextInputPropsPhone extends TextInputMaskProps {
-  callingCode?: string;
-  countryCode: CountryCode;
-  onCountryChange: (country: Country) => void;
-}
-
-const TextInputPhone = React.forwardRef<
-  TextInputMaskHandle,
-  TextInputPropsPhone
->(
-  (
-    {
-      mask = Masks.BRL_PHONE,
-      placeholder = '(___) ___ __ __',
-      keyboardType = 'phone-pad',
-      callingCode,
-      countryCode,
-      onCountryChange,
-      ...props
-    },
-    ref,
-  ) => {
-    return (
-      <TextInputMask
-        inputLeft={
-          <InputLeft
-            callingCode={callingCode}
-            countryCode={countryCode}
-            onChange={onCountryChange}
-          />
-        }
-        inputPaddingLeft={0}
-        maxLength={mask.length}
-        mask={mask}
-        placeholder={placeholder}
-        keyboardType={keyboardType}
-        {...props}
-        ref={ref}
-      />
-    );
-  },
-);
-
-export default TextInputPhone;
+export default InputLeft;

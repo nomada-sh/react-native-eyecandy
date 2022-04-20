@@ -2,8 +2,8 @@ import { MaskInputProps } from 'react-native-mask-input';
 
 import { TextInputBaseProps, TextInputHandle } from '../TextInput';
 
-export interface TextInputMaskHandle extends TextInputHandle {}
+export interface MaskedTextInputHandle extends TextInputHandle {}
 
-export interface TextInputMaskProps
+export interface MaskedTextInputProps
   extends TextInputBaseProps,
     Omit<MaskInputProps, 'style'> {}

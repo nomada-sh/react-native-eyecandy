@@ -22,19 +22,19 @@ export type { RadioButtonProps as CheckProps } from './RadioButton';
 export { default as TextInputErrors } from './TextInputErrors';
 export type { TextInputErrorsProps } from './TextInputErrors';
 
-export { default as TextInputMask } from './TextInputMask';
-export type { TextInputMaskProps } from './TextInputMask';
-
 export { default as TextInput } from './TextInput';
 export type { TextInputProps } from './TextInput';
-
-export { default as TextInputPhone } from './TextInputPhone';
-export type { TextInputPropsPhone } from './TextInputPhone';
 
 export { default as TextInputEmail } from './TextInputEmail';
 export { default as TextInputPassword } from './TextInputPassword';
 export { default as TextInputName } from './TextInputName';
 export { default as TextInputUsername } from './TextInputUsername';
+
+export { default as MaskedTextInput } from './MaskedTextInput';
+export type { MaskedTextInputProps } from './MaskedTextInput';
+
+export { default as MaskedTextInputPhone } from './MaskedTextInputPhone';
+export type { MaskedTextInputPropsPhone } from './MaskedTextInputPhone';
 
 export { default as CodeInput } from './CodeInput';
 export type { CodeInputProps } from './CodeInput';
