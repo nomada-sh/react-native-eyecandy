@@ -14,17 +14,16 @@ import Color from 'color';
 
 export interface RadioButtonProps extends TouchableWithoutFeedbackProps {
   value?: boolean;
-  onValueChange?: (checked: boolean) => void;
+  onValueChange?: (value: boolean) => void;
   style?: StyleProp<ViewStyle>;
   color?: string;
   size?: number;
-  label?: string;
 }
 
 function RadioButton({
-  value = false,
   size = 32,
   style,
+  value,
   onValueChange,
   onPress,
   ...props
