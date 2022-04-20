@@ -4,13 +4,13 @@ import { ScrollView } from 'react-native';
 import {
   TextInput,
   SearchBar,
-  PhoneTextInput,
-  usePhoneTextInput,
+  TextInputPhone,
+  useTextInputPhone,
 } from '@nomada-sh/react-native-eyecandy';
 import { Lock } from '@nomada-sh/react-native-eyecandy-icons';
 
 export default function TextInputs() {
-  const phoneInputProps = usePhoneTextInput();
+  const phoneInputProps = useTextInputPhone();
 
   return (
     <ScrollView
@@ -19,7 +19,7 @@ export default function TextInputs() {
       }}
       keyboardShouldPersistTaps="always"
     >
-      <PhoneTextInput {...phoneInputProps} />
+      <TextInputPhone {...phoneInputProps} />
       <SearchBar />
       <TextInput iconLeft={Lock} placeholder="test" error required />
       <TextInput iconLeft={Lock} placeholder="test" />

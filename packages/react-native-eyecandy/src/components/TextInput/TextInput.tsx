@@ -1,9 +1,10 @@
 import React, { useImperativeHandle, useRef, useState } from 'react';
-import { View, StyleSheet, TextInput as RNTextInput } from 'react-native';
+import { View, TextInput as RNTextInput } from 'react-native';
 
 import { EyeCheck, EyeOff } from '@nomada-sh/react-native-eyecandy-icons';
 
 import IconTouchable from './IconTouchable';
+import styles from './styles';
 import { TextInputStyles, TextInputProps, TextInputHandle } from './types';
 import useSecureTextEntry from './useSecureTextEntry';
 import useStyles from './useStyles';
@@ -142,28 +143,5 @@ const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
     );
   },
 );
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderRadius: 12,
-    overflow: 'hidden',
-    flexDirection: 'row',
-    borderStyle: 'solid',
-  },
-  input: {
-    flex: 1,
-    height: '100%',
-  },
-  iconContainer: {
-    justifyContent: 'center',
-  },
-  leftIconContainer: {
-    paddingHorizontal: 16,
-  },
-  rightIconContainer: {
-    paddingHorizontal: 16,
-  },
-});
 
 export default TextInput;

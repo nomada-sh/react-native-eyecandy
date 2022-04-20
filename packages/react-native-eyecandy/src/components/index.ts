@@ -28,11 +28,8 @@ export type { TextInputMaskProps } from './TextInputMask';
 export { default as TextInput } from './TextInput';
 export type { TextInputProps } from './TextInput';
 
-export { default as TextInputContainer } from './TextInputContainer';
-export type { TextInputContainerProps } from './TextInputContainer';
-
-export { default as PhoneTextInput } from './PhoneTextInput';
-export type { PhoneTextInputProps } from './PhoneTextInput';
+export { default as TextInputPhone } from './TextInputPhone';
+export type { TextInputPropsPhone } from './TextInputPhone';
 
 export { default as TextInputEmail } from './TextInputEmail';
 export { default as TextInputPassword } from './TextInputPassword';

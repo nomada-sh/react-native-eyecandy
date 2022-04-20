@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Country, CountryCode } from 'react-native-country-picker-modal';
 
-export default function usePhoneTextInput() {
+export default function useTextInputPhone() {
   const [formattedPhone, setFormattedPhone] = useState('');
   const [countryCode, setCountryCode] = useState<CountryCode>('MX');
   const [callingCode, setCallingCode] = useState<string | undefined>('52');

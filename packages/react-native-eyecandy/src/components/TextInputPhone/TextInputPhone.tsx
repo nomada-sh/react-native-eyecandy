@@ -72,15 +72,15 @@ const InputLeft = ({ onChange, countryCode, callingCode }: InputLeftProps) => {
   );
 };
 
-export interface PhoneTextInputProps extends TextInputMaskProps {
+export interface TextInputPropsPhone extends TextInputMaskProps {
   callingCode?: string;
   countryCode: CountryCode;
   onCountryChange: (country: Country) => void;
 }
 
-const PhoneTextInput = React.forwardRef<
+const TextInputPhone = React.forwardRef<
   TextInputMaskHandle,
-  PhoneTextInputProps
+  TextInputPropsPhone
 >(
   (
     {
@@ -115,4 +115,4 @@ const PhoneTextInput = React.forwardRef<
   },
 );
 
-export default PhoneTextInput;
+export default TextInputPhone;
