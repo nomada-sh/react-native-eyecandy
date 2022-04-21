@@ -20,7 +20,6 @@ import Animated, {
 
 import { Body } from '../../typography';
 
-// TODO: Fix thumbIconComponent type.
 export interface SwipeButtonProps {
   onFail?: () => void;
   onSuccess?: () => void;
@@ -158,11 +157,11 @@ function SwipeButton({
         backgroundColor: colors.background,
       }}
     >
-      <Body testID={`${testID}-title`} color="white">
+      <Body testID={testID ? `${testID}-title` : undefined} color="white">
         {title}
       </Body>
       <Animated.View
-        testID={`${testID}-track`}
+        testID={testID ? `${testID}-track` : undefined}
         style={[
           StyleSheet.absoluteFill,
           {
@@ -172,45 +171,9 @@ function SwipeButton({
           fillStyle,
         ]}
       />
-      {/* <View
-        style={[
-          StyleSheet.absoluteFill,
-          {
-            top: padding,
-            bottom: padding,
-            left: padding,
-            right: padding,
-            flexDirection: 'row',
-          },
-        ]}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'red',
-          }}
-        />
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'blue',
-          }}
-        />
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'red',
-          }}
-        />
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'blue',
-          }}
-        />
-      </View> */}
       <PanGestureHandler onGestureEvent={gestureHandler}>
         <Animated.View
-          testID={`${testID}-thumb`}
+          testID={testID ? `${testID}-thumb` : undefined}
           style={[
             {
               position: 'absolute',
