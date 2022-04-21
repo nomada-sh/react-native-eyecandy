@@ -1,0 +1,65 @@
+---
+id: badge
+title: Badge
+---
+
+## Import
+
+```jsx
+import { Badge } from '@nomada-sh/react-native-eyecandy';
+```
+
+## Example
+
+## Props
+
+### [View Props](https://reactnative.dev/docs/view#props)
+
+Inherits [View Props](https://reactnative.dev/docs/view#props).
+
+---
+
+### `color`
+
+| Type                                                                                 | Default     |
+| ------------------------------------------------------------------------------------ | ----------- |
+| `'default'` or `'primary'` or `'error'` or `'warning'` or `'success'` or `'greyout'` | `'default'` |
+
+---
+
+### `size`
+
+| Type   | Default |
+| ------ | ------- |
+| number | `18`    |
+
+---
+
+### `anchorOrigin`
+
+| Type                          | Default                                       |
+| ----------------------------- | --------------------------------------------- |
+| [AnchorOrigin](#anchororigin) | `{ vertical: 'bottom', horizontal: 'right' }` |
+
+---
+
+### `badgeStyle`
+
+| Type       |
+| ---------- |
+| View Style |
+
+## Type Definitions
+
+### AnchorOrigin
+
+| Type   |
+| ------ |
+| object |
+
+#### Properties
+
+| Name       | Type                  | Required | Description                       |
+| ---------- | --------------------- | -------- | --------------------------------- |
+| horizontal | `'left'` or `'right'` | Yes      | Horizontal position of the badge. |
+| vertical   | `'top'` or `'bottom'` | Yes      | Vertical position of the badge.   |
