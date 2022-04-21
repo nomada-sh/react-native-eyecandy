@@ -20,6 +20,12 @@ export default function Buttons() {
       }}
     >
       <Button marginBottom={20}>Button</Button>
+      <Button marginBottom={20} loading>
+        Button Loading
+      </Button>
+      <Button marginBottom={20} disabled>
+        Button Disabled
+      </Button>
       <Button marginBottom={20} color="primary">
         Button Primary
       </Button>
