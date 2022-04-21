@@ -97,6 +97,10 @@ Renders an icon on the left side of the input.
 
 ### `onPressIconLeft`
 
+```jsx
+() => void;
+```
+
 Callback function that is called when the left icon is pressed.
 
 | Type     |
@@ -126,6 +130,10 @@ Render an icon on the right side of the input.
 ---
 
 ### `onPressIconRight`
+
+```jsx
+() => void;
+```
 
 Callback function that is called when the right icon is pressed.
 
@@ -247,8 +255,8 @@ If `true`, the input will be in secure text entry mode.
 
 ### `onSecureTextEntryChange`
 
-```js
-onSecureTextEntryChange(secureTextEntry: boolean);
+```jsx
+(secureTextEntry: boolean) => void;
 ```
 
 Callback function that is called when the secure text entry toggle icon is pressed.
