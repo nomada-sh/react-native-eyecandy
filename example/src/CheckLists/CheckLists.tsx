@@ -62,6 +62,7 @@ export default function CheckLists() {
           image={{
             uri: 'https://picsum.photos/500/400',
           }}
+          checkComponent={<Crown color="primary" size={40} />}
         />
       </CheckList>
     </ScrollView>

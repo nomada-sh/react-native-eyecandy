@@ -10,6 +10,7 @@ import Calendars from '../Calendars';
 import CheckLists from '../CheckLists';
 import Forms from '../Forms';
 import LineValueSelectors from '../LineValueSelectors';
+import RadioGroups from '../RadioGroups';
 import TextInputs from '../TextInputs';
 import { useTheme } from '../shared/hooks';
 
@@ -33,6 +34,7 @@ export default function Drawer() {
       <Screen name="Avatars" component={Avatars} />
       <Screen name="BottomSheets" component={BottomSheets} />
       <Screen name="CheckLists" component={CheckLists} />
+      <Screen name="RadioGroups" component={RadioGroups} />
       <Screen name="LineValueSelectors" component={LineValueSelectors} />
       <Screen name="Calendars" component={Calendars} />
     </Navigator>
