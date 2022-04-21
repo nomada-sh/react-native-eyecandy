@@ -24,7 +24,9 @@ export interface CheckListOptionProps<V = any>
   onPress?: (props: { value: V; id: string }) => void;
   disabled?: boolean;
   image?: ImageSourcePropType;
-  checkComponent?: React.FC<{ selected?: boolean }>;
+  checkComponent?:
+    | React.ComponentType<{ selected?: boolean }>
+    | React.ReactElement<any>;
 }
 
 function CheckListOption<V = any>({
@@ -48,6 +50,14 @@ function CheckListOption<V = any>({
   const backgroundColor = selected ? selectedBackground : defaultBackground;
   const borderColor = selected ? backgroundColor : colors.input.default.border;
   const rippleColor = useRippleColor(selectedBackground).string();
+
+  const checkComponent = CheckComponent ? (
+    React.isValidElement(CheckComponent) ? (
+      CheckComponent
+    ) : (
+      <CheckComponent selected={selected} />
+    )
+  ) : null;
 
   return (
     <View
@@ -77,8 +87,8 @@ function CheckListOption<V = any>({
             <Body weight="bold">{title}</Body>
             <Body color="greyout">{description}</Body>
           </View>
-          {CheckComponent ? (
-            <CheckComponent selected={selected} />
+          {checkComponent ? (
+            checkComponent
           ) : (
             <RadioButton disabled value={selected} />
           )}

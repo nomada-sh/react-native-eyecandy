@@ -1,0 +1,79 @@
+---
+id: checklist
+title: CheckList
+---
+
+## Import
+
+```jsx
+import { CheckList } from '@nomada-sh/react-native-eyecandy';
+```
+
+## Example
+
+## Props
+
+### [View Props](https://reactnative.dev/docs/view#props)
+
+Inherits [View Props](https://reactnative.dev/docs/view#props).
+
+---
+
+### <div class="label required basic">Required</div>**`children`**
+
+| Type                                                                       |
+| -------------------------------------------------------------------------- |
+| [CheckListOption](checklistoption) or [CheckListOption](checklistoption)[] |
+
+---
+
+### <div class="label required basic">Required</div>**`selected`**
+
+| Type     |
+| -------- |
+| string[] |
+
+---
+
+### <div class="label required basic">Required</div>**`onSelectedChange`**
+
+```jsx
+(selected: string[]) => void
+```
+
+| Type     |
+| -------- |
+| function |
+
+- 'selected' (string[]): array of selected item ids.
+
+---
+
+### `onPress`
+
+```jsx
+({ id: string, value: any }) => void;
+```
+
+| Type     |
+| -------- |
+| function |
+
+- 'id' (string): id of the option.
+- 'value' (any): value of the option.
+
+---
+
+### `maxSelected`
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `marginBottom`
+
+| Type   | Default |
+| ------ | ------- |
+| number | 20      |
