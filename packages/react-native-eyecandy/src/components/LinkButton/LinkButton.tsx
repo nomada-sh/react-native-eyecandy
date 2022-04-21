@@ -13,7 +13,8 @@ import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 
 export interface LinkButtonProps extends ButtonBaseProps {
   icon?: React.ComponentType<IconProps> | React.ReactElement<any>;
-  text: string;
+  text?: string;
+  children?: string;
   showChevronRight?: boolean;
   bold?: boolean;
   focused?: boolean;
@@ -21,6 +22,7 @@ export interface LinkButtonProps extends ButtonBaseProps {
 
 function LinkButton({
   text,
+  children,
   icon: Icon,
   pressableStyle,
   color = 'default',
@@ -45,7 +47,7 @@ function LinkButton({
     fontWeight: bold ? 'bold' : 'normal',
   };
 
-  const children = Icon ? (
+  const icon = Icon ? (
     React.isValidElement(Icon) ? (
       Icon
     ) : (
@@ -59,8 +61,8 @@ function LinkButton({
 
   return (
     <ButtonBase color={color} pressableStyle={buttonStyles} {...props}>
-      {children}
-      <Body style={[textStyle, styles.text]}>{text}</Body>
+      {icon}
+      <Body style={[textStyle, styles.text]}>{children ?? text}</Body>
       {showChevronRight ? <ChevronRight color="greyout" size={20} /> : null}
     </ButtonBase>
   );

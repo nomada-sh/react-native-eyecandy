@@ -6,6 +6,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Avatars from '../Avatars';
 import BottomSheets from '../BottomSheets';
+import Buttons from '../Buttons';
 import Calendars from '../Calendars';
 import CheckLists from '../CheckLists';
 import Forms from '../Forms';
@@ -22,13 +23,14 @@ export default function Drawer() {
 
   return (
     <Navigator
-      initialRouteName="TextInputs"
+      initialRouteName="Buttons"
       screenOptions={{
         headerTintColor: colors.text.default.normal,
         headerRight: () => <Switch value={dark} onValueChange={setDark} />,
         swipeEnabled: false,
       }}
     >
+      <Screen name="Buttons" component={Buttons} />
       <Screen name="TextInputs" component={TextInputs} />
       <Screen name="Forms" component={Forms} />
       <Screen name="Avatars" component={Avatars} />

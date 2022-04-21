@@ -7,7 +7,6 @@ import {
   StyleProp,
   View,
   ViewStyle,
-  StyleSheet,
 } from 'react-native';
 
 import type { ThemeButtonColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
@@ -31,13 +30,13 @@ export interface ButtonBaseProps extends PressableProps {
   color?: ThemeButtonColorChoices;
   styles?: {
     /**
-     * Container view style (Applied after style).
+     * Container view style (Applied before style).
      */
     container?: StyleProp<ViewStyle>;
     /**
-     * Pressable style (Applied after buttonStyle).
+     * Pressable style (Applied before pressable style).
      */
-    button?: PressableProps['style'];
+    pressable?: PressableProps['style'];
   };
   variant?: 'default' | 'rounded';
   height?: number;
@@ -47,6 +46,8 @@ export interface ButtonBaseProps extends PressableProps {
   transparent?: boolean;
   outlined?: boolean;
   disableHapticFeedback?: boolean;
+  marginTop?: number;
+  marginBottom?: number;
 }
 
 function ButtonBase({
@@ -66,6 +67,8 @@ function ButtonBase({
   transparent,
   outlined,
   disableHapticFeedback = false,
+  marginBottom,
+  marginTop,
   ...props
 }: ButtonBaseProps) {
   const disabled = disabledProp || loading;
@@ -83,8 +86,8 @@ function ButtonBase({
 
   const getButtonStyle = usePressableStyles([
     styles.pressable,
+    customStyles.pressable,
     pressableStyle,
-    customStyles.button,
   ]);
 
   const onPress = useCallback(
@@ -97,7 +100,17 @@ function ButtonBase({
   );
 
   return (
-    <View style={[styles.container, style, customStyles.container]}>
+    <View
+      style={[
+        {
+          marginTop,
+          marginBottom,
+        },
+        styles.container,
+        customStyles.container,
+        style,
+      ]}
+    >
       <Pressable
         style={getButtonStyle}
         android_ripple={{

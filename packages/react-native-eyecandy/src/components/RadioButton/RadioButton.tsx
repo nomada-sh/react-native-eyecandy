@@ -30,7 +30,7 @@ function RadioButton({
 }: RadioButtonProps) {
   const { palette, dark } = useTheme();
 
-  const frontSize = size - 10;
+  const frontSize = size * 0.7;
   const backgroundColor = value
     ? palette.success[200]
     : palette.grey[dark ? 700 : 200];
@@ -66,7 +66,7 @@ function RadioButton({
             styles.iconContainer,
           ]}
         >
-          {value ? <Check stroke="white" size={15} /> : null}
+          {value ? <Check stroke="white" size={size / 2} /> : null}
         </View>
       </View>
     </TouchableWithoutFeedback>
