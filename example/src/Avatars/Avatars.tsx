@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageSourcePropType, ScrollView } from 'react-native';
 
-import { AvatarEdit } from '@nomada-sh/react-native-eyecandy';
+import { Avatar, AvatarEdit } from '@nomada-sh/react-native-eyecandy';
 
 export default function Avatars() {
   const [source, setSource] = React.useState<ImageSourcePropType>({
@@ -12,13 +12,11 @@ export default function Avatars() {
     <ScrollView>
       <AvatarEdit
         source={source}
-        onChange={assets => {
-          if (assets && assets.length) {
-            console.log(assets[0]);
-            setSource(assets[0]);
-          }
+        onChange={image => {
+          if (image) setSource(image);
         }}
       />
+      <Avatar source={source} />
     </ScrollView>
   );
 }

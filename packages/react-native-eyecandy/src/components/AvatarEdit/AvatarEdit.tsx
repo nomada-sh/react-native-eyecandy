@@ -6,6 +6,7 @@ import {
   StyleProp,
   StyleSheet,
   ViewStyle,
+  ImageSourcePropType,
 } from 'react-native';
 
 import { Camera } from '@nomada-sh/react-native-eyecandy-icons';
@@ -26,7 +27,7 @@ export interface AvatarEditProps extends Omit<PressableProps, 'style'> {
   size?: number;
   source: AvatarProps['source'];
   style?: StyleProp<ViewStyle>;
-  onChange?: (assets: ImagePickerResponse['assets']) => void;
+  onChange?: (image?: ImageSourcePropType) => void;
 }
 
 function AvatarEdit({
@@ -49,7 +50,8 @@ function AvatarEdit({
         return;
       }
 
-      onChange?.(res.assets);
+      if (res.assets && res.assets.length) onChange?.(res.assets[0]);
+      else onChange?.(undefined);
     },
     [onChange],
   );
