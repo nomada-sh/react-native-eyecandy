@@ -1,109 +1,162 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Platform, TouchableWithoutFeedback, View } from 'react-native';
+import React, { useImperativeHandle, useState } from 'react';
+import { TouchableWithoutFeedback, View, Pressable } from 'react-native';
 
-import { ChevronDown } from '@nomada-sh/react-native-eyecandy-icons';
-import SelectBase from 'react-native-picker-select';
+import { ChevronDown, Plus } from '@nomada-sh/react-native-eyecandy-icons';
 
-import type { SelectProps } from './typings';
+import { Body } from '../../typography';
+
+import Picker from './Picker';
+import { SelectHandle, SelectItem, SelectProps } from './types';
 import useStyles from './useStyles';
 
-function Select<ValueType>({
-  items = [],
-  onValueChange = () => {},
-  value,
-  color,
-  icon: Icon,
-  onFocus,
-  onBlur,
-  style,
-  variant,
-  pickerProps = {},
-  placeholder: placeholderProp = 'Select an item...',
-  androidItemSelectedColor = '#9ea0a4',
-  ...props
-}: SelectProps<ValueType>) {
-  const placeholder = useMemo(() => {
-    let placeholderColor =
-      Platform.OS === 'android' ? androidItemSelectedColor : undefined;
+const defaultIsSelected = (item: SelectItem, value?: any) => {
+  return value === undefined ? false : item.value === value;
+};
 
-    return {
-      label: placeholderProp,
-      value: null,
-      color: placeholderColor,
+const defaultItems: SelectItem[] = [];
+
+const Select = React.forwardRef<SelectHandle, SelectProps>(
+  (
+    {
+      items = defaultItems,
+      placeholder = 'Select an item...',
+      emptyText = 'No items',
+      onChange,
+      value,
+      color,
+      icon: Icon,
+      onFocus,
+      onBlur,
+      style,
+      variant,
+      isSelected = defaultIsSelected,
+      closeOnSelect,
+      modalTitle,
+      marginBottom,
+      marginTop,
+      hideClearIcon,
+    },
+    ref,
+  ) => {
+    const [visible, setVisible] = useState(false);
+
+    const focus = () => {
+      setVisible(true);
+      onFocus?.();
     };
-  }, [placeholderProp, androidItemSelectedColor]);
 
-  const [focused, setFocused] = useState(false);
-  const styles = useStyles({
-    color,
-    variant,
-    value,
-    focused,
-    withPaddingStart: Icon === undefined,
-  });
+    const blur = () => {
+      setVisible(false);
+      onBlur?.();
+    };
 
-  const selectRef = useRef<any>(null);
+    useImperativeHandle(ref, () => ({
+      focus,
+      blur,
+    }));
 
-  const openPicker = useCallback(() => {
-    if (Platform.OS === 'android') {
-      selectRef.current?.focus();
-    } else {
-      selectRef.current?.togglePicker(true);
-    }
-  }, []);
+    const styles = useStyles({
+      color,
+      variant,
+      focused: visible,
+      removePaddingLeft: Icon !== undefined,
+    });
 
-  const handleFocus = useCallback(() => {
-    setFocused(true);
-    onFocus?.();
-  }, [onFocus]);
+    const selectedItemIndex = items.findIndex(item => isSelected(item, value));
+    const selectedItem =
+      selectedItemIndex >= 0 ? items[selectedItemIndex] : null;
 
-  const handleBlur = useCallback(() => {
-    setFocused(false);
-    onBlur?.();
-  }, [onBlur]);
+    const icon = Icon ? (
+      React.isValidElement(Icon) ? (
+        Icon
+      ) : (
+        <Icon size={styles.icon.fontSize} stroke={styles.icon.color} />
+      )
+    ) : null;
 
-  return (
-    <View style={[styles.container, style]}>
-      {Icon ? (
-        <TouchableWithoutFeedback onPress={() => openPicker()}>
-          <View style={styles.iconContainer}>
-            <Icon size={styles.icon.fontSize} stroke={styles.icon.color} />
-          </View>
-        </TouchableWithoutFeedback>
-      ) : null}
-      <View style={styles.selectContainer}>
-        <SelectBase
-          ref={Platform.OS === 'android' ? undefined : selectRef}
-          pickerProps={{
-            ...pickerProps,
-            // @ts-ignore
-            ref: Platform.OS === 'android' ? selectRef : undefined,
-            onFocus: handleFocus,
-            onBlur: handleBlur,
-          }}
-          useNativeAndroidPickerStyle={false}
-          style={{
-            inputAndroid: styles.input,
-            inputIOS: styles.input,
-            placeholder: styles.placeholder,
-          }}
+    const text = items.length ? (
+      selectedItem ? (
+        <Body>{selectedItem.label}</Body>
+      ) : (
+        <Body color={styles.placeholder.color}>{placeholder}</Body>
+      )
+    ) : (
+      <Body color={styles.placeholder.color}>{emptyText}</Body>
+    );
+
+    const disabled = items.length === 0;
+    const showClearIcon = !hideClearIcon && selectedItem !== null;
+
+    return (
+      <>
+        <Picker
+          selectedItemIndex={selectedItemIndex}
+          onClose={blur}
+          visible={visible}
           items={items}
-          onValueChange={onValueChange}
+          isSelected={isSelected}
           value={value}
-          placeholder={placeholder}
-          {...props}
+          title={modalTitle}
+          onPress={(item, index) => {
+            onChange?.(item.value, index);
+            if (closeOnSelect) blur();
+          }}
         />
-      </View>
-      <TouchableWithoutFeedback onPress={() => openPicker()}>
-        <View style={styles.iconContainer}>
-          <ChevronDown
-            size={styles.icon.fontSize}
-            stroke={focused ? styles.icon.color : styles.placeholder.color}
-          />
+        <View
+          style={[
+            styles.container,
+            {
+              marginTop,
+              marginBottom,
+            },
+            style,
+          ]}
+        >
+          {icon ? (
+            <TouchableWithoutFeedback disabled={disabled} onPress={focus}>
+              <View style={styles.iconContainer}>{icon}</View>
+            </TouchableWithoutFeedback>
+          ) : null}
+          <View style={styles.selectContainer}>
+            <Pressable
+              disabled={disabled}
+              style={styles.select}
+              onPress={focus}
+            >
+              {text}
+            </Pressable>
+          </View>
+          {showClearIcon ? (
+            <TouchableWithoutFeedback
+              onPress={() => {
+                onChange?.(undefined, -1);
+              }}
+            >
+              <View style={styles.iconContainer}>
+                <Plus
+                  style={{
+                    transform: [{ rotate: '45deg' }],
+                  }}
+                  size={styles.icon.fontSize}
+                  stroke={
+                    visible ? styles.icon.color : styles.placeholder.color
+                  }
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          ) : null}
+          <TouchableWithoutFeedback disabled={disabled} onPress={focus}>
+            <View style={styles.iconContainer}>
+              <ChevronDown
+                size={styles.icon.fontSize}
+                stroke={visible ? styles.icon.color : styles.placeholder.color}
+              />
+            </View>
+          </TouchableWithoutFeedback>
         </View>
-      </TouchableWithoutFeedback>
-    </View>
-  );
-}
+      </>
+    );
+  },
+);
 
 export default Select;

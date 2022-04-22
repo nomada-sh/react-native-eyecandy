@@ -12,10 +12,9 @@
     "typecheck": "tsc --noEmit",
     "build": "bob build",
     "prepare": "npm run build",
-    "release": "npm publish --access public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "local:publish": "yalc publish --push"
+    "yalc:publish": "yalc publish --push"
   },
   "files": [
     "src",

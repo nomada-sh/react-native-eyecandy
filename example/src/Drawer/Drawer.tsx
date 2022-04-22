@@ -12,6 +12,7 @@ import CheckLists from '../CheckLists';
 import Forms from '../Forms';
 import LineValueSelectors from '../LineValueSelectors';
 import RadioGroups from '../RadioGroups';
+import Selects from '../Selects';
 import TextInputs from '../TextInputs';
 import { useTheme } from '../shared/hooks';
 
@@ -32,6 +33,7 @@ export default function Drawer() {
     >
       <Screen name="Buttons" component={Buttons} />
       <Screen name="TextInputs" component={TextInputs} />
+      <Screen name="Selects" component={Selects} />
       <Screen name="Forms" component={Forms} />
       <Screen name="Avatars" component={Avatars} />
       <Screen name="BottomSheets" component={BottomSheets} />

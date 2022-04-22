@@ -63,8 +63,16 @@ export type { MenuItemProps } from './MenuItem';
 export { default as MenuItemSwitch } from './MenuItemSwitch';
 export type { MenuItemSwitchProps } from './MenuItemSwitch';
 
+export { default as NativeSelect } from './NativeSelect';
+export type { NativeSelectProps, NativeSelectItem } from './NativeSelect';
+
 export { default as Select } from './Select';
-export type { SelectProps, Item as SelectItem } from './Select';
+export type {
+  SelectProps,
+  SelectItem,
+  SelectHandle,
+  SelectItemIconProps,
+} from './Select';
 
 export { default as BottomSheetSwipeConfirmation } from './BottomSheetSwipeConfirmation';
 export type { BottomSheetSwipeConfirmationProps } from './BottomSheetSwipeConfirmation';

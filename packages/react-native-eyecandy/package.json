@@ -27,10 +27,9 @@
     "build": "bob build",
     "prepare": "npm run build",
     "typecheck": "tsc --noEmit",
-    "release": "npm publish --access public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "local:publish": "yalc publish --push"
+    "yalc:publish": "yalc publish --push"
   },
   "keywords": [
     "react-native",
@@ -69,7 +68,8 @@
     "react-native-haptic-feedback": "^1.13.0",
     "react-native-image-picker": "^4.4.2",
     "react-native-reanimated": "2.3.1",
-    "react-native-svg": "^12.3.0"
+    "react-native-svg": "^12.3.0",
+    "@react-native-picker/picker": "^2.4.1"
   },
   "peerDependencies": {
     "react": "*",
@@ -78,7 +78,8 @@
     "react-native-haptic-feedback": "^1.13.0",
     "react-native-image-picker": "^4.4.2",
     "react-native-reanimated": "^2.3.1",
-    "react-native-svg": "^12.3.0"
+    "react-native-svg": "^12.3.0",
+    "@react-native-picker/picker": "^2.4.1"
   },
   "dependencies": {
     "@nomada-sh/react-native-eyecandy-icons": "^1.0.5",
