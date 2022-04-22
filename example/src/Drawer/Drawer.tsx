@@ -4,6 +4,7 @@ import { Switch } from '@nomada-sh/react-native-eyecandy';
 import { useTheme as useEyecandyTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
+import ActionSheets from '../ActionSheets';
 import Avatars from '../Avatars';
 import BottomSheets from '../BottomSheets';
 import Buttons from '../Buttons';
@@ -37,6 +38,7 @@ export default function Drawer() {
       <Screen name="Forms" component={Forms} />
       <Screen name="Avatars" component={Avatars} />
       <Screen name="BottomSheets" component={BottomSheets} />
+      <Screen name="ActionSheets" component={ActionSheets} />
       <Screen name="CheckLists" component={CheckLists} />
       <Screen name="RadioGroups" component={RadioGroups} />
       <Screen name="LineValueSelectors" component={LineValueSelectors} />

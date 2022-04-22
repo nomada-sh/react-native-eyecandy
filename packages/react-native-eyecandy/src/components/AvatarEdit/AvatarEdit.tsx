@@ -19,7 +19,8 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 
-import { ActionSheet, ms } from '../../utils';
+import { ms } from '../../utils';
+import ActionSheet from '../../utils/ActionSheet';
 import Avatar, { AvatarProps } from '../Avatar';
 import IconButton from '../IconButton';
 

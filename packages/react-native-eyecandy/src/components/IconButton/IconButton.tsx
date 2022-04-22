@@ -7,7 +7,7 @@ import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 
 export interface IconButtonProps extends ButtonBaseProps {
-  icon?: React.ComponentType<IconProps> | React.ReactElement<any>;
+  icon?: React.ComponentType<IconProps> | React.ReactElement<any> | null;
   size?: number;
   iconSize?: number;
   iconColor?: string;

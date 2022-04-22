@@ -110,3 +110,6 @@ export type { CalendarStripProps, CalendarStripHandle } from './CalendarStrip';
 
 export { default as WrappedPan } from './WrappedPan';
 export type { WrappedPanProps } from './WrappedPan';
+
+export { default as ActionSheet } from './ActionSheet';
+export type { ActionSheetProps, ActionSheetOption } from './ActionSheet';
