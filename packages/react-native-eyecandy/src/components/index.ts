@@ -71,6 +71,7 @@ export type {
   SelectProps,
   SelectItem,
   SelectHandle,
+  SelectIconProps,
   SelectItemIconProps,
 } from './Select';
 

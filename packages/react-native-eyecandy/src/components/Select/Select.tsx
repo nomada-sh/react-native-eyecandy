@@ -9,154 +9,155 @@ import Picker from './Picker';
 import { SelectHandle, SelectItem, SelectProps } from './types';
 import useStyles from './useStyles';
 
-const defaultIsSelected = (item: SelectItem, value?: any) => {
+const defaultIsSelected = (item: SelectItem<any>, value?: any) => {
   return value === undefined ? false : item.value === value;
 };
 
-const defaultItems: SelectItem[] = [];
+const defaultItems: SelectItem<any>[] = [];
 
-const Select = React.forwardRef<SelectHandle, SelectProps>(
-  (
-    {
-      items = defaultItems,
-      placeholder = 'Select an item...',
-      emptyText = 'No items',
-      onChange,
-      value,
-      color,
-      icon: Icon,
-      onFocus,
-      onBlur,
-      style,
-      variant,
-      isSelected = defaultIsSelected,
-      closeOnSelect,
-      modalTitle,
-      marginBottom,
-      marginTop,
-      hideClearIcon,
-    },
-    ref,
-  ) => {
-    const [visible, setVisible] = useState(false);
+function Select<V>(
+  {
+    items = defaultItems,
+    placeholder = 'Select an item...',
+    emptyText = 'No items',
+    onChange,
+    value,
+    color,
+    icon: Icon,
+    onFocus,
+    onBlur,
+    style,
+    variant,
+    isSelected = defaultIsSelected,
+    closeOnSelect,
+    modalTitle,
+    marginBottom,
+    marginTop,
+    hideClearIcon,
+  }: SelectProps<V>,
+  ref: React.Ref<SelectHandle>,
+) {
+  const disabled = items.length === 0;
+  const [visible, setVisible] = useState(false);
 
-    const focus = () => {
-      setVisible(true);
-      onFocus?.();
-    };
+  const focus = () => {
+    if (disabled) return;
 
-    const blur = () => {
-      setVisible(false);
-      onBlur?.();
-    };
+    setVisible(true);
+    onFocus?.();
+  };
 
-    useImperativeHandle(ref, () => ({
-      focus,
-      blur,
-    }));
+  const blur = () => {
+    if (disabled) return;
 
-    const styles = useStyles({
-      color,
-      variant,
-      focused: visible,
-      removePaddingLeft: Icon !== undefined,
-    });
+    setVisible(false);
+    onBlur?.();
+  };
 
-    const selectedItemIndex = items.findIndex(item => isSelected(item, value));
-    const selectedItem =
-      selectedItemIndex >= 0 ? items[selectedItemIndex] : null;
+  useImperativeHandle(ref, () => ({
+    focus,
+    blur,
+  }));
 
-    const icon = Icon ? (
-      React.isValidElement(Icon) ? (
-        Icon
-      ) : (
-        <Icon size={styles.icon.fontSize} stroke={styles.icon.color} />
-      )
-    ) : null;
+  const styles = useStyles({
+    color,
+    variant,
+    focused: visible,
+    removePaddingLeft: Icon !== undefined,
+  });
 
-    const text = items.length ? (
-      selectedItem ? (
-        <Body>{selectedItem.label}</Body>
-      ) : (
-        <Body color={styles.placeholder.color}>{placeholder}</Body>
-      )
+  const selectedItemIndex = items.findIndex(item => isSelected(item, value));
+  const selectedItem = selectedItemIndex >= 0 ? items[selectedItemIndex] : null;
+
+  const showClearIcon = !hideClearIcon && selectedItem !== null;
+
+  const icon = Icon ? (
+    React.isValidElement(Icon) ? (
+      Icon
     ) : (
-      <Body color={styles.placeholder.color}>{emptyText}</Body>
-    );
+      <Icon
+        focused={visible}
+        size={styles.icon.fontSize}
+        stroke={styles.icon.color}
+      />
+    )
+  ) : null;
 
-    const disabled = items.length === 0;
-    const showClearIcon = !hideClearIcon && selectedItem !== null;
+  const text = items.length ? (
+    selectedItem ? (
+      <Body>{selectedItem.label}</Body>
+    ) : (
+      <Body color={styles.placeholder.color}>{placeholder}</Body>
+    )
+  ) : (
+    <Body color={styles.placeholder.color}>{emptyText}</Body>
+  );
 
-    return (
-      <>
-        <Picker
-          selectedItemIndex={selectedItemIndex}
-          onClose={blur}
-          visible={visible}
-          items={items}
-          isSelected={isSelected}
-          value={value}
-          title={modalTitle}
-          onPress={(item, index) => {
-            onChange?.(item.value, index);
-            if (closeOnSelect) blur();
-          }}
-        />
-        <View
-          style={[
-            styles.container,
-            {
-              marginTop,
-              marginBottom,
-            },
-            style,
-          ]}
-        >
-          {icon ? (
-            <TouchableWithoutFeedback disabled={disabled} onPress={focus}>
-              <View style={styles.iconContainer}>{icon}</View>
-            </TouchableWithoutFeedback>
-          ) : null}
-          <View style={styles.selectContainer}>
-            <Pressable
-              disabled={disabled}
-              style={styles.select}
-              onPress={focus}
-            >
-              {text}
-            </Pressable>
-          </View>
-          {showClearIcon ? (
-            <TouchableWithoutFeedback
-              onPress={() => {
-                onChange?.(undefined, -1);
-              }}
-            >
-              <View style={styles.iconContainer}>
-                <Plus
-                  style={{
-                    transform: [{ rotate: '45deg' }],
-                  }}
-                  size={styles.icon.fontSize}
-                  stroke={
-                    visible ? styles.icon.color : styles.placeholder.color
-                  }
-                />
-              </View>
-            </TouchableWithoutFeedback>
-          ) : null}
+  return (
+    <>
+      <Picker
+        selectedItemIndex={selectedItemIndex}
+        onClose={blur}
+        visible={visible}
+        items={items}
+        isSelected={isSelected}
+        value={value}
+        title={modalTitle}
+        onPress={(item, index) => {
+          onChange?.(item.value, index);
+          if (closeOnSelect) blur();
+        }}
+      />
+      <View
+        style={[
+          styles.container,
+          {
+            marginTop,
+            marginBottom,
+          },
+          style,
+        ]}
+      >
+        {icon ? (
           <TouchableWithoutFeedback disabled={disabled} onPress={focus}>
+            <View style={styles.iconContainer}>{icon}</View>
+          </TouchableWithoutFeedback>
+        ) : null}
+        <View style={styles.selectContainer}>
+          <Pressable disabled={disabled} style={styles.select} onPress={focus}>
+            {text}
+          </Pressable>
+        </View>
+        {showClearIcon ? (
+          <TouchableWithoutFeedback
+            onPress={() => {
+              onChange?.(undefined, -1);
+            }}
+          >
             <View style={styles.iconContainer}>
-              <ChevronDown
+              <Plus
+                style={{
+                  transform: [{ rotate: '45deg' }],
+                }}
                 size={styles.icon.fontSize}
                 stroke={visible ? styles.icon.color : styles.placeholder.color}
               />
             </View>
           </TouchableWithoutFeedback>
-        </View>
-      </>
-    );
-  },
-);
+        ) : null}
+        <TouchableWithoutFeedback disabled={disabled} onPress={focus}>
+          <View style={styles.iconContainer}>
+            <ChevronDown
+              size={styles.icon.fontSize}
+              stroke={visible ? styles.icon.color : styles.placeholder.color}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
+    </>
+  );
+}
 
-export default Select;
+export default React.forwardRef(Select) as <V>(
+  p: SelectProps<V> & { ref?: React.Ref<SelectHandle> },
+) => JSX.Element;

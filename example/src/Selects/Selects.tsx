@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ScrollView } from 'react-native';
 
-import { Select, SelectItem } from '@nomada-sh/react-native-eyecandy';
+import {
+  Button,
+  Select,
+  SelectHandle,
+  SelectItem,
+} from '@nomada-sh/react-native-eyecandy';
 import { Crown, Star } from '@nomada-sh/react-native-eyecandy-icons';
 
-const items: SelectItem[] = [
+const items: SelectItem<string>[] = [
   ...Array.from({ length: 100 }, (_, i) => ({
     label: `Option ${i}`,
     value: `option${i}`,
@@ -12,7 +17,7 @@ const items: SelectItem[] = [
   })),
 ];
 
-const items2: SelectItem[] = [
+const items2: SelectItem<string>[] = [
   ...Array.from({ length: 10 }, (_, i) => ({
     label: `Option ${i}`,
     value: `option${i}`,
@@ -23,6 +28,8 @@ const items2: SelectItem[] = [
 export default function Selects() {
   const [value, setValue] = React.useState<string | undefined>(undefined);
   const [value2, setValue2] = React.useState<string | undefined>('option0');
+
+  const ref = useRef<SelectHandle>(null);
 
   return (
     <ScrollView
@@ -40,12 +47,21 @@ export default function Selects() {
       />
       <Select marginBottom={20} modalTitle="Select an item" />
       <Select
+        marginBottom={20}
+        ref={ref}
         icon={Star}
         value={value2}
         items={items2}
         onChange={setValue2}
         hideClearIcon
       />
+      <Button
+        onPress={() => {
+          ref.current?.focus();
+        }}
+      >
+        Open select
+      </Button>
     </ScrollView>
   );
 }

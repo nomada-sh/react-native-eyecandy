@@ -11,7 +11,7 @@ import { PickerProps } from './types';
 
 const ITEM_HEIGHT = 45;
 
-export default function Picker({
+export default function Picker<V>({
   visible,
   onClose,
   items,
@@ -20,7 +20,7 @@ export default function Picker({
   onPress,
   title,
   selectedItemIndex,
-}: PickerProps) {
+}: PickerProps<V>) {
   const { colors, palette } = useTheme();
 
   const backgroundColor = colors.background.default.container;

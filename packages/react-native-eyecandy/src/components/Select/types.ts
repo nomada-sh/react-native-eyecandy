@@ -8,8 +8,12 @@ export interface SelectItemIconProps extends IconProps {
   selected: boolean;
 }
 
-export interface SelectItem {
-  value: any;
+export interface SelectIconProps extends IconProps {
+  focused: boolean;
+}
+
+export interface SelectItem<V> {
+  value: V;
   label: string;
   key?: string;
   icon?: React.ComponentType<SelectItemIconProps> | React.ReactElement<any>;
@@ -20,15 +24,15 @@ export interface SelectHandle {
   blur: () => void;
 }
 
-type IsSelected = (item: SelectItem, value: any) => boolean;
+type IsSelected<V> = (item: SelectItem<V>, value: any) => boolean;
 
-export interface PickerProps {
+export interface PickerProps<V> {
   onClose: () => void;
   visible: boolean;
-  items: SelectItem[];
-  isSelected: IsSelected;
-  value?: any;
-  onPress: (item: SelectItem, index: number) => void;
+  items: SelectItem<V>[];
+  isSelected: IsSelected<V>;
+  value?: V;
+  onPress: (item: SelectItem<V>, index: number) => void;
   title?: string;
   selectedItemIndex: number;
 }
@@ -38,16 +42,16 @@ export interface SelectPropsStyleProps {
   variant?: 'default' | 'outlined';
 }
 
-export interface SelectProps extends SelectPropsStyleProps {
-  items?: SelectItem[];
-  onChange?: (value: any, index: number) => void;
-  value?: any;
+export interface SelectProps<V> extends SelectPropsStyleProps {
+  items?: SelectItem<V>[];
+  onChange?: (value: V | undefined, index: number) => void;
+  value?: V;
   placeholder?: string;
   onFocus?: () => void;
   onBlur?: () => void;
-  icon?: React.ComponentType<IconProps> | React.ReactElement<any>;
+  icon?: React.ComponentType<SelectIconProps> | React.ReactElement<any>;
   style?: StyleProp<ViewStyle>;
-  isSelected?: IsSelected;
+  isSelected?: IsSelected<V>;
   closeOnSelect?: boolean;
   modalTitle?: string;
   emptyText?: string;
