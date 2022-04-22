@@ -16,6 +16,10 @@ export type TextInputStyles = {
   rightIconContainer?: StyleProp<ViewStyle>;
 };
 
+export interface TextInputIconProps extends IconProps {
+  focused: boolean;
+}
+
 export interface TextInputStyleProps {
   color?: ThemeInputColorChoices;
   error?: boolean;
@@ -39,9 +43,9 @@ export interface TextInputBaseProps
     TextInputSecureTextEntryProps {
   style?: StyleProp<ViewStyle>;
   styles?: TextInputStyles;
-  iconLeft?: React.ComponentType<IconProps> | React.ReactElement<any>;
+  iconLeft?: React.ComponentType<TextInputIconProps> | React.ReactElement<any>;
   onPressIconLeft?: () => void;
-  iconRight?: React.ComponentType<IconProps> | React.ReactElement<any>;
+  iconRight?: React.ComponentType<TextInputIconProps> | React.ReactElement<any>;
   onPressIconRight?: () => void;
   focusOnLeftIconPress?: boolean;
   focusOnRightIconPress?: boolean;

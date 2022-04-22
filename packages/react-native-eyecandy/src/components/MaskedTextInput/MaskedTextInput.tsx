@@ -98,6 +98,7 @@ const MaskedTextInput = React.forwardRef<
     >
       {/* Left Icon */}
       <IconTouchable
+        focused={focused}
         onPress={handlePressIconLeft}
         style={[styles.leftIconContainer, customStyles.leftIconContainer]}
         icon={iconLeft}
@@ -131,6 +132,7 @@ const MaskedTextInput = React.forwardRef<
 
       {/* Right Icon */}
       <IconTouchable
+        focused={focused}
         onPress={handlePressIconRight}
         style={[styles.rightIconContainer, customStyles.rightIconContainer]}
         icon={iconRight}
@@ -140,6 +142,7 @@ const MaskedTextInput = React.forwardRef<
       {/* Secure Text Entry Toggle */}
       {showSecureTextEntryToggle ? (
         <IconTouchable
+          focused={focused}
           onPress={onPressSecureTextEntryToggle}
           style={[styles.rightIconContainer, customStyles.rightIconContainer]}
           icon={secureTextEntry ? EyeOff : EyeCheck}

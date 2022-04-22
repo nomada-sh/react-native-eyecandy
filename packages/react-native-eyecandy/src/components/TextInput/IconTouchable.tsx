@@ -6,13 +6,14 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { IconProps } from '@nomada-sh/react-native-eyecandy-icons';
+import { TextInputIconProps } from './types';
 
 export interface IconTouchableProps {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
-  icon?: React.ComponentType<IconProps> | React.ReactElement<any>;
+  icon?: React.ComponentType<TextInputIconProps> | React.ReactElement<any>;
   color: string;
+  focused: boolean;
 }
 
 export default function IconTouchable({
@@ -20,13 +21,14 @@ export default function IconTouchable({
   icon: Icon,
   style,
   color,
+  focused,
 }: IconTouchableProps) {
   if (!Icon) return null;
 
   const icon = React.isValidElement(Icon) ? (
     Icon
   ) : (
-    <Icon size={20} stroke={color} />
+    <Icon focused={focused} size={20} stroke={color} />
   );
 
   return (
