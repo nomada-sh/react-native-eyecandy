@@ -2,6 +2,7 @@ import React, { useImperativeHandle, useRef, useState } from 'react';
 import { Platform, TouchableWithoutFeedback, View } from 'react-native';
 
 import { ChevronDown } from '@nomada-sh/react-native-eyecandy-icons';
+import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import SelectBase from 'react-native-picker-select';
 
 import type {
@@ -28,6 +29,7 @@ function NativeSelect<V>(
     marginBottom,
     marginTop,
     placeholder = 'Select an item...',
+    dark: darkProp,
   }: NativeSelectProps<V>,
   ref: React.Ref<NativeSelectHandle>,
 ) {
@@ -41,6 +43,7 @@ function NativeSelect<V>(
   };
 
   const [focused, setFocused] = useState(false);
+  const { dark } = useTheme();
   const styles = useStyles({
     color,
     variant,
@@ -117,6 +120,12 @@ function NativeSelect<V>(
             inputAndroid: styles.select,
             inputIOS: styles.select,
             placeholder: styles.placeholder,
+            chevronUp: {
+              display: 'none',
+            },
+            chevronDown: {
+              display: 'none',
+            },
           }}
           items={items}
           onValueChange={(value, index) => {
@@ -124,6 +133,7 @@ function NativeSelect<V>(
           }}
           value={value}
           placeholder={placeholderItem}
+          darkTheme={darkProp !== undefined ? darkProp : dark}
         />
       </View>
       <TouchableWithoutFeedback disabled={disabled} onPress={focus}>

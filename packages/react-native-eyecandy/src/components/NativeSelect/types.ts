@@ -33,4 +33,5 @@ export interface NativeSelectProps<V> extends NativeSelectStyleProps {
   emptyText?: string;
   marginBottom?: number;
   marginTop?: number;
+  dark?: boolean;
 }
