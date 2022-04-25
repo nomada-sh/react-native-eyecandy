@@ -9,6 +9,7 @@ import AvatarEdits from '../AvatarEdits';
 import Avatars from '../Avatars';
 import BottomSheetSwipeConfirmation from '../BottomSheetSwipeConfirmation/BottomSheetSwipeConfirmation';
 import BottomSheets from '../BottomSheets';
+import ButtonBase from '../ButtonBase';
 import Buttons from '../Buttons';
 import Calendars from '../CalendarStrips';
 import CheckLists from '../CheckLists';
@@ -45,6 +46,7 @@ export default function Drawer() {
       }}
     >
       <Screen name="Button" component={Buttons} />
+      <Screen name="ButtonBase" component={ButtonBase} />
       <Screen name="TextInput" component={TextInputs} />
       <Screen name="Select" component={Selects} />
       <Screen name="SwipeButton" component={SwipeButtons} />

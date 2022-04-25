@@ -7,8 +7,8 @@ const getButtonColors: GetThemeColors<ThemeBackgroundColors> = options => {
   const defaultColors: ThemeBackgroundColors = {
     default: {
       container: dark ? palette.grey[900] : 'white',
-      content: dark ? palette.grey[900] : 'white',
-      // content: dark ? palette.grey[800] : palette.grey[100],
+      //content: dark ? palette.grey[900] : 'white',
+      content: dark ? palette.grey[800] : palette.grey[100],
     },
   };
 

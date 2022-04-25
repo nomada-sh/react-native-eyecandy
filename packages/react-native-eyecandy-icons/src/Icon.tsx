@@ -4,12 +4,13 @@ import { StyleProp, ViewStyle } from 'react-native';
 import {
   useColors,
   ThemeTextColorsChoices,
+  isThemeTextColorsChoices,
 } from '@nomada-sh/react-native-eyecandy-theme';
 import Svg from 'react-native-svg';
 
 export interface IconProps {
   size?: number;
-  color?: ThemeTextColorsChoices;
+  color?: ThemeTextColorsChoices | string;
   filled?: boolean;
   stroke?: string;
   fill?: string;
@@ -27,7 +28,11 @@ export default function Icon({
 }: IconProps) {
   const colors = useColors(c => c.text);
 
-  const s = stroke ?? colors[color].normal;
+  const iconColor: string = isThemeTextColorsChoices(color)
+    ? colors[color].normal
+    : color;
+
+  const s = stroke ?? iconColor;
   const f = fill ?? (filled ? s : undefined);
 
   return (

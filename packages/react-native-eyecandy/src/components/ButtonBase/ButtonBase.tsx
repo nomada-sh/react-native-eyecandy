@@ -1,7 +1,9 @@
-import React, { ReactNode, useCallback } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import {
   ActivityIndicator,
+  Animated,
   GestureResponderEvent,
+  Platform,
   Pressable,
   PressableProps,
   StyleProp,
@@ -64,6 +66,8 @@ function ButtonBase({
   styles: customStyles = {},
   hideDisabledOverlay,
   onPress: onPressProp,
+  onPressIn: onPressInProp,
+  onPressOut: onPressOutProp,
   transparent,
   outlined,
   disableHapticFeedback = false,
@@ -71,6 +75,7 @@ function ButtonBase({
   marginTop,
   ...props
 }: ButtonBaseProps) {
+  const animated = useRef(new Animated.Value(0)).current;
   const disabled = disabledProp || loading;
 
   const styles = useStyles({
@@ -90,14 +95,36 @@ function ButtonBase({
     pressableStyle,
   ]);
 
-  const onPress = useCallback(
-    (e: GestureResponderEvent) => {
-      if (!disableHapticFeedback)
-        ReactNativeHapticFeedback.trigger('impactMedium');
-      onPressProp?.(e);
-    },
-    [disableHapticFeedback, onPressProp],
-  );
+  const fadeIn = () => {
+    Animated.timing(animated, {
+      toValue: 1,
+      duration: 100,
+      useNativeDriver: true,
+    }).start();
+  };
+  const fadeOut = () => {
+    Animated.timing(animated, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const onPress = (e: GestureResponderEvent) => {
+    if (!disableHapticFeedback)
+      ReactNativeHapticFeedback.trigger('impactMedium');
+    onPressProp?.(e);
+  };
+
+  const onPressIn = (e: GestureResponderEvent) => {
+    fadeIn();
+    onPressInProp?.(e);
+  };
+
+  const onPressOut = (e: GestureResponderEvent) => {
+    fadeOut();
+    onPressOutProp?.(e);
+  };
 
   return (
     <View
@@ -111,6 +138,9 @@ function ButtonBase({
         style,
       ]}
     >
+      {Platform.OS === 'ios' ? (
+        <Animated.View style={[styles.activeOpacity, { opacity: animated }]} />
+      ) : null}
       <Pressable
         style={getButtonStyle}
         android_ripple={{
@@ -118,6 +148,8 @@ function ButtonBase({
         }}
         disabled={disabled}
         onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
         {...props}
       >
         {children}

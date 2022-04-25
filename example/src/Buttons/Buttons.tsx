@@ -1,66 +1,62 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { Alert, SafeAreaView, ScrollView } from 'react-native';
 
-import {
-  Body,
-  Button,
-  IconButton,
-  LinkButton,
-  RadioButton,
-} from '@nomada-sh/react-native-eyecandy';
-import { Crown } from '@nomada-sh/react-native-eyecandy-icons';
+import { Button } from '@nomada-sh/react-native-eyecandy';
 
 export default function Buttons() {
-  const [value, setValue] = React.useState<boolean>(true);
-
   return (
-    <ScrollView
-      contentContainerStyle={{
-        padding: 20,
+    <SafeAreaView
+      style={{
+        flex: 1,
       }}
     >
-      <Button marginBottom={20}>Button</Button>
-      <Button marginBottom={20} loading>
-        Button Loading
-      </Button>
-      <Button marginBottom={20} disabled>
-        Button Disabled
-      </Button>
-      <Button marginBottom={20} color="primary">
-        Button Primary
-      </Button>
-      <Button marginBottom={20} color="secondary">
-        Button Secondary
-      </Button>
-      <Button variant="rounded" marginBottom={20} inverse>
-        Button Rounded Inverse
-      </Button>
-      <LinkButton icon={Crown} marginBottom={20}>
-        Link Button
-      </LinkButton>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginBottom: 20,
+      <ScrollView
+        contentContainerStyle={{
+          padding: 20,
         }}
       >
-        <IconButton icon={<Body>Text</Body>} />
-        <IconButton icon={Crown} />
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-      >
-        <RadioButton value={value} onValueChange={setValue} />
-        <RadioButton
-          value={!value}
-          onValueChange={() => setValue(!value)}
-          size={64}
-        />
-      </View>
-    </ScrollView>
+        <Button
+          marginBottom={20}
+          onPress={() => {
+            Alert.alert('Button pressed');
+          }}
+        >
+          Button
+        </Button>
+        <Button marginBottom={20} loading>
+          Button Loading
+        </Button>
+        <Button marginBottom={20} disabled>
+          Button Disabled
+        </Button>
+        <Button
+          marginBottom={20}
+          color="primary"
+          onLongPress={() => {
+            Alert.alert('Button long pressed');
+          }}
+        >
+          Button Primary
+        </Button>
+        <Button
+          marginBottom={20}
+          color="secondary"
+          onPressIn={() => {
+            Alert.alert('Button pressed in');
+          }}
+          onPressOut={() => {
+            Alert.alert('Button pressed out');
+          }}
+        >
+          Button Secondary
+        </Button>
+        <Button variant="rounded" marginBottom={20} inverse>
+          Button Rounded Inverse
+        </Button>
+        <Button variant="rounded" transparent>
+          Button Rounded Transparent
+        </Button>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
