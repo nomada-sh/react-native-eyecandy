@@ -5,6 +5,7 @@ import { useTheme as useEyecandyTheme } from '@nomada-sh/react-native-eyecandy-t
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import ActionSheets from '../ActionSheets';
+import AvatarEdits from '../AvatarEdits';
 import Avatars from '../Avatars';
 import BottomSheets from '../BottomSheets';
 import Buttons from '../Buttons';
@@ -39,6 +40,7 @@ export default function Drawer() {
       <Screen name="SwipeButtons" component={SwipeButtons} />
       <Screen name="Forms" component={Forms} />
       <Screen name="Avatars" component={Avatars} />
+      <Screen name="AvatarEdits" component={AvatarEdits} />
       <Screen name="BottomSheets" component={BottomSheets} />
       <Screen name="ActionSheets" component={ActionSheets} />
       <Screen name="CheckLists" component={CheckLists} />
