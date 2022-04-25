@@ -12,6 +12,7 @@ import BottomSheets from '../BottomSheets';
 import ButtonBase from '../ButtonBase';
 import Buttons from '../Buttons';
 import Calendars from '../CalendarStrips';
+import Cards from '../Cards';
 import CheckLists from '../CheckLists';
 import Forms from '../Forms';
 import LineValueSelectors from '../LineValueSelectors';
@@ -50,6 +51,7 @@ export default function Drawer() {
       <Screen name="TextInput" component={TextInputs} />
       <Screen name="Select" component={Selects} />
       <Screen name="SwipeButton" component={SwipeButtons} />
+      <Screen name="Cards" component={Cards} />
       <Screen name="Forms" component={Forms} />
       <Screen name="Avatar" component={Avatars} />
       <Screen name="AvatarEdit" component={AvatarEdits} />

@@ -6,19 +6,30 @@ import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
 export interface CardProps extends ViewProps {
   children?: ReactNode;
+  marginBottom?: number;
+  marginTop?: number;
+  padding?: number;
 }
 
-function Card({ style, ...props }: CardProps) {
-  const { dark, palette } = useTheme();
+function Card({
+  style,
+  marginBottom,
+  marginTop,
+  padding,
+  ...props
+}: CardProps) {
+  const { colors } = useTheme();
 
   return (
     <View
       style={[
         {
-          backgroundColor: palette.grey[dark ? 800 : 100],
-          padding: 16,
+          backgroundColor: colors.background.default.content,
+          padding: padding !== undefined ? padding : 20,
           borderRadius: 16,
           overflow: 'hidden',
+          marginBottom,
+          marginTop,
         },
         style,
       ]}
