@@ -7,6 +7,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import ActionSheets from '../ActionSheets';
 import AvatarEdits from '../AvatarEdits';
 import Avatars from '../Avatars';
+import BottomSheetSwipeConfirmation from '../BottomSheetSwipeConfirmation/BottomSheetSwipeConfirmation';
 import BottomSheets from '../BottomSheets';
 import Buttons from '../Buttons';
 import Calendars from '../CalendarStrips';
@@ -51,6 +52,10 @@ export default function Drawer() {
       <Screen name="Avatar" component={Avatars} />
       <Screen name="AvatarEdit" component={AvatarEdits} />
       <Screen name="BottomSheet" component={BottomSheets} />
+      <Screen
+        name="BottomSheetSwipeConfirmation"
+        component={BottomSheetSwipeConfirmation}
+      />
       <Screen name="ActionSheet" component={ActionSheets} />
       <Screen name="CheckList" component={CheckLists} />
       <Screen name="RadioGroup" component={RadioGroups} />
