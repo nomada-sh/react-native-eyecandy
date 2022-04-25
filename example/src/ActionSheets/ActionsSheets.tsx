@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Alert, SafeAreaView } from 'react-native';
 
 import {
   Button,
@@ -9,23 +9,23 @@ import {
 import {
   Camera,
   Mail,
-  Star,
+  Photo,
   Eye,
   Download,
 } from '@nomada-sh/react-native-eyecandy-icons';
 
-const options: ActionSheetOption[] = [
+const profilePictureOptions: ActionSheetOption[] = [
   {
     label: 'Take a photo',
     icon: Camera,
   },
   {
     label: 'Choose from gallery',
-    icon: Star,
+    icon: Photo,
   },
 ];
 
-const options2: ActionSheetOption[] = [
+const shareDocumentOptions: ActionSheetOption[] = [
   {
     label: 'Download',
     icon: Download,
@@ -41,55 +41,73 @@ const options2: ActionSheetOption[] = [
 ];
 
 export default function ActionSheets() {
-  const [visible, setVisible] = React.useState(false);
-  const [visible2, setVisible2] = React.useState(false);
-  const [visible3, setVisible3] = React.useState(false);
+  const [visibleChangePicture, setVisibleChangePicture] = React.useState(false);
+  const [visibleShare, setVisibleShare] = React.useState(false);
+  const [nativeVisible, setNativeVisible] = React.useState(false);
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        padding: 20,
+    <SafeAreaView
+      style={{
+        flex: 1,
       }}
     >
-      <Button
-        marginBottom={20}
-        onPress={() => setVisible(true)}
-        text="Show Action Sheet"
-      />
-      <ActionSheet
-        title="Change your profile picture"
-        message="Select a new profile picture"
-        options={options}
-        visible={visible}
-        onClose={() => setVisible(false)}
-        onPressAction={index => console.log(index)}
-        showCancelIcon
-      />
-      <Button
-        marginBottom={20}
-        onPress={() => setVisible2(true)}
-        text="Show Action Sheet 2"
-      />
-      <ActionSheet
-        options={options2}
-        visible={visible2}
-        onClose={() => setVisible2(false)}
-        onPressAction={index => console.log(index)}
-        showCancelIcon
-      />
-      <Button
-        marginBottom={20}
-        onPress={() => setVisible3(true)}
-        text="Show Native Action Sheet"
-      />
-      <ActionSheet
-        native
-        options={options2}
-        visible={visible3}
-        onClose={() => setVisible3(false)}
-        onPressAction={index => console.log(index)}
-        showCancelIcon
-      />
-    </ScrollView>
+      <ScrollView
+        contentContainerStyle={{
+          padding: 20,
+        }}
+      >
+        <Button
+          marginBottom={20}
+          onPress={() => setVisibleChangePicture(true)}
+          text="Change your profile picture"
+        />
+        <ActionSheet
+          title="Change your profile picture"
+          message="Select a new profile picture"
+          options={profilePictureOptions}
+          visible={visibleChangePicture}
+          onClose={() => setVisibleChangePicture(false)}
+          onPressAction={index => {
+            const option = profilePictureOptions[index];
+            if (typeof option === 'string') Alert.alert(option);
+            else Alert.alert(option.label);
+          }}
+          showCancelIcon
+        />
+        <Button
+          marginBottom={20}
+          onPress={() => setVisibleShare(true)}
+          text="Share document"
+        />
+        <ActionSheet
+          options={shareDocumentOptions}
+          visible={visibleShare}
+          onClose={() => setVisibleShare(false)}
+          onPressAction={index => {
+            const option = shareDocumentOptions[index];
+            if (typeof option === 'string') Alert.alert(option);
+            else Alert.alert(option.label);
+          }}
+          showCancelIcon
+        />
+        <Button
+          marginBottom={20}
+          onPress={() => setNativeVisible(true)}
+          text="Share document (native)"
+        />
+        <ActionSheet
+          native
+          options={shareDocumentOptions}
+          visible={nativeVisible}
+          onClose={() => setNativeVisible(false)}
+          onPressAction={index => {
+            const option = shareDocumentOptions[index];
+            if (typeof option === 'string') Alert.alert(option);
+            else Alert.alert(option.label);
+          }}
+          showCancelIcon
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
