@@ -14,6 +14,7 @@ import Buttons from '../Buttons';
 import Calendars from '../CalendarStrips';
 import Cards from '../Cards';
 import CheckLists from '../CheckLists';
+import CodeInputs from '../CodeInputs';
 import Forms from '../Forms';
 import LineValueSelectors from '../LineValueSelectors';
 import RadioGroups from '../RadioGroups';
@@ -49,6 +50,7 @@ export default function Drawer() {
       <Screen name="Button" component={Buttons} />
       <Screen name="ButtonBase" component={ButtonBase} />
       <Screen name="TextInput" component={TextInputs} />
+      <Screen name="CodeInput" component={CodeInputs} />
       <Screen name="Select" component={Selects} />
       <Screen name="SwipeButton" component={SwipeButtons} />
       <Screen name="Cards" component={Cards} />
