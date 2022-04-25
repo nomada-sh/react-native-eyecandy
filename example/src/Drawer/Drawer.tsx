@@ -9,7 +9,7 @@ import AvatarEdits from '../AvatarEdits';
 import Avatars from '../Avatars';
 import BottomSheets from '../BottomSheets';
 import Buttons from '../Buttons';
-import Calendars from '../Calendars';
+import Calendars from '../CalendarStrips';
 import CheckLists from '../CheckLists';
 import Forms from '../Forms';
 import LineValueSelectors from '../LineValueSelectors';
@@ -30,23 +30,32 @@ export default function Drawer() {
       initialRouteName="Buttons"
       screenOptions={{
         headerTintColor: colors.text.default.normal,
-        headerRight: () => <Switch value={dark} onValueChange={setDark} />,
-        swipeEnabled: false,
+        headerShown: false,
+        headerRight: () => (
+          <Switch
+            style={{
+              marginEnd: 10,
+            }}
+            value={dark}
+            onValueChange={setDark}
+          />
+        ),
+        // swipeEnabled: false,
       }}
     >
-      <Screen name="Buttons" component={Buttons} />
-      <Screen name="TextInputs" component={TextInputs} />
-      <Screen name="Selects" component={Selects} />
-      <Screen name="SwipeButtons" component={SwipeButtons} />
+      <Screen name="Button" component={Buttons} />
+      <Screen name="TextInput" component={TextInputs} />
+      <Screen name="Select" component={Selects} />
+      <Screen name="SwipeButton" component={SwipeButtons} />
       <Screen name="Forms" component={Forms} />
-      <Screen name="Avatars" component={Avatars} />
-      <Screen name="AvatarEdits" component={AvatarEdits} />
-      <Screen name="BottomSheets" component={BottomSheets} />
-      <Screen name="ActionSheets" component={ActionSheets} />
-      <Screen name="CheckLists" component={CheckLists} />
-      <Screen name="RadioGroups" component={RadioGroups} />
-      <Screen name="LineValueSelectors" component={LineValueSelectors} />
-      <Screen name="Calendars" component={Calendars} />
+      <Screen name="Avatar" component={Avatars} />
+      <Screen name="AvatarEdit" component={AvatarEdits} />
+      <Screen name="BottomSheet" component={BottomSheets} />
+      <Screen name="ActionSheet" component={ActionSheets} />
+      <Screen name="CheckList" component={CheckLists} />
+      <Screen name="RadioGroup" component={RadioGroups} />
+      <Screen name="LineValueSelector" component={LineValueSelectors} />
+      <Screen name="CalendarStrip" component={Calendars} />
     </Navigator>
   );
 }

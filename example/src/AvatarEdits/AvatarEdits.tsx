@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageSourcePropType, ScrollView } from 'react-native';
+import { ImageSourcePropType, SafeAreaView, ScrollView } from 'react-native';
 
 import { AvatarEdit } from '@nomada-sh/react-native-eyecandy';
 
@@ -9,13 +9,25 @@ export default function Avatars() {
   });
 
   return (
-    <ScrollView>
-      <AvatarEdit
-        source={source}
-        onChange={image => {
-          if (image) setSource(image);
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          padding: 20,
+          alignItems: 'center',
         }}
-      />
-    </ScrollView>
+      >
+        <AvatarEdit
+          size={150}
+          source={source}
+          onChange={image => {
+            if (image) setSource(image);
+          }}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 }

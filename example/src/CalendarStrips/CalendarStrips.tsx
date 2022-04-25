@@ -8,7 +8,7 @@ import {
   CalendarStripHandle,
 } from '@nomada-sh/react-native-eyecandy';
 
-export default function Calendars() {
+export default function CalendarStrips() {
   const [value, setValue] = React.useState(new Date());
   const ref = useRef<CalendarStripHandle>(null);
 
