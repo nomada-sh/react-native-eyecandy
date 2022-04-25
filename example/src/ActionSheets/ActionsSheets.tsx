@@ -43,10 +43,19 @@ const options2: ActionSheetOption[] = [
 export default function ActionSheets() {
   const [visible, setVisible] = React.useState(false);
   const [visible2, setVisible2] = React.useState(false);
+  const [visible3, setVisible3] = React.useState(false);
 
   return (
-    <ScrollView>
-      <Button onPress={() => setVisible(true)} text="Show Action Sheet" />
+    <ScrollView
+      contentContainerStyle={{
+        padding: 20,
+      }}
+    >
+      <Button
+        marginBottom={20}
+        onPress={() => setVisible(true)}
+        text="Show Action Sheet"
+      />
       <ActionSheet
         title="Change your profile picture"
         message="Select a new profile picture"
@@ -56,11 +65,28 @@ export default function ActionSheets() {
         onPressAction={index => console.log(index)}
         showCancelIcon
       />
-      <Button onPress={() => setVisible2(true)} text="Show Action Sheet 2" />
+      <Button
+        marginBottom={20}
+        onPress={() => setVisible2(true)}
+        text="Show Action Sheet 2"
+      />
       <ActionSheet
         options={options2}
         visible={visible2}
         onClose={() => setVisible2(false)}
+        onPressAction={index => console.log(index)}
+        showCancelIcon
+      />
+      <Button
+        marginBottom={20}
+        onPress={() => setVisible3(true)}
+        text="Show Native Action Sheet"
+      />
+      <ActionSheet
+        native
+        options={options2}
+        visible={visible3}
+        onClose={() => setVisible3(false)}
         onPressAction={index => console.log(index)}
         showCancelIcon
       />

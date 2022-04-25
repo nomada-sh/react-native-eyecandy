@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Platform, ActionSheetIOS, View } from 'react-native';
 
 import { IconProps, Close } from '@nomada-sh/react-native-eyecandy-icons';
@@ -22,12 +22,13 @@ export interface ActionSheetProps {
   options: ActionSheetOption[];
   title?: string;
   message?: string;
-  useNative?: boolean;
+  native?: boolean;
   onClose?: () => void;
   onCancel?: () => void;
   onPressAction?: (index: number) => void;
   cancelText?: string;
   showCancelIcon?: boolean;
+  dark?: boolean;
 }
 
 export default function ActionSheet({
@@ -35,26 +36,35 @@ export default function ActionSheet({
   options,
   title,
   message,
-  useNative,
+  native,
   onPressAction,
   onCancel,
   onClose,
   cancelText = 'Cancel',
   showCancelIcon,
+  dark: darkProp,
 }: ActionSheetProps) {
-  const { dark, palette } = useTheme();
+  const { dark: darkTheme, palette } = useTheme();
+  const dark = darkProp !== undefined ? darkProp : darkTheme;
 
-  const cancelButtonIndex = options.length + 1;
+  const cancelButtonIndex = options.length;
 
-  if (useNative && Platform.OS === 'ios' && visible) {
+  const isNative = native && Platform.OS === 'ios';
+
+  useEffect(() => {
+    if (!isNative || !visible) return;
+
     ActionSheetIOS.showActionSheetWithOptions(
       {
         cancelButtonIndex,
-        options: options.map(option => {
-          if (typeof option === 'string') return option;
+        options: [
+          ...options.map(option => {
+            if (typeof option === 'string') return option;
 
-          return option.label;
-        }),
+            return option.label;
+          }),
+          cancelText,
+        ],
         userInterfaceStyle: dark ? 'dark' : 'light',
         title,
         message,
@@ -65,17 +75,32 @@ export default function ActionSheet({
         onClose && onClose();
       },
     );
+  }, [
+    cancelButtonIndex,
+    cancelText,
+    dark,
+    message,
+    onCancel,
+    onClose,
+    onPressAction,
+    options,
+    title,
+    visible,
+    isNative,
+  ]);
 
-    return null;
-  }
+  if (isNative) return null;
 
   const showHeader = title || message;
-  const heightAddedPadding = 30 + (showHeader ? 20 : 0);
+  const paddingVertical = 10;
+  const cancelItemBottomMargin = Platform.OS === 'ios' ? 20 : 10;
+  const heightAddedSeparation =
+    2 * paddingVertical + cancelItemBottomMargin + (showHeader ? 20 : 0);
   const titleHeight = title ? 24 : 0;
   const messageHeight = message ? 20 : 0;
   let height =
     (options.length + 1) * 45 +
-    heightAddedPadding +
+    heightAddedSeparation +
     titleHeight +
     messageHeight;
 
@@ -85,7 +110,7 @@ export default function ActionSheet({
         <View
           style={{
             paddingHorizontal: 20,
-            paddingVertical: 10,
+            paddingVertical,
           }}
         >
           {title ? (
