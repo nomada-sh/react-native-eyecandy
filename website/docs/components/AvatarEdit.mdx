@@ -11,6 +11,39 @@ import { AvatarEdit } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
+```jsx
+import React from 'react';
+import { ImageSourcePropType, ScrollView } from 'react-native';
+
+import { AvatarEdit } from '@nomada-sh/react-native-eyecandy';
+
+export default function Avatars() {
+  const [source, setSource] =
+    React.useState <
+    ImageSourcePropType >
+    {
+      uri: 'https://i.pravatar.cc/300',
+    };
+
+  return (
+    <ScrollView
+      contentContainerStyle={{
+        padding: 20,
+        alignItems: 'center',
+      }}
+    >
+      <AvatarEdit
+        size={150}
+        source={source}
+        onChange={image => {
+          if (image) setSource(image);
+        }}
+      />
+    </ScrollView>
+  );
+}
+```
+
 ## Props
 
 ### [Pressable Props](https://reactnative.dev/docs/pressable#props)
@@ -40,7 +73,10 @@ Width and height of the avatar.
 ### `onChange`
 
 ```jsx
-(source: ImageSource) => void
+(source: ImageSource | undefined, error: {
+  code: number;
+  message: string;
+} | undefined) => void;
 ```
 
 | Type     |
@@ -48,6 +84,31 @@ Width and height of the avatar.
 | function |
 
 - 'source' ([ImageSource](https://reactnative.dev/docs/image#imagesource)): The new image source of the avatar.
+- 'error' (object): The error object if the image source is invalid.
+
+---
+
+### `fromGalleryText`
+
+| Type   | Default          |
+| ------ | ---------------- |
+| string | `'From Gallery'` |
+
+---
+
+### `fromCameraText`
+
+| Type   | Default         |
+| ------ | --------------- |
+| string | `'From Camera'` |
+
+---
+
+### `title`
+
+| Type   | Default           |
+| ------ | ----------------- |
+| string | `'Change Avatar'` |
 
 ---
 

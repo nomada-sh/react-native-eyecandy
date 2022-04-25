@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 
 import {
   ThemeProvider,
@@ -21,7 +21,10 @@ export default function Theme({ children }: { children: React.ReactNode }) {
         setDark,
       }}
     >
-      <StatusBar barStyle={dark ? 'light-content' : 'dark-content'} />
+      <StatusBar
+        backgroundColor={theme.colors.background.default.container}
+        barStyle={dark ? 'light-content' : 'dark-content'}
+      />
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </ThemeContext.Provider>
   );

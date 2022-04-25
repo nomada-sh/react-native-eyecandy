@@ -35,3 +35,4 @@ export { default as Dots } from './Dots';
 export { default as UserPlus } from './UserPlus';
 export { default as Download } from './Download';
 export { default as Close } from './Close';
+export { default as Photo } from './Photo';

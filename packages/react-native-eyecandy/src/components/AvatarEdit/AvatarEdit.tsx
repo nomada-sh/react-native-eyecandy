@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   GestureResponderEvent,
   Pressable,
@@ -9,7 +9,7 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 
-import { Camera } from '@nomada-sh/react-native-eyecandy-icons';
+import { Camera, Photo } from '@nomada-sh/react-native-eyecandy-icons';
 import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {
@@ -19,86 +19,83 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 
-import { ms } from '../../utils';
-import ActionSheet from '../../utils/ActionSheet';
+import ActionSheet, { ActionSheetOption } from '../ActionSheet';
 import Avatar, { AvatarProps } from '../Avatar';
 import IconButton from '../IconButton';
+
+interface OnChangeError {
+  code: string;
+  message: string;
+}
 
 export interface AvatarEditProps extends Omit<PressableProps, 'style'> {
   size?: number;
   source: AvatarProps['source'];
   style?: StyleProp<ViewStyle>;
-  onChange?: (image?: ImageSourcePropType) => void;
+  onChange?: (image?: ImageSourcePropType, error?: OnChangeError) => void;
+  fromGalleryText?: string;
+  fromCameraText?: string;
+  title?: string;
 }
 
 function AvatarEdit({
   style,
-  size = ms(100),
+  size = 100,
   source,
-  onPress,
+  onPress: onPressProp,
   onChange,
+  fromGalleryText = 'From Gallery',
+  fromCameraText = 'From Camera',
+  title = 'Change Avatar',
   ...props
 }: AvatarEditProps) {
   const colors = useColors(c => c.background.default);
+  const [visible, setVisible] = React.useState(false);
 
-  const onImageSelected = useCallback(
-    (res: ImagePickerResponse) => {
-      if (res.errorCode) {
-        throw JSON.stringify(res);
-      }
+  const onImageSelected = (res: ImagePickerResponse) => {
+    if (res.didCancel) return;
 
-      if (res.didCancel) {
-        return;
-      }
-
+    if (res.errorCode) {
+      onChange?.(undefined, {
+        code: res.errorCode,
+        message: res.errorMessage ?? 'An unknown error occurred',
+      });
+    } else {
       if (res.assets && res.assets.length) onChange?.(res.assets[0]);
-      else onChange?.(undefined);
+      else onChange?.();
+    }
+  };
+
+  const onPressAction = (index: number) => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'photo',
+    };
+
+    const launch = index === 0 ? launchImageLibrary : launchCamera;
+
+    launch(options).then(onImageSelected).catch(console.error);
+  };
+
+  const options: ActionSheetOption[] = [
+    {
+      label: fromGalleryText,
+      icon: Photo,
     },
-    [onChange],
-  );
-
-  const onActionSheetSelect = useCallback(
-    index => {
-      if (index === 2) {
-        return;
-      }
-
-      const options: ImageLibraryOptions = {
-        mediaType: 'photo',
-      };
-
-      const launch = index === 0 ? launchImageLibrary : launchCamera;
-
-      launch(options).then(onImageSelected).catch(console.error);
+    {
+      label: fromCameraText,
+      icon: Camera,
     },
-    [onImageSelected],
-  );
+  ];
 
-  // TODO: Translate this.
-
-  const handlePress = useCallback(
-    (e: GestureResponderEvent) => {
-      ReactNativeHapticFeedback.trigger('impactMedium');
-
-      ActionSheet(
-        {
-          optionsIOS: ['From Gallery', 'From Camera', 'Cancel'],
-          optionsAndroid: ['From Gallery', 'From Camera'],
-          cancelButtonIndex: 2,
-          onCancelAndroidIndex: 2,
-          title: 'Update Profile Picture',
-        },
-        onActionSheetSelect,
-      );
-
-      onPress?.(e);
-    },
-    [onActionSheetSelect, onPress],
-  );
+  const onPress = (e: GestureResponderEvent) => {
+    ReactNativeHapticFeedback.trigger('impactLight');
+    setVisible(true);
+    onPressProp && onPressProp(e);
+  };
 
   return (
     <Pressable
-      onPress={handlePress}
+      onPress={onPress}
       style={[
         {
           width: size,
@@ -119,10 +116,19 @@ function AvatarEdit({
           styles.cameraIconButton,
         ]}
         icon={Camera}
-        iconSize={14}
-        size={24}
+        iconSize={size * 0.14}
+        size={size * 0.24}
         color="primary"
-        onPress={handlePress}
+        onPress={onPress}
+      />
+      <ActionSheet
+        native
+        visible={visible}
+        onClose={() => setVisible(false)}
+        onPressAction={onPressAction}
+        options={options}
+        title={title}
+        showCancelIcon
       />
     </Pressable>
   );
