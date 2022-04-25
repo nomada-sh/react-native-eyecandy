@@ -468,7 +468,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../../node_modules/react-native/ReactCommon`)
-  - "RNCPicker (from `../../node_modules/@react-native-picker/picker`)"
+  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - RNGestureHandler (from `../../node_modules/react-native-gesture-handler`)
   - RNReactNativeHapticFeedback (from `../../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../../node_modules/react-native-reanimated`)
@@ -562,7 +562,7 @@ EXTERNAL SOURCES:
   ReactCommon:
     :path: "../../node_modules/react-native/ReactCommon"
   RNCPicker:
-    :path: "../../node_modules/@react-native-picker/picker"
+    :path: "../node_modules/@react-native-picker/picker"
   RNGestureHandler:
     :path: "../../node_modules/react-native-gesture-handler"
   RNReactNativeHapticFeedback:
