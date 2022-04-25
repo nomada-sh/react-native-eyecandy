@@ -16,7 +16,9 @@ import Cards from '../Cards';
 import CheckLists from '../CheckLists';
 import CodeInputs from '../CodeInputs';
 import Forms from '../Forms';
+import IconButtons from '../IconButtons';
 import LineValueSelectors from '../LineValueSelectors';
+import LinkButtons from '../LinkButtons';
 import RadioGroups from '../RadioGroups';
 import Selects from '../Selects';
 import SwipeButtons from '../SwipeButtons';
@@ -49,6 +51,8 @@ export default function Drawer() {
     >
       <Screen name="Button" component={Buttons} />
       <Screen name="ButtonBase" component={ButtonBase} />
+      <Screen name="IconButtons" component={IconButtons} />
+      <Screen name="LinkButtons" component={LinkButtons} />
       <Screen name="TextInput" component={TextInputs} />
       <Screen name="CodeInput" component={CodeInputs} />
       <Screen name="Select" component={Selects} />
