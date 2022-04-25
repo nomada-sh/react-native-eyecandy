@@ -4,3 +4,4 @@ yalc.lock
 node_modules
 yarn-error.log
 *.ignore
+tsconfig.tsbuildinfo
