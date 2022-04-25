@@ -5,17 +5,15 @@ import {
   useColors,
 } from '@nomada-sh/react-native-eyecandy-theme';
 
-export default function useStyles<ValueType>({
+export default function useStyles({
   color = 'default',
   variant = 'default',
-  value,
   focused,
-  withPaddingStart,
+  removePaddingLeft,
 }: {
   color?: ThemeInputColorChoices;
-  value?: ValueType;
   focused?: boolean;
-  withPaddingStart?: boolean;
+  removePaddingLeft?: boolean;
   variant?: 'default' | 'outlined';
 }) {
   const colors = useColors(c => c.input[color]);
@@ -43,11 +41,10 @@ export default function useStyles<ValueType>({
     selectContainer: {
       flex: 1,
     },
-    input: {
+    select: {
       color: colors.foreground,
-      fontWeight: value ? '700' : 'normal',
       paddingHorizontal: 0,
-      paddingStart: withPaddingStart ? padding : 0,
+      paddingStart: removePaddingLeft ? 0 : padding,
       height: 56,
     },
     placeholder: {

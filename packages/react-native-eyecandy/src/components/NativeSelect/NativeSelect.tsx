@@ -1,106 +1,132 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 import { Platform, TouchableWithoutFeedback, View } from 'react-native';
 
 import { ChevronDown } from '@nomada-sh/react-native-eyecandy-icons';
 import SelectBase from 'react-native-picker-select';
 
-import type { NativeSelectProps } from './types';
+import type {
+  NativeSelectHandle,
+  NativeSelectItem,
+  NativeSelectProps,
+} from './types';
 import useStyles from './useStyles';
 
-function NativeSelect<V>({
-  items = [],
-  onValueChange = () => {},
-  value,
-  color,
-  icon: Icon,
-  onFocus,
-  onBlur,
-  style,
-  variant,
-  pickerProps = {},
-  placeholder: placeholderProp = 'Select an item...',
-  androidItemSelectedColor = '#9ea0a4',
-  ...props
-}: NativeSelectProps<V>) {
-  const placeholder = useMemo(() => {
-    let placeholderColor =
-      Platform.OS === 'android' ? androidItemSelectedColor : undefined;
+const defaultItems: NativeSelectItem<any>[] = [];
 
-    return {
-      label: placeholderProp,
-      value: null,
-      color: placeholderColor,
-    };
-  }, [placeholderProp, androidItemSelectedColor]);
+function NativeSelect<V>(
+  {
+    items = defaultItems,
+    onChange,
+    value,
+    color,
+    icon: Icon,
+    onFocus: onFocusProp,
+    onBlur: onBlurProp,
+    style,
+    variant,
+    emptyText = 'No items',
+    marginBottom,
+    marginTop,
+    placeholder = 'Select an item...',
+  }: NativeSelectProps<V>,
+  ref: React.Ref<NativeSelectHandle>,
+) {
+  const disabled = items.length === 0;
+  const androidItemSelectedColor = '#9ea0a4';
+
+  const placeholderItem = {
+    label: items.length === 0 ? emptyText : placeholder,
+    value: undefined,
+    color: Platform.OS === 'android' ? androidItemSelectedColor : undefined,
+  };
 
   const [focused, setFocused] = useState(false);
   const styles = useStyles({
     color,
     variant,
-    value,
     focused,
-    withPaddingStart: Icon === undefined,
+    removePaddingLeft: Icon !== undefined,
   });
 
   const selectRef = useRef<any>(null);
 
-  const openPicker = useCallback(() => {
+  const focus = () => {
+    if (disabled) return;
+
     if (Platform.OS === 'android') {
       selectRef.current?.focus();
     } else {
       selectRef.current?.togglePicker(true);
     }
-  }, []);
+  };
 
-  const handleFocus = useCallback(() => {
+  const onFocus = () => {
     setFocused(true);
-    onFocus?.();
-  }, [onFocus]);
+    onFocusProp?.();
+  };
 
-  const handleBlur = useCallback(() => {
+  const onBlur = () => {
     setFocused(false);
-    onBlur?.();
-  }, [onBlur]);
+    onBlurProp?.();
+  };
+
+  useImperativeHandle(ref, () => ({
+    focus,
+  }));
 
   const icon = Icon ? (
     React.isValidElement(Icon) ? (
       Icon
     ) : (
-      <Icon size={styles.icon.fontSize} stroke={styles.icon.color} />
+      <Icon
+        focused={focused}
+        size={styles.icon.fontSize}
+        stroke={styles.icon.color}
+      />
     )
   ) : null;
 
   return (
-    <View style={[styles.container, style]}>
+    <View
+      style={[
+        styles.container,
+        {
+          marginBottom,
+          marginTop,
+        },
+        style,
+      ]}
+    >
       {icon ? (
-        <TouchableWithoutFeedback onPress={() => openPicker()}>
+        <TouchableWithoutFeedback disabled={disabled} onPress={focus}>
           <View style={styles.iconContainer}>{icon}</View>
         </TouchableWithoutFeedback>
       ) : null}
       <View style={styles.selectContainer}>
         <SelectBase
+          disabled={disabled}
           ref={Platform.OS === 'android' ? undefined : selectRef}
           pickerProps={{
-            ...pickerProps,
             // @ts-ignore
             ref: Platform.OS === 'android' ? selectRef : undefined,
-            onFocus: handleFocus,
-            onBlur: handleBlur,
+            onFocus,
+            onBlur,
           }}
           useNativeAndroidPickerStyle={false}
           style={{
-            inputAndroid: styles.input,
-            inputIOS: styles.input,
+            inputAndroid: styles.select,
+            inputIOS: styles.select,
             placeholder: styles.placeholder,
           }}
           items={items}
-          onValueChange={onValueChange}
+          onValueChange={(value, index) => {
+            onChange && onChange(value, index);
+          }}
           value={value}
-          placeholder={placeholder}
-          {...props}
+          placeholder={placeholderItem}
         />
       </View>
-      <TouchableWithoutFeedback onPress={() => openPicker()}>
+      <TouchableWithoutFeedback disabled={disabled} onPress={focus}>
         <View style={styles.iconContainer}>
           <ChevronDown
             size={styles.icon.fontSize}
@@ -112,4 +138,6 @@ function NativeSelect<V>({
   );
 }
 
-export default NativeSelect;
+export default React.forwardRef(NativeSelect) as <V>(
+  p: NativeSelectProps<V> & { ref?: React.Ref<NativeSelectHandle> },
+) => JSX.Element;

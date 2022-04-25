@@ -19,6 +19,8 @@ export interface TextProps extends TextBaseProps {
   align?: TextStyle['textAlign'];
   contrast?: boolean;
   color?: ThemeTextColorsChoices | string;
+  marginTop?: number;
+  marginBottom?: number;
 }
 
 function Text({
@@ -28,6 +30,8 @@ function Text({
   contrast = false,
   color = 'default',
   align,
+  marginBottom,
+  marginTop,
   ...props
 }: TextProps) {
   const { colors } = useTheme();
@@ -65,6 +69,8 @@ function Text({
           fontSize: size,
           color: textColor,
           textAlign: align,
+          marginBottom,
+          marginTop,
         },
         style,
       ]}

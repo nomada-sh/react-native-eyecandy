@@ -37,12 +37,12 @@ export interface PickerProps<V> {
   selectedItemIndex: number;
 }
 
-export interface SelectPropsStyleProps {
+export interface SelectStyleProps {
   color?: ThemeInputColorChoices;
   variant?: 'default' | 'outlined';
 }
 
-export interface SelectProps<V> extends SelectPropsStyleProps {
+export interface SelectProps<V> extends SelectStyleProps {
   items?: SelectItem<V>[];
   onChange?: (value: V | undefined, index: number) => void;
   value?: V;

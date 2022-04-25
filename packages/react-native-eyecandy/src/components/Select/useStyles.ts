@@ -2,9 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
-import { SelectPropsStyleProps } from './types';
+import { SelectStyleProps } from './types';
 
-interface UseStylesProps extends SelectPropsStyleProps {
+interface UseStylesProps extends SelectStyleProps {
   focused?: boolean;
   removePaddingLeft?: boolean;
 }
@@ -49,7 +49,6 @@ export default function useStyles({
       height: 56,
       justifyContent: 'center',
     },
-    menu: {},
     placeholder: {
       color: colors.placeholder,
     },
