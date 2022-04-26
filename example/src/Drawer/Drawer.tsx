@@ -32,6 +32,7 @@ import SwipeButtons from '../SwipeButtons';
 import Switchs from '../Switchs';
 import TextInputs from '../TextInputs';
 import Texts from '../Texts';
+import ThemeSwitch from '../ThemeSwitch';
 import { useTheme } from '../shared/hooks';
 
 const { Navigator, Screen } = createDrawerNavigator();
@@ -109,6 +110,7 @@ export default function Drawer() {
       <Screen name="CheckList" component={CheckLists} />
       <Screen name="LineValueSelector" component={LineValueSelectors} />
       <Screen name="CalendarStrip" component={Calendars} />
+      <Screen name="ThemeSwitch" component={ThemeSwitch} />
     </Navigator>
   );
 }

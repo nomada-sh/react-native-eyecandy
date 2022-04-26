@@ -38,10 +38,21 @@ export default function App() {
           alignItems: 'center',
         }}
       >
-        <Body>Hello World!</Body>
-        <Switch value={dark} onValueChange={setDark} />
+        <Switch
+          value={dark}
+          onValueChange={setDark}
+          style={{
+            alignSelf: 'center',
+            marginBottom: 20,
+          }}
+        />
+        <Body weight="bold" size="xlarge">
+          Hello, world!
+        </Body>
       </View>
     </ThemeProvider>
   );
 }
 ```
+
+![Theme](./assets/theme.gif)
