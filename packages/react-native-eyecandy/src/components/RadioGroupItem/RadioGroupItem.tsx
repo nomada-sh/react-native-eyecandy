@@ -63,7 +63,7 @@ function RadioGroupItem<V = any>({
           accessible
           accessibilityRole="button"
         >
-          <RadioButton value={selected} />
+          <RadioButton disabled value={selected} />
           <Body
             testID={testID ? `${testID}-label` : undefined}
             size="small"

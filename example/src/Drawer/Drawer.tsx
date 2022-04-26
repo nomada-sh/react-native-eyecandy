@@ -21,6 +21,7 @@ import IconButtons from '../IconButtons';
 import LineValueSelectors from '../LineValueSelectors';
 import LinkButtons from '../LinkButtons';
 import Menus from '../Menus';
+import RadioButtons from '../RadioButtons';
 import RadioGroups from '../RadioGroups';
 import Selects from '../Selects';
 import SwipeButtons from '../SwipeButtons';
@@ -53,8 +54,10 @@ export default function Drawer() {
     >
       <Screen name="Button" component={Buttons} />
       <Screen name="ButtonBase" component={ButtonBase} />
-      <Screen name="IconButtons" component={IconButtons} />
-      <Screen name="LinkButtons" component={LinkButtons} />
+      <Screen name="IconButton" component={IconButtons} />
+      <Screen name="LinkButton" component={LinkButtons} />
+      <Screen name="RadioButton" component={RadioButtons} />
+      <Screen name="RadioGroup" component={RadioGroups} />
       <Screen name="SwipeButton" component={SwipeButtons} />
       <Screen name="Badge" component={Badges} />
       <Screen name="TextInput" component={TextInputs} />
@@ -72,7 +75,6 @@ export default function Drawer() {
       <Screen name="ActionSheet" component={ActionSheets} />
       <Screen name="Menu" component={Menus} />
       <Screen name="CheckList" component={CheckLists} />
-      <Screen name="RadioGroup" component={RadioGroups} />
       <Screen name="LineValueSelector" component={LineValueSelectors} />
       <Screen name="CalendarStrip" component={Calendars} />
     </Navigator>
