@@ -34,22 +34,24 @@ function NativeSelect<V>(
   ref: React.Ref<NativeSelectHandle>,
 ) {
   const disabled = items.length === 0;
-  const androidItemSelectedColor = '#9ea0a4';
-
-  const placeholderItem = {
-    label: items.length === 0 ? emptyText : placeholder,
-    value: undefined,
-    color: Platform.OS === 'android' ? androidItemSelectedColor : undefined,
-  };
 
   const [focused, setFocused] = useState(false);
-  const { dark } = useTheme();
+
+  const { dark: darkTheme } = useTheme();
+  const dark = darkProp !== undefined ? darkProp : darkTheme;
+
   const styles = useStyles({
     color,
     variant,
     focused,
     removePaddingLeft: Icon !== undefined,
   });
+
+  const placeholderItem = {
+    label: items.length === 0 ? emptyText : placeholder,
+    value: undefined,
+    color: Platform.OS === 'android' ? styles.placeholder.color : undefined,
+  };
 
   const selectRef = useRef<any>(null);
 
@@ -133,7 +135,7 @@ function NativeSelect<V>(
           }}
           value={value}
           placeholder={placeholderItem}
-          darkTheme={darkProp !== undefined ? darkProp : dark}
+          darkTheme={dark}
         />
       </View>
       <TouchableWithoutFeedback disabled={disabled} onPress={focus}>

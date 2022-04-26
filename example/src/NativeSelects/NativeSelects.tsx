@@ -1,27 +1,25 @@
 import React, { useRef } from 'react';
-import { ScrollView, SafeAreaView } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 import {
   Button,
-  Select,
-  SelectHandle,
-  SelectItem,
+  NativeSelect,
+  NativeSelectHandle,
+  NativeSelectItem,
 } from '@nomada-sh/react-native-eyecandy';
 import { Crown, Star } from '@nomada-sh/react-native-eyecandy-icons';
 
-const items1: SelectItem<string>[] = [
+const items1: NativeSelectItem<string>[] = [
   ...Array.from({ length: 100 }, (_, i) => ({
     label: `Option ${i}`,
     value: `option${i}`,
-    icon: Crown,
   })),
 ];
 
-const items2: SelectItem<string>[] = [
+const items2: NativeSelectItem<string>[] = [
   ...Array.from({ length: 10 }, (_, i) => ({
     label: `Option ${i}`,
     value: `option${i}`,
-    icon: Star,
   })),
 ];
 
@@ -29,7 +27,7 @@ export default function Selects() {
   const [v1, setV1] = React.useState<string | undefined>(undefined);
   const [v2, setV2] = React.useState<string | undefined>('option0');
 
-  const ref = useRef<SelectHandle>(null);
+  const ref = useRef<NativeSelectHandle>(null);
 
   return (
     <SafeAreaView
@@ -42,31 +40,23 @@ export default function Selects() {
           padding: 20,
         }}
       >
-        <Select
-          marginBottom={20}
-          modalTitle="Select an option"
-          placeholder="Select an option"
-          icon={Crown}
+        <NativeSelect
           value={v1}
+          marginBottom={20}
+          icon={Crown}
           items={items1}
           onChange={setV1}
         />
-        <Select
-          marginBottom={20}
-          modalTitle="Select an item"
-          emptyText="Empty"
-        />
-        <Select
-          marginBottom={20}
-          ref={ref}
-          icon={Star}
+        <NativeSelect marginBottom={20} ref={ref} emptyText="Empty" />
+        <NativeSelect
           value={v2}
-          items={items2}
           onChange={setV2}
-          hideClearIcon
+          items={items2}
+          ref={ref}
+          marginBottom={20}
+          icon={Star}
         />
         <Button
-          marginBottom={20}
           onPress={() => {
             ref.current?.focus();
           }}

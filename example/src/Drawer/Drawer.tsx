@@ -22,6 +22,7 @@ import IconButtons from '../IconButtons';
 import LineValueSelectors from '../LineValueSelectors';
 import LinkButtons from '../LinkButtons';
 import Menus from '../Menus';
+import NativeSelects from '../NativeSelects';
 import RadioButtons from '../RadioButtons';
 import RadioGroups from '../RadioGroups';
 import Selects from '../Selects';
@@ -87,6 +88,7 @@ export default function Drawer() {
       <Screen name="TextInput" component={TextInputs} />
       <Screen name="CodeInput" component={CodeInputs} />
       <Screen name="Select" component={Selects} />
+      <Screen name="NativeSelect" component={NativeSelects} />
       <Screen name="Forms" component={Forms} />
       <Screen name="Card" component={Cards} />
       <Screen name="Avatar" component={Avatars} />
