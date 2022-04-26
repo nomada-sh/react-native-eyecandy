@@ -8,7 +8,7 @@ import {
 } from '@nomada-sh/react-native-eyecandy';
 
 export default function RadioGroups() {
-  const [value, setValue] = useState<string | undefined>();
+  const [value, setValue] = useState<string | undefined>('option1');
 
   return (
     <SafeAreaView
@@ -32,14 +32,16 @@ export default function RadioGroups() {
           <RadioGroupItem value="option5" label="Option 5" />
           <RadioGroupItem value="option6" label="Option 6" />
         </RadioGroup>
-        <Body
-          weight="bold"
-          style={{
-            margin: 20,
-          }}
-        >
-          You selected: <Body weight="normal">{value}</Body>
-        </Body>
+        {value ? (
+          <Body
+            weight="bold"
+            style={{
+              margin: 20,
+            }}
+          >
+            You selected: <Body weight="normal">{value}</Body>
+          </Body>
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );
