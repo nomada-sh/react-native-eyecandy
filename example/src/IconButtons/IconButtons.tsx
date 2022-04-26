@@ -30,7 +30,7 @@ export default function IconButtons() {
         >
           <IconButton icon={Plus} onPress={() => Alert.alert('Plus')} />
           <IconButton
-            variant="default"
+            variant="squared"
             icon={Close}
             onPress={() => Alert.alert('Close')}
           />

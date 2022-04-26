@@ -126,3 +126,122 @@ export default function App() {
 ![ActionSheet](../assets/components/actionsheet.gif)
 
 ## Props
+
+### <div class="label required basic">Required</div>**`options`**
+
+| Type                                      |
+| ----------------------------------------- |
+| [ActionSheetOption](#actionsheetoption)[] |
+
+---
+
+### `visible`
+
+| Type    |
+| ------- |
+| boolean |
+
+---
+
+### `title`
+
+| Type   |
+| ------ |
+| string |
+
+---
+
+### `message`
+
+| Type   |
+| ------ |
+| string |
+
+---
+
+### `onClose`
+
+```jsx
+() => void;
+```
+
+| Type     |
+| -------- |
+| function |
+
+---
+
+### `onPressAction`
+
+```jsx
+(index: number) => void;
+```
+
+| Type     |
+| -------- |
+| function |
+
+---
+
+### `onCancel`
+
+```jsx
+() => void;
+```
+
+| Type     |
+| -------- |
+| function |
+
+---
+
+### `showCancelIcon`
+
+| Type    |
+| ------- |
+| boolean |
+
+---
+
+### `cancelText`
+
+| Type   | Default    |
+| ------ | ---------- |
+| string | `'Cancel'` |
+
+---
+
+### `native` <div class="label ios">iOS</div>
+
+When set to `true`, the action sheet will be rendered natively on iOS.
+
+| Type    |
+| ------- |
+| boolean |
+
+---
+
+### `dark` <div class="label ios">iOS</div>
+
+When set to `true`, the action sheet will be rendered in dark mode on iOS.
+
+| Type    |
+| ------- |
+| boolean |
+
+## Type definitions
+
+### ActionSheetOption
+
+| Type             |
+| ---------------- |
+| string or object |
+
+When the type is string, the string is the label of the option.
+
+When the type is object, the object must have the following properties:
+
+| Name  | Type             | Required | Description             |
+| ----- | ---------------- | -------- | ----------------------- |
+| label | string           | Yes      | The label of the option |
+| icon  | [Icon](../icons) | No       | The icon of the option  |

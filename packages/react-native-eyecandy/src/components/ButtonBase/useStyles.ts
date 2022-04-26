@@ -20,7 +20,7 @@ export default function useStyles({
 }: {
   color?: ThemeButtonColorChoices;
   inverse?: boolean;
-  variant?: 'default' | 'rounded';
+  variant?: 'default' | 'rounded' | `squared`;
   height?: number;
   disabled?: boolean | null;
   fullwidth?: boolean;

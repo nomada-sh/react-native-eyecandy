@@ -7,6 +7,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import ActionSheets from '../ActionSheets';
 import AvatarEdits from '../AvatarEdits';
 import Avatars from '../Avatars';
+import Badges from '../Badges';
 import BottomSheetSwipeConfirmation from '../BottomSheetSwipeConfirmation/BottomSheetSwipeConfirmation';
 import BottomSheets from '../BottomSheets';
 import ButtonBase from '../ButtonBase';
@@ -53,12 +54,13 @@ export default function Drawer() {
       <Screen name="ButtonBase" component={ButtonBase} />
       <Screen name="IconButtons" component={IconButtons} />
       <Screen name="LinkButtons" component={LinkButtons} />
+      <Screen name="SwipeButton" component={SwipeButtons} />
+      <Screen name="Badge" component={Badges} />
       <Screen name="TextInput" component={TextInputs} />
       <Screen name="CodeInput" component={CodeInputs} />
       <Screen name="Select" component={Selects} />
-      <Screen name="SwipeButton" component={SwipeButtons} />
-      <Screen name="Cards" component={Cards} />
       <Screen name="Forms" component={Forms} />
+      <Screen name="Cards" component={Cards} />
       <Screen name="Avatar" component={Avatars} />
       <Screen name="AvatarEdit" component={AvatarEdits} />
       <Screen name="BottomSheet" component={BottomSheets} />

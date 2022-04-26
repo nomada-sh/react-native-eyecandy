@@ -40,7 +40,7 @@ export interface ButtonBaseProps extends PressableProps {
      */
     pressable?: PressableProps['style'];
   };
-  variant?: 'default' | 'rounded';
+  variant?: 'default' | 'rounded' | 'squared';
   height?: number;
   fullwidth?: boolean;
   loading?: boolean;
