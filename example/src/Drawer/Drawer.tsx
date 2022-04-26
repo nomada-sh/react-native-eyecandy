@@ -9,7 +9,8 @@ import ActionSheets from '../ActionSheets';
 import AvatarEdits from '../AvatarEdits';
 import Avatars from '../Avatars';
 import Badges from '../Badges';
-import BottomSheetSwipeConfirmation from '../BottomSheetSwipeConfirmation/BottomSheetSwipeConfirmation';
+import Body from '../Body';
+import BottomSheetSwipeConfirmation from '../BottomSheetSwipeConfirmation';
 import BottomSheets from '../BottomSheets';
 import ButtonBase from '../ButtonBase';
 import Buttons from '../Buttons';
@@ -18,6 +19,7 @@ import Cards from '../Cards';
 import CheckLists from '../CheckLists';
 import CodeInputs from '../CodeInputs';
 import Forms from '../Forms';
+import Headings from '../Headings';
 import IconButtons from '../IconButtons';
 import LineValueSelectors from '../LineValueSelectors';
 import LinkButtons from '../LinkButtons';
@@ -29,6 +31,7 @@ import Selects from '../Selects';
 import SwipeButtons from '../SwipeButtons';
 import Switchs from '../Switchs';
 import TextInputs from '../TextInputs';
+import Texts from '../Texts';
 import { useTheme } from '../shared/hooks';
 
 const { Navigator, Screen } = createDrawerNavigator();
@@ -93,6 +96,9 @@ export default function Drawer() {
       <Screen name="Card" component={Cards} />
       <Screen name="Avatar" component={Avatars} />
       <Screen name="AvatarEdit" component={AvatarEdits} />
+      <Screen name="Text" component={Texts} />
+      <Screen name="Body" component={Body} />
+      <Screen name="Heading" component={Headings} />
       <Screen name="BottomSheet" component={BottomSheets} />
       <Screen
         name="BottomSheetSwipeConfirmation"

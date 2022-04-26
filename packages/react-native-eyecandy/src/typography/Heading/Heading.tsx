@@ -2,13 +2,13 @@ import React from 'react';
 
 import {
   useTypography,
-  ThemeHeadingFontSizes,
+  ThemeHeadingVariants,
 } from '@nomada-sh/react-native-eyecandy-theme';
 
 import Text, { TextProps } from '../Text';
 
 export interface HeadingProps extends Omit<TextProps, 'variant'> {
-  variant?: keyof ThemeHeadingFontSizes;
+  variant?: ThemeHeadingVariants;
 }
 
 export default function Heading({

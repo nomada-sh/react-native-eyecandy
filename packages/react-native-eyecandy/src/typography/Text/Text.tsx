@@ -9,10 +9,11 @@ import {
   ThemeTextColorsChoices,
   useTheme,
   isThemeTextColorsChoices,
+  ThemeTextWeights,
 } from '@nomada-sh/react-native-eyecandy-theme';
 import Color from 'color';
 export interface TextProps extends TextBaseProps {
-  weight?: TextStyle['fontWeight'] | 'semibold' | 'medium' | 'regular';
+  weight?: ThemeTextWeights;
   size?: TextStyle['fontSize'];
   align?: TextStyle['textAlign'];
   contrast?: boolean;
