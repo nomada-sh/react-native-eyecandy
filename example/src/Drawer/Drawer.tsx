@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Switch } from '@nomada-sh/react-native-eyecandy';
+import { IconButton, Switch } from '@nomada-sh/react-native-eyecandy';
+import { Menu } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme as useEyecandyTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
@@ -31,6 +32,25 @@ import { useTheme } from '../shared/hooks';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
+function HeaderLeft(props: any) {
+  const toggleDrawer = () => {
+    props.navigation.toggleDrawer();
+  };
+
+  return (
+    <IconButton
+      icon={Menu}
+      onPress={toggleDrawer}
+      size={32}
+      iconSize={24}
+      style={{
+        marginLeft: 20,
+      }}
+      transparent
+    />
+  );
+}
+
 export default function Drawer() {
   const { dark, setDark } = useTheme();
   const { colors } = useEyecandyTheme();
@@ -38,20 +58,22 @@ export default function Drawer() {
   return (
     <Navigator
       initialRouteName="Buttons"
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         headerTintColor: colors.text.default.normal,
-        headerShown: false,
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
         headerRight: () => (
           <Switch
             style={{
-              marginEnd: 10,
+              marginEnd: 20,
+              alignSelf: 'flex-end',
             }}
             value={dark}
             onValueChange={setDark}
           />
         ),
+        headerShown: false,
         // swipeEnabled: false,
-      }}
+      })}
     >
       <Screen name="Button" component={Buttons} />
       <Screen name="ButtonBase" component={ButtonBase} />
