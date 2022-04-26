@@ -25,6 +25,7 @@ import RadioButtons from '../RadioButtons';
 import RadioGroups from '../RadioGroups';
 import Selects from '../Selects';
 import SwipeButtons from '../SwipeButtons';
+import Switchs from '../Switchs';
 import TextInputs from '../TextInputs';
 import { useTheme } from '../shared/hooks';
 
@@ -58,6 +59,7 @@ export default function Drawer() {
       <Screen name="LinkButton" component={LinkButtons} />
       <Screen name="RadioButton" component={RadioButtons} />
       <Screen name="RadioGroup" component={RadioGroups} />
+      <Screen name="Switch" component={Switchs} />
       <Screen name="SwipeButton" component={SwipeButtons} />
       <Screen name="Badge" component={Badges} />
       <Screen name="TextInput" component={TextInputs} />

@@ -15,6 +15,7 @@ export interface SwitchProps extends RNSwitchProps {
 function Switch({
   color = 'default',
   onValueChange: onValueChangeProp,
+  style,
   ...props
 }: SwitchProps) {
   const colors = useColors(c => c.switch[color]);
@@ -36,6 +37,12 @@ function Switch({
         true: colors.trackColorEnabled,
       }}
       thumbColor={colors.thumbColor}
+      style={[
+        {
+          alignSelf: 'flex-start',
+        },
+        style,
+      ]}
       {...props}
     />
   );

@@ -1,19 +1,5 @@
----
-id: switch
-title: Switch
----
-
-## Import
-
-```jsx
-import { Switch } from '@nomada-sh/react-native-eyecandy';
-```
-
-## Example
-
-```tsx
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 import { Switch } from '@nomada-sh/react-native-eyecandy';
 
@@ -36,18 +22,3 @@ export default function Switchs() {
     </SafeAreaView>
   );
 }
-```
-
-## Props
-
-### [Switch Props](https://reactnative.dev/docs/switch#props)
-
-Inherits [Switch Props](https://reactnative.dev/docs/switch#props).
-
----
-
-### `color`
-
-| Type        | Default     |
-| ----------- | ----------- |
-| `'default'` | `'default'` |
