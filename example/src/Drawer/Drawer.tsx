@@ -20,6 +20,7 @@ import Forms from '../Forms';
 import IconButtons from '../IconButtons';
 import LineValueSelectors from '../LineValueSelectors';
 import LinkButtons from '../LinkButtons';
+import Menus from '../Menus';
 import RadioGroups from '../RadioGroups';
 import Selects from '../Selects';
 import SwipeButtons from '../SwipeButtons';
@@ -60,7 +61,7 @@ export default function Drawer() {
       <Screen name="CodeInput" component={CodeInputs} />
       <Screen name="Select" component={Selects} />
       <Screen name="Forms" component={Forms} />
-      <Screen name="Cards" component={Cards} />
+      <Screen name="Card" component={Cards} />
       <Screen name="Avatar" component={Avatars} />
       <Screen name="AvatarEdit" component={AvatarEdits} />
       <Screen name="BottomSheet" component={BottomSheets} />
@@ -69,6 +70,7 @@ export default function Drawer() {
         component={BottomSheetSwipeConfirmation}
       />
       <Screen name="ActionSheet" component={ActionSheets} />
+      <Screen name="Menu" component={Menus} />
       <Screen name="CheckList" component={CheckLists} />
       <Screen name="RadioGroup" component={RadioGroups} />
       <Screen name="LineValueSelector" component={LineValueSelectors} />

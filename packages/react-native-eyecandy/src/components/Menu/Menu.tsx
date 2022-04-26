@@ -1,10 +1,27 @@
 import React from 'react';
 import { View, ViewProps } from 'react-native';
 
-export interface MenuProps extends ViewProps {}
+import { Body } from '../../typography';
 
-function Menu(props: MenuProps) {
-  return <View {...props} />;
+export interface MenuProps extends ViewProps {
+  title?: string;
+}
+
+function Menu({ title, children, ...props }: MenuProps) {
+  return (
+    <View {...props}>
+      {title ? (
+        <Body
+          style={{ padding: 20, paddingBottom: 10 }}
+          weight="bold"
+          size="large"
+        >
+          {title}
+        </Body>
+      ) : null}
+      {children}
+    </View>
+  );
 }
 
 export default Menu;

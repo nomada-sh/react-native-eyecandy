@@ -15,6 +15,7 @@ import IconButton, { IconButtonProps } from '../IconButton';
 
 export interface MenuItemBaseProps {
   style?: StyleProp<ViewStyle>;
+  contentContainerStyle?: StyleProp<ViewStyle>;
   icon?: IconButtonProps['icon'];
   iconColor?: string;
   iconBackgroundColor?: string;
@@ -26,6 +27,7 @@ export interface MenuItemBaseProps {
 
 function MenuItemBase({
   style,
+  contentContainerStyle,
   icon,
   iconColor,
   iconBackgroundColor,
@@ -61,7 +63,7 @@ function MenuItemBase({
       onPress={onPress}
       testID={testID}
     >
-      <View style={styles.content}>
+      <View style={[styles.contentContainer, contentContainerStyle]}>
         {icon && (
           <IconButton
             variant="rounded"
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
   },
-  content: {
+  contentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 10,

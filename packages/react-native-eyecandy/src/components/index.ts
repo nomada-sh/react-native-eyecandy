@@ -63,6 +63,9 @@ export type { MenuItemProps } from './MenuItem';
 export { default as MenuItemSwitch } from './MenuItemSwitch';
 export type { MenuItemSwitchProps } from './MenuItemSwitch';
 
+export { default as MenuItemValue } from './MenuItemValue';
+export type { MenuItemValueProps } from './MenuItemValue';
+
 export { default as NativeSelect } from './NativeSelect';
 export type {
   NativeSelectProps,
