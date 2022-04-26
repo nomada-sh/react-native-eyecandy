@@ -1,5 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useRef } from 'react';
 import {
+  Animated,
+  Platform,
   Pressable,
   StyleProp,
   StyleSheet,
@@ -36,22 +38,39 @@ function MenuItemBase({
   children,
   testID,
 }: MenuItemBaseProps) {
+  const animated = useRef(new Animated.Value(0)).current;
   const { background, divider } = useColors(c => ({
     background: c.background.default,
     divider: c.divider.default,
   }));
 
-  const rippleColor = useRippleColor(background.container);
+  const rippleColor = useRippleColor(background.container).string();
 
-  const onPress = useCallback(() => {
+  const fadeIn = () => {
+    Animated.timing(animated, {
+      toValue: 1,
+      duration: 100,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const fadeOut = () => {
+    Animated.timing(animated, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const onPress = () => {
     ReactNativeHapticFeedback.trigger('impactMedium');
     onPressProp?.();
-  }, [onPressProp]);
+  };
 
   return (
     <Pressable
       android_ripple={{
-        color: rippleColor.string(),
+        color: rippleColor,
       }}
       style={[
         {
@@ -61,8 +80,18 @@ function MenuItemBase({
         style,
       ]}
       onPress={onPress}
+      onPressIn={fadeIn}
+      onPressOut={fadeOut}
       testID={testID}
     >
+      {Platform.OS === 'ios' ? (
+        <Animated.View
+          style={[
+            styles.activeOpacity,
+            { opacity: animated, backgroundColor: rippleColor },
+          ]}
+        />
+      ) : null}
       <View style={[styles.contentContainer, contentContainerStyle]}>
         {icon && (
           <IconButton
@@ -99,11 +128,15 @@ function MenuItemBase({
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
+    overflow: 'hidden',
   },
   contentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 10,
+  },
+  activeOpacity: {
+    ...StyleSheet.absoluteFillObject,
   },
   text: {
     flex: 1,
