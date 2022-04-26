@@ -28,6 +28,8 @@ export interface SwipeButtonProps {
   padding?: number;
   width: number;
   testID?: string;
+  marginTop?: number;
+  marginBottom?: number;
 }
 
 type Context = {
@@ -53,6 +55,8 @@ function SwipeButton({
   height = 80,
   width,
   testID,
+  marginBottom,
+  marginTop,
 }: SwipeButtonProps) {
   const feedbackRef = useRef<boolean[]>([...feedbackTypes.map(() => false)]);
   const minProgress = 1 / (feedbackTypes.length + 1);
@@ -155,6 +159,8 @@ function SwipeButton({
         padding,
         borderRadius: height / 2,
         backgroundColor: colors.background,
+        marginTop,
+        marginBottom,
       }}
     >
       <Body testID={testID ? `${testID}-title` : undefined} color="white">
