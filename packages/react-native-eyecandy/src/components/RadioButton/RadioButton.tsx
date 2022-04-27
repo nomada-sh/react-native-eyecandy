@@ -8,33 +8,49 @@ import {
   TouchableWithoutFeedbackProps,
 } from 'react-native';
 
-import { Check } from '@nomada-sh/react-native-eyecandy-icons';
+import { Check, IconProps } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import Color from 'color';
 
 export interface RadioButtonProps extends TouchableWithoutFeedbackProps {
   value?: boolean;
-  onValueChange?: (checked: boolean) => void;
+  onValueChange?: (value: boolean) => void;
   style?: StyleProp<ViewStyle>;
-  color?: string;
   size?: number;
-  label?: string;
+  activeColor?: string;
+  activeIcon?: React.ComponentType<IconProps> | React.ReactElement;
+  activeIconColor?: string;
 }
 
 function RadioButton({
-  value = false,
   size = 32,
   style,
+  value,
   onValueChange,
   onPress,
+  activeColor: activeColorProp,
+  activeIconColor: activeIconColorProp,
+  activeIcon: ActiveIcon,
   ...props
 }: RadioButtonProps) {
   const { palette, dark } = useTheme();
 
-  const frontSize = size - 10;
-  const backgroundColor = value
-    ? palette.success[200]
-    : palette.grey[dark ? 700 : 200];
+  const activeColor = activeColorProp || palette.success[200];
+  const activeIconColor = activeIconColorProp || 'white';
+  const activeIconSize = size * 0.5;
+
+  const frontSize = size * 0.7;
+  const backgroundColor = value ? activeColor : palette.grey[dark ? 700 : 200];
+
+  const activeIcon = ActiveIcon ? (
+    React.isValidElement(ActiveIcon) ? (
+      ActiveIcon
+    ) : (
+      <ActiveIcon size={activeIconSize} color={activeIconColor} />
+    )
+  ) : (
+    <Check size={activeIconSize} color={activeIconColor} />
+  );
 
   return (
     <TouchableWithoutFeedback
@@ -67,7 +83,7 @@ function RadioButton({
             styles.iconContainer,
           ]}
         >
-          {value ? <Check stroke="white" size={15} /> : null}
+          {value ? activeIcon : null}
         </View>
       </View>
     </TouchableWithoutFeedback>

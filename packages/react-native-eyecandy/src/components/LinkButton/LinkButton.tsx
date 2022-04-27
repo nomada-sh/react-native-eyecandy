@@ -1,22 +1,20 @@
 import React from 'react';
-import { StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle } from 'react-native';
 
-import { ChevronRight } from '@nomada-sh/react-native-eyecandy-icons';
+import {
+  ChevronRight,
+  IconProps,
+} from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme, useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
 import { usePressableStyles } from '../../hooks';
 import { Body } from '../../typography';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 
-interface IconProps {
-  size?: number;
-  stroke?: string;
-  style?: StyleProp<ViewStyle>;
-}
-
 export interface LinkButtonProps extends ButtonBaseProps {
-  icon?: React.ComponentType<IconProps> | React.ReactElement<IconProps>;
-  text: string;
+  icon?: React.ComponentType<IconProps> | React.ReactElement<any>;
+  text?: string;
+  children?: string;
   showChevronRight?: boolean;
   bold?: boolean;
   focused?: boolean;
@@ -24,6 +22,7 @@ export interface LinkButtonProps extends ButtonBaseProps {
 
 function LinkButton({
   text,
+  children,
   icon: Icon,
   pressableStyle,
   color = 'default',
@@ -48,7 +47,7 @@ function LinkButton({
     fontWeight: bold ? 'bold' : 'normal',
   };
 
-  const children = Icon ? (
+  const icon = Icon ? (
     React.isValidElement(Icon) ? (
       Icon
     ) : (
@@ -62,8 +61,8 @@ function LinkButton({
 
   return (
     <ButtonBase color={color} pressableStyle={buttonStyles} {...props}>
-      {children}
-      <Body style={[textStyle, styles.text]}>{text}</Body>
+      {icon}
+      <Body style={[textStyle, styles.text]}>{children ?? text}</Body>
       {showChevronRight ? <ChevronRight color="greyout" size={20} /> : null}
     </ButtonBase>
   );

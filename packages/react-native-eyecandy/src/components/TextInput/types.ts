@@ -5,12 +5,8 @@ import {
   TextInputProps as RNTextInputProps,
 } from 'react-native';
 
+import { IconProps } from '@nomada-sh/react-native-eyecandy-icons';
 import { ThemeInputColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
-
-export interface TextInputIconProps {
-  size: number;
-  stroke: string;
-}
 
 export type TextInputStyles = {
   container?: StyleProp<ViewStyle>;
@@ -19,6 +15,10 @@ export type TextInputStyles = {
   leftIconContainer?: StyleProp<ViewStyle>;
   rightIconContainer?: StyleProp<ViewStyle>;
 };
+
+export interface TextInputIconProps extends IconProps {
+  focused: boolean;
+}
 
 export interface TextInputStyleProps {
   color?: ThemeInputColorChoices;

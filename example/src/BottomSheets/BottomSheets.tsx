@@ -1,45 +1,58 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, SafeAreaView, View } from 'react-native';
 
 import {
   Body,
   BottomSheet,
-  BottomSheetSwipeConfirmation,
   Button,
-  TextInput,
+  IconButton,
 } from '@nomada-sh/react-native-eyecandy';
+import {
+  Camera,
+  Mail,
+  Photo,
+  Star,
+} from '@nomada-sh/react-native-eyecandy-icons';
 
 export default function BottomSheets() {
   const [visible, setVisible] = React.useState(false);
-  const [visible2, setVisible2] = React.useState(false);
-  const [height, setHeight] = React.useState(200);
 
   return (
-    <ScrollView>
-      <TextInput
-        defaultValue={`${height}`}
-        onChangeText={text => {
-          if (text !== '' && !Number.isNaN(Number(text)))
-            setHeight(Number(text));
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          padding: 20,
         }}
-      />
-      <Button onPress={() => setVisible(true)} text="Show Bottom Sheet" />
-      <Body>{`${visible}`}</Body>
-      <Button
-        onPress={() => setVisible2(true)}
-        text="Show Bottom Sheet Swipe Confirmation"
-      />
-      <BottomSheet
-        visible={visible}
-        height={height}
-        onClose={() => setVisible(false)}
-      />
-      <BottomSheetSwipeConfirmation
-        title="Are you sure you want to delete this item?"
-        visible={visible2}
-        onClose={() => setVisible2(false)}
-        onConfirm={() => setVisible2(false)}
-      />
-    </ScrollView>
+      >
+        <Button onPress={() => setVisible(true)} text="Show Bottom Sheet" />
+        <BottomSheet
+          visible={visible}
+          height={160}
+          onClose={() => setVisible(false)}
+          contentStyle={{
+            padding: 20,
+          }}
+        >
+          <Body marginBottom={20} weight="bold" align="center">
+            Hello, I am a bottom sheet.
+          </Body>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <IconButton icon={Camera} onPress={() => setVisible(false)} />
+            <IconButton icon={Photo} onPress={() => setVisible(false)} />
+            <IconButton icon={Star} onPress={() => setVisible(false)} />
+            <IconButton icon={Mail} onPress={() => setVisible(false)} />
+          </View>
+        </BottomSheet>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

@@ -1,0 +1,65 @@
+---
+id: avatar
+title: Avatar
+---
+
+## Import
+
+```jsx
+import { Avatar } from '@nomada-sh/react-native-eyecandy';
+```
+
+## Example
+
+```tsx
+import React from 'react';
+import { ScrollView } from 'react-native';
+
+import { Avatar } from '@nomada-sh/react-native-eyecandy';
+
+export default function App() {
+  return (
+    <ScrollView
+      contentContainerStyle={{
+        padding: 20,
+      }}
+    >
+      <Avatar
+        source={{
+          uri: 'https://i.pravatar.cc/300',
+        }}
+      />
+      <Avatar
+        source={{
+          uri: 'https://i.pravatar.cc/300',
+        }}
+        size={100}
+      />
+      <Avatar
+        source={{
+          uri: 'https://i.pravatar.cc/300',
+        }}
+        size={200}
+      />
+    </ScrollView>
+  );
+}
+```
+
+![Avatar](../assets/components/avatar.png)
+
+## Props
+
+### [ImageBackground Props](https://reactnative.dev/docs/imagebackground#props)
+
+Inherits [ImageBackground Props](https://reactnative.dev/docs/imagebackground#props)
+
+---
+
+### `size`
+
+Width and height of the avatar.
+
+| Type   | Default |
+| ------ | ------- |
+| number | `64`    |

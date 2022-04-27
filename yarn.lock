@@ -2237,6 +2237,23 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@nomada-sh/react-native-eyecandy@^2.1.10":
+  version "2.1.18"
+  resolved "https://registry.yarnpkg.com/@nomada-sh/react-native-eyecandy/-/react-native-eyecandy-2.1.18.tgz#c008c47648990fee6ba458a4e0f4566924f6d932"
+  integrity sha512-vtHloUQQGfzOHljfRRJlmryZGdixhq5dnEjm1Um9V0rjJ2Uig0M16wpXk8Y6ReONt1RF8jFz19u1xlcS9RNRbg==
+  dependencies:
+    "@nomada-sh/react-native-eyecandy-icons" "^1.0.5"
+    "@nomada-sh/react-native-eyecandy-theme" "^1.0.3"
+    calendar-base "^1.1.1"
+    color "^4.2.0"
+    date-fns "^2.28.0"
+    react-native-country-picker-modal "^2.0.0"
+    react-native-mask-input "^1.2.0"
+    react-native-picker-select "^8.0.4"
+    react-native-redash "^16.2.3"
+    react-use "^17.3.2"
+    rn-swipe-button "^1.3.6"
+
 "@polka/url@^1.0.0-next.20":
   version "1.0.0-next.21"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
@@ -2383,6 +2400,11 @@
   version "1.16.8"
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.16.8.tgz#2126ca54d4a5a3e9ea5e3f39ad1e6643f8e4b3d4"
   integrity sha512-pacdQDX6V6EmjF+HoiIh6u++qx4mTK0WnhgUHRc01B+Qt5eoeUwseBqmqfTSXTx/aHDEd6PiIw7UGvKgFoqgFQ==
+
+"@react-native-picker/picker@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.1.tgz#92feb7e0672d739624517dae04bf4de1452dfcdc"
+  integrity sha512-1XWy3IQgwr7MWd30KdY1iUh2gQZD+JiotN1ifj/ptFUYKon/0UFwngKQaWCO/CP/FdLl20/huSSLwKedYrdMMA==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -10817,6 +10839,13 @@ react-native-picker-select@^8.0.4:
   version "8.0.4"
   resolved "https://registry.yarnpkg.com/react-native-picker-select/-/react-native-picker-select-8.0.4.tgz#3f7f1f42df69b06e7d2c10338288332a6c40fd10"
   integrity sha512-orBjPIwBkV5oipyVw263YNMI56f6Kj3p/ejabZoCYYNSG3AiLVVhC2RqsxMgDA7IayyURAW+AlV+mDJyVqLBkg==
+  dependencies:
+    "@react-native-picker/picker" "^1.8.3"
+    lodash.isequal "^4.5.0"
+
+"react-native-picker-select@https://github.com/Canciller/react-native-picker-select":
+  version "8.0.4"
+  resolved "https://github.com/Canciller/react-native-picker-select#e273fbb7c205f36cd3344c2fcc5a067d411c5801"
   dependencies:
     "@react-native-picker/picker" "^1.8.3"
     lodash.isequal "^4.5.0"

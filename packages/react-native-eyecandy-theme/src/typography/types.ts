@@ -1,24 +1,32 @@
+import { TextStyle } from 'react-native';
+
 import { DeepPartial } from '../types';
 
+export type ThemeTextWeights =
+  | TextStyle['fontWeight']
+  | 'semibold'
+  | 'medium'
+  | 'regular';
+
+export type ThemeHeadingVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
 export type ThemeHeadingFontSizes = {
-  h1: number;
-  h2: number;
-  h3: number;
-  h4: number;
-  h5: number;
-  h6: number;
+  [key in ThemeHeadingVariants]: number;
 };
 
 export type ThemeHeading = {
   fontSize: ThemeHeadingFontSizes;
 };
 
+export type ThemeBodyFontSizesChoices =
+  | 'xsmall'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xlarge';
+
 export type ThemeBodyFontSizes = {
-  xsmall: number;
-  small: number;
-  medium: number;
-  large: number;
-  xlarge: number;
+  [key in ThemeBodyFontSizesChoices]: number;
 };
 
 export type ThemeBody = {

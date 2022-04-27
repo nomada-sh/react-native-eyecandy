@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Body } from '../../typography';
-import BaseMenuItem, { BaseMenuItemProps } from '../BaseMenuItem';
+import MenuItemBase, { MenuItemBaseProps } from '../MenuItemBase';
 import Switch from '../Switch';
 
 export interface MenuItemSwitchProps
-  extends Omit<BaseMenuItemProps, 'children'> {
+  extends Omit<MenuItemBaseProps, 'children'> {
   text?: string;
   textColor?: string;
   value?: boolean;
@@ -21,12 +21,12 @@ function MenuItemSwitch({
   ...props
 }: MenuItemSwitchProps) {
   return (
-    <BaseMenuItem {...props}>
+    <MenuItemBase {...props}>
       <Body style={styles.text} weight="bold" size="medium" color={textColor}>
         {text}
       </Body>
       <Switch value={value} onValueChange={onValueChange} />
-    </BaseMenuItem>
+    </MenuItemBase>
   );
 }
 

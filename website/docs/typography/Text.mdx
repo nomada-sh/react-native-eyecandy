@@ -11,11 +11,59 @@ import { Text } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
+```tsx
+import React from 'react';
+import { ScrollView, View } from 'react-native';
+
+import { Text } from '@nomada-sh/react-native-eyecandy';
+import {
+  ThemeTextColorsChoices,
+  ThemeTextWeights,
+} from '@nomada-sh/react-native-eyecandy-theme';
+
+const colors: ThemeTextColorsChoices[] = [
+  'default',
+  'primary',
+  'error',
+  'greyout',
+];
+
+const weights: ThemeTextWeights[] = ['normal', 'bold'];
+
+export default function App() {
+  return (
+    <ScrollView
+      contentContainerStyle={{
+        padding: 20,
+      }}
+    >
+      {colors.map(color => (
+        <View
+          key={color}
+          style={{
+            marginBottom: 20,
+          }}
+        >
+          {weights.map(weight => (
+            <Text key={weight} color={color} weight={weight}>
+              {`${color} ${weight}`}: The quick brown fox jumps over the lazy
+              dog.
+            </Text>
+          ))}
+        </View>
+      ))}
+    </ScrollView>
+  );
+}
+```
+
+![Text](../assets/components/text.png)
+
 ## Props
 
-### [RN Text Props](https://reactnative.dev/docs/text#props)
+### [Text Props](https://reactnative.dev/docs/text#props)
 
-Inherits [RN Text Props](https://reactnative.dev/docs/text#props).
+Inherits [Text Props](https://reactnative.dev/docs/text#props).
 
 ---
 
@@ -61,8 +109,8 @@ See [Text Style textAlign](https://reactnative.dev/docs/text-style-props#textali
 
 Color of the text. The color will change based on the theme (dark or light) if set to `'default'`.
 
-| Type                                                               | Default     |
-| ------------------------------------------------------------------ | ----------- |
+| Type                                                             | Default     |
+| ---------------------------------------------------------------- | ----------- |
 | string or `'default'` or `'primary'` or `'error'` or `'greyout'` | `'default'` |
 
 ---
@@ -74,3 +122,19 @@ If `true`, the text will be displayed in a color that contrasts with the color s
 | Type    | Default |
 | ------- | ------- |
 | boolean | `false` |
+
+---
+
+### `marginTop`
+
+| Type   |
+| ------ |
+| number |
+
+---
+
+### `marginBottom`
+
+| Type   |
+| ------ |
+| number |

@@ -91,6 +91,7 @@ const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
       >
         {/* Left Icon */}
         <IconTouchable
+          focused={focused}
           onPress={handlePressIconLeft}
           style={[styles.leftIconContainer, customStyles.leftIconContainer]}
           icon={iconLeft}
@@ -124,6 +125,7 @@ const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
 
         {/* Right Icon */}
         <IconTouchable
+          focused={focused}
           onPress={handlePressIconRight}
           style={[styles.rightIconContainer, customStyles.rightIconContainer]}
           icon={iconRight}
@@ -133,6 +135,7 @@ const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
         {/* Secure Text Entry Toggle */}
         {showSecureTextEntryToggle ? (
           <IconTouchable
+            focused={focused}
             onPress={onPressSecureTextEntryToggle}
             style={[styles.rightIconContainer, customStyles.rightIconContainer]}
             icon={secureTextEntry ? EyeOff : EyeCheck}

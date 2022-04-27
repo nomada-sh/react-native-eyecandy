@@ -19,7 +19,7 @@ export interface BadgeProps extends ViewProps {
   anchorOrigin?: AnchorOrigin;
 }
 
-const defaultBadgeProps: ViewProps = {};
+const DEFAULT_BADGE_PROPS: ViewProps = {};
 
 const defaultAnchorOrigin: AnchorOrigin = {
   horizontal: 'right',
@@ -31,7 +31,7 @@ function Badge({
   size = 18,
   style,
   children,
-  badgeProps: initialBadgeProps = defaultBadgeProps,
+  badgeProps: initialBadgeProps = DEFAULT_BADGE_PROPS,
   badgeStyle,
   anchorOrigin = defaultAnchorOrigin,
   ...props

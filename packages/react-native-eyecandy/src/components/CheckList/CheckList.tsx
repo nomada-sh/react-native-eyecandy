@@ -3,10 +3,10 @@ import { View, ViewProps } from 'react-native';
 
 import { CheckListOptionProps } from '../CheckListOption';
 
-type Child = React.ReactElement<CheckListOptionProps>;
-
 export interface CheckListProps extends Omit<ViewProps, 'children'> {
-  children: Child | Child[];
+  children:
+    | React.ReactElement<CheckListOptionProps>
+    | React.ReactElement<CheckListOptionProps>[];
   selected: string[];
   onSelectedChange: (selected: string[]) => void;
   onPress?: (props: { id: string; value: any }) => void;
@@ -31,7 +31,7 @@ function CheckList({
   const childrenCount = React.Children.count(children);
 
   const injectedChildren = React.Children.map(children, (child, index) => {
-    if (React.isValidElement(child)) {
+    if (React.isValidElement<CheckListOptionProps>(child)) {
       const isSelected = selected.includes(child.props.id);
       const disabled = isMaxSelected && !isSelected;
 

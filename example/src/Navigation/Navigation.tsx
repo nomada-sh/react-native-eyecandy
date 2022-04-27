@@ -18,7 +18,7 @@ export default function Navigation() {
       colors: {
         primary: palette.primary[500],
         background: colors.background.default.container,
-        card: colors.background.default.content,
+        card: colors.background.default.container,
         text: colors.text.default.normal,
         border: colors.divider.default,
       },
@@ -27,7 +27,6 @@ export default function Navigation() {
     dark,
     palette.primary,
     colors.background.default.container,
-    colors.background.default.content,
     colors.text.default.normal,
     colors.divider.default,
   ]);

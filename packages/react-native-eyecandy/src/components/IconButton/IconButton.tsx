@@ -1,18 +1,13 @@
 import React from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
+import { IconProps } from '@nomada-sh/react-native-eyecandy-icons';
 import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 
-interface IconProps {
-  size: number;
-  stroke?: string;
-  style?: StyleProp<ViewStyle>;
-}
-
 export interface IconButtonProps extends ButtonBaseProps {
-  icon?: React.ComponentType<IconProps> | React.ReactElement<any>;
+  icon?: React.ComponentType<IconProps> | React.ReactElement<any> | null;
   size?: number;
   iconSize?: number;
   iconColor?: string;

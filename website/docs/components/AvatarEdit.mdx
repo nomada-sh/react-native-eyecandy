@@ -1,0 +1,118 @@
+---
+id: avataredit
+title: AvatarEdit
+---
+
+## Import
+
+```jsx
+import { AvatarEdit } from '@nomada-sh/react-native-eyecandy';
+```
+
+## Example
+
+```tsx
+import React from 'react';
+import { ImageSourcePropType, ScrollView } from 'react-native';
+
+import { AvatarEdit } from '@nomada-sh/react-native-eyecandy';
+
+export default function App() {
+  const [source, setSource] = React.useState<ImageSourcePropType>({
+    uri: 'https://i.pravatar.cc/300',
+  });
+
+  return (
+    <ScrollView
+      contentContainerStyle={{
+        padding: 20,
+        alignItems: 'center',
+      }}
+    >
+      <AvatarEdit
+        size={150}
+        source={source}
+        onChange={image => {
+          if (image) setSource(image);
+        }}
+      />
+    </ScrollView>
+  );
+}
+```
+
+![AvatarEdit](../assets/components/avataredit.gif)
+
+## Props
+
+### [Pressable Props](https://reactnative.dev/docs/pressable#props)
+
+Inherits [Pressable Props](https://reactnative.dev/docs/pressable#props).
+
+---
+
+### <div class="label required basic">Required</div>**`source`**
+
+| Type                                                          |
+| ------------------------------------------------------------- |
+| [ImageSource](https://reactnative.dev/docs/image#imagesource) |
+
+---
+
+### `size`
+
+Width and height of the avatar.
+
+| Type   | Default |
+| ------ | ------- |
+| number | `100`   |
+
+---
+
+### `onChange`
+
+```jsx
+(source: ImageSource | undefined, error: {
+  code: number;
+  message: string;
+} | undefined) => void;
+```
+
+| Type     |
+| -------- |
+| function |
+
+- 'source' ([ImageSource](https://reactnative.dev/docs/image#imagesource)): The new image source of the avatar.
+- 'error' (object): The error object if the image source is invalid.
+
+---
+
+### `fromGalleryText`
+
+| Type   | Default          |
+| ------ | ---------------- |
+| string | `'From Gallery'` |
+
+---
+
+### `fromCameraText`
+
+| Type   | Default         |
+| ------ | --------------- |
+| string | `'From Camera'` |
+
+---
+
+### `title`
+
+| Type   | Default           |
+| ------ | ----------------- |
+| string | `'Change Avatar'` |
+
+---
+
+### `style`
+
+| Type       |
+| ---------- |
+| View Style |

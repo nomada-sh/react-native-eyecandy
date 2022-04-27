@@ -1,0 +1,163 @@
+---
+id: icons
+title: Icons
+---
+
+# Icons
+
+## Installation
+
+To use these icons, you will first need to install the [react-native-svg](https://github.com/react-native-community/react-native-svg) package.
+
+```bash npm2yarn
+npm install @nomada-sh/react-native-eyecandy-icons
+```
+
+## Icons
+
+import ThemedIcon from '@site/src/components/ThemedIcon';
+
+### Mail
+
+```jsx
+import { Mail } from '@nomada-sh/react-native-eyecandy-icons';
+```
+
+<ThemedIcon name="mail" />
+
+---
+
+### Lock
+
+```jsx
+import { Lock } from '@nomada-sh/react-native-eyecandy-icons';
+```
+
+<ThemedIcon name="lock" />
+
+---
+
+### User
+
+```jsx
+import { User } from '@nomada-sh/react-native-eyecandy-icons';
+```
+
+<ThemedIcon name="user" />
+
+---
+
+### Search
+
+```jsx
+import { Search } from '@nomada-sh/react-native-eyecandy-icons';
+```
+
+<ThemedIcon name="search" />
+
+---
+
+### Filter
+
+```jsx
+import { Filter } from '@nomada-sh/react-native-eyecandy-icons';
+```
+
+<ThemedIcon name="filter" />
+
+---
+
+### Download
+
+```jsx
+import { Download } from '@nomada-sh/react-native-eyecandy-icons';
+```
+
+<ThemedIcon name="download" />
+
+---
+
+### Close
+
+```jsx
+import { Close } from '@nomada-sh/react-native-eyecandy-icons';
+```
+
+<ThemedIcon name="close" />
+
+---
+
+### Photo
+
+```jsx
+import { Photo } from '@nomada-sh/react-native-eyecandy-icons';
+```
+
+<ThemedIcon name="photo" />
+
+---
+
+### Menu
+
+```jsx
+import { Menu } from '@nomada-sh/react-native-eyecandy-icons';
+```
+
+<ThemedIcon name="menu" />
+
+## Props
+
+### `style`
+
+Icon style.
+
+| Type       |
+| ---------- |
+| View Style |
+
+---
+
+### `size`
+
+Width and height of the icon.
+
+| Type   | Default |
+| ------ | ------- |
+| number | `24`    |
+
+---
+
+### `color`
+
+Changes the stroke or fill color if it is not overridden. Color will change based on the theme.
+
+| Type                                                             | Default     |
+| ---------------------------------------------------------------- | ----------- |
+| string or `'default'` or `'primary'` or `'error'` or `'greyout'` | `'default'` |
+
+---
+
+### `stroke`
+
+Stroke color of the icon. This overrides the color set with the [`color`](#color) prop.
+
+| Type   |
+| ------ |
+| string |
+
+---
+
+### `fill`
+
+Fill color of the icon. This overrides the color set with the [`color`](#color) prop.
+
+| Type   |
+| ------ |
+| string |
+
+---
+
+### `filled`
+
+If `true`, uses the [`stroke`](#stroke) prop as fill color.
+If [`fill`](#fill) is also set, this prop will be ignored.

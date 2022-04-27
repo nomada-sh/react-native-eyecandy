@@ -8,21 +8,22 @@ import { RectButton } from 'react-native-gesture-handler';
 import { Body } from '../../typography';
 import RadioButton from '../RadioButton';
 
-export interface RadioGroupItemProps<V> {
+export interface RadioGroupItemProps<V = any> {
   testID?: string;
   value: V;
   label: string;
   selected?: boolean;
-  onPress?: () => void;
+  onPress?: (value: V) => void;
   containerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
   numberOfLines?: number;
 }
 
-function RadioGroupItem<V>({
+function RadioGroupItem<V = any>({
   testID,
   label,
   selected,
+  value,
   onPress,
   containerStyle,
   style,
@@ -53,18 +54,18 @@ function RadioGroupItem<V>({
       ]}
     >
       <RectButton
-        testID={`${testID}-button`}
+        testID={testID ? `${testID}-button` : undefined}
         rippleColor={rippleColor}
-        onPress={onPress}
+        onPress={() => onPress && onPress(value)}
       >
         <View
           style={[styles.button, style]}
           accessible
           accessibilityRole="button"
         >
-          <RadioButton value={selected} />
+          <RadioButton disabled value={selected} />
           <Body
-            testID={`${testID}-label`}
+            testID={testID ? `${testID}-label` : undefined}
             size="small"
             weight="bold"
             style={styles.label}

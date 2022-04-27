@@ -22,19 +22,19 @@ export type { RadioButtonProps as CheckProps } from './RadioButton';
 export { default as TextInputErrors } from './TextInputErrors';
 export type { TextInputErrorsProps } from './TextInputErrors';
 
-export { default as TextInputMask } from './TextInputMask';
-export type { TextInputMaskProps } from './TextInputMask';
-
 export { default as TextInput } from './TextInput';
-export type { TextInputProps } from './TextInput';
-
-export { default as TextInputPhone } from './TextInputPhone';
-export type { TextInputPropsPhone } from './TextInputPhone';
+export type { TextInputProps, TextInputIconProps } from './TextInput';
 
 export { default as TextInputEmail } from './TextInputEmail';
 export { default as TextInputPassword } from './TextInputPassword';
 export { default as TextInputName } from './TextInputName';
 export { default as TextInputUsername } from './TextInputUsername';
+
+export { default as MaskedTextInput } from './MaskedTextInput';
+export type { MaskedTextInputProps } from './MaskedTextInput';
+
+export { default as MaskedTextInputPhone } from './MaskedTextInputPhone';
+export type { MaskedTextInputPropsPhone } from './MaskedTextInputPhone';
 
 export { default as CodeInput } from './CodeInput';
 export type { CodeInputProps } from './CodeInput';
@@ -54,8 +54,8 @@ export type { CardProps } from './Card';
 export { default as Menu } from './Menu';
 export type { MenuProps } from './Menu';
 
-export { default as BaseMenuItem } from './BaseMenuItem';
-export type { BaseMenuItemProps } from './BaseMenuItem';
+export { default as MenuItemBase } from './MenuItemBase';
+export type { MenuItemBaseProps } from './MenuItemBase';
 
 export { default as MenuItem } from './MenuItem';
 export type { MenuItemProps } from './MenuItem';
@@ -63,8 +63,25 @@ export type { MenuItemProps } from './MenuItem';
 export { default as MenuItemSwitch } from './MenuItemSwitch';
 export type { MenuItemSwitchProps } from './MenuItemSwitch';
 
+export { default as MenuItemValue } from './MenuItemValue';
+export type { MenuItemValueProps } from './MenuItemValue';
+
+export { default as NativeSelect } from './NativeSelect';
+export type {
+  NativeSelectProps,
+  NativeSelectItem,
+  NativeSelectHandle,
+  NativeSelectIconProps,
+} from './NativeSelect';
+
 export { default as Select } from './Select';
-export type { SelectProps, Item as SelectItem } from './Select';
+export type {
+  SelectProps,
+  SelectItem,
+  SelectHandle,
+  SelectIconProps,
+  SelectItemIconProps,
+} from './Select';
 
 export { default as BottomSheetSwipeConfirmation } from './BottomSheetSwipeConfirmation';
 export type { BottomSheetSwipeConfirmationProps } from './BottomSheetSwipeConfirmation';
@@ -101,3 +118,6 @@ export type { CalendarStripProps, CalendarStripHandle } from './CalendarStrip';
 
 export { default as WrappedPan } from './WrappedPan';
 export type { WrappedPanProps } from './WrappedPan';
+
+export { default as ActionSheet } from './ActionSheet';
+export type { ActionSheetProps, ActionSheetOption } from './ActionSheet';

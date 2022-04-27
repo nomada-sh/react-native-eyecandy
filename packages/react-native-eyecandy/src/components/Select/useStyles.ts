@@ -1,24 +1,23 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  ThemeInputColorChoices,
-  useColors,
-} from '@nomada-sh/react-native-eyecandy-theme';
+import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
-export default function useStyles<ValueType>({
+import { SelectStyleProps } from './types';
+
+interface UseStylesProps extends SelectStyleProps {
+  focused?: boolean;
+  removePaddingLeft?: boolean;
+}
+
+export default function useStyles({
   color = 'default',
   variant = 'default',
-  value,
   focused,
-  withPaddingStart,
-}: {
-  color?: ThemeInputColorChoices;
-  value?: ValueType;
-  focused?: boolean;
-  withPaddingStart?: boolean;
-  variant?: 'default' | 'outlined';
-}) {
-  const colors = useColors(c => c.input[color]);
+  removePaddingLeft,
+}: UseStylesProps) {
+  const { colors } = useTheme(t => ({
+    colors: t.colors.input[color],
+  }));
   const padding = 16;
 
   return StyleSheet.create({
@@ -43,12 +42,12 @@ export default function useStyles<ValueType>({
     selectContainer: {
       flex: 1,
     },
-    input: {
+    select: {
       color: colors.foreground,
-      fontWeight: value ? '700' : 'normal',
       paddingHorizontal: 0,
-      paddingStart: withPaddingStart ? padding : 0,
+      paddingStart: removePaddingLeft ? 0 : padding,
       height: 56,
+      justifyContent: 'center',
     },
     placeholder: {
       color: colors.placeholder,

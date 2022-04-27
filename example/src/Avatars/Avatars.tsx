@@ -1,24 +1,39 @@
 import React from 'react';
-import { ImageSourcePropType, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 
-import { AvatarEdit } from '@nomada-sh/react-native-eyecandy';
+import { Avatar } from '@nomada-sh/react-native-eyecandy';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Avatars() {
-  const [source, setSource] = React.useState<ImageSourcePropType>({
-    uri: 'https://avatars.githubusercontent.com/u/39095957',
-  });
-
   return (
-    <ScrollView>
-      <AvatarEdit
-        source={source}
-        onChange={assets => {
-          if (assets && assets.length) {
-            console.log(assets[0]);
-            setSource(assets[0]);
-          }
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          padding: 20,
         }}
-      />
-    </ScrollView>
+      >
+        <Avatar
+          source={{
+            uri: 'https://i.pravatar.cc/300',
+          }}
+        />
+        <Avatar
+          source={{
+            uri: 'https://i.pravatar.cc/300',
+          }}
+          size={100}
+        />
+        <Avatar
+          source={{
+            uri: 'https://i.pravatar.cc/300',
+          }}
+          size={200}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 }

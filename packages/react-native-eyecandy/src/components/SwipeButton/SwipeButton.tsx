@@ -20,7 +20,6 @@ import Animated, {
 
 import { Body } from '../../typography';
 
-// TODO: Fix thumbIconComponent type.
 export interface SwipeButtonProps {
   onFail?: () => void;
   onSuccess?: () => void;
@@ -29,6 +28,8 @@ export interface SwipeButtonProps {
   padding?: number;
   width: number;
   testID?: string;
+  marginTop?: number;
+  marginBottom?: number;
 }
 
 type Context = {
@@ -54,6 +55,8 @@ function SwipeButton({
   height = 80,
   width,
   testID,
+  marginBottom,
+  marginTop,
 }: SwipeButtonProps) {
   const feedbackRef = useRef<boolean[]>([...feedbackTypes.map(() => false)]);
   const minProgress = 1 / (feedbackTypes.length + 1);
@@ -156,13 +159,15 @@ function SwipeButton({
         padding,
         borderRadius: height / 2,
         backgroundColor: colors.background,
+        marginTop,
+        marginBottom,
       }}
     >
-      <Body testID={`${testID}-title`} color="white">
+      <Body testID={testID ? `${testID}-title` : undefined} color="white">
         {title}
       </Body>
       <Animated.View
-        testID={`${testID}-track`}
+        testID={testID ? `${testID}-track` : undefined}
         style={[
           StyleSheet.absoluteFill,
           {
@@ -172,45 +177,9 @@ function SwipeButton({
           fillStyle,
         ]}
       />
-      {/* <View
-        style={[
-          StyleSheet.absoluteFill,
-          {
-            top: padding,
-            bottom: padding,
-            left: padding,
-            right: padding,
-            flexDirection: 'row',
-          },
-        ]}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'red',
-          }}
-        />
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'blue',
-          }}
-        />
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'red',
-          }}
-        />
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'blue',
-          }}
-        />
-      </View> */}
       <PanGestureHandler onGestureEvent={gestureHandler}>
         <Animated.View
-          testID={`${testID}-thumb`}
+          testID={testID ? `${testID}-thumb` : undefined}
           style={[
             {
               position: 'absolute',

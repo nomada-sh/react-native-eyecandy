@@ -1,3 +1,6 @@
+export { default as Icon } from './Icon';
+export { IconProps } from './Icon';
+
 export { default as Lock } from './Lock';
 export { default as Edit } from './Edit';
 export { default as Camera } from './Camera';
@@ -30,3 +33,7 @@ export { default as Tree } from './Tree';
 export { default as Warning } from './Warning';
 export { default as Dots } from './Dots';
 export { default as UserPlus } from './UserPlus';
+export { default as Download } from './Download';
+export { default as Close } from './Close';
+export { default as Photo } from './Photo';
+export { default as Menu } from './Menu';

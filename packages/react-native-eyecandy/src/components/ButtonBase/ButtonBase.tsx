@@ -1,13 +1,14 @@
-import React, { ReactNode, useCallback } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import {
   ActivityIndicator,
+  Animated,
   GestureResponderEvent,
+  Platform,
   Pressable,
   PressableProps,
   StyleProp,
   View,
   ViewStyle,
-  StyleSheet,
 } from 'react-native';
 
 import type { ThemeButtonColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
@@ -31,15 +32,15 @@ export interface ButtonBaseProps extends PressableProps {
   color?: ThemeButtonColorChoices;
   styles?: {
     /**
-     * Container view style (Applied after style).
+     * Container view style (Applied before style).
      */
     container?: StyleProp<ViewStyle>;
     /**
-     * Pressable style (Applied after buttonStyle).
+     * Pressable style (Applied before pressable style).
      */
-    button?: PressableProps['style'];
+    pressable?: PressableProps['style'];
   };
-  variant?: 'default' | 'rounded';
+  variant?: 'default' | 'rounded' | 'squared';
   height?: number;
   fullwidth?: boolean;
   loading?: boolean;
@@ -47,6 +48,8 @@ export interface ButtonBaseProps extends PressableProps {
   transparent?: boolean;
   outlined?: boolean;
   disableHapticFeedback?: boolean;
+  marginTop?: number;
+  marginBottom?: number;
 }
 
 function ButtonBase({
@@ -63,11 +66,16 @@ function ButtonBase({
   styles: customStyles = {},
   hideDisabledOverlay,
   onPress: onPressProp,
+  onPressIn: onPressInProp,
+  onPressOut: onPressOutProp,
   transparent,
   outlined,
   disableHapticFeedback = false,
+  marginBottom,
+  marginTop,
   ...props
 }: ButtonBaseProps) {
+  const animated = useRef(new Animated.Value(0)).current;
   const disabled = disabledProp || loading;
 
   const styles = useStyles({
@@ -83,21 +91,56 @@ function ButtonBase({
 
   const getButtonStyle = usePressableStyles([
     styles.pressable,
+    customStyles.pressable,
     pressableStyle,
-    customStyles.button,
   ]);
 
-  const onPress = useCallback(
-    (e: GestureResponderEvent) => {
-      if (!disableHapticFeedback)
-        ReactNativeHapticFeedback.trigger('impactMedium');
-      onPressProp?.(e);
-    },
-    [disableHapticFeedback, onPressProp],
-  );
+  const fadeIn = () => {
+    Animated.timing(animated, {
+      toValue: 1,
+      duration: 100,
+      useNativeDriver: true,
+    }).start();
+  };
+  const fadeOut = () => {
+    Animated.timing(animated, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const onPress = (e: GestureResponderEvent) => {
+    if (!disableHapticFeedback)
+      ReactNativeHapticFeedback.trigger('impactMedium');
+    onPressProp?.(e);
+  };
+
+  const onPressIn = (e: GestureResponderEvent) => {
+    fadeIn();
+    onPressInProp?.(e);
+  };
+
+  const onPressOut = (e: GestureResponderEvent) => {
+    fadeOut();
+    onPressOutProp?.(e);
+  };
 
   return (
-    <View style={[styles.container, style, customStyles.container]}>
+    <View
+      style={[
+        {
+          marginTop,
+          marginBottom,
+        },
+        styles.container,
+        customStyles.container,
+        style,
+      ]}
+    >
+      {Platform.OS === 'ios' ? (
+        <Animated.View style={[styles.activeOpacity, { opacity: animated }]} />
+      ) : null}
       <Pressable
         style={getButtonStyle}
         android_ripple={{
@@ -105,6 +148,8 @@ function ButtonBase({
         }}
         disabled={disabled}
         onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
         {...props}
       >
         {children}

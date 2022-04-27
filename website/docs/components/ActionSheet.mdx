@@ -1,0 +1,247 @@
+---
+id: actionsheet
+title: ActionSheet
+---
+
+## Import
+
+```jsx
+import { ActionSheet } from '@nomada-sh/react-native-eyecandy';
+```
+
+## Example
+
+```tsx
+import React from 'react';
+import { ScrollView, Alert } from 'react-native';
+
+import {
+  Button,
+  ActionSheet,
+  ActionSheetOption,
+} from '@nomada-sh/react-native-eyecandy';
+import {
+  Camera,
+  Mail,
+  Photo,
+  Eye,
+  Download,
+} from '@nomada-sh/react-native-eyecandy-icons';
+
+const profilePictureOptions: ActionSheetOption[] = [
+  {
+    label: 'Take a photo',
+    icon: Camera,
+  },
+  {
+    label: 'Choose from gallery',
+    icon: Photo,
+  },
+];
+
+const shareDocumentOptions: ActionSheetOption[] = [
+  {
+    label: 'Download',
+    icon: Download,
+  },
+  {
+    label: 'Share',
+    icon: Mail,
+  },
+  {
+    label: 'Preview',
+    icon: Eye,
+  },
+];
+
+export default function App() {
+  const [visibleChangePicture, setVisibleChangePicture] = React.useState(false);
+  const [visibleShare, setVisibleShare] = React.useState(false);
+  const [nativeVisible, setNativeVisible] = React.useState(false);
+
+  return (
+    <ScrollView
+      contentContainerStyle={{
+        padding: 20,
+      }}
+    >
+      <Button
+        marginBottom={20}
+        onPress={() => setVisibleChangePicture(true)}
+        text="Change your profile picture"
+      />
+      <ActionSheet
+        title="Change your profile picture"
+        message="Select a new profile picture"
+        options={profilePictureOptions}
+        visible={visibleChangePicture}
+        onClose={() => setVisibleChangePicture(false)}
+        onPressAction={index => {
+          const option = profilePictureOptions[index];
+          if (typeof option === 'string') Alert.alert(option);
+          else Alert.alert(option.label);
+        }}
+        showCancelIcon
+      />
+
+      <Button
+        marginBottom={20}
+        onPress={() => setVisibleShare(true)}
+        text="Share document"
+      />
+      <ActionSheet
+        options={shareDocumentOptions}
+        visible={visibleShare}
+        onClose={() => setVisibleShare(false)}
+        onPressAction={index => {
+          const option = shareDocumentOptions[index];
+          if (typeof option === 'string') Alert.alert(option);
+          else Alert.alert(option.label);
+        }}
+        showCancelIcon
+      />
+
+      <Button
+        marginBottom={20}
+        onPress={() => setNativeVisible(true)}
+        text="Share document (native)"
+      />
+      <ActionSheet
+        native
+        options={shareDocumentOptions}
+        visible={nativeVisible}
+        onClose={() => setNativeVisible(false)}
+        onPressAction={index => {
+          const option = shareDocumentOptions[index];
+          if (typeof option === 'string') Alert.alert(option);
+          else Alert.alert(option.label);
+        }}
+        showCancelIcon
+      />
+    </ScrollView>
+  );
+}
+```
+
+![ActionSheet](../assets/components/actionsheet.gif)
+
+## Props
+
+### <div class="label required basic">Required</div>**`options`**
+
+| Type                                      |
+| ----------------------------------------- |
+| [ActionSheetOption](#actionsheetoption)[] |
+
+---
+
+### `visible`
+
+| Type    |
+| ------- |
+| boolean |
+
+---
+
+### `title`
+
+| Type   |
+| ------ |
+| string |
+
+---
+
+### `message`
+
+| Type   |
+| ------ |
+| string |
+
+---
+
+### `onClose`
+
+```jsx
+() => void;
+```
+
+| Type     |
+| -------- |
+| function |
+
+---
+
+### `onPressAction`
+
+```jsx
+(index: number) => void;
+```
+
+| Type     |
+| -------- |
+| function |
+
+---
+
+### `onCancel`
+
+```jsx
+() => void;
+```
+
+| Type     |
+| -------- |
+| function |
+
+---
+
+### `showCancelIcon`
+
+| Type    |
+| ------- |
+| boolean |
+
+---
+
+### `cancelText`
+
+| Type   | Default    |
+| ------ | ---------- |
+| string | `'Cancel'` |
+
+---
+
+### `native` <div class="label ios">iOS</div>
+
+When set to `true`, the action sheet will be rendered natively on iOS.
+
+| Type    |
+| ------- |
+| boolean |
+
+---
+
+### `dark` <div class="label ios">iOS</div>
+
+When set to `true`, the action sheet will be rendered in dark mode on iOS.
+
+| Type    |
+| ------- |
+| boolean |
+
+## Type definitions
+
+### ActionSheetOption
+
+| Type           |
+| -------------- |
+| string, object |
+
+When the type is string, the string is the label of the option.
+
+When the type is object, the object must have the following properties:
+
+| Name  | Type             | Required | Description             |
+| ----- | ---------------- | -------- | ----------------------- |
+| label | string           | Yes      | The label of the option |
+| icon  | [Icon](../icons) | No       | The icon of the option  |

@@ -20,7 +20,7 @@ export default function useStyles({
 }: {
   color?: ThemeButtonColorChoices;
   inverse?: boolean;
-  variant?: 'default' | 'rounded';
+  variant?: 'default' | 'rounded' | `squared`;
   height?: number;
   disabled?: boolean | null;
   fullwidth?: boolean;
@@ -56,16 +56,21 @@ export default function useStyles({
       width: fullwidth ? '100%' : undefined,
       borderWidth,
       borderColor,
+      backgroundColor: backgroundColor.string(),
     },
     pressable: {
       flex: 1,
       borderRadius,
-      backgroundColor: backgroundColor.string(),
       justifyContent: 'center',
       alignItems: 'center',
     },
     ripple: {
       color: rippleColor,
+    },
+    activeOpacity: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: rippleColor,
+      flex: 1,
     },
     disabled: {
       backgroundColor: disabled ? disabledColor.string() : undefined,

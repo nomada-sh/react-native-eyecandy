@@ -10,31 +10,30 @@ import {
 import { Body } from '../../typography';
 import type { RadioGroupItemProps } from '../RadioGroupItem';
 
-type Child<V> = React.ReactElement<RadioGroupItemProps<V>>;
-
-export interface RadioGroupProps<V> extends Omit<ViewProps, 'children'> {
-  children: Child<V> | Child<V>[];
-  label: string;
+export interface RadioGroupProps<V = any> extends Omit<ViewProps, 'children'> {
+  children:
+    | React.ReactElement<RadioGroupItemProps>
+    | React.ReactElement<RadioGroupItemProps>[];
+  title?: string;
   value?: V;
-  onPress?: (value: V) => void;
+  onChange?: (value: V) => void;
   gap?: number;
-  margin?: number;
   itemsPerRow?: number;
-  labelStyle?: StyleProp<TextStyle>;
-  numberOfLines?: number;
+  titleStyle?: StyleProp<TextStyle>;
+  itemLabelNumberOfLines?: number;
 }
 
 function RadioGroup<V>({
   children,
-  label,
-  onPress,
+  title,
+  onChange,
   value,
   testID,
   style,
   gap = 10,
   itemsPerRow = 3,
-  labelStyle,
-  numberOfLines,
+  titleStyle,
+  itemLabelNumberOfLines,
   ...props
 }: RadioGroupProps<V>) {
   if (itemsPerRow < 1) throw new Error('itemsPerRow must be greater than 0');
@@ -49,7 +48,7 @@ function RadioGroup<V>({
 
   let row = 0;
   const injectedChildren = React.Children.map(children, (child, index) => {
-    if (React.isValidElement(child)) {
+    if (React.isValidElement<RadioGroupItemProps>(child)) {
       const i = index % itemsPerRow;
 
       const isEnd = i === itemsPerRow - 1;
@@ -67,9 +66,12 @@ function RadioGroup<V>({
           },
         ],
         selected: value !== undefined && child.props.value === value,
-        onPress: () => onPress?.(child.props.value),
+        onPress: (value: any) => {
+          onChange && onChange(value);
+          child.props.onPress && child.props.onPress(value);
+        },
         testID: child.props.testID ?? `${testID}-item-${index}`,
-        numberOfLines: child.props.numberOfLines ?? numberOfLines,
+        numberOfLines: child.props.numberOfLines ?? itemLabelNumberOfLines,
       });
     }
 
@@ -78,9 +80,15 @@ function RadioGroup<V>({
 
   return (
     <View testID={testID} style={[styles.root, style]} {...props}>
-      <Body numberOfLines={1} style={[styles.label, labelStyle]} weight="bold">
-        {label}
-      </Body>
+      {title ? (
+        <Body
+          numberOfLines={1}
+          style={[styles.label, titleStyle]}
+          weight="bold"
+        >
+          {title}
+        </Body>
+      ) : null}
       <View
         onLayout={event => {
           const { width } = event.nativeEvent.layout;

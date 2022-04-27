@@ -1,8 +1,5 @@
 import React, { ReactNode, useCallback } from 'react';
-import {
-  Switch as SwitchBase,
-  SwitchProps as SwitchBaseProps,
-} from 'react-native';
+import { Switch as RNSwitch, SwitchProps as RNSwitchProps } from 'react-native';
 
 import {
   useColors,
@@ -10,7 +7,7 @@ import {
 } from '@nomada-sh/react-native-eyecandy-theme';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
-export interface SwitchProps extends SwitchBaseProps {
+export interface SwitchProps extends RNSwitchProps {
   children?: ReactNode;
   color?: ThemeSwitchColorChoices;
 }
@@ -18,6 +15,7 @@ export interface SwitchProps extends SwitchBaseProps {
 function Switch({
   color = 'default',
   onValueChange: onValueChangeProp,
+  style,
   ...props
 }: SwitchProps) {
   const colors = useColors(c => c.switch[color]);
@@ -32,13 +30,19 @@ function Switch({
   );
 
   return (
-    <SwitchBase
+    <RNSwitch
       onValueChange={onValueChange}
       trackColor={{
         false: colors.trackColor,
         true: colors.trackColorEnabled,
       }}
       thumbColor={colors.thumbColor}
+      style={[
+        {
+          alignSelf: 'flex-start',
+        },
+        style,
+      ]}
       {...props}
     />
   );

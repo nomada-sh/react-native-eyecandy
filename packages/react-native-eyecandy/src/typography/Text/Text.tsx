@@ -8,17 +8,18 @@ import {
 import {
   ThemeTextColorsChoices,
   useTheme,
+  isThemeTextColorsChoices,
+  ThemeTextWeights,
 } from '@nomada-sh/react-native-eyecandy-theme';
 import Color from 'color';
-
-import { isThemeTextColorsChoices } from '../../utils';
-
 export interface TextProps extends TextBaseProps {
-  weight?: TextStyle['fontWeight'] | 'semibold' | 'medium' | 'regular';
+  weight?: ThemeTextWeights;
   size?: TextStyle['fontSize'];
   align?: TextStyle['textAlign'];
   contrast?: boolean;
   color?: ThemeTextColorsChoices | string;
+  marginTop?: number;
+  marginBottom?: number;
 }
 
 function Text({
@@ -28,6 +29,8 @@ function Text({
   contrast = false,
   color = 'default',
   align,
+  marginBottom,
+  marginTop,
   ...props
 }: TextProps) {
   const { colors } = useTheme();
@@ -65,6 +68,8 @@ function Text({
           fontSize: size,
           color: textColor,
           textAlign: align,
+          marginBottom,
+          marginTop,
         },
         style,
       ]}

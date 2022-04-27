@@ -13,6 +13,7 @@ export interface IconTouchableProps {
   style?: StyleProp<ViewStyle>;
   icon?: React.ComponentType<TextInputIconProps> | React.ReactElement<any>;
   color: string;
+  focused: boolean;
 }
 
 export default function IconTouchable({
@@ -20,13 +21,14 @@ export default function IconTouchable({
   icon: Icon,
   style,
   color,
+  focused,
 }: IconTouchableProps) {
   if (!Icon) return null;
 
   const icon = React.isValidElement(Icon) ? (
     Icon
   ) : (
-    <Icon size={20} stroke={color} />
+    <Icon focused={focused} size={20} stroke={color} />
   );
 
   return (

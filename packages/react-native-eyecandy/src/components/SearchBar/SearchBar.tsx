@@ -22,13 +22,24 @@ function SearchBar({
   onFocus,
   onBlur,
   onChangeText,
+  marginBottom,
+  marginTop,
   ...props
 }: SearchBarProps) {
   const [focused, setFocused] = useState(false);
   const [cancelButtonVisible, setCancelButtonVisible] = useState(false);
 
   return (
-    <View style={[styles.container, style]}>
+    <View
+      style={[
+        styles.container,
+        {
+          marginBottom,
+          marginTop,
+        },
+        style,
+      ]}
+    >
       <TextInput
         fullWidth={false}
         onFocus={e => {
