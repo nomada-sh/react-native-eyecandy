@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy-theme",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React Native Eyecandy Theme",
   "license": "MIT",
   "main": "lib/commonjs/index.js",

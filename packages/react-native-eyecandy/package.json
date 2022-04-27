@@ -82,8 +82,8 @@
     "react-native-svg": "^12.3.0"
   },
   "dependencies": {
-    "@nomada-sh/react-native-eyecandy-icons": "^1.0.5",
-    "@nomada-sh/react-native-eyecandy-theme": "^1.0.3",
+    "@nomada-sh/react-native-eyecandy-icons": "^1.0.6",
+    "@nomada-sh/react-native-eyecandy-theme": "^1.0.4",
     "calendar-base": "^1.1.1",
     "color": "^4.2.0",
     "date-fns": "^2.28.0",

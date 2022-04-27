@@ -33,7 +33,7 @@
     ]
   },
   "dependencies": {
-    "@nomada-sh/react-native-eyecandy-theme": "^1.0.1"
+    "@nomada-sh/react-native-eyecandy-theme": "^1.0.4"
   },
   "devDependencies": {
     "@types/react": "^17.0.38",
