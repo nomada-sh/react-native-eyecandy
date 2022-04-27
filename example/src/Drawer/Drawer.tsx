@@ -76,8 +76,8 @@ export default function Drawer() {
             onValueChange={setDark}
           />
         ),
-        headerShown: false,
-        // swipeEnabled: false,
+        // headerShown: false,
+        swipeEnabled: false,
       })}
     >
       <Screen name="Button" component={Buttons} />
