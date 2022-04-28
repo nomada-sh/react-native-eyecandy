@@ -10,38 +10,42 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
+    title: 'Cross-platform',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        You won't have to worry about designing separate versions of your app
+        for different platforms. You can rely on a consistent design across all
+        devices.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Customizable',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        You can tailor the appearance of the components to match your brand or
+        style preferences. This allows you to create an app that looks exactly
+        the way you want it to.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Rich set of components',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        We offer a wide range of different types of components, so you can
+        easily find the perfect ones for your app. This gives you the
+        flexibility to create an app that has all the features and functionality
+        that you need.
       </>
     ),
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({ title, Svg, description }: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">

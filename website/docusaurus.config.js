@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'React Native Eyecandy',
-  tagline: 'Dinosaurs are cool',
+  tagline: 'Make your React Native apps look great on any device',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -17,9 +17,7 @@ const config = {
   projectName: 'react-native-eyecandy', // Usually your repo name.
   plugins: ['docusaurus-plugin-sass'],
   clientModules: [require.resolve('./snackPlayerInitializer.js')],
-  scripts: [
-    {src: 'https://snack.expo.dev/embed.js', defer: true},
-  ],
+  scripts: [{ src: 'https://snack.expo.dev/embed.js', defer: true }],
   presets: [
     [
       'classic',
@@ -29,7 +27,7 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/nomada-sh/react-native-eyecandy/tree/main/website',
+            'https://github.com/nomada-sh/react-native-eyecandy/blob/develop/website',
           remarkPlugins: [
             require('./plugins/remark-snackplayer'),
             [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
@@ -39,7 +37,7 @@ const config = {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/nomada-sh/react-native-eyecandy/tree/main/website',
+            'https://github.com/nomada-sh/react-native-eyecandy/blob/develop/website',
         },
         theme: {
           customCss: require.resolve('./src/css/customTheme.scss'),
