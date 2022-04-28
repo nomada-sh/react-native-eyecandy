@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { useUpdateEffect } from 'react-use';
+import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 
 import type {
   Fields,

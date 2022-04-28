@@ -126,6 +126,8 @@ function ButtonBase({
     onPressOutProp?.(e);
   };
 
+  const showActiveOpacity = Platform.OS === 'ios' || Platform.OS === 'web';
+
   return (
     <View
       style={[
@@ -138,7 +140,7 @@ function ButtonBase({
         style,
       ]}
     >
-      {Platform.OS === 'ios' ? (
+      {showActiveOpacity ? (
         <Animated.View style={[styles.activeOpacity, { opacity: animated }]} />
       ) : null}
       <Pressable
