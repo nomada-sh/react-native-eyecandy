@@ -11,7 +11,8 @@ import { LinkButton } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
+```SnackPlayer name=RN%20Eyecandy%20LinkButton
+import React from 'react';
 import { Alert, ScrollView } from 'react-native';
 
 import { LinkButton } from '@nomada-sh/react-native-eyecandy';
@@ -53,7 +54,7 @@ export default function App() {
       <LinkButton disabled marginBottom={20}>
         Disabled
       </LinkButton>
-      <LinkButton loading>
+      <LinkButton loading variant="rounded">
         Loading
       </LinkButton>
     </ScrollView>
@@ -61,7 +62,7 @@ export default function App() {
 }
 ```
 
-![LinkButton](../assets/components/linkbutton.gif)
+<!-- ![LinkButton](../assets/components/linkbutton.gif) -->
 
 ## Props
 

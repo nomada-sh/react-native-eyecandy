@@ -16,6 +16,10 @@ const config = {
   organizationName: 'nomada-sh', // Usually your GitHub org/user name.
   projectName: 'react-native-eyecandy', // Usually your repo name.
   plugins: ['docusaurus-plugin-sass'],
+  clientModules: [require.resolve('./snackPlayerInitializer.js')],
+  scripts: [
+    {src: 'https://snack.expo.dev/embed.js', defer: true},
+  ],
   presets: [
     [
       'classic',
@@ -27,6 +31,7 @@ const config = {
           editUrl:
             'https://github.com/nomada-sh/react-native-eyecandy/tree/main/website',
           remarkPlugins: [
+            require('./plugins/remark-snackplayer'),
             [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
           ],
         },
@@ -92,7 +97,7 @@ const config = {
               {
                 label: 'Theme',
                 to: '/docs/theme',
-              }
+              },
             ],
           },
           {

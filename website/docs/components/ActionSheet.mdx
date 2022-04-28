@@ -3,7 +3,7 @@ id: actionsheet
 title: ActionSheet
 ---
 
-ActionSheets are sheets that slides up from the bottom of the screen, and present two or more choices related to an intentional user action. For example, an ActionSheet component might be used to allow a user to share content from an app.
+ActionSheets are sheets that slide up from the bottom of the screen, and present two or more choices related to an intentional user action.
 
 ## Import
 
@@ -13,7 +13,7 @@ import { ActionSheet } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
+```SnackPlayer name=RN%20Eyecandy%20ActionSheet
 import React from 'react';
 import { ScrollView, Alert } from 'react-native';
 
@@ -92,27 +92,10 @@ export default function App() {
         text="Share document"
       />
       <ActionSheet
+        native
         options={shareDocumentOptions}
         visible={visibleShare}
         onClose={() => setVisibleShare(false)}
-        onPressAction={index => {
-          const option = shareDocumentOptions[index];
-          if (typeof option === 'string') Alert.alert(option);
-          else Alert.alert(option.label);
-        }}
-        showCancelIcon
-      />
-
-      <Button
-        marginBottom={20}
-        onPress={() => setNativeVisible(true)}
-        text="Share document (native)"
-      />
-      <ActionSheet
-        native
-        options={shareDocumentOptions}
-        visible={nativeVisible}
-        onClose={() => setNativeVisible(false)}
         onPressAction={index => {
           const option = shareDocumentOptions[index];
           if (typeof option === 'string') Alert.alert(option);
@@ -125,7 +108,7 @@ export default function App() {
 }
 ```
 
-![ActionSheet](../assets/components/actionsheet.gif)
+<!-- ![ActionSheet](../assets/components/actionsheet.gif) -->
 
 ## Props
 

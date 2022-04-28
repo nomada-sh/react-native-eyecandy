@@ -13,7 +13,7 @@ import { Switch } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
+```SnackPlayer name=RN%20Eyecandy%20Switch
 import React from 'react';
 import { ScrollView } from 'react-native';
 
@@ -23,24 +23,18 @@ export default function App() {
   const [value, setValue] = React.useState(false);
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
+    <ScrollView
+      contentContainerStyle={{
+        padding: 20,
       }}
     >
-      <ScrollView
-        contentContainerStyle={{
-          padding: 20,
-        }}
-      >
-        <Switch value={value} onValueChange={setValue} />
-      </ScrollView>
-    </SafeAreaView>
+      <Switch value={value} onValueChange={setValue} />
+    </ScrollView>
   );
 }
 ```
 
-![Switch](../assets/components/switch.gif)
+<!-- ![Switch](../assets/components/switch.gif) -->
 
 ## Props
 

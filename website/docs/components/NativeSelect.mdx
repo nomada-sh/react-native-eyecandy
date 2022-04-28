@@ -11,26 +11,25 @@ import { NativeSelect } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
+```SnackPlayer name=RN%20Eyecandy%20NativeSelect&supportedPlatforms=ios,android
 import React, { useRef } from 'react';
 import { ScrollView } from 'react-native';
 
 import {
   Button,
   NativeSelect,
-  NativeSelectHandle,
   NativeSelectItem,
 } from '@nomada-sh/react-native-eyecandy';
 import { Crown, Star } from '@nomada-sh/react-native-eyecandy-icons';
 
-const items1: NativeSelectItem<string>[] = [
+const items1 = [
   ...Array.from({ length: 100 }, (_, i) => ({
     label: `Option ${i}`,
     value: `option${i}`,
   })),
 ];
 
-const items2: NativeSelectItem<string>[] = [
+const items2 = [
   ...Array.from({ length: 10 }, (_, i) => ({
     label: `Option ${i}`,
     value: `option${i}`,
@@ -38,10 +37,10 @@ const items2: NativeSelectItem<string>[] = [
 ];
 
 export default function App() {
-  const [v1, setV1] = React.useState<string | undefined>(undefined);
-  const [v2, setV2] = React.useState<string | undefined>('option0');
+  const [v1, setV1] = React.useState(undefined);
+  const [v2, setV2] = React.useState('option0');
 
-  const ref = useRef<NativeSelectHandle>(null);
+  const ref = useRef(null);
 
   return (
     <ScrollView

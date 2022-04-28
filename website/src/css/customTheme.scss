@@ -287,3 +287,14 @@ td .label {
     }
   }
 }
+
+/* Snack Player */
+
+.snack-player {
+  height: 544px;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 24px;
+  border: 1px solid var(--ifm-table-border-color);
+  border-radius: var(--ifm-global-radius);
+}

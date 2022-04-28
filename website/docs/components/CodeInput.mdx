@@ -3,7 +3,7 @@ id: codeinput
 title: CodeInput
 ---
 
-CodeInputs are inputs used to enter confirmation codes. They can be used to enter double-factor authentication codes.
+CodeInputs are inputs used to enter numeric codes. They can be used to enter double-factor authentication codes.
 
 ## Import
 
@@ -13,7 +13,7 @@ import { CodeInput } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
+```SnackPlayer name=RN%20Eyecandy%20CodeInput
 import React from 'react';
 import { View, Alert } from 'react-native';
 
@@ -35,14 +35,14 @@ export default function App() {
         onFinish={code => {
           Alert.alert(`Code: ${code}`);
         }}
-        length={5}
+        length={4}
       />
     </View>
   );
 }
 ```
 
-![CodeInput](../assets/components/codeinput.gif)
+<!-- ![CodeInput](../assets/components/codeinput.gif) -->
 
 ## Props
 

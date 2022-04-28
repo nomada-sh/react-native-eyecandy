@@ -13,7 +13,7 @@ import { ButtonBase } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
+```SnackPlayer name=RN%20Eyecandy%20ButtonBase
 import React from 'react';
 import { Alert, ScrollView, View } from 'react-native';
 
@@ -59,19 +59,19 @@ export default function App() {
           justifyContent: 'flex-start',
           paddingHorizontal: 20,
         }}
+        height={64}
       >
         <Star color="white" />
         <View
           style={{
             flex: 1,
             marginHorizontal: 20,
-            alignItems: 'center',
           }}
         >
-          <Body weight="bold" color="white">
+          <Body weight="bold" color="white" align="center">
             Button Base
           </Body>
-          <Body color="white">This is a button base</Body>
+          <Body color="white" align="center" size="small">This is a button base</Body>
         </View>
         <Star color="white" />
       </ButtonBase>
@@ -80,7 +80,7 @@ export default function App() {
 }
 ```
 
-![ButtonBase](../assets/components/buttonbase.gif)
+<!-- ![ButtonBase](../assets/components/buttonbase.gif) -->
 
 ## Props
 
