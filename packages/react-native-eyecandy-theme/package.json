@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy-theme",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "React Native Eyecandy Theme",
   "license": "MIT",
   "main": "lib/commonjs/index.js",
@@ -15,6 +15,7 @@
     "test:watch": "jest --watch",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "typecheck": "tsc --noEmit",
     "yalc:publish": "yalc publish --push"
   },
   "files": [

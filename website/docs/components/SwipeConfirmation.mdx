@@ -1,14 +1,14 @@
 ---
-id: bottomsheetswipeconfirmation
-title: BottomSheetSwipeConfirmation
+id: swipeconfirmation
+title: SwipeConfirmation
 ---
 
-BottomSheetSwipeConfirmations are used to add a confirmation to any action in your app that is invoked with a [ButtonSwipe](buttonswipe). This is useful for things like deleting items or taking some other destructive action. 
+SwipeConfirmations are used to add a confirmation to any action in your app that is invoked with a [ButtonSwipe](buttonswipe). This is useful for things like deleting items or taking some other destructive action. 
 
 ## Import
 
 ```jsx
-import { BottomSheetSwipeConfirmation } from '@nomada-sh/react-native-eyecandy';
+import { SwipeConfirmation } from '@nomada-sh/react-native-eyecandy';
 ```
 
 ## Example
@@ -18,7 +18,7 @@ import React from 'react';
 import { Alert, ScrollView } from 'react-native';
 
 import {
-  BottomSheetSwipeConfirmation,
+  SwipeConfirmation,
   Button,
 } from '@nomada-sh/react-native-eyecandy';
 
@@ -32,7 +32,7 @@ export default function App() {
       }}
     >
       <Button onPress={() => setVisible(true)} text="Show swipe confirmation" />
-      <BottomSheetSwipeConfirmation
+      <SwipeConfirmation
         title="Swipe to confirm"
         visible={visible}
         onClose={() => setVisible(false)}

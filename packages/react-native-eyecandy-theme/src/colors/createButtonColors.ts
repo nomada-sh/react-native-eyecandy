@@ -1,7 +1,7 @@
 import mergeColors from './mergeColors';
 import { ThemeButtonColors, GetThemeColors } from './types';
 
-const getButtonColors: GetThemeColors<ThemeButtonColors> = options => {
+const createButtonColors: GetThemeColors<ThemeButtonColors> = options => {
   const { dark, palette } = options;
 
   const defaultColors: ThemeButtonColors = {
@@ -25,4 +25,4 @@ const getButtonColors: GetThemeColors<ThemeButtonColors> = options => {
   });
 };
 
-export default getButtonColors;
+export default createButtonColors;

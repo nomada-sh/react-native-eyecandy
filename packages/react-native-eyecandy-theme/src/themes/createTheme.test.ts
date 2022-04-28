@@ -2,11 +2,12 @@ import { Palette } from '../palette';
 import { Typography } from '../typography';
 
 import createTheme from './createTheme';
+import { Theme } from './types';
 
 test('createTheme', () => {
   const theme = createTheme();
 
-  expect(theme).toEqual({
+  expect(theme).toEqual<Theme>({
     dark: false,
     palette: Palette,
     typography: Typography,
@@ -19,7 +20,7 @@ test('createTheme dark', () => {
     dark: true,
   });
 
-  expect(theme).toEqual({
+  expect(theme).toEqual<Theme>({
     dark: true,
     palette: Palette,
     typography: Typography,
@@ -49,12 +50,12 @@ test('createTheme custom palette', () => {
     palette: customPalette,
   });
 
-  expect(theme.palette.primary).toEqual({
+  expect(theme.palette.primary).toEqual<Theme['palette']['primary']>({
     ...Palette.primary,
     ...customPalette.primary,
   });
 
-  expect(theme.palette.secondary).toEqual({
+  expect(theme.palette.secondary).toEqual<Theme['palette']['secondary']>({
     ...Palette.secondary,
     ...customPalette.secondary,
   });

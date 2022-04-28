@@ -10,7 +10,7 @@ const config = {
   tagline: 'Make your React Native apps look great on any device',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'nomada-sh', // Usually your GitHub org/user name.

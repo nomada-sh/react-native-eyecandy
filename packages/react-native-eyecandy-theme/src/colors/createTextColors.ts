@@ -1,7 +1,7 @@
 import mergeColors from './mergeColors';
 import { ThemeTextColors, GetThemeColors } from './types';
 
-const getTextColors: GetThemeColors<ThemeTextColors> = options => {
+const createTextColors: GetThemeColors<ThemeTextColors> = options => {
   const { dark, palette } = options;
 
   const defaultColors: ThemeTextColors = {
@@ -29,4 +29,4 @@ const getTextColors: GetThemeColors<ThemeTextColors> = options => {
   });
 };
 
-export default getTextColors;
+export default createTextColors;

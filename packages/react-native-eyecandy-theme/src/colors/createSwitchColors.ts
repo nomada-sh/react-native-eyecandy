@@ -1,7 +1,7 @@
 import mergeColors from './mergeColors';
 import { ThemeSwitchColors, GetThemeColors } from './types';
 
-const getSwitchColors: GetThemeColors<ThemeSwitchColors> = options => {
+const createSwitchColors: GetThemeColors<ThemeSwitchColors> = options => {
   const { dark, palette } = options;
 
   const defaultColors: ThemeSwitchColors = {
@@ -18,4 +18,4 @@ const getSwitchColors: GetThemeColors<ThemeSwitchColors> = options => {
   });
 };
 
-export default getSwitchColors;
+export default createSwitchColors;

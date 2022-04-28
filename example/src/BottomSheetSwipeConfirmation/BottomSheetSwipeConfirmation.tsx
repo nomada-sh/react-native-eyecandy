@@ -1,10 +1,7 @@
 import React from 'react';
 import { Alert, SafeAreaView, ScrollView } from 'react-native';
 
-import {
-  BottomSheetSwipeConfirmation,
-  Button,
-} from '@nomada-sh/react-native-eyecandy';
+import { SwipeConfirmation, Button } from '@nomada-sh/react-native-eyecandy';
 
 export default function () {
   const [visible, setVisible] = React.useState(false);
@@ -24,7 +21,7 @@ export default function () {
           onPress={() => setVisible(true)}
           text="Show swipe confirmation"
         />
-        <BottomSheetSwipeConfirmation
+        <SwipeConfirmation
           title="Swipe to confirm"
           visible={visible}
           onClose={() => setVisible(false)}

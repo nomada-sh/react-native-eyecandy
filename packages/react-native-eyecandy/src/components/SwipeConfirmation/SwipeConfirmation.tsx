@@ -10,21 +10,21 @@ import { Body } from '../../typography';
 import BottomSheet, { BottomSheetProps } from '../BottomSheet';
 import SwipeButton from '../SwipeButton';
 
-export interface BottomSheetSwipeConfirmationProps extends BottomSheetProps {
+export interface SwipeConfirmationProps extends BottomSheetProps {
   title: string;
   swipeTitle?: string;
   onConfirm?: () => void;
   style?: StyleProp<ViewStyle>;
 }
 
-function BottomSheetSwipeConfirmation({
+function SwipeConfirmation({
   title,
   swipeTitle,
   style,
   onConfirm,
   testID,
   ...props
-}: BottomSheetSwipeConfirmationProps) {
+}: SwipeConfirmationProps) {
   const { width } = useWindowDimensions();
 
   return (
@@ -60,8 +60,8 @@ function BottomSheetSwipeConfirmation({
   );
 }
 
-BottomSheetSwipeConfirmation.defaultProps = {
+SwipeConfirmation.defaultProps = {
   height: Platform.OS === 'ios' ? 190 : 150,
 };
 
-export default BottomSheetSwipeConfirmation;
+export default SwipeConfirmation;

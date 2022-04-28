@@ -3,7 +3,7 @@ import { GetThemeColors } from './types';
 
 import { ThemeBadgeColors } from '.';
 
-const getDividerColors: GetThemeColors<ThemeBadgeColors> = options => {
+const createBadgeColors: GetThemeColors<ThemeBadgeColors> = options => {
   const { dark, palette } = options;
 
   const border = dark ? palette.grey[900] : 'white';
@@ -41,4 +41,4 @@ const getDividerColors: GetThemeColors<ThemeBadgeColors> = options => {
   });
 };
 
-export default getDividerColors;
+export default createBadgeColors;
