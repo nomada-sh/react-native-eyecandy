@@ -1,5 +1,4 @@
 {
-  "version": "1.0.0",
   "private": true,
   "workspaces": [
     "example",
@@ -10,6 +9,7 @@
     "start": "yarn workspace example start",
     "start:website": "yarn workspace website start",
     "build:website": "yarn workspace website build",
+    "deploy:website": "yarn workspace website deploy",
     "build:theme": "yarn workspace @nomada-sh/react-native-eyecandy-theme build",
     "build:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons build",
     "build:components": "yarn workspace @nomada-sh/react-native-eyecandy build",
