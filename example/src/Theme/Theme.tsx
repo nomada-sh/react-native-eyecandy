@@ -1,5 +1,4 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
 
 import {
   ThemeProvider,
@@ -7,6 +6,8 @@ import {
 } from '@nomada-sh/react-native-eyecandy-theme';
 
 import { ThemeContext } from '../shared/hooks/useTheme';
+
+import ThemedStatusBar from './ThemedStatusBar';
 
 const DefaultTheme = createTheme({
   palette: {
@@ -43,11 +44,10 @@ export default function Theme({ children }: { children: React.ReactNode }) {
         setDark,
       }}
     >
-      <StatusBar
-        backgroundColor={theme.colors.background.default.container}
-        barStyle={dark ? 'light-content' : 'dark-content'}
-      />
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <ThemedStatusBar />
+        {children}
+      </ThemeProvider>
     </ThemeContext.Provider>
   );
 }
