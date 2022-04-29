@@ -43,10 +43,6 @@
         ]
       }
     },
-    "git": {
-      "push": false,
-      "requireUpstream": false
-    },
     "npm": false
   }
 }
