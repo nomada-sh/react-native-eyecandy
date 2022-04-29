@@ -38,9 +38,7 @@
     "react": "*",
     "react-native": "*"
   },
-  "dependencies": {
-    "deepmerge": "^4.2.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^27.4.0",
     "@types/react": "^17.0.38",

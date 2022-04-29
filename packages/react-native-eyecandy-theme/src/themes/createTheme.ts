@@ -5,17 +5,25 @@ import { createTypography } from '../typography';
 import { CreateTheme } from './types';
 
 const createTheme: CreateTheme = (options = {}) => {
-  const palette = createPalette(options.palette);
-  const typography = createTypography(options.typography);
+  const dark = Boolean(options.dark);
+
+  const palette = createPalette({
+    dark,
+    palette: options.palette,
+  });
+  const typography = createTypography({
+    dark,
+    typography: options.typography,
+  });
   const colors = createColors({
-    dark: options.dark,
+    dark,
     colors: options.colors,
     palette,
     typography,
   });
 
   return {
-    dark: Boolean(options.dark),
+    dark,
     palette,
     typography,
     colors,

@@ -11,10 +11,18 @@ import createTextColors from './createTextColors';
 import { CreateThemeColors } from './types';
 
 const createColors: CreateThemeColors = (options = {}) => {
+  const dark = Boolean(options.dark);
+
   const variables = {
-    dark: Boolean(options.dark),
-    palette: createPalette(options.palette),
-    typography: createTypography(options.typography),
+    dark,
+    palette: createPalette({
+      dark,
+      palette: options.palette,
+    }),
+    typography: createTypography({
+      dark,
+      typography: options.typography,
+    }),
   };
 
   const partialColors =

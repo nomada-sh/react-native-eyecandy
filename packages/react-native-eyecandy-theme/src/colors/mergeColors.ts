@@ -1,4 +1,4 @@
-import deepmerge from 'deepmerge';
+import { merge } from '../utils';
 
 import { MergeThemeColorsOptions } from './types';
 
@@ -7,15 +7,17 @@ export default function mergeColors<T>({
   defaultColors,
   ...variables
 }: MergeThemeColorsOptions<T>): T {
+  const baseColors: T = JSON.parse(JSON.stringify(defaultColors));
+
   if (colors instanceof Function) {
     const newColors = colors(variables);
 
-    return deepmerge(defaultColors, newColors as Partial<T>);
+    return merge(baseColors, newColors);
   }
 
   if (colors) {
-    return deepmerge(defaultColors, colors as Partial<T>);
+    return merge(baseColors, colors);
   }
 
-  return defaultColors;
+  return baseColors;
 }
