@@ -90,7 +90,7 @@ function Content({
     return {
       transform: [{ translateY }],
       height: fullHeight,
-      backgroundColor: background.content,
+      backgroundColor: background.container,
       borderTopLeftRadius: 32,
       borderTopRightRadius: 32,
       overflow: 'hidden',

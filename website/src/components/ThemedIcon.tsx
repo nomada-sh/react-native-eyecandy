@@ -9,6 +9,8 @@ export default function ThemedIcon({
 }) {
   return (
     <ThemedImage
+      height={48}
+      width={48}
       sources={{
         light: useBaseUrl(`/img/icons/${name}.svg`),
         dark: useBaseUrl(`/img/icons/${name}-dark.svg`),

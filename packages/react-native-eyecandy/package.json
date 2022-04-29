@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "React Native Eyecandy",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "@react-native-picker/picker": "^2.4.1",
+    "@testing-library/react-hooks": "^8.0.0",
     "@types/color": "^3.0.2",
     "@types/jest": "^26.0.0",
     "@types/react": "*",
@@ -91,7 +92,6 @@
     "react-native-mask-input": "^1.2.0",
     "react-native-picker-select": "https://github.com/Canciller/react-native-picker-select",
     "react-native-redash": "^16.2.3",
-    "react-use": "^17.3.2",
-    "rn-swipe-button": "^1.3.6"
+    "react-use": "^17.3.2"
   }
 }

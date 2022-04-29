@@ -83,8 +83,8 @@ export type {
   SelectItemIconProps,
 } from './Select';
 
-export { default as BottomSheetSwipeConfirmation } from './BottomSheetSwipeConfirmation';
-export type { BottomSheetSwipeConfirmationProps } from './BottomSheetSwipeConfirmation';
+export { default as SwipeConfirmation } from './SwipeConfirmation';
+export type { SwipeConfirmationProps } from './SwipeConfirmation';
 
 export { default as BottomSheet } from './BottomSheet';
 export type { BottomSheetProps } from './BottomSheet';

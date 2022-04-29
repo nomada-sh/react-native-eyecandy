@@ -3,6 +3,8 @@ id: radiobutton
 title: RadioButton
 ---
 
+RadioButtons allow the selection of an option from a set.
+
 ## Import
 
 ```jsx
@@ -11,7 +13,7 @@ import { RadioButton } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
+```SnackPlayer name=RN%20Eyecandy%20RadioButton
 import React from 'react';
 import { ScrollView } from 'react-native';
 
@@ -19,14 +21,18 @@ import { RadioButton } from '@nomada-sh/react-native-eyecandy';
 import { Crown, Star } from '@nomada-sh/react-native-eyecandy-icons';
 
 export default function App() {
-  const [v1, setV1] = React.useState<boolean>(true);
-  const [v2, setV2] = React.useState<boolean>(true);
-  const [v3, setV3] = React.useState<boolean>(true);
+  const [v1, setV1] = React.useState(true);
+  const [v2, setV2] = React.useState(true);
+  const [v3, setV3] = React.useState(true);
 
   return (
     <ScrollView
       contentContainerStyle={{
         padding: 20,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
       }}
     >
       <RadioButton value={v1} onValueChange={setV1} />
@@ -49,7 +55,7 @@ export default function App() {
 }
 ```
 
-![RadioButton](../assets/components/radiobutton.gif)
+<!-- ![RadioButton](../assets/components/radiobutton.gif) -->
 
 ## Props
 

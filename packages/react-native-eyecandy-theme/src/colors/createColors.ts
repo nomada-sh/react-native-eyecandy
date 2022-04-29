@@ -1,13 +1,13 @@
 import { createPalette } from '../palette';
 import { createTypography } from '../typography';
 
-import getBackgroundColors from './getBackgroundColors';
-import getBadgeColors from './getBadgeColors';
-import getButtonColors from './getButtonColors';
-import getDividerColors from './getDividerColors';
-import getInputColors from './getInputColors';
-import getSwitchColors from './getSwitchColors';
-import getTextColors from './getTextColors';
+import createBackgroundColors from './createBackgroundColors';
+import createBadgeColors from './createBadgeColors';
+import createButtonColors from './createButtonColors';
+import createDividerColors from './createDividerColors';
+import createInputColors from './createInputColors';
+import createSwitchColors from './createSwitchColors';
+import createTextColors from './createTextColors';
 import { CreateThemeColors } from './types';
 
 const createColors: CreateThemeColors = (options = {}) => {
@@ -23,31 +23,31 @@ const createColors: CreateThemeColors = (options = {}) => {
       : options.colors || {};
 
   return {
-    button: getButtonColors({
+    button: createButtonColors({
       ...variables,
       colors: partialColors.button,
     }),
-    text: getTextColors({
+    text: createTextColors({
       ...variables,
       colors: partialColors.text,
     }),
-    input: getInputColors({
+    input: createInputColors({
       ...variables,
       colors: partialColors.input,
     }),
-    switch: getSwitchColors({
+    switch: createSwitchColors({
       ...variables,
       colors: partialColors.switch,
     }),
-    background: getBackgroundColors({
+    background: createBackgroundColors({
       ...variables,
       colors: partialColors.background,
     }),
-    divider: getDividerColors({
+    divider: createDividerColors({
       ...variables,
       colors: partialColors.divider,
     }),
-    badge: getBadgeColors({
+    badge: createBadgeColors({
       ...variables,
       colors: partialColors.badge,
     }),

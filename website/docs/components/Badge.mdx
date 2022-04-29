@@ -3,6 +3,8 @@ id: badge
 title: Badge
 ---
 
+Badges are small components typically used to indicate the status of an item, such as "new" or "unread", to the user.
+
 ## Import
 
 ```jsx
@@ -11,24 +13,25 @@ import { Badge } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
-import { ScrollView, View } from 'react-native';
+```SnackPlayer name=RN%20Eyecandy%20Badge
+import React from 'react';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 
 import { IconButton, Badge, Avatar } from '@nomada-sh/react-native-eyecandy';
 import { Photo } from '@nomada-sh/react-native-eyecandy-icons';
 
 export default function App() {
   return (
-    <ScrollView
-      contentContainerStyle={{
-        padding: 20,
+    <SafeAreaView
+      style={{
+        flex: 1,
       }}
     >
-      <View
-        style={{
+      <ScrollView
+        contentContainerStyle={{
+          padding: 20,
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginBottom: 20,
         }}
       >
         <Badge>
@@ -77,50 +80,13 @@ export default function App() {
             }}
           />
         </Badge>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Badge>
-          <IconButton icon={Photo} />
-        </Badge>
-        <Badge
-          color="success"
-          anchorOrigin={{
-            horizontal: 'left',
-            vertical: 'bottom',
-          }}
-        >
-          <IconButton icon={Photo} />
-        </Badge>
-        <Badge
-          color="warning"
-          anchorOrigin={{
-            horizontal: 'right',
-            vertical: 'top',
-          }}
-        >
-          <IconButton icon={Photo} />
-        </Badge>
-        <Badge
-          color="error"
-          anchorOrigin={{
-            horizontal: 'left',
-            vertical: 'top',
-          }}
-        >
-          <IconButton icon={Photo} />
-        </Badge>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 ```
 
-![Badge](../assets/components/badge.png)
+<!-- ![Badge](../assets/components/badge.png) -->
 
 ## Props
 

@@ -3,6 +3,8 @@ id: body
 title: Body
 ---
 
+Body displays words and characters of various sizes. They are typically used to display text content.
+
 ## Import
 
 ```jsx
@@ -11,27 +13,22 @@ import { Body } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
+```SnackPlayer name=RN%20Eyecandy%20Body
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { Body } from '@nomada-sh/react-native-eyecandy';
-import {
-  ThemeBodyFontSizesChoices,
-  ThemeTextColorsChoices,
-  ThemeTextWeights,
-} from '@nomada-sh/react-native-eyecandy-theme';
 
-const colors: ThemeTextColorsChoices[] = [
+const colors = [
   'default',
   'primary',
   'error',
   'greyout',
 ];
 
-const weights: ThemeTextWeights[] = ['normal', 'bold'];
+const weights = ['normal', 'bold'];
 
-const fontSizes: ThemeBodyFontSizesChoices[] = [
+const fontSizes = [
   'xsmall',
   'small',
   'medium',
@@ -80,7 +77,7 @@ export default function App() {
 }
 ```
 
-![Body](../assets/components/body.gif)
+<!-- ![Body](../assets/components/body.gif) -->
 
 ## Props
 

@@ -3,6 +3,8 @@ id: select
 title: Select
 ---
 
+Selects allow the user to choose a single value from a list of options.
+
 ## Import
 
 ```jsx
@@ -11,19 +13,18 @@ import { Select } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
+```SnackPlayer name=RN%20Eyecandy%20Select
 import React, { useRef } from 'react';
-import { ScrollView } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 import {
   Button,
   Select,
-  SelectHandle,
   SelectItem,
 } from '@nomada-sh/react-native-eyecandy';
 import { Crown, Star } from '@nomada-sh/react-native-eyecandy-icons';
 
-const items1: SelectItem<string>[] = [
+const items1 = [
   ...Array.from({ length: 100 }, (_, i) => ({
     label: `Option ${i}`,
     value: `option${i}`,
@@ -31,7 +32,7 @@ const items1: SelectItem<string>[] = [
   })),
 ];
 
-const items2: SelectItem<string>[] = [
+const items2 = [
   ...Array.from({ length: 10 }, (_, i) => ({
     label: `Option ${i}`,
     value: `option${i}`,
@@ -40,50 +41,56 @@ const items2: SelectItem<string>[] = [
 ];
 
 export default function App() {
-  const [v1, setV1] = React.useState<string | undefined>(undefined);
-  const [v2, setV2] = React.useState<string | undefined>('option0');
+  const [v1, setV1] = React.useState(undefined);
+  const [v2, setV2] = React.useState('option0');
 
-  const ref = useRef<SelectHandle>(null);
+  const ref = useRef(null);
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        padding: 20,
+    <SafeAreaView
+      style={{
+        flex: 1,
       }}
     >
-      <Select
-        marginBottom={20}
-        modalTitle="Select an option"
-        placeholder="Select an option"
-        icon={Crown}
-        value={v1}
-        items={items1}
-        onChange={setV1}
-      />
-      <Select marginBottom={20} modalTitle="Select an item" emptyText="Empty" />
-      <Select
-        marginBottom={20}
-        ref={ref}
-        icon={Star}
-        value={v2}
-        items={items2}
-        onChange={setV2}
-        hideClearIcon
-      />
-      <Button
-        marginBottom={20}
-        onPress={() => {
-          ref.current?.focus();
+      <ScrollView
+        contentContainerStyle={{
+          padding: 20,
         }}
       >
-        Open select
-      </Button>
-    </ScrollView>
+        <Select
+          marginBottom={20}
+          modalTitle="Select an option"
+          placeholder="Select an option"
+          icon={Crown}
+          value={v1}
+          items={items1}
+          onChange={setV1}
+        />
+        <Select marginBottom={20} modalTitle="Select an item" emptyText="Empty" />
+        <Select
+          marginBottom={20}
+          ref={ref}
+          icon={Star}
+          value={v2}
+          items={items2}
+          onChange={setV2}
+          hideClearIcon
+        />
+        <Button
+          marginBottom={20}
+          onPress={() => {
+            ref.current?.focus();
+          }}
+        >
+          Open select
+        </Button>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 ```
 
-![Select](../assets/components/select.gif)
+<!-- ![Select](../assets/components/select.gif) -->
 
 ## Props
 

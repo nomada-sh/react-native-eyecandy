@@ -3,6 +3,8 @@ id: text
 title: Text
 ---
 
+Text displays words and characters of various sizes.
+
 ## Import
 
 ```jsx
@@ -11,24 +13,20 @@ import { Text } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
+```SnackPlayer name=RN%20Eyecandy%20Text
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { Text } from '@nomada-sh/react-native-eyecandy';
-import {
-  ThemeTextColorsChoices,
-  ThemeTextWeights,
-} from '@nomada-sh/react-native-eyecandy-theme';
 
-const colors: ThemeTextColorsChoices[] = [
+const colors = [
   'default',
   'primary',
   'error',
   'greyout',
 ];
 
-const weights: ThemeTextWeights[] = ['normal', 'bold'];
+const weights = ['normal', 'bold'];
 
 export default function App() {
   return (
@@ -57,7 +55,7 @@ export default function App() {
 }
 ```
 
-![Text](../assets/components/text.png)
+<!-- ![Text](../assets/components/text.png) -->
 
 ## Props
 

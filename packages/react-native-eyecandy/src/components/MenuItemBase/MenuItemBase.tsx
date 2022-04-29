@@ -67,6 +67,8 @@ function MenuItemBase({
     onPressProp?.();
   };
 
+  const showActiveOpacity = Platform.OS === 'ios' || Platform.OS === 'web';
+
   return (
     <Pressable
       android_ripple={{
@@ -84,7 +86,7 @@ function MenuItemBase({
       onPressOut={fadeOut}
       testID={testID}
     >
-      {Platform.OS === 'ios' ? (
+      {showActiveOpacity ? (
         <Animated.View
           style={[
             styles.activeOpacity,

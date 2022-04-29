@@ -3,11 +3,33 @@ import { StatusBar } from 'react-native';
 
 import {
   ThemeProvider,
-  DefaultTheme,
-  DarkTheme,
+  createTheme,
 } from '@nomada-sh/react-native-eyecandy-theme';
 
 import { ThemeContext } from '../shared/hooks/useTheme';
+
+const DefaultTheme = createTheme({
+  palette: {
+    primary: {
+      '500': '#00bcd4',
+    },
+    secondary: {
+      '500': '#ff9800',
+    },
+  },
+});
+
+const DarkTheme = createTheme({
+  palette: {
+    primary: {
+      '500': '#ff9800',
+    },
+    secondary: {
+      '500': '#00bcd4',
+    },
+  },
+  dark: true,
+});
 
 export default function Theme({ children }: { children: React.ReactNode }) {
   const [dark, setDark] = React.useState(false);

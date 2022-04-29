@@ -1,4 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
+
+const inputWebStyle =
+  Platform.OS === 'web'
+    ? {
+        outline: 'none',
+      }
+    : {};
 
 const styles = StyleSheet.create({
   container: {
@@ -11,6 +18,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: '100%',
+    ...inputWebStyle,
   },
   iconContainer: {
     justifyContent: 'center',

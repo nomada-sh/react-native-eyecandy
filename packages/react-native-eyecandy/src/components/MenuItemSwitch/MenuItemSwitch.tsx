@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Body } from '../../typography';
 import MenuItemBase, { MenuItemBaseProps } from '../MenuItemBase';
@@ -25,7 +25,9 @@ function MenuItemSwitch({
       <Body style={styles.text} weight="bold" size="medium" color={textColor}>
         {text}
       </Body>
-      <Switch value={value} onValueChange={onValueChange} />
+      <View>
+        <Switch value={value} onValueChange={onValueChange} />
+      </View>
     </MenuItemBase>
   );
 }

@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import type { Locale } from 'date-fns';
 import { FlatList } from 'react-native-gesture-handler';
-import { useUpdateEffect } from 'react-use';
+import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 
 import { Body } from '../../../../typography';
 import Button from '../../../Button';

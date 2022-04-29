@@ -20,7 +20,7 @@ export type ThemeColorsVariables = {
 
 export type CustomThemeColors<T = ThemeColors> =
   | DeepPartial<T>
-  | ((variables: ThemeColorsVariables) => T);
+  | ((variables: ThemeColorsVariables) => DeepPartial<T>);
 
 export type CreateThemeColorsOptions = {
   dark?: boolean;

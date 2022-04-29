@@ -3,6 +3,8 @@ id: avataredit
 title: AvatarEdit
 ---
 
+AvatarEdits enable users to upload a new profile picture, or edit their current profile picture.
+
 ## Import
 
 ```jsx
@@ -11,32 +13,38 @@ import { AvatarEdit } from '@nomada-sh/react-native-eyecandy';
 
 ## Example
 
-```tsx
+```SnackPlayer name=RN%20Eyecandy%20AvatarEdit
 import React from 'react';
-import { ImageSourcePropType, ScrollView } from 'react-native';
+import { ImageSourcePropType, SafeAreaView, ScrollView } from 'react-native';
 
 import { AvatarEdit } from '@nomada-sh/react-native-eyecandy';
 
 export default function App() {
-  const [source, setSource] = React.useState<ImageSourcePropType>({
+  const [source, setSource] = React.useState({
     uri: 'https://i.pravatar.cc/300',
   });
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        padding: 20,
-        alignItems: 'center',
+    <SafeAreaView
+      style={{
+        flex: 1,
       }}
     >
-      <AvatarEdit
-        size={150}
-        source={source}
-        onChange={image => {
-          if (image) setSource(image);
+      <ScrollView
+        contentContainerStyle={{
+          padding: 20,
+          alignItems: 'center',
         }}
-      />
-    </ScrollView>
+      >
+        <AvatarEdit
+          size={150}
+          source={source}
+          onChange={image => {
+            if (image) setSource(image);
+          }}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 ```

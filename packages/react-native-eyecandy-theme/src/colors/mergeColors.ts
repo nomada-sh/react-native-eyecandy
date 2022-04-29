@@ -10,7 +10,7 @@ export default function mergeColors<T>({
   if (colors instanceof Function) {
     const newColors = colors(variables);
 
-    return deepmerge(defaultColors, newColors);
+    return deepmerge(defaultColors, newColors as Partial<T>);
   }
 
   if (colors) {

@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { useUpdateEffect } from 'react-use';
+import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 
 import Content from './Content';
 

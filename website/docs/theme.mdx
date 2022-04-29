@@ -5,54 +5,108 @@ title: Theme
 
 # Theme
 
+If you want to change the theme of a component or of your entire app, you can do so by following the steps below.
+
 ## Installation
 
 ```bash npm2yarn
 npm install @nomada-sh/react-native-eyecandy-theme
 ```
 
-## Example
+## Create a theme
 
-```tsx
+Firstly you'll want to set up your `ThemeProvider`.
+
+```jsx
 import React from 'react';
-
-import { View } from 'react-native';
 
 import {
   ThemeProvider,
-  DefaultTheme,
-  DarkTheme,
+  createTheme,
 } from '@nomada-sh/react-native-eyecandy-theme';
 
-import { Body, Switch } from '@noma-sh/react-native-eyecandy';
+import { Button } from '@nomada-sh/react-native-eyecandy';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      500: '#00bcd4',
+    },
+    secondary: {
+      500: '#ff9800',
+    },
+  },
+});
 
 export default function App() {
-  const [dark, setDark] = React.useState(false);
-
   return (
-    <ThemeProvider theme={dark ? DarkTheme : DefaultTheme}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Switch
-          value={dark}
-          onValueChange={setDark}
-          style={{
-            alignSelf: 'center',
-            marginBottom: 20,
-          }}
-        />
-        <Body weight="bold" size="xlarge">
-          Hello, world!
-        </Body>
-      </View>
+    <ThemeProvider theme={theme}>
+      <Button color="primary">Primary</Button>
+      <Button color="secondary">Secondary</Button>
     </ThemeProvider>
   );
 }
 ```
 
-![Theme](./assets/theme.gif)
+This is extremely convenient and is made possible through [React's context API](https://reactjs.org/docs/context.html).
+
+## Light and Dark Mode
+
+```jsx
+import React from 'react';
+
+import {
+  ThemeProvider,
+  createTheme,
+} from '@nomada-sh/react-native-eyecandy-theme';
+
+import { Button } from '@nomada-sh/react-native-eyecandy';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      500: '#00bcd4',
+    },
+    secondary: {
+      500: '#ff9800',
+    },
+  },
+});
+
+const darkTheme = createTheme({
+  palette: {
+    primary: {
+      500: '#ff9800',
+    },
+    secondary: {
+      500: '#00bcd4',
+    },
+  },
+  dark: true,
+});
+
+export default function App() {
+  const { dark, setDark } = useTheme();
+
+  return (
+    <ThemeProvider theme={dark ? darkTheme : theme}>
+      <Button
+        color="primary"
+        onPress={() => {
+          setDark(true);
+        }}
+      >
+        Dark Theme
+      </Button>
+      <Button
+        color="secondary"
+        onPress={() => {
+          setDark(false);
+        }}
+      >
+        Light Theme
+      </Button>
+    </ThemeProvider>
+  );
+}
+```
