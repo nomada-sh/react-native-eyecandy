@@ -3,6 +3,8 @@ id: linkbutton
 title: LinkButton
 ---
 
+LinkButtons are buttons that are normally used to open a new screen.
+
 ## Import
 
 ```jsx
@@ -13,7 +15,7 @@ import { LinkButton } from '@nomada-sh/react-native-eyecandy';
 
 ```SnackPlayer name=RN%20Eyecandy%20LinkButton
 import React from 'react';
-import { Alert, ScrollView } from 'react-native';
+import { SafeAreaView, Alert, ScrollView } from 'react-native';
 
 import { LinkButton } from '@nomada-sh/react-native-eyecandy';
 import {
@@ -24,40 +26,46 @@ import {
 
 export default function App() {
   return (
-    <ScrollView
-      contentContainerStyle={{
-        padding: 20,
+    <SafeAreaView
+      style={{
+        flex: 1,
       }}
     >
-      <LinkButton
-        marginBottom={20}
-        icon={Settings}
-        onPress={() => Alert.alert('Go to Settings')}
+      <ScrollView
+        contentContainerStyle={{
+          padding: 20,
+        }}
       >
-        Settings
-      </LinkButton>
-      <LinkButton
-        marginBottom={20}
-        icon={Notifications}
-        onPress={() => Alert.alert('Go to Notifications')}
-      >
-        Notifications
-      </LinkButton>
-      <LinkButton
-        marginBottom={20}
-        variant="rounded"
-        icon={Edit}
-        onPress={() => Alert.alert('Go to Change Password')}
-      >
-        Change Password
-      </LinkButton>
-      <LinkButton disabled marginBottom={20}>
-        Disabled
-      </LinkButton>
-      <LinkButton loading variant="rounded">
-        Loading
-      </LinkButton>
-    </ScrollView>
+        <LinkButton
+          marginBottom={20}
+          icon={Settings}
+          onPress={() => Alert.alert('Go to Settings')}
+        >
+          Settings
+        </LinkButton>
+        <LinkButton
+          marginBottom={20}
+          icon={Notifications}
+          onPress={() => Alert.alert('Go to Notifications')}
+        >
+          Notifications
+        </LinkButton>
+        <LinkButton
+          marginBottom={20}
+          variant="rounded"
+          icon={Edit}
+          onPress={() => Alert.alert('Go to Change Password')}
+        >
+          Change Password
+        </LinkButton>
+        <LinkButton disabled marginBottom={20}>
+          Disabled
+        </LinkButton>
+        <LinkButton loading variant="rounded">
+          Loading
+        </LinkButton>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 ```

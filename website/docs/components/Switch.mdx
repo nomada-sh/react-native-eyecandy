@@ -15,7 +15,7 @@ import { Switch } from '@nomada-sh/react-native-eyecandy';
 
 ```SnackPlayer name=RN%20Eyecandy%20Switch
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { Switch } from '@nomada-sh/react-native-eyecandy';
 
@@ -26,9 +26,14 @@ export default function App() {
     <ScrollView
       contentContainerStyle={{
         padding: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
       }}
     >
-      <Switch value={value} onValueChange={setValue} />
+      <View>
+        <Switch value={value} onValueChange={setValue} />
+      </View>
     </ScrollView>
   );
 }

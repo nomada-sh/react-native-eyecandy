@@ -122,6 +122,8 @@ function CodeInput({
           right: 0,
           borderWidth: 0,
           backgroundColor: 'transparent',
+          // @ts-ignore
+          outline: 'none',
         }}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}

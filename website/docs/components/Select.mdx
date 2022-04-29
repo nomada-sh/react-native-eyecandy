@@ -3,6 +3,8 @@ id: select
 title: Select
 ---
 
+Selects allow the user to choose a single value from a list of options.
+
 ## Import
 
 ```jsx
@@ -13,7 +15,7 @@ import { Select } from '@nomada-sh/react-native-eyecandy';
 
 ```SnackPlayer name=RN%20Eyecandy%20Select
 import React, { useRef } from 'react';
-import { ScrollView } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 import {
   Button,
@@ -45,39 +47,45 @@ export default function App() {
   const ref = useRef(null);
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        padding: 20,
+    <SafeAreaView
+      style={{
+        flex: 1,
       }}
     >
-      <Select
-        marginBottom={20}
-        modalTitle="Select an option"
-        placeholder="Select an option"
-        icon={Crown}
-        value={v1}
-        items={items1}
-        onChange={setV1}
-      />
-      <Select marginBottom={20} modalTitle="Select an item" emptyText="Empty" />
-      <Select
-        marginBottom={20}
-        ref={ref}
-        icon={Star}
-        value={v2}
-        items={items2}
-        onChange={setV2}
-        hideClearIcon
-      />
-      <Button
-        marginBottom={20}
-        onPress={() => {
-          ref.current?.focus();
+      <ScrollView
+        contentContainerStyle={{
+          padding: 20,
         }}
       >
-        Open select
-      </Button>
-    </ScrollView>
+        <Select
+          marginBottom={20}
+          modalTitle="Select an option"
+          placeholder="Select an option"
+          icon={Crown}
+          value={v1}
+          items={items1}
+          onChange={setV1}
+        />
+        <Select marginBottom={20} modalTitle="Select an item" emptyText="Empty" />
+        <Select
+          marginBottom={20}
+          ref={ref}
+          icon={Star}
+          value={v2}
+          items={items2}
+          onChange={setV2}
+          hideClearIcon
+        />
+        <Button
+          marginBottom={20}
+          onPress={() => {
+            ref.current?.focus();
+          }}
+        >
+          Open select
+        </Button>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 ```

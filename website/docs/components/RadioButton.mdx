@@ -3,6 +3,8 @@ id: radiobutton
 title: RadioButton
 ---
 
+RadioButtons allow the selection of an option from a set.
+
 ## Import
 
 ```jsx
@@ -27,6 +29,10 @@ export default function App() {
     <ScrollView
       contentContainerStyle={{
         padding: 20,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
       }}
     >
       <RadioButton value={v1} onValueChange={setV1} />

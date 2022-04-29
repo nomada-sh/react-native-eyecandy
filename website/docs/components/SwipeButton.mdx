@@ -3,6 +3,8 @@ id: swipeButton
 title: SwipeButton
 ---
 
+SwipeButtons are buttons that can be swiped to the left or right to trigger an action.
+
 ## Import
 
 ```jsx
@@ -13,7 +15,7 @@ import { SwipeButton } from '@nomada-sh/react-native-eyecandy';
 
 ```SnackPlayer name=RN%20Eyecandy%20SwipeButton
 import React from 'react';
-import { ScrollView, useWindowDimensions, Alert } from 'react-native';
+import { SafeAreaView, ScrollView, useWindowDimensions, Alert } from 'react-native';
 
 import { SwipeButton } from '@nomada-sh/react-native-eyecandy';
 
@@ -21,20 +23,26 @@ export default function App() {
   const { width } = useWindowDimensions();
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        padding: 20,
+    <SafeAreaView
+      style={{
+        flex: 1,
       }}
     >
-      <SwipeButton
-        marginBottom={20}
-        width={width - 40}
-        onSuccess={() => Alert.alert('Success')}
-        onFail={() => Alert.alert('Fail')}
-      />
-      <SwipeButton marginBottom={20} width={width - 40} height={100} />
-      <SwipeButton width={width - 40} height={100} padding={20} />
-    </ScrollView>
+      <ScrollView
+        contentContainerStyle={{
+          padding: 20,
+        }}
+      >
+        <SwipeButton
+          marginBottom={20}
+          width={width - 40}
+          onSuccess={() => Alert.alert('Success')}
+          onFail={() => Alert.alert('Fail')}
+        />
+        <SwipeButton marginBottom={20} width={width - 40} height={100} />
+        <SwipeButton width={width - 40} height={100} padding={20} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 ```
