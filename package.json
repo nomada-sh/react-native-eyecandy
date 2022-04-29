@@ -14,8 +14,7 @@
     "build:icons": "yarn workspace @nomada-sh/react-native-eyecandy-icons build",
     "build:components": "yarn workspace @nomada-sh/react-native-eyecandy build",
     "build": "yarn build:theme && yarn build:icons && yarn build:components",
-    "typecheck": "tsc --noEmit",
-    "release": "yarn build && release-it"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.16.0",
@@ -29,20 +28,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-react-native": "^4.0.0",
     "prettier": "^2.6.1",
-    "release-it": "^14.14.2",
-    "release-it-yarn-workspaces": "^2.0.1",
     "typescript": "^4.5.5",
     "yalc": "^1.0.0-pre.53"
-  },
-  "release-it": {
-    "plugins": {
-      "release-it-yarn-workspaces": {
-        "publish": false,
-        "workspaces": [
-          "packages/*"
-        ]
-      }
-    },
-    "npm": false
   }
 }
