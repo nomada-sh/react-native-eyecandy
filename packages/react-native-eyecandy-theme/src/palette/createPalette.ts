@@ -1,12 +1,27 @@
-import deepmerge from 'deepmerge';
+import { merge } from '../utils';
 
 import defaultPalette from './Palette';
 import { CreateThemePaletteOptions, ThemePalette } from './types';
 
-export default function createPalette(palette?: CreateThemePaletteOptions) {
-  if (palette) {
-    return deepmerge(defaultPalette, palette) as ThemePalette;
+export default function createPalette(
+  options: CreateThemePaletteOptions = {},
+): ThemePalette {
+  const basePalette: typeof defaultPalette = JSON.parse(
+    JSON.stringify(defaultPalette),
+  );
+
+  if (options.palette instanceof Function) {
+    return merge(
+      basePalette,
+      options.palette({
+        dark: Boolean(options.dark),
+      }),
+    );
   }
 
-  return defaultPalette;
+  if (options.palette) {
+    return merge(basePalette, options.palette);
+  }
+
+  return basePalette;
 }

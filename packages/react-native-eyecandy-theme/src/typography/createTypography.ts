@@ -1,14 +1,27 @@
-import deepmerge from 'deepmerge';
+import { merge } from '../utils';
 
 import defaultTypography from './Typography';
-import { ThemeTypography, CreateThemeTypographyOptions } from './types';
+import { CreateThemeTypographyOptions } from './types';
 
 export default function createPalette(
-  typography?: CreateThemeTypographyOptions,
+  options: CreateThemeTypographyOptions = {},
 ) {
-  if (typography) {
-    return deepmerge(defaultTypography, typography) as ThemeTypography;
+  const baseTypography: typeof defaultTypography = JSON.parse(
+    JSON.stringify(defaultTypography),
+  );
+
+  if (options.typography instanceof Function) {
+    return merge(
+      baseTypography,
+      options.typography({
+        dark: Boolean(options.dark),
+      }),
+    );
   }
 
-  return defaultTypography;
+  if (options.typography) {
+    return merge(baseTypography, options.typography);
+  }
+
+  return baseTypography;
 }

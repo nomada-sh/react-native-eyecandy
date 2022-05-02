@@ -1,5 +1,4 @@
-import React from 'react';
-import { StatusBar } from 'react-native';
+import React, { useMemo } from 'react';
 
 import {
   ThemeProvider,
@@ -8,33 +7,26 @@ import {
 
 import { ThemeContext } from '../shared/hooks/useTheme';
 
-const DefaultTheme = createTheme({
-  palette: {
-    primary: {
-      '500': '#00bcd4',
-    },
-    secondary: {
-      '500': '#ff9800',
-    },
-  },
-});
-
-const DarkTheme = createTheme({
-  palette: {
-    primary: {
-      '500': '#ff9800',
-    },
-    secondary: {
-      '500': '#00bcd4',
-    },
-  },
-  dark: true,
-});
+import ThemedStatusBar from './ThemedStatusBar';
 
 export default function Theme({ children }: { children: React.ReactNode }) {
   const [dark, setDark] = React.useState(false);
 
-  const theme = dark ? DarkTheme : DefaultTheme;
+  const theme = useMemo(
+    () =>
+      createTheme({
+        dark,
+        palette: ({ dark }) => ({
+          primary: {
+            '500': dark ? '#ff9800' : '#00bcd4',
+          },
+          secondary: {
+            '500': dark ? '#00bcd4' : '#ff9800',
+          },
+        }),
+      }),
+    [dark],
+  );
 
   return (
     <ThemeContext.Provider
@@ -43,11 +35,10 @@ export default function Theme({ children }: { children: React.ReactNode }) {
         setDark,
       }}
     >
-      <StatusBar
-        backgroundColor={theme.colors.background.default.container}
-        barStyle={dark ? 'light-content' : 'dark-content'}
-      />
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <ThemedStatusBar />
+        {children}
+      </ThemeProvider>
     </ThemeContext.Provider>
   );
 }

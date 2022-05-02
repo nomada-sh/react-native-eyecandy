@@ -38,6 +38,19 @@ export type ThemeTypography = {
   body: ThemeBody;
 };
 
-export type CustomThemeTypography = DeepPartial<ThemeTypography>;
+export type ThemeTypographyVariables = {
+  dark: boolean;
+};
 
-export type CreateThemeTypographyOptions = DeepPartial<ThemeTypography>;
+export type CustomThemeTypography =
+  | DeepPartial<ThemeTypography>
+  | ((variables: ThemeTypographyVariables) => DeepPartial<ThemeTypography>);
+
+export type CreateThemeTypographyOptions = {
+  dark?: boolean;
+  typography?: CustomThemeTypography;
+};
+
+export type CreateThemeTypography = (
+  options?: CreateThemeTypographyOptions,
+) => ThemeTypography;

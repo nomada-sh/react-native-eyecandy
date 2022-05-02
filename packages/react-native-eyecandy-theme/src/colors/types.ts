@@ -26,7 +26,7 @@ export type CreateThemeColorsOptions = {
   dark?: boolean;
   palette?: CustomThemePalette;
   typography?: CustomThemeTypography;
-  colors?: CustomThemeColors<ThemeColors>;
+  colors?: CustomThemeColors;
 };
 
 export type CreateThemeColors = (

@@ -29,7 +29,7 @@ export default function useLineValueSelector(
     options.max !== undefined ? options.max / increment : undefined;
 
   const setValue = useCallback(
-    newValue => {
+    (newValue: number) => {
       tick.value = newValue / increment;
       _setValue(newValue);
     },

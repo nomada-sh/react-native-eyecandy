@@ -30,6 +30,19 @@ export type ThemePalette = {
   teal: string;
 };
 
-export type CustomThemePalette = DeepPartial<ThemePalette>;
+export type ThemePaletteVariables = {
+  dark: boolean;
+};
 
-export type CreateThemePaletteOptions = DeepPartial<ThemePalette>;
+export type CustomThemePalette =
+  | DeepPartial<ThemePalette>
+  | ((variables: ThemePaletteVariables) => DeepPartial<ThemePalette>);
+
+export type CreateThemePaletteOptions = {
+  dark?: boolean;
+  palette?: CustomThemePalette;
+};
+
+export type CreateThemePaletee = (
+  options?: CreateThemePaletteOptions,
+) => ThemePalette;

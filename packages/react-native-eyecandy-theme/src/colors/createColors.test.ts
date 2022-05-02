@@ -1,6 +1,5 @@
 import createColors from './createColors';
 import {
-  CustomThemeColors,
   ThemeBackgroundColor,
   ThemeBackgroundColors,
   ThemeBadgeColor,
@@ -103,19 +102,17 @@ test('createColors', () => {
 });
 
 test('createColors button', () => {
-  const customColors: CustomThemeColors<ThemeButtonColors> = {
-    default: {
-      background: 'black',
-      foreground: 'white',
-    },
-    primary: {
-      background: 'blue',
-    },
-  };
-
   const colors = createColors({
     colors: {
-      button: customColors,
+      button: {
+        default: {
+          background: 'black',
+          foreground: 'white',
+        },
+        primary: {
+          background: 'blue',
+        },
+      },
     },
   });
 
@@ -135,21 +132,19 @@ test('createColors button', () => {
   });
 });
 
-test('createColors button function', () => {
-  const customColors: CustomThemeColors<ThemeButtonColors> = {
-    default: {
-      background: 'black',
-      foreground: 'white',
-    },
-    primary: {
-      background: 'blue',
-    },
-  };
-
+test('createColors button colors function', () => {
   const colors = createColors({
     colors: () => {
       return {
-        button: customColors,
+        button: {
+          default: {
+            background: 'black',
+            foreground: 'white',
+          },
+          primary: {
+            background: 'blue',
+          },
+        },
       };
     },
   });
@@ -161,6 +156,112 @@ test('createColors button function', () => {
     },
     primary: {
       background: 'blue',
+      foreground: expect.any(String),
+    },
+    secondary: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+  });
+});
+
+test('createColors button dark', () => {
+  const colors = createColors({
+    dark: true,
+    colors: ({ dark }) => {
+      return {
+        button: {
+          default: {
+            background: dark ? 'white' : 'black',
+            foreground: dark ? 'black' : 'white',
+          },
+          primary: {
+            background: 'blue',
+          },
+        },
+      };
+    },
+  });
+
+  expect(colors.button).toEqual<ThemeButtonColors>({
+    default: {
+      background: 'white',
+      foreground: 'black',
+    },
+    primary: {
+      background: 'blue',
+      foreground: expect.any(String),
+    },
+    secondary: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+  });
+});
+
+test('createColors button palette', () => {
+  const colors = createColors({
+    palette: {
+      primary: {
+        500: 'blue',
+      },
+      secondary: {
+        500: 'red',
+      },
+    },
+    colors: ({ palette }) => {
+      return {
+        button: {
+          default: {
+            background: palette.primary[500],
+            foreground: palette.secondary[500],
+          },
+          primary: {
+            background: palette.primary[500],
+          },
+        },
+      };
+    },
+  });
+
+  expect(colors.button).toEqual<ThemeButtonColors>({
+    default: {
+      background: 'blue',
+      foreground: 'red',
+    },
+    primary: {
+      background: 'blue',
+      foreground: expect.any(String),
+    },
+    secondary: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+  });
+});
+
+test('createColors button undefined use default colors', () => {
+  const colors = createColors({
+    colors: {
+      button: {
+        default: {
+          background: undefined,
+          foreground: undefined,
+        },
+        primary: {
+          background: undefined,
+        },
+      },
+    },
+  });
+
+  expect(colors.button).toEqual<ThemeButtonColors>({
+    default: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    primary: {
+      background: expect.any(String),
       foreground: expect.any(String),
     },
     secondary: {
