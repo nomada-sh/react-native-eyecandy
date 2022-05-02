@@ -15,7 +15,7 @@ npm install @nomada-sh/react-native-eyecandy-theme
 
 ## Create a theme
 
-Firstly you'll want to set up your `ThemeProvider`.
+<!-- Firstly you'll want to set up your `ThemeProvider`. -->
 
 ```jsx
 import React from 'react';
@@ -48,7 +48,7 @@ export default function App() {
 }
 ```
 
-<!-- This is extremely convenient and is made possible through [React's context API](https://reactjs.org/docs/context.html).
+<!-- This is extremely convenient and is made possible through [React's context API](https://reactjs.org/docs/context.html). -->
 
 ## Light and Dark Mode
 
@@ -62,34 +62,27 @@ import {
 
 import { Button } from '@nomada-sh/react-native-eyecandy';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      500: '#00bcd4',
-    },
-    secondary: {
-      500: '#ff9800',
-    },
-  },
-});
-
-const darkTheme = createTheme({
-  palette: {
-    primary: {
-      500: '#ff9800',
-    },
-    secondary: {
-      500: '#00bcd4',
-    },
-  },
-  dark: true,
-});
-
 export default function App() {
-  const { dark, setDark } = useTheme();
+  const [dark, setDark] = React.useState(false);
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        dark,
+        palette: ({ dark }) => ({
+          primary: {
+            500: dark ? '#ff9800' : '#00bcd4',
+          },
+          secondary: {
+            500: dark ? '#00bcd4' : '#ff9800',
+          },
+        }),
+      }),
+    [dark],
+  );
 
   return (
-    <ThemeProvider theme={dark ? darkTheme : theme}>
+    <ThemeProvider theme={theme}>
       <Button
         color="primary"
         onPress={() => {
@@ -109,4 +102,4 @@ export default function App() {
     </ThemeProvider>
   );
 }
-``` -->
+```
