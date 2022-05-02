@@ -18,4 +18,4 @@ Check [getting started](https://eyecandy.nomada.cloud/docs/getting-started#insta
 
 ## Documentation
 
-Check out our dedicated [documentation](https://eyecandy.nomada.cloud/docs/components/actionsheet) page for info about this library, API reference and more.
+Check out our dedicated [documentation](https://eyecandy.nomada.cloud/docs/getting-started) page for info about this library, API reference and more.
