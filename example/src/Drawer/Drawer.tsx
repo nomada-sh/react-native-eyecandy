@@ -25,6 +25,7 @@ import LineValueSelectors from '../LineValueSelectors';
 import LinkButtons from '../LinkButtons';
 import Menus from '../Menus';
 import NativeSelects from '../NativeSelects';
+import Passcodes from '../Passcodes';
 import RadioButtons from '../RadioButtons';
 import RadioGroups from '../RadioGroups';
 import Selects from '../Selects';
@@ -110,6 +111,7 @@ export default function Drawer() {
       <Screen name="CheckList" component={CheckLists} />
       <Screen name="LineValueSelector" component={LineValueSelectors} />
       <Screen name="CalendarStrip" component={Calendars} />
+      <Screen name="Passcode" component={Passcodes} />
       <Screen name="ThemeSwitch" component={ThemeSwitch} />
     </Navigator>
   );

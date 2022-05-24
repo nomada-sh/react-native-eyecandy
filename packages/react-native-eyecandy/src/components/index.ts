@@ -121,3 +121,6 @@ export type { WrappedPanProps } from './WrappedPan';
 
 export { default as ActionSheet } from './ActionSheet';
 export type { ActionSheetProps, ActionSheetOption } from './ActionSheet';
+
+export { default as Passcode } from './Passcode';
+export type { PasscodeProps } from './Passcode';
