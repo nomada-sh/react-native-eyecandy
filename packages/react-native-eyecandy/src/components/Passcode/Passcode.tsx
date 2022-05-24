@@ -1,10 +1,13 @@
 import React, { useRef } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 
-import Button from '../Button';
+import { Backspace } from '@nomada-sh/react-native-eyecandy-icons';
 
-const DELETE_KEY_VALUE = '<';
-const EMPTY_KEY_VALUE = '';
+import { Body } from '../../typography';
+import ButtonBase from '../ButtonBase';
+
+export const DELETE_KEY_VALUE = '<';
+export const EMPTY_KEY_VALUE = '';
 
 const REPEAT_TIMEOUT = 180;
 
@@ -12,15 +15,13 @@ interface KeyValueProps {
   keyValue: string;
   onPressIn: () => void;
   onPressOut: () => void;
+  isDeleteKey?: boolean;
 }
 
-function KeyValue({ keyValue, ...props }: KeyValueProps) {
-  const empty = keyValue === EMPTY_KEY_VALUE;
-
+function KeyValue({ keyValue, isDeleteKey, ...props }: KeyValueProps) {
   return (
-    <Button
+    <ButtonBase
       style={{
-        opacity: empty ? 0 : 1,
         borderRadius: 40,
         margin: 4,
         height: 80,
@@ -29,8 +30,18 @@ function KeyValue({ keyValue, ...props }: KeyValueProps) {
       fullwidth={false}
       {...props}
     >
-      {keyValue}
-    </Button>
+      {isDeleteKey ? (
+        <Backspace
+          style={{
+            transform: [{ translateX: -1 }],
+          }}
+        />
+      ) : (
+        <Body size="large" weight="bold">
+          {keyValue}
+        </Body>
+      )}
+    </ButtonBase>
   );
 }
 
@@ -42,6 +53,8 @@ interface KeyProps {
     | React.ComponentType<KeyValueProps>
     | React.ReactElement<KeyValueProps>;
   keyValueContainerStyle?: StyleProp<ViewStyle>;
+  hideDeleteKey?: boolean;
+  testID?: string;
 }
 
 function Key({
@@ -50,10 +63,16 @@ function Key({
   keyValue,
   KeyValueComponent = KeyValue,
   keyValueContainerStyle,
+  hideDeleteKey,
+  testID,
 }: KeyProps) {
+  const isDeleteKey = keyValue === DELETE_KEY_VALUE;
+  const isEmptyKey = keyValue === EMPTY_KEY_VALUE;
+
   let children: React.ReactNode = null;
 
-  if (React.isValidElement(KeyValueComponent)) {
+  if (isEmptyKey || (isDeleteKey && hideDeleteKey)) children = null;
+  else if (React.isValidElement(KeyValueComponent)) {
     const keyValueProps = React.Children.only(KeyValueComponent).props;
 
     children = React.cloneElement(KeyValueComponent, {
@@ -66,21 +85,24 @@ function Key({
         keyValueProps.onPressOut();
       },
       keyValue,
+      isDeleteKey,
     });
   } else {
     children = (
       <KeyValueComponent
-        {...{
-          keyValue,
-          onPressIn,
-          onPressOut,
-        }}
+        keyValue={keyValue}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        isDeleteKey={isDeleteKey}
       />
     );
   }
 
   return (
     <View
+      testID={
+        testID ? `${testID}-${isDeleteKey ? 'delete' : keyValue}` : undefined
+      }
       style={[
         {
           flex: 1,
@@ -100,6 +122,8 @@ export interface PasscodeProps {
   style?: StyleProp<ViewStyle>;
   KeyValueComponent?: React.ComponentType<KeyValueProps> | React.ReactElement;
   keyValueContainerStyle?: StyleProp<ViewStyle>;
+  hideDeleteKey?: boolean;
+  testID?: string;
 }
 
 const keyValues = [
@@ -115,6 +139,8 @@ export default function Passcode({
   style,
   KeyValueComponent,
   keyValueContainerStyle,
+  hideDeleteKey,
+  testID,
 }: PasscodeProps) {
   const timeoutRef = useRef<NodeJS.Timeout>();
   const valueRef = useRef(value);
@@ -156,6 +182,8 @@ export default function Passcode({
               onPressOut={onPressOut}
               KeyValueComponent={KeyValueComponent}
               keyValueContainerStyle={keyValueContainerStyle}
+              hideDeleteKey={hideDeleteKey}
+              testID={testID ? `${testID}-key` : undefined}
             />
           ))}
         </View>
