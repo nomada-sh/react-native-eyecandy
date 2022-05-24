@@ -8,5 +8,8 @@ module.exports = {
   transformIgnorePatterns: [
     '/node_modules/(?!victory|react-native-svg|@react-native|react-native|@react-navigation)',
   ],
-  timers: 'fake',
+  moduleNameMapper: {
+    ['@nomada-sh/react-native-eyecandy-icon']: '<rootDir>/../../packages/react-native-eyecandy-icons/src',
+    ['@nomada-sh/react-native-eyecandy-theme']: '<rootDir>/../../packages/react-native-eyecandy-theme/src',
+  }
 };

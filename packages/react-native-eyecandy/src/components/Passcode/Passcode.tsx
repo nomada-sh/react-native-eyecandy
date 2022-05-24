@@ -166,7 +166,7 @@ export default function Passcode({
   };
 
   return (
-    <View style={style}>
+    <View style={style} testID={testID}>
       {keyValues.map((row, i) => (
         <View
           key={i}
