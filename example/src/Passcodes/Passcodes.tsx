@@ -1,21 +1,21 @@
 import React from 'react';
-import {
-  ScrollView,
-  SafeAreaView,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
-import { Body, Passcode, TextInput } from '@nomada-sh/react-native-eyecandy';
-import { useHeaderHeight } from '@react-navigation/elements';
+import {
+  Body,
+  KeyValueProps,
+  Passcode,
+  TextInput,
+} from '@nomada-sh/react-native-eyecandy';
+
+const CustomKeyValue = ({ keyValue, isDeleteKey }: KeyValueProps) => (
+  <View>
+    <Body>{isDeleteKey ? 'Delete' : keyValue}</Body>
+  </View>
+);
 
 export default function Passcodes() {
   const [value, setValue] = React.useState('');
-
-  const headerHeight = useHeaderHeight();
-  const { height: windowHeight } = useWindowDimensions();
-
-  const height = windowHeight - headerHeight;
 
   return (
     <SafeAreaView
@@ -23,17 +23,35 @@ export default function Passcodes() {
         flex: 1,
       }}
     >
-      <ScrollView keyboardShouldPersistTaps="always">
+      <View
+        style={{
+          flex: 1,
+          marginVertical: 20,
+        }}
+      >
         <View
           style={{
-            height,
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            padding: 20,
           }}
         >
-          <Body>{value}</Body>
-          <TextInput value={value} onChangeText={setValue} />
-          <Passcode value={value} onChange={setValue} />
+          <Body marginBottom={20} weight="bold" size="xlarge">
+            {value}
+          </Body>
+          <TextInput
+            value={value}
+            onChangeText={setValue}
+            keyboardType="number-pad"
+          />
         </View>
-      </ScrollView>
+        <Passcode
+          value={value}
+          onChange={setValue}
+          // KeyValueComponent={CustomKeyValue}
+        />
+      </View>
     </SafeAreaView>
   );
 }
