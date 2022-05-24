@@ -13,3 +13,9 @@ jest.mock('react-native-reanimated', () => {
 
   return Reanimated;
 });
+
+// Silence the warning: RNReactNativeHapticFeedback is not available.
+jest.mock('react-native-haptic-feedback', () => ({
+  ...jest.requireActual('react-native-haptic-feedback'),
+  trigger: jest.fn(),
+}));

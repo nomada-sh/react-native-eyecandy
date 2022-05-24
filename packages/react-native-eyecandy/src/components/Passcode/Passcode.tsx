@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 
+import RNHapticFeedback from 'react-native-haptic-feedback';
+
 import { DELETE_KEY_VALUE, EMPTY_KEY_VALUE, Key } from './Key';
 import { KeyValueProps } from './KeyValue';
 
@@ -36,6 +38,8 @@ export default function Passcode({
   if (valueRef.current !== value) valueRef.current = value;
 
   const onPress = (keyValue: string) => {
+    RNHapticFeedback.trigger('impactMedium');
+
     onChange(
       keyValue === DELETE_KEY_VALUE
         ? valueRef.current.slice(0, -1)
