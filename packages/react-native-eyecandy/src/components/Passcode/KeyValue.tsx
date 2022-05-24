@@ -22,9 +22,7 @@ export function KeyValue({ keyValue, isDeleteKey, isPressed }: KeyValueProps) {
 
   const pressedOverlayOpacity = useSharedValue(0);
 
-  const pressedOverlayBackgroundColor = isPressed
-    ? palette.primary[500]
-    : colors.button.default.background;
+  const pressedOverlayBackgroundColor = palette.primary[500];
 
   const backgroundColor = colors.button.default.background;
 
@@ -32,7 +30,7 @@ export function KeyValue({ keyValue, isDeleteKey, isPressed }: KeyValueProps) {
 
   useEffect(() => {
     pressedOverlayOpacity.value = withTiming(isPressed ? 1 : 0, {
-      duration: 100,
+      duration: isPressed ? 100 : 500,
     });
   }, [isPressed, pressedOverlayOpacity]);
 

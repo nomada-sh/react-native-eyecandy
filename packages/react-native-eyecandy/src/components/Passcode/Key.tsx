@@ -7,7 +7,7 @@ export const DELETE_KEY_VALUE = '<';
 export const EMPTY_KEY_VALUE = '';
 
 export interface KeyProps {
-  onPressIn: () => void;
+  onPressIn: (keyValue: string) => void;
   onPressOut: () => void;
   keyValue: string;
   KeyValueComponent?: React.ComponentType<KeyValueProps>;
@@ -40,7 +40,7 @@ export function Key({
 
   const onPressIn = () => {
     setIsPressed(true);
-    onPressInProp();
+    onPressInProp(keyValue);
   };
 
   const onPressOut = () => {

@@ -75,7 +75,7 @@ export default function Passcode({
             <Key
               key={j}
               keyValue={keyValue}
-              onPressIn={() => onPressIn(keyValue)}
+              onPressIn={onPressIn}
               onPressOut={onPressOut}
               KeyValueComponent={KeyValueComponent}
               keyValueContainerStyle={keyValueContainerStyle}
