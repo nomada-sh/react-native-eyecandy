@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "React Native Eyecandy",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -86,7 +86,7 @@
     "react-native-svg": "12.1.1"
   },
   "dependencies": {
-    "@nomada-sh/react-native-eyecandy-icons": "^1.0.6",
+    "@nomada-sh/react-native-eyecandy-icons": "^1.0.7",
     "@nomada-sh/react-native-eyecandy-theme": "^1.0.4",
     "calendar-base": "^1.1.1",
     "color": "^4.2.0",

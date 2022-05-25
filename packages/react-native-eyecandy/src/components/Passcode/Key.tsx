@@ -10,6 +10,9 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { Body } from '../../typography';
+import ButtonBase from '../ButtonBase';
+
 // TODO: Make this work.
 // const AnimatedBackspace = Animated.createAnimatedComponent(Backspace);
 
@@ -36,34 +39,8 @@ export function Key({
   testID,
   testIDPrefix,
 }: KeyProps) {
-  const { palette, colors } = useTheme();
-  const [isPressed, setIsPressed] = React.useState(false);
-
+  const { colors } = useTheme();
   const backgroundColor = colors.button.default.background;
-
-  const pressedOverlayBackgroundColor = palette.primary[500];
-  const pressedOverlayOpacity = useSharedValue(0);
-
-  const pressedOverlayStyle = useAnimatedStyle(() => {
-    return {
-      opacity: pressedOverlayOpacity.value,
-      backgroundColor: pressedOverlayBackgroundColor,
-    };
-  });
-
-  const textStyle = useAnimatedStyle(() => {
-    const color = interpolateColor(
-      pressedOverlayOpacity.value,
-      [0, 1],
-      [colors.text.default.normal, 'white'],
-    );
-
-    return {
-      color,
-      fontSize: 18,
-      fontWeight: 'bold',
-    };
-  });
 
   const visible = !(
     (isEmptyKey && keyValue === null) ||
@@ -82,46 +59,29 @@ export function Key({
       }}
     >
       {visible ? (
-        <Pressable
+        <ButtonBase
           testID={testID}
-          onPressIn={() => {
-            setIsPressed(true);
-            onPressIn();
-            pressedOverlayOpacity.value = withTiming(1, {
-              duration: 100,
-            });
-          }}
-          onPressOut={() => {
-            setIsPressed(false);
-            onPressOut();
-            pressedOverlayOpacity.value = withTiming(0, {
-              duration: 500,
-            });
-          }}
+          onPressIn={onPressIn}
+          onPressOut={onPressOut}
           style={{
             height: 80,
             width: 80,
             borderRadius: 40,
             backgroundColor,
-            justifyContent: 'center',
-            alignItems: 'center',
-            overflow: 'hidden',
           }}
         >
-          <Animated.View
-            style={[StyleSheet.absoluteFill, pressedOverlayStyle]}
-          />
           {isDeleteKey && keyValue === null ? (
             <Backspace
-              color={isPressed ? 'white' : undefined}
               style={{
                 transform: [{ translateX: -1 }],
               }}
             />
           ) : (
-            <Animated.Text style={textStyle}>{keyValue}</Animated.Text>
+            <Body size={18} weight="bold">
+              {keyValue}
+            </Body>
           )}
-        </Pressable>
+        </ButtonBase>
       ) : null}
     </View>
   );

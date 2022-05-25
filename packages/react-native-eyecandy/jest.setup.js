@@ -1,3 +1,5 @@
+import { Animated } from 'react-native';
+
 // react-native-gesture-handler
 import 'react-native-gesture-handler/jestSetup';
 
@@ -20,3 +22,8 @@ jest.mock('react-native-haptic-feedback', () => ({
   ...jest.requireActual('react-native-haptic-feedback'),
   trigger: jest.fn(),
 }));
+
+Animated.timing = () => ({
+  // I'm mocking the Animated.timing here
+  start: () => jest.fn(),
+});
