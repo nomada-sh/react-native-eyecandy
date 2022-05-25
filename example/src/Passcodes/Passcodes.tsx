@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, SafeAreaView, View } from 'react-native';
+import { ImageBackground, Pressable, SafeAreaView, View } from 'react-native';
 
 import {
   Body,
@@ -47,10 +47,14 @@ const LettersKey = ({
   return (
     <Pressable
       style={{
-        flex: 1,
+        // flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 10,
+        backgroundColor: 'red',
+        // width: 60,
+        // height: 60,
+        // borderRadius: 30,
       }}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
@@ -89,6 +93,46 @@ const SquaredKey = ({
   );
 };
 
+const TransparentKey = ({
+  keyValue,
+  isDeleteKey,
+  isEmptyKey,
+  onPressIn,
+  onPressOut,
+}: PasscodeKeyProps) => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        margin: 4,
+        marginVertical: 15,
+      }}
+    >
+      {isEmptyKey || isDeleteKey ? null : (
+        <Pressable
+          style={{
+            height: 80,
+            width: 80,
+            borderRadius: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(255,255,255,0.55)',
+            borderWidth: 1,
+            borderColor: 'white',
+          }}
+          onPressIn={onPressIn}
+          onPressOut={onPressOut}
+        >
+          <Body size={24} color="white">
+            {isDeleteKey ? <Backspace color="white" /> : keyValue}
+          </Body>
+        </Pressable>
+      )}
+    </View>
+  );
+};
+
 export default function Passcodes() {
   const [value, setValue] = React.useState('');
 
@@ -120,18 +164,21 @@ export default function Passcodes() {
             keyboardType="number-pad"
           />
         </View>
+        {/* <ImageBackground source={require('./Background.jpg')}> */}
         <Passcode
-          style={
-            {
-              // marginBottom: 20,
-            }
-          }
+          style={{
+            // marginBottom: 20,
+            // width: '50%',
+            marginHorizontal: 20,
+          }}
           testID="passcode"
           value={value}
           onChange={setValue}
-          KeyComponent={LettersKey}
+          // KeyComponent={LettersKey}
           // KeyComponent={SquaredKey}
+          // KeyComponent={TransparentKey}
         />
+        {/* </ImageBackground> */}
       </View>
     </SafeAreaView>
   );

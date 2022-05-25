@@ -4,12 +4,14 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { Backspace } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import Animated, {
+  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 
-import { Body } from '../../typography';
+// TODO: Make this work.
+// const AnimatedBackspace = Animated.createAnimatedComponent(Backspace);
 
 export interface KeyProps {
   keyValue: string | null;
@@ -38,7 +40,6 @@ export function Key({
   const [isPressed, setIsPressed] = React.useState(false);
 
   const backgroundColor = colors.button.default.background;
-  const textColor = isPressed ? 'white' : undefined;
 
   const pressedOverlayBackgroundColor = palette.primary[500];
   const pressedOverlayOpacity = useSharedValue(0);
@@ -47,6 +48,20 @@ export function Key({
     return {
       opacity: pressedOverlayOpacity.value,
       backgroundColor: pressedOverlayBackgroundColor,
+    };
+  });
+
+  const textStyle = useAnimatedStyle(() => {
+    const color = interpolateColor(
+      pressedOverlayOpacity.value,
+      [0, 1],
+      [colors.text.default.normal, 'white'],
+    );
+
+    return {
+      color,
+      fontSize: 18,
+      fontWeight: 'bold',
     };
   });
 
@@ -98,15 +113,13 @@ export function Key({
           />
           {isDeleteKey && keyValue === null ? (
             <Backspace
-              color={textColor}
+              color={isPressed ? 'white' : undefined}
               style={{
                 transform: [{ translateX: -1 }],
               }}
             />
           ) : (
-            <Body size="large" weight="bold" color={textColor}>
-              {keyValue}
-            </Body>
+            <Animated.Text style={textStyle}>{keyValue}</Animated.Text>
           )}
         </Pressable>
       ) : null}

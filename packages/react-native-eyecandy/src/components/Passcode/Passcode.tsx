@@ -23,6 +23,7 @@ export interface PasscodeProps {
   emptyKeyValue?: string;
   deleteKeyValue?: string;
   testID?: string;
+  rowStyle?: StyleProp<ViewStyle>;
 }
 
 export default function Passcode({
@@ -34,6 +35,7 @@ export default function Passcode({
   emptyKeyValue,
   deleteKeyValue,
   testID,
+  rowStyle,
 }: PasscodeProps) {
   const timeoutRef = useRef<NodeJS.Timeout>();
   const valueRef = useRef(value);
@@ -72,9 +74,12 @@ export default function Passcode({
       {KEY_VALUES.map((row, i) => (
         <View
           key={i}
-          style={{
-            flexDirection: 'row',
-          }}
+          style={[
+            {
+              flexDirection: 'row',
+            },
+            rowStyle,
+          ]}
         >
           {row.map((keyValue, j) => (
             <KeyInjector
