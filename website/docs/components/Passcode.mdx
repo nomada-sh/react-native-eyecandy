@@ -1,0 +1,160 @@
+---
+id: passcode
+title: Passcode
+---
+
+## Import
+
+```jsx
+import { Passcode } from '@nomada-sh/react-native-eyecandy';
+```
+
+## Example
+
+```SnackPlayer name=RN%20Eyecandy%20Passcode
+import React from 'react';
+import { SafeAreaView, View } from 'react-native';
+
+import {
+  TextInput,
+  Passcode
+} from '@nomada-sh/react-native-eyecandy';
+
+export default function App() {
+  const [value, setValue] = React.useState('');
+
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
+      <View
+        style={{
+          flex: 1,
+          margin: 20,
+          alignItems: 'center',
+        }}
+      >
+        <TextInput
+          marginBottom={20}
+          value={value}
+          onChangeText={setValue}
+        />
+        <Passcode
+          value={value}
+          onChange={setValue}
+        />
+      </View>
+    </SafeAreaView>
+  );
+}
+```
+
+## Props
+
+### <div class="label required basic">Required</div>**`value`**
+
+| Type   |
+| ------ |
+| string |
+
+---
+
+### <div class="label required basic">Required</div>**`onChange`**
+
+```jsx
+(value: string) => void;
+```
+
+| Type     |
+| -------- |
+| function |
+
+- 'value' (string): value with latest key value appended to it.
+
+---
+
+### `KeyComponent`
+
+Component to use as key. You need to pass onPressIn and onPressOut props to a pressable component (or any other component that can be pressed).
+
+**Example:**
+
+```jsx
+const SquaredKey = ({
+  keyValue,
+  isDeleteKey,
+  onPressIn,
+  onPressOut,
+  col,
+}: PasscodeKeyProps) => (
+  <Pressable
+    style={{
+      flex: 1,
+      borderTopWidth: 1,
+      borderRightWidth: col < 3 ? 1 : 0,
+      borderColor: 'grey',
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingVertical: 20,
+    }}
+    onPressIn={onPressIn}
+    onPressOut={onPressOut}
+  >
+    <Body size={24}>{isDeleteKey ? <Backspace /> : keyValue}</Body>
+  </Pressable>
+);
+```
+
+| Type      |
+| --------- |
+| component |
+
+---
+
+### `style`
+
+| Type       |
+| ---------- |
+| View Style |
+
+---
+
+### `rowStyle`
+
+| Type       |
+| ---------- |
+| View Style |
+
+---
+
+### `hideDeleteKey`
+
+| Type    |
+| ------- |
+| boolean |
+
+---
+
+### `emptyKeyValue`
+
+| Type   |
+| ------ |
+| string |
+
+---
+
+### `deleteKeyValue`
+
+| Type   |
+| ------ |
+| string |
+
+---
+
+### `testID`
+
+| Type   |
+| ------ |
+| string |

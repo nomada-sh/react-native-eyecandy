@@ -37,3 +37,4 @@ export { default as Download } from './Download';
 export { default as Close } from './Close';
 export { default as Photo } from './Photo';
 export { default as Menu } from './Menu';
+export { default as Backspace } from './Backspace';
