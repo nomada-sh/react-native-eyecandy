@@ -87,6 +87,8 @@ export default function Passcode({
               hideDeleteKey={hideDeleteKey}
               emptyKeyValue={emptyKeyValue}
               deleteKeyValue={deleteKeyValue}
+              row={i}
+              col={j}
             />
           ))}
         </View>

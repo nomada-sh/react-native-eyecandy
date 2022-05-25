@@ -18,6 +18,8 @@ export interface KeyProps {
   hideDeleteKey: boolean;
   onPressIn: () => void;
   onPressOut: () => void;
+  row: number;
+  col: number;
   testID?: string;
   testIDPrefix?: string;
 }
@@ -61,6 +63,7 @@ export function Key({
       style={{
         flex: 1,
         alignItems: 'center',
+        margin: 4,
       }}
     >
       {visible ? (
@@ -81,7 +84,6 @@ export function Key({
             });
           }}
           style={{
-            margin: 4,
             height: 80,
             width: 80,
             borderRadius: 40,

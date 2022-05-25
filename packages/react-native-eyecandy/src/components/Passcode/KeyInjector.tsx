@@ -14,6 +14,8 @@ export interface KeyInjectorProps {
   hideDeleteKey?: boolean;
   emptyKeyValue?: string;
   deleteKeyValue?: string;
+  row: number;
+  col: number;
 }
 
 export function KeyInjector({
@@ -25,6 +27,8 @@ export function KeyInjector({
   testIDPrefix,
   emptyKeyValue,
   deleteKeyValue,
+  row,
+  col,
 }: KeyInjectorProps) {
   const isDeleteKey = keyValue === DELETE_KEY_VALUE;
   const isEmptyKey = keyValue === EMPTY_KEY_VALUE;
@@ -59,6 +63,8 @@ export function KeyInjector({
       onPressOut={onPressOut}
       testID={keyTestID}
       testIDPrefix={testIDPrefix}
+      row={row}
+      col={col}
     />
   );
 }
