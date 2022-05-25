@@ -1,73 +1,113 @@
 import React from 'react';
-import { Pressable, StyleProp, View, ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
-import { KeyValue, KeyValueProps } from './KeyValue';
+import { Backspace } from '@nomada-sh/react-native-eyecandy-icons';
+import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
-export const DELETE_KEY_VALUE = '<';
-export const EMPTY_KEY_VALUE = '';
+import { Body } from '../../typography';
 
 export interface KeyProps {
-  onPressIn: (keyValue: string) => void;
+  keyValue: string | null;
+  isDeleteKey: boolean;
+  isEmptyKey: boolean;
+  hideDeleteKey: boolean;
+  onPressIn: () => void;
   onPressOut: () => void;
-  keyValue: string;
-  KeyValueComponent?: React.ComponentType<KeyValueProps>;
-  keyValueContainerStyle?: StyleProp<ViewStyle>;
-  hideDeleteKey?: boolean;
   testID?: string;
+  testIDPrefix?: string;
 }
 
 export function Key({
-  onPressIn: onPressInProp,
-  onPressOut: onPressOutProp,
   keyValue,
-  keyValueContainerStyle,
-  KeyValueComponent = KeyValue,
+  isDeleteKey,
+  isEmptyKey,
   hideDeleteKey,
+  onPressIn,
+  onPressOut,
   testID,
+  testIDPrefix,
 }: KeyProps) {
+  const { palette, colors } = useTheme();
   const [isPressed, setIsPressed] = React.useState(false);
-  const isDeleteKey = keyValue === DELETE_KEY_VALUE;
-  const isEmptyKey = keyValue === EMPTY_KEY_VALUE;
 
-  const children =
-    isEmptyKey || (isDeleteKey && hideDeleteKey) ? null : (
-      <KeyValueComponent
-        keyValue={keyValue}
-        isDeleteKey={isDeleteKey}
-        isPressed={isPressed}
-      />
-    );
+  const backgroundColor = colors.button.default.background;
+  const textColor = isPressed ? 'white' : undefined;
 
-  const onPressIn = () => {
-    setIsPressed(true);
-    onPressInProp(keyValue);
-  };
+  const pressedOverlayBackgroundColor = palette.primary[500];
+  const pressedOverlayOpacity = useSharedValue(0);
 
-  const onPressOut = () => {
-    setIsPressed(false);
-    onPressOutProp();
-  };
+  const pressedOverlayStyle = useAnimatedStyle(() => {
+    return {
+      opacity: pressedOverlayOpacity.value,
+      backgroundColor: pressedOverlayBackgroundColor,
+    };
+  });
 
-  const keyTestID = testID
-    ? `${testID}-${isDeleteKey ? 'delete' : keyValue}`
-    : undefined;
+  const visible = !(
+    (isEmptyKey && keyValue === null) ||
+    (isDeleteKey && hideDeleteKey)
+  );
 
   return (
     <View
+      testID={
+        testIDPrefix ? `${testIDPrefix}-${keyValue}-container` : undefined
+      }
       style={{
         flex: 1,
         alignItems: 'center',
       }}
     >
-      <Pressable
-        testID={keyTestID}
-        // onPress={onPress}
-        onPressIn={onPressIn}
-        onPressOut={onPressOut}
-        style={keyValueContainerStyle}
-      >
-        {children}
-      </Pressable>
+      {visible ? (
+        <Pressable
+          testID={testID}
+          onPressIn={() => {
+            setIsPressed(true);
+            onPressIn();
+            pressedOverlayOpacity.value = withTiming(1, {
+              duration: 100,
+            });
+          }}
+          onPressOut={() => {
+            setIsPressed(false);
+            onPressOut();
+            pressedOverlayOpacity.value = withTiming(0, {
+              duration: 500,
+            });
+          }}
+          style={{
+            margin: 4,
+            height: 80,
+            width: 80,
+            borderRadius: 40,
+            backgroundColor,
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'hidden',
+          }}
+        >
+          <Animated.View
+            style={[StyleSheet.absoluteFill, pressedOverlayStyle]}
+          />
+          {isDeleteKey && keyValue === null ? (
+            <Backspace
+              color={textColor}
+              style={{
+                transform: [{ translateX: -1 }],
+              }}
+            />
+          ) : (
+            <Body size="large" weight="bold" color={textColor}>
+              {keyValue}
+            </Body>
+          )}
+        </Pressable>
+      ) : null}
     </View>
   );
 }

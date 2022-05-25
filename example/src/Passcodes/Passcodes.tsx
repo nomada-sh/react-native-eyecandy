@@ -1,17 +1,22 @@
 import React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { Pressable, SafeAreaView, View } from 'react-native';
 
 import {
   Body,
-  KeyValueProps,
+  PasscodeKeyProps,
   Passcode,
   TextInput,
 } from '@nomada-sh/react-native-eyecandy';
 
-const CustomKeyValue = ({ keyValue, isDeleteKey }: KeyValueProps) => (
-  <View>
+const SquaredKey = ({
+  keyValue,
+  isDeleteKey,
+  onPressIn,
+  onPressOut,
+}: PasscodeKeyProps) => (
+  <Pressable onPressIn={onPressIn} onPressOut={onPressOut}>
     <Body>{isDeleteKey ? 'Delete' : keyValue}</Body>
-  </View>
+  </Pressable>
 );
 
 export default function Passcodes() {
@@ -47,9 +52,10 @@ export default function Passcodes() {
           />
         </View>
         <Passcode
+          testID="passcode"
           value={value}
           onChange={setValue}
-          // KeyValueComponent={CustomKeyValue}
+          // KeyComponent={SquaredKey}
         />
       </View>
     </SafeAreaView>

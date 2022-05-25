@@ -3,8 +3,8 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 
 import RNHapticFeedback from 'react-native-haptic-feedback';
 
-import { DELETE_KEY_VALUE, EMPTY_KEY_VALUE, Key } from './Key';
-import { KeyValueProps } from './KeyValue';
+import { KeyProps } from './Key';
+import { DELETE_KEY_VALUE, EMPTY_KEY_VALUE, KeyInjector } from './KeyInjector';
 
 const REPEAT_TIMEOUT = 180;
 
@@ -18,9 +18,10 @@ export interface PasscodeProps {
   value: string;
   onChange: (value: string) => void;
   style?: StyleProp<ViewStyle>;
-  KeyValueComponent?: React.ComponentType<KeyValueProps>;
-  keyValueContainerStyle?: StyleProp<ViewStyle>;
+  KeyComponent?: React.ComponentType<KeyProps>;
   hideDeleteKey?: boolean;
+  emptyKeyValue?: string;
+  deleteKeyValue?: string;
   testID?: string;
 }
 
@@ -28,9 +29,10 @@ export default function Passcode({
   value,
   onChange,
   style,
-  KeyValueComponent,
-  keyValueContainerStyle,
+  KeyComponent,
   hideDeleteKey,
+  emptyKeyValue,
+  deleteKeyValue,
   testID,
 }: PasscodeProps) {
   const timeoutRef = useRef<NodeJS.Timeout>();
@@ -40,8 +42,11 @@ export default function Passcode({
   const onPress = (keyValue: string) => {
     RNHapticFeedback.trigger('impactMedium');
 
+    const shouldDelete =
+      keyValue === DELETE_KEY_VALUE && deleteKeyValue === undefined;
+
     onChange(
-      keyValue === DELETE_KEY_VALUE
+      shouldDelete
         ? valueRef.current.slice(0, -1)
         : valueRef.current + keyValue,
     );
@@ -72,15 +77,16 @@ export default function Passcode({
           }}
         >
           {row.map((keyValue, j) => (
-            <Key
+            <KeyInjector
+              testIDPrefix={testID ? `${testID}-key` : undefined}
               key={j}
               keyValue={keyValue}
               onPressIn={onPressIn}
               onPressOut={onPressOut}
-              KeyValueComponent={KeyValueComponent}
-              keyValueContainerStyle={keyValueContainerStyle}
+              KeyComponent={KeyComponent}
               hideDeleteKey={hideDeleteKey}
-              testID={testID ? `${testID}-key` : undefined}
+              emptyKeyValue={emptyKeyValue}
+              deleteKeyValue={deleteKeyValue}
             />
           ))}
         </View>

@@ -1,3 +1,3 @@
 export { default } from './Passcode';
 export * from './Passcode';
-export * from './KeyValue';
+export * from './Key';
