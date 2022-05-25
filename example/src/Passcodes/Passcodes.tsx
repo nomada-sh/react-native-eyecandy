@@ -10,6 +10,57 @@ import {
 import { Backspace } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
+const LettersKey = ({
+  keyValue,
+  onPressIn,
+  onPressOut,
+  isDeleteKey,
+}: PasscodeKeyProps) => {
+  let letters = '';
+  switch (keyValue) {
+    case '2':
+      letters = 'ABC';
+      break;
+    case '3':
+      letters = 'DEF';
+      break;
+    case '4':
+      letters = 'GHI';
+      break;
+    case '5':
+      letters = 'JKL';
+      break;
+    case '6':
+      letters = 'MNO';
+      break;
+    case '7':
+      letters = 'PQRS';
+      break;
+    case '8':
+      letters = 'TUV';
+      break;
+    case '9':
+      letters = 'WXYZ';
+      break;
+  }
+
+  return (
+    <Pressable
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 10,
+      }}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+    >
+      <Body size={24}>{isDeleteKey ? <Backspace /> : keyValue}</Body>
+      <Body size={12}>{letters}</Body>
+    </Pressable>
+  );
+};
+
 const SquaredKey = ({
   keyValue,
   isDeleteKey,
@@ -50,7 +101,6 @@ export default function Passcodes() {
       <View
         style={{
           flex: 1,
-          marginVertical: 20,
         }}
       >
         <View
@@ -71,9 +121,15 @@ export default function Passcodes() {
           />
         </View>
         <Passcode
+          style={
+            {
+              // marginBottom: 20,
+            }
+          }
           testID="passcode"
           value={value}
           onChange={setValue}
+          KeyComponent={LettersKey}
           // KeyComponent={SquaredKey}
         />
       </View>
