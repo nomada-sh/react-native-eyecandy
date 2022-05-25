@@ -20,6 +20,7 @@ import {
   Passcode
 } from '@nomada-sh/react-native-eyecandy';
 
+
 export default function App() {
   const [value, setValue] = React.useState('');
 
@@ -31,9 +32,9 @@ export default function App() {
     >
       <View
         style={{
+          justifyContent: 'flex-end',
           flex: 1,
-          margin: 20,
-          alignItems: 'center',
+          padding: 20,
         }}
       >
         <TextInput
@@ -71,17 +72,29 @@ export default function App() {
 | -------- |
 | function |
 
-- 'value' (string): value with latest key value appended to it.
+- 'value' (string): new value.
 
 ---
 
 ### `KeyComponent`
 
-Component to use as key. You need to pass onPressIn and onPressOut props to a pressable component (or any other component that can be pressed).
+Component to use as key button. You need to pass `onPressIn` and `onPressOut` props to a pressable component (or any other component that can be pressed).
 
-**Example:**
+#### Examples
 
-```jsx
+```SnackPlayer name=RN%20Eyecandy%20Passcode%20SquaredKey
+import React from 'react';
+import { SafeAreaView, View, Pressable } from 'react-native';
+
+import {
+  TextInput,
+  Passcode,
+  PasscodeKeyProps,
+  Body
+} from '@nomada-sh/react-native-eyecandy';
+
+import { Backspace } from '@nomada-sh/react-native-eyecandy-icons';
+
 const SquaredKey = ({
   keyValue,
   isDeleteKey,
@@ -93,8 +106,8 @@ const SquaredKey = ({
     style={{
       flex: 1,
       borderTopWidth: 1,
-      borderRightWidth: col < 3 ? 1 : 0,
-      borderColor: 'grey',
+      borderRightWidth: col < 2 ? 1 : 0,
+      borderColor: '#ccc',
       justifyContent: 'center',
       alignItems: 'center',
       paddingVertical: 20,
@@ -105,6 +118,218 @@ const SquaredKey = ({
     <Body size={24}>{isDeleteKey ? <Backspace /> : keyValue}</Body>
   </Pressable>
 );
+
+export default function App() {
+  const [value, setValue] = React.useState('');
+
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'flex-end',
+        }}
+      >
+        <TextInput
+          style={{
+            margin: 20
+          }}
+          fullWidth={false}
+          value={value}
+          onChangeText={setValue}
+        />
+        <Passcode
+          value={value}
+          onChange={setValue}
+          KeyComponent={SquaredKey}
+        />
+      </View>
+    </SafeAreaView>
+  );
+}
+```
+
+```SnackPlayer name=RN%20Eyecandy%20Passcode%20DialKey
+import React from 'react';
+import { SafeAreaView, View, Pressable } from 'react-native';
+
+import {
+  TextInput,
+  Passcode,
+  PasscodeKeyProps,
+  Body
+} from '@nomada-sh/react-native-eyecandy';
+
+import { Backspace } from '@nomada-sh/react-native-eyecandy-icons';
+
+const DialKey = ({
+  keyValue,
+  onPressIn,
+  onPressOut,
+  isDeleteKey,
+}: PasscodeKeyProps) => {
+  let letters = '';
+  switch (keyValue) {
+    case '2':
+      letters = 'ABC';
+      break;
+    case '3':
+      letters = 'DEF';
+      break;
+    case '4':
+      letters = 'GHI';
+      break;
+    case '5':
+      letters = 'JKL';
+      break;
+    case '6':
+      letters = 'MNO';
+      break;
+    case '7':
+      letters = 'PQRS';
+      break;
+    case '8':
+      letters = 'TUV';
+      break;
+    case '9':
+      letters = 'WXYZ';
+      break;
+  }
+
+  return (
+    <Pressable
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        paddingVertical: 10,
+      }}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+    >
+      <Body size={24}>{isDeleteKey ? <Backspace /> : keyValue}</Body>
+      <Body size={12}>{letters}</Body>
+    </Pressable>
+  );
+};
+
+export default function App() {
+  const [value, setValue] = React.useState('');
+
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'flex-end',
+          padding: 20,
+        }}
+      >
+        <TextInput
+          marginBottom={20}
+          fullWidth={false}
+          value={value}
+          onChangeText={setValue}
+        />
+        <Passcode
+          value={value}
+          onChange={setValue}
+          KeyComponent={DialKey}
+          emptyKeyValue="*"
+        />
+      </View>
+    </SafeAreaView>
+  );
+}
+```
+
+```SnackPlayer name=RN%20Eyecandy%20Passcode%20TransparentKey
+import React from 'react';
+import { SafeAreaView, View, Pressable, ImageBackground } from 'react-native';
+
+import {
+  TextInput,
+  Passcode,
+  PasscodeKeyProps,
+  Body
+} from '@nomada-sh/react-native-eyecandy';
+
+import { Backspace } from '@nomada-sh/react-native-eyecandy-icons';
+
+const TransparentKey = ({
+  keyValue,
+  isDeleteKey,
+  isEmptyKey,
+  onPressIn,
+  onPressOut,
+}: PasscodeKeyProps) => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        margin: 4,
+      }}
+    >
+      {isEmptyKey || isDeleteKey ? null : (
+        <Pressable
+          style={{
+            height: 80,
+            width: 80,
+            borderRadius: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(255,255,255,0.55)',
+            borderWidth: 1,
+            borderColor: 'white',
+          }}
+          onPressIn={onPressIn}
+          onPressOut={onPressOut}
+        >
+          <Body size={24} color="white">
+            {isDeleteKey ? <Backspace color="white" /> : keyValue}
+          </Body>
+        </Pressable>
+      )}
+    </View>
+  );
+};
+
+export default function App() {
+  const [value, setValue] = React.useState('');
+
+  return (
+    <ImageBackground
+      source={{
+        uri: 'https://i.pinimg.com/736x/6c/08/c7/6c08c7cc5d5d9248fe596f1550d7c93c.jpg'
+      }}
+      style={{
+        flex: 1,
+        justifyContent: 'flex-end',
+        padding: 20
+      }}
+    >
+      <TextInput
+        marginBottom={20}
+        fullWidth={false}
+        value={value}
+        onChangeText={setValue}
+      />
+      <Passcode
+        value={value}
+        onChange={setValue}
+        KeyComponent={TransparentKey}
+      />
+    </ImageBackground>
+  );
+}
 ```
 
 | Type      |
@@ -115,6 +340,8 @@ const SquaredKey = ({
 
 ### `style`
 
+Styles applied to the root view.
+
 | Type       |
 | ---------- |
 | View Style |
@@ -122,6 +349,8 @@ const SquaredKey = ({
 ---
 
 ### `rowStyle`
+
+Styles applied to each row view.
 
 | Type       |
 | ---------- |
@@ -131,6 +360,8 @@ const SquaredKey = ({
 
 ### `hideDeleteKey`
 
+Hides delete key.
+
 | Type    |
 | ------- |
 | boolean |
@@ -139,6 +370,8 @@ const SquaredKey = ({
 
 ### `emptyKeyValue`
 
+Value to use for empty key. When set, the empty key will be shown (Bottom left key).
+
 | Type   |
 | ------ |
 | string |
@@ -146,6 +379,8 @@ const SquaredKey = ({
 ---
 
 ### `deleteKeyValue`
+
+Value to use for delete key (Delete key will be used to append this value, instead of deleting the last character).
 
 | Type   |
 | ------ |
