@@ -1,4 +1,4 @@
-package com.nomadashreactnativeeyecandy;
+package com.nomada.eyecandy;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.react.bridge.Callback;
+import com.nomada.eyecandy.R;
 
 public class ActionSheetAdapter extends RecyclerView.Adapter<ActionSheetAdapter.MyViewHolder> {
     private String[] mDataset;

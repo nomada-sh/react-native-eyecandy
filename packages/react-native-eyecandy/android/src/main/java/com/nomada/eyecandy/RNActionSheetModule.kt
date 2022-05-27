@@ -1,4 +1,4 @@
-package com.nomadashreactnativeeyecandy
+package com.nomada.eyecandy
 
 import com.facebook.react.bridge.*
 

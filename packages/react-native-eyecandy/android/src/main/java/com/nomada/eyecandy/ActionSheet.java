@@ -1,4 +1,4 @@
-package com.nomadashreactnativeeyecandy;
+package com.nomada.eyecandy;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.react.bridge.Callback;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.nomada.eyecandy.R;
 
 public class ActionSheet extends BottomSheetDialog {
     BottomSheetDialog mBottomSheetDialog;
@@ -24,7 +25,7 @@ public class ActionSheet extends BottomSheetDialog {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mBottomSheetDialog = new BottomSheetDialog(context);
-        RecyclerView.Adapter mAdapter = new com.nomadashreactnativeeyecandy.ActionSheetAdapter(options, onClickCallback, this);
+        RecyclerView.Adapter mAdapter = new ActionSheetAdapter(options, onClickCallback, this);
         mRecyclerView.setAdapter(mAdapter);
         if (sheetView.getParent() != null) {
             ((ViewGroup) sheetView.getParent()).removeView(sheetView); // <- fix
