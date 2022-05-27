@@ -64,7 +64,7 @@ export default function Drawer() {
 
   return (
     <Navigator
-      initialRouteName="Buttons"
+      initialRouteName="ActionSheet"
       screenOptions={({ navigation }) => ({
         headerTintColor: colors.text.default.normal,
         headerLeft: () => <HeaderLeft navigation={navigation} />,

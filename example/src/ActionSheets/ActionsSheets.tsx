@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Alert, SafeAreaView } from 'react-native';
+import { ScrollView, Alert, SafeAreaView, Platform } from 'react-native';
 
 import {
   Button,
@@ -93,10 +93,11 @@ export default function ActionSheets() {
         <Button
           marginBottom={20}
           onPress={() => setNativeVisible(true)}
-          text="Share document (native)"
+          text="Share document (Native)"
         />
         <ActionSheet
           native
+          title="Share document"
           options={shareDocumentOptions}
           visible={nativeVisible}
           onClose={() => setNativeVisible(false)}

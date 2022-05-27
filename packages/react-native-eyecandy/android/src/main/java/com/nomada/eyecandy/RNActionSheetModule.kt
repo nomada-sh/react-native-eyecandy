@@ -10,12 +10,12 @@ class RNActionSheetModule(reactContext: ReactApplicationContext) : ReactContextB
   private var actionSheet: ActionSheet? = null
 
   @ReactMethod
-  fun show(title: String?, items: ReadableArray, cancelIndex: Int, onClickCallback: Callback?) {
+  fun show(title: String?, items: ReadableArray, cancelIndex: Int, userInterfaceStyle: String?, onClickCallback: Callback?) {
     val labels = arrayOfNulls<String>(items.size())
     for (i in 0 until items.size()) {
       labels[i] = items.getString(i)
     }
-    actionSheet = ActionSheet(currentActivity!!, title, labels, cancelIndex, onClickCallback)
+    actionSheet = ActionSheet(currentActivity!!, title, labels, cancelIndex, userInterfaceStyle, onClickCallback)
     actionSheet!!.show()
   }
 

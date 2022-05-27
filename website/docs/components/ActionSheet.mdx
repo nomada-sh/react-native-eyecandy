@@ -30,7 +30,7 @@ import {
   Download,
 } from '@nomada-sh/react-native-eyecandy-icons';
 
-const profilePictureOptions: ActionSheetOption[] = [
+const profilePictureOptions = [
   {
     label: 'Take a photo',
     icon: Camera,
@@ -41,7 +41,7 @@ const profilePictureOptions: ActionSheetOption[] = [
   },
 ];
 
-const shareDocumentOptions: ActionSheetOption[] = [
+const shareDocumentOptions = [
   {
     label: 'Download',
     icon: Download,
@@ -59,7 +59,6 @@ const shareDocumentOptions: ActionSheetOption[] = [
 export default function App() {
   const [visibleChangePicture, setVisibleChangePicture] = React.useState(false);
   const [visibleShare, setVisibleShare] = React.useState(false);
-  const [nativeVisible, setNativeVisible] = React.useState(false);
 
   return (
     <SafeAreaView
@@ -97,7 +96,6 @@ export default function App() {
           text="Share document"
         />
         <ActionSheet
-          native
           options={shareDocumentOptions}
           visible={visibleShare}
           onClose={() => setVisibleShare(false)}
@@ -202,9 +200,64 @@ export default function App() {
 
 ---
 
-### `native` <div class="label ios">iOS</div>
+### `native`
 
-When set to `true`, the action sheet will be rendered natively on iOS.
+When set to `true`, the action sheet will be rendered natively on iOS or Android.
+
+#### Example
+
+```SnackPlayer name=RN%20Eyecandy%20ActionSheet%20Native&supportedPlatforms=ios,android
+import React from 'react';
+import { SafeAreaView, View, Alert } from 'react-native';
+
+import {
+  Button,
+  ActionSheet,
+  ActionSheetOption,
+} from '@nomada-sh/react-native-eyecandy';
+
+const options = [
+  'Download',
+  'Share',
+  'Preview',
+];
+
+export default function App() {
+  const [visible, setVisible] = React.useState(false);
+
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
+      <View
+        style={{
+          padding: 20,
+        }}
+      >
+        <Button
+          marginBottom={20}
+          onPress={() => setVisible(true)}
+          text="Share document"
+        />
+        <ActionSheet
+          native
+          options={options}
+          visible={visible}
+          onClose={() => setVisible(false)}
+          onPressAction={index => {
+            const option = options[index];
+            if (typeof option === 'string') Alert.alert(option);
+            else Alert.alert(option.label);
+          }}
+          showCancelIcon
+        />
+      </View>
+    </SafeAreaView>
+  );
+}
+```
 
 | Type    |
 | ------- |
