@@ -4,6 +4,7 @@ import { IconButton, Switch } from '@nomada-sh/react-native-eyecandy';
 import { Menu } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme as useEyecandyTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import ActionSheets from '../ActionSheets';
 import AvatarEdits from '../AvatarEdits';

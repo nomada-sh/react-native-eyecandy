@@ -3132,19 +3132,10 @@
   dependencies:
     "@types/react" "^17"
 
-"@types/react@*", "@types/react@^17":
+"@types/react@*", "@types/react@^17", "@types/react@^17.0.2":
   version "17.0.44"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.44.tgz#c3714bd34dd551ab20b8015d9d0dbec812a51ec7"
   integrity sha512-Ye0nlw09GeMp2Suh8qoOv0odfgCoowfM/9MG6WeRD60Gq9wS90bdkdRtYbRkNhXOpG4H+YXGvj4wOWhAC0LJ1g==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    csstype "^3.0.2"
-
-"@types/react@^17.0.2":
-  version "17.0.45"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.45.tgz#9b3d5b661fd26365fefef0e766a1c6c30ccf7b3f"
-  integrity sha512-YfhQ22Lah2e3CHPsb93tRwIGNiSwkuz1/blk4e6QrWS0jQzCSNbGLtOEYhPg02W0yGTTmpajp7dCTbBAMN3qsg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -11255,10 +11246,10 @@ react-native-country-picker-modal@^2.0.0:
     prop-types "15.7.2"
     react-async-hook "3.6.1"
 
-react-native-gesture-handler@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.2.0.tgz#a551f9ca33d8766d0a24268f49e0f1b05191b105"
-  integrity sha512-WF25CNgn164bF9juW8N/jICIFXiEOgsxCuY7DRlnFdiH5ZfvMYtZHRC+zr1fFMap2ty1f2HWDQNVVSo0FDXP4A==
+react-native-gesture-handler@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.4.2.tgz#de93760b0bc251d94e8ae692f9850ec3ed2e4f27"
+  integrity sha512-K3oMiQV7NOVB5RvNlxkyJxU1Gn6m1cYu53MoFA542FVDSTR491d1eQkWDdqy4lW52rfF7IK7eE1LCi+kTJx7jw==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
     hoist-non-react-statics "^3.3.0"
