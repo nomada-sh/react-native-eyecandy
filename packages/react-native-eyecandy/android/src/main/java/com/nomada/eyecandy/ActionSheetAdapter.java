@@ -1,6 +1,8 @@
-package com.nomadashreactnativeeyecandy;
+package com.nomada.eyecandy;
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +12,14 @@ import android.widget.LinearLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.react.bridge.Callback;
+import com.nomada.eyecandy.R;
 
 public class ActionSheetAdapter extends RecyclerView.Adapter<ActionSheetAdapter.MyViewHolder> {
     private String[] mDataset;
     private Callback callback;
     private ActionSheet actionSheet;
+    private boolean mDark;
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout linearLayout;
         public MyViewHolder(LinearLayout v) {
@@ -23,15 +28,15 @@ public class ActionSheetAdapter extends RecyclerView.Adapter<ActionSheetAdapter.
         }
     }
 
-    public ActionSheetAdapter(String[] myDataset, Callback onClickCallback, ActionSheet actionSheetC) {
+    public ActionSheetAdapter(String[] myDataset, Callback onClickCallback, boolean dark, ActionSheet actionSheetC) {
         mDataset = myDataset;
         callback = onClickCallback;
         actionSheet = actionSheetC;
+        mDark = dark;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                              int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.action_sheet_item, parent, false);
         MyViewHolder vh = new MyViewHolder(linearLayout);

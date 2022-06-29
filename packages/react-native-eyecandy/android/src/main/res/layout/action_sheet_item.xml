@@ -14,7 +14,7 @@
         android:layout_margin="0dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="start"
-        android:padding="15dp"
+        android:padding="14dp"
         android:text="TextView"
         android:textAllCaps="false"
         android:textColor="@color/action_sheet_text_color"

@@ -5,6 +5,7 @@ import { IconProps, Close } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import Color from 'color';
 
+import { ActionSheetAndroid } from '../../modules';
 import { Body } from '../../typography';
 import BottomSheet from '../BottomSheet';
 import Menu from '../Menu';
@@ -49,32 +50,48 @@ export default function ActionSheet({
 
   const cancelButtonIndex = options.length;
 
-  const isNative = native && Platform.OS === 'ios';
+  const isNative =
+    native && (Platform.OS === 'ios' || Platform.OS === 'android');
 
   useEffect(() => {
     if (!isNative || !visible) return;
 
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        cancelButtonIndex,
-        options: [
-          ...options.map(option => {
-            if (typeof option === 'string') return option;
+    const newOptions = options.map(option => {
+      if (typeof option === 'string') return option;
 
-            return option.label;
-          }),
-          cancelText,
-        ],
-        userInterfaceStyle: dark ? 'dark' : 'light',
-        title,
-        message,
-      },
-      index => {
-        if (index !== cancelButtonIndex) onPressAction && onPressAction(index);
-        else onCancel && onCancel();
-        onClose && onClose();
-      },
-    );
+      return option.label;
+    });
+
+    const callback = (index: number) => {
+      if (index !== cancelButtonIndex) onPressAction && onPressAction(index);
+      else onCancel && onCancel();
+      onClose && onClose();
+    };
+
+    switch (Platform.OS) {
+      case 'ios':
+        return ActionSheetIOS.showActionSheetWithOptions(
+          {
+            cancelButtonIndex,
+            options: [...newOptions, cancelText],
+            userInterfaceStyle: dark ? 'dark' : 'light',
+            title,
+            message,
+          },
+          callback,
+        );
+
+      case 'android':
+        return ActionSheetAndroid.show(
+          {
+            options: newOptions,
+            title,
+            cancelButtonIndex,
+            userInterfaceStyle: dark ? 'dark' : 'light',
+          },
+          callback,
+        );
+    }
   }, [
     cancelButtonIndex,
     cancelText,

@@ -14,6 +14,7 @@ const KEY_VALUES = [
   ['7', '8', '9'],
   [EMPTY_KEY_VALUE, '0', DELETE_KEY_VALUE],
 ];
+
 export interface PasscodeProps {
   value: string;
   onChange: (value: string) => void;

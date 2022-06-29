@@ -1,26 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
     android:orientation="vertical"
-    android:background="@color/action_sheet_background_color">
+    android:background="@color/action_sheet_background_color"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp">
 
     <TextView
         android:id="@+id/title"
         android:textSize="16sp"
+        android:text="Title"
         android:textColor="@color/action_sheet_text_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"/>
+        android:paddingHorizontal="14dp"
+        android:paddingBottom="14dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+      >
 
     </androidx.recyclerview.widget.RecyclerView>
 

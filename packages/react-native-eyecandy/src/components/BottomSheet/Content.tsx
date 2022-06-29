@@ -3,7 +3,6 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 
 import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 import {
-  gestureHandlerRootHOC,
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
@@ -40,7 +39,7 @@ type Context = {
   startY: number;
 };
 
-function Content({
+export default function Content({
   children,
   height,
   handleHeight,
@@ -105,7 +104,11 @@ function Content({
 
         open.value = true;
 
-        y.value = withSpring(0, { damping: 12 }, () => {
+        // y.value = withSpring(0, { damping: 12 }, () => {
+        //   onOpen && runOnJS(onOpen)();
+        // });
+
+        y.value = withTiming(0, { duration: 400 }, () => {
           onOpen && runOnJS(onOpen)();
         });
       };
@@ -174,5 +177,3 @@ function Content({
     </PanGestureHandler>
   );
 }
-
-export default gestureHandlerRootHOC(Content);

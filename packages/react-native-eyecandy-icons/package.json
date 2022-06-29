@@ -36,15 +36,16 @@
     "@nomada-sh/react-native-eyecandy-theme": "^1.0.4"
   },
   "devDependencies": {
-    "@types/react": "^17.0.38",
+    "@types/react": "^17.0.2",
+    "@types/react-native": "^0.67.4",
     "react": "^17.0.2",
-    "react-native": "^0.67.1",
+    "react-native": "^0.67.4",
     "react-native-builder-bob": "^0.18.2",
     "react-native-svg": "12.1.1"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-native": "*",
+    "react": "^17.0.2",
+    "react-native": "0.67.4",
     "react-native-svg": "12.1.1"
   }
 }
