@@ -1,15 +1,25 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
-import { Rating, TextArea } from '@nomada-sh/react-native-eyecandy';
+import { NPS } from '@nomada-sh/react-native-eyecandy';
 
 export function RatingScreen() {
-  const [value, setValue] = React.useState(0);
+  const [rating, setRating] = React.useState(0);
+  const [review, setReview] = React.useState('');
 
   return (
-    <View>
-      <Rating value={value} onChange={setValue} max={5} />
-      <TextArea />
-    </View>
+    <ScrollView
+      contentContainerStyle={{
+        paddingVertical: 20,
+        paddingHorizontal: 30,
+      }}
+    >
+      <NPS
+        rating={rating}
+        onRatingChange={setRating}
+        review={review}
+        onReviewChange={setReview}
+      />
+    </ScrollView>
   );
 }

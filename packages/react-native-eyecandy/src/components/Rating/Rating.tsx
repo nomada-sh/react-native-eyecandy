@@ -14,9 +14,16 @@ export interface RatingProps {
   value: number;
   onChange: (value: number) => void;
   max?: number;
+  gap?: number;
 }
 
-export function Rating({ style, value, onChange, max = 5 }: RatingProps) {
+export function Rating({
+  style,
+  value,
+  onChange,
+  max = 5,
+  gap = 10,
+}: RatingProps) {
   const { palette, dark } = useTheme();
 
   const onColor = palette.primary[500];
@@ -29,11 +36,11 @@ export function Rating({ style, value, onChange, max = 5 }: RatingProps) {
       <View
         key={i}
         style={{
-          marginRight: i < max ? 5 : 0,
+          marginRight: i < max ? gap : 0,
         }}
       >
         <TouchableWithoutFeedback onPress={() => onPress(i)}>
-          <StarFill color={i <= value ? onColor : offColor} />
+          <StarFill size={32} color={i <= value ? onColor : offColor} />
         </TouchableWithoutFeedback>
       </View>,
     );

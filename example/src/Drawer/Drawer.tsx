@@ -64,7 +64,7 @@ export default function Drawer() {
 
   return (
     <Navigator
-      initialRouteName="Rating"
+      initialRouteName="NPS"
       screenOptions={({ navigation }) => ({
         headerTintColor: colors.text.default.normal,
         headerLeft: () => <HeaderLeft navigation={navigation} />,
@@ -113,7 +113,7 @@ export default function Drawer() {
       <Screen name="LineValueSelector" component={LineValueSelectors} />
       <Screen name="CalendarStrip" component={Calendars} />
       <Screen name="Passcode" component={Passcodes} />
-      <Screen name="Rating" component={RatingScreen} />
+      <Screen name="NPS" component={RatingScreen} />
       <Screen name="ThemeSwitch" component={ThemeSwitch} />
     </Navigator>
   );

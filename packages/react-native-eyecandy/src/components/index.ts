@@ -128,3 +128,5 @@ export type { PasscodeProps, KeyProps as PasscodeKeyProps } from './Passcode';
 export { Rating, RatingProps } from './Rating';
 
 export { TextArea } from './TextArea';
+
+export { NPS, NPSProps } from './NPS';
