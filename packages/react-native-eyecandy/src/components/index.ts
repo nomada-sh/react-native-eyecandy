@@ -124,3 +124,5 @@ export type { ActionSheetProps, ActionSheetOption } from './ActionSheet';
 
 export { default as Passcode } from './Passcode';
 export type { PasscodeProps, KeyProps as PasscodeKeyProps } from './Passcode';
+
+export { Rating, RatingProps } from './Rating';
