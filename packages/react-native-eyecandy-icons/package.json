@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy-icons",
-  "version": "1.0.7",
+  "version": "0.0.3",
   "description": "React Native Eyecandy Icons",
   "license": "MIT",
   "main": "lib/commonjs/index.js",
@@ -32,8 +32,13 @@
       "typescript"
     ]
   },
-  "dependencies": {
-    "@nomada-sh/react-native-eyecandy-theme": "^1.0.4"
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "17.x",
+    "react-native": ">=0.67.x",
+    "react-native-svg": "12.x"
   },
   "devDependencies": {
     "@types/react": "^17.0.2",
@@ -43,9 +48,7 @@
     "react-native-builder-bob": "^0.18.2",
     "react-native-svg": "12.1.1"
   },
-  "peerDependencies": {
-    "react": "^17.0.2",
-    "react-native": "0.67.4",
-    "react-native-svg": "12.1.1"
+  "dependencies": {
+    "@nomada-sh/react-native-eyecandy-theme": "^0.0.2"
   }
 }

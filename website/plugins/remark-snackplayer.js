@@ -32,7 +32,6 @@ const processNode = (node, parent) => {
           '@nomada-sh/react-native-eyecandy',
           '@nomada-sh/react-native-eyecandy-icons',
           '@nomada-sh/react-native-eyecandy-theme',
-          '@react-native-picker/picker',
           'react-native-gesture-handler',
           'react-native-haptic-feedback',
           'react-native-image-picker',
