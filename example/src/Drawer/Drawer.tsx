@@ -27,16 +27,18 @@ import Menus from '../Menus';
 import Passcodes from '../Passcodes';
 import RadioButtons from '../RadioButtons';
 import RadioGroups from '../RadioGroups';
-import Selects from '../Selects';
 import SwipeButtons from '../SwipeButtons';
 import Switchs from '../Switchs';
 import TextInputs from '../TextInputs';
 import Texts from '../Texts';
 import ThemeSwitch from '../ThemeSwitch';
 import { RatingScreen } from '../screens/RatingScreen';
+import { SelectScreen } from '../screens/SelectScreen';
 import { useTheme } from '../shared/hooks';
 
 const { Navigator, Screen } = createDrawerNavigator();
+
+const initialRouteName = 'Select';
 
 function HeaderLeft(props: any) {
   const toggleDrawer = () => {
@@ -63,7 +65,7 @@ export default function Drawer() {
 
   return (
     <Navigator
-      initialRouteName="NPS"
+      initialRouteName={initialRouteName}
       screenOptions={({ navigation }) => ({
         headerTintColor: colors.text.default.normal,
         headerLeft: () => <HeaderLeft navigation={navigation} />,
@@ -92,7 +94,7 @@ export default function Drawer() {
       <Screen name="Badge" component={Badges} />
       <Screen name="TextInput" component={TextInputs} />
       <Screen name="CodeInput" component={CodeInputs} />
-      <Screen name="Select" component={Selects} />
+      <Screen name="Select" component={SelectScreen} />
       <Screen name="Forms" component={Forms} />
       <Screen name="Card" component={Cards} />
       <Screen name="Avatar" component={Avatars} />

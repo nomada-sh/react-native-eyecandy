@@ -5,9 +5,9 @@ import { ChevronDown, Plus } from '@nomada-sh/react-native-eyecandy-icons';
 
 import { Body } from '../../typography';
 
-import Picker from './Picker';
+import { Picker } from './Picker';
 import { SelectHandle, SelectItem, SelectProps } from './types';
-import useStyles from './useStyles';
+import { useStyles } from './useStyles';
 
 const defaultIsSelected = (item: SelectItem<any>, value?: any) => {
   return value === undefined ? false : item.value === value;
@@ -15,7 +15,7 @@ const defaultIsSelected = (item: SelectItem<any>, value?: any) => {
 
 const defaultItems: SelectItem<any>[] = [];
 
-function Select<V>(
+function SelectBase<V>(
   {
     items = defaultItems,
     placeholder = 'Select an item...',
@@ -158,6 +158,6 @@ function Select<V>(
   );
 }
 
-export default React.forwardRef(Select) as <V>(
+export const Select = React.forwardRef(SelectBase) as <V>(
   p: SelectProps<V> & { ref?: React.Ref<SelectHandle> },
 ) => JSX.Element;
