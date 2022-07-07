@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy-theme",
-  "version": "1.0.5",
+  "version": "0.0.1",
   "description": "React Native Eyecandy Theme",
   "license": "MIT",
   "main": "lib/commonjs/index.js",
@@ -33,6 +33,9 @@
       "module",
       "typescript"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "peerDependencies": {
     "react": "^17.0.2",
