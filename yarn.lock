@@ -2764,11 +2764,6 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-picker/picker@^1.8.3":
-  version "1.16.8"
-  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.16.8.tgz#2126ca54d4a5a3e9ea5e3f39ad1e6643f8e4b3d4"
-  integrity sha512-pacdQDX6V6EmjF+HoiIh6u++qx4mTK0WnhgUHRc01B+Qt5eoeUwseBqmqfTSXTx/aHDEd6PiIw7UGvKgFoqgFQ==
-
 "@react-native-picker/picker@^2.4.1":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.1.tgz#92feb7e0672d739624517dae04bf4de1452dfcdc"
@@ -11887,13 +11882,6 @@ react-native-mask-input@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-mask-input/-/react-native-mask-input-1.2.0.tgz#08da62742b34697d1e42d086fb4640951caea5a2"
   integrity sha512-0bLJ9Szlly4tt59RrbLBS5TSJAGVoH22Hpka85HQ3q4qy10AH+UkcDkozXEonSY5oJK6sobnmzKQ4px5+mkCWg==
-
-"react-native-picker-select@https://github.com/Canciller/react-native-picker-select":
-  version "8.0.4"
-  resolved "https://github.com/Canciller/react-native-picker-select#e273fbb7c205f36cd3344c2fcc5a067d411c5801"
-  dependencies:
-    "@react-native-picker/picker" "^1.8.3"
-    lodash.isequal "^4.5.0"
 
 react-native-reanimated@2.3.1:
   version "2.3.1"

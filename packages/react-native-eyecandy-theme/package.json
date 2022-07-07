@@ -38,10 +38,9 @@
     "access": "public"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-native": "^0.67.4"
+    "react": "17.x",
+    "react-native": ">=0.67.x"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^27.4.0",
     "@types/react": "^17.0.2",
@@ -50,5 +49,6 @@
     "react-native-builder-bob": "^0.18.2",
     "react": "^17.0.2",
     "react-native": "^0.67.4"
-  }
+  },
+  "dependencies": {}
 }

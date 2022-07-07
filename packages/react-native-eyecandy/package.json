@@ -56,6 +56,15 @@
       "typescript"
     ]
   },
+  "peerDependencies": {
+    "react": "17.x",
+    "react-native": ">=0.67.x",
+    "react-native-gesture-handler": "2.x",
+    "react-native-haptic-feedback": "1.x",
+    "react-native-image-picker": "4.x",
+    "react-native-reanimated": "2.x",
+    "react-native-svg": "12.x"
+  },
   "devDependencies": {
     "@react-native-picker/picker": "^2.4.1",
     "@testing-library/jest-native": "^4.0.5",
@@ -76,16 +85,6 @@
     "react-native-svg": "12.1.1",
     "react-test-renderer": "^17.0.2"
   },
-  "peerDependencies": {
-    "@react-native-picker/picker": "^2.4.1",
-    "react": "^17.0.2",
-    "react-native": "^0.67.4",
-    "react-native-gesture-handler": "^2.4.2",
-    "react-native-haptic-feedback": "^1.13.0",
-    "react-native-image-picker": "^4.7.3",
-    "react-native-reanimated": "2.3.1",
-    "react-native-svg": "12.1.1"
-  },
   "dependencies": {
     "@nomada-sh/react-native-eyecandy-icons": "^0.0.2",
     "@nomada-sh/react-native-eyecandy-theme": "^0.0.1",
@@ -94,7 +93,6 @@
     "date-fns": "^2.28.0",
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-mask-input": "^1.2.0",
-    "react-native-picker-select": "https://github.com/Canciller/react-native-picker-select",
     "react-native-redash": "^16.2.3",
     "react-use": "^17.3.2"
   }
