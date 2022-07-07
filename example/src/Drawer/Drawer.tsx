@@ -4,7 +4,6 @@ import { IconButton, Switch } from '@nomada-sh/react-native-eyecandy';
 import { Menu } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme as useEyecandyTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import ActionSheets from '../ActionSheets';
 import AvatarEdits from '../AvatarEdits';
@@ -35,6 +34,7 @@ import Switchs from '../Switchs';
 import TextInputs from '../TextInputs';
 import Texts from '../Texts';
 import ThemeSwitch from '../ThemeSwitch';
+import { RatingScreen } from '../screens/RatingScreen';
 import { useTheme } from '../shared/hooks';
 
 const { Navigator, Screen } = createDrawerNavigator();
@@ -64,7 +64,7 @@ export default function Drawer() {
 
   return (
     <Navigator
-      initialRouteName="ActionSheet"
+      initialRouteName="NPS"
       screenOptions={({ navigation }) => ({
         headerTintColor: colors.text.default.normal,
         headerLeft: () => <HeaderLeft navigation={navigation} />,
@@ -113,6 +113,7 @@ export default function Drawer() {
       <Screen name="LineValueSelector" component={LineValueSelectors} />
       <Screen name="CalendarStrip" component={Calendars} />
       <Screen name="Passcode" component={Passcodes} />
+      <Screen name="NPS" component={RatingScreen} />
       <Screen name="ThemeSwitch" component={ThemeSwitch} />
     </Navigator>
   );
