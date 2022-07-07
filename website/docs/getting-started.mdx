@@ -24,7 +24,6 @@ This library requires the following packages to be installed correctly:
 - [react-native-svg](https://github.com/react-native-community/react-native-svg)
 - [react-native-haptic-feedback](https://github.com/junina-de/react-native-haptic-feedback)
 - [react-native-image-picker](https://github.com/react-native-image-picker/react-native-image-picker)
-- [@react-native-picker/picker](https://github.com/react-native-picker/picker)
 
 ```bash npm2yarn
 npm install @nomada-sh/react-native-eyecandy
@@ -32,52 +31,52 @@ npm install @nomada-sh/react-native-eyecandy
 
 ### Installing dependencies into an Expo managed project
 
-In your project directory, run:
+1. In your project directory, run:
 
-```sh
-expo install react-native-gesture-handler react-native-reanimated react-native-svg react-native-haptic-feedback react-native-image-picker @react-native-picker/picker
-```
+  ```sh
+  expo install react-native-gesture-handler react-native-reanimated react-native-svg react-native-haptic-feedback react-native-image-picker
+  ```
 
-To finalize installation of `react-native-gesture-handler`, add the following at the **top** (make sure it's at the top and there's nothing else before it) of your entry file, such as `index.js` or `App.js`:
+2. To finalize installation of `react-native-gesture-handler`, add the following at the **top** (make sure it's at the top and there's nothing else before it) of your entry file, such as `index.js` or `App.js`:
 
-```js
-import 'react-native-gesture-handler';
-```
+  ```js
+  import 'react-native-gesture-handler';
+  ```
 
-> Note: If you are building for Android or iOS, do not skip this step, or your app may crash in production even if it works fine in development. This is not applicable to other platforms.
+  > Note: If you are building for Android or iOS, do not skip this step, or your app may crash in production even if it works fine in development. This is not applicable to other platforms.
 
-To finalize installation of `react-native-reanimated`, add Reanimated's babel plugin to your `babel.config.js`:
+3. To finalize installation of `react-native-reanimated`, add Reanimated's babel plugin to your `babel.config.js`:
 
-```js
-module.exports = {
-  plugins: ['react-native-reanimated/plugin'],
-};
-```
+  ```js
+  module.exports = {
+    plugins: ['react-native-reanimated/plugin'],
+  };
+  ```
 
-After you add the Babel plugin, restart your development server and clear the bundler cache: `expo start --clear`
+  After you add the Babel plugin, restart your development server and clear the bundler cache: `expo start --clear`
 
 ### Installing dependencies into a bare React Native project
 
-In your project directory, run:
+1. In your project directory, run:
 
-```bash npm2yarn
-npm install react-native-gesture-handler react-native-reanimated react-native-svg react-native-haptic-feedback react-native-image-picker @react-native-picker/picker
-```
+  ```bash npm2yarn
+  npm install react-native-gesture-handler react-native-reanimated react-native-svg react-native-haptic-feedback react-native-image-picker
+  ```
 
-From React Native 0.60 and higher, [linking is automatic](https://github.com/react-native-community/cli/blob/master/docs/autolinking.md). So you **don't need to run** `react-native link`.
+  From React Native 0.60 and higher, [linking is automatic](https://github.com/react-native-community/cli/blob/master/docs/autolinking.md). So you **don't need to run** `react-native link`.
 
-If you're on a Mac and developing for iOS, you need to install the pods (via [Cocoapods](https://cocoapods.org/)) to complete the linking.
+  If you're on a Mac and developing for iOS, you need to install the pods (via [Cocoapods](https://cocoapods.org/)) to complete the linking.
 
-```sh
-npx pod-install ios
-```
+  ```sh
+  npx pod-install ios
+  ```
 
-To finalize installation of `react-native-gesture-handler`, add the following at the **top** (make sure it's at the top and there's nothing else before it) of your entry file, such as `index.js` or `App.js`:
+2. To finalize installation of `react-native-gesture-handler`, add the following at the **top** (make sure it's at the top and there's nothing else before it) of your entry file, such as `index.js` or `App.js`:
 
-```js
-import 'react-native-gesture-handler';
-```
+  ```js
+  import 'react-native-gesture-handler';
+  ```
 
-> Note: If you are building for Android or iOS, do not skip this step, or your app may crash in production even if it works fine in development. This is not applicable to other platforms.
+  > Note: If you are building for Android or iOS, do not skip this step, or your app may crash in production even if it works fine in development. This is not applicable to other platforms.
 
-To finalize installation of `react-native-reanimated`, configure it following the [installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation).
+3. To finalize installation of `react-native-reanimated`, configure it following the [installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation).
