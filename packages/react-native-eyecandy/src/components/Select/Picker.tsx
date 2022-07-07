@@ -1,5 +1,11 @@
 import React from 'react';
-import { FlatList, Modal, TouchableWithoutFeedback, View } from 'react-native';
+import {
+  FlatList,
+  Modal,
+  TouchableWithoutFeedback,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 import Color from 'color';
@@ -11,7 +17,9 @@ import { PickerProps } from './types';
 
 const ITEM_HEIGHT = 45;
 
-export default function Picker<V>({
+// TODO: Improve FlatList.
+
+export function Picker<V>({
   visible,
   onClose,
   items,
@@ -21,6 +29,7 @@ export default function Picker<V>({
   title,
   selectedItemIndex,
 }: PickerProps<V>) {
+  const { height: windowHeight } = useWindowDimensions();
   const { colors, palette } = useTheme();
 
   const backgroundColor = colors.background.default.container;
@@ -29,6 +38,12 @@ export default function Picker<V>({
     .string();
 
   const flatListRef = React.useRef<FlatList<any>>(null);
+
+  const paddingTop = title ? 0 : 20;
+  const paddingBottom = 20;
+  let maxHeight = windowHeight * 0.6;
+  const visibleItems = Math.floor((maxHeight - paddingTop) / ITEM_HEIGHT) + 0.6;
+  maxHeight = visibleItems * ITEM_HEIGHT + paddingTop;
 
   return (
     <Modal
@@ -51,7 +66,7 @@ export default function Picker<V>({
             <View
               style={{
                 width: '90%',
-                maxHeight: '60%',
+                maxHeight,
                 overflow: 'hidden',
                 backgroundColor: colors.background.default.container,
                 borderRadius: 12,
@@ -74,15 +89,15 @@ export default function Picker<V>({
                 initialScrollIndex={
                   selectedItemIndex >= 0 ? selectedItemIndex : undefined
                 }
-                getItemLayout={(data, index) => ({
+                getItemLayout={(_, index) => ({
                   length: ITEM_HEIGHT,
                   offset: ITEM_HEIGHT * index,
                   index,
                 })}
                 ref={flatListRef}
                 contentContainerStyle={{
-                  paddingTop: title ? 0 : 20,
-                  paddingBottom: 20,
+                  paddingTop,
+                  paddingBottom,
                 }}
                 data={items}
                 keyExtractor={(item, index) => item.key || index.toString()}

@@ -4,12 +4,12 @@ import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
 import { SelectStyleProps } from './types';
 
-interface UseStylesProps extends SelectStyleProps {
+export interface UseStylesProps extends SelectStyleProps {
   focused?: boolean;
   removePaddingLeft?: boolean;
 }
 
-export default function useStyles({
+export function useStyles({
   color = 'default',
   variant = 'default',
   focused,
