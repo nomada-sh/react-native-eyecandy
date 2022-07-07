@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.3
+
+### Patch Changes
+
+- Improved Select component UX
+
 ## 0.0.2
 
 ### Patch Changes
