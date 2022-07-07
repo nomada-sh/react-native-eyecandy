@@ -24,7 +24,6 @@ import IconButtons from '../IconButtons';
 import LineValueSelectors from '../LineValueSelectors';
 import LinkButtons from '../LinkButtons';
 import Menus from '../Menus';
-import Passcodes from '../Passcodes';
 import RadioButtons from '../RadioButtons';
 import RadioGroups from '../RadioGroups';
 import SwipeButtons from '../SwipeButtons';
@@ -32,6 +31,7 @@ import Switchs from '../Switchs';
 import TextInputs from '../TextInputs';
 import Texts from '../Texts';
 import ThemeSwitch from '../ThemeSwitch';
+import { DialerScreen } from '../screens/DialerScreen';
 import { RatingScreen } from '../screens/RatingScreen';
 import { SelectScreen } from '../screens/SelectScreen';
 import { useTheme } from '../shared/hooks';
@@ -112,7 +112,7 @@ export default function Drawer() {
       <Screen name="CheckList" component={CheckLists} />
       <Screen name="LineValueSelector" component={LineValueSelectors} />
       <Screen name="CalendarStrip" component={Calendars} />
-      <Screen name="Passcode" component={Passcodes} />
+      <Screen name="Dialer" component={DialerScreen} />
       <Screen name="NPS" component={RatingScreen} />
       <Screen name="ThemeSwitch" component={ThemeSwitch} />
     </Navigator>

@@ -15,7 +15,7 @@ const KEY_VALUES = [
   [EMPTY_KEY_VALUE, '0', DELETE_KEY_VALUE],
 ];
 
-export interface PasscodeProps {
+export interface DialerProps {
   value: string;
   onChange: (value: string) => void;
   style?: StyleProp<ViewStyle>;
@@ -27,7 +27,7 @@ export interface PasscodeProps {
   rowStyle?: StyleProp<ViewStyle>;
 }
 
-export default function Passcode({
+export function Dialer({
   value,
   onChange,
   style,
@@ -37,7 +37,7 @@ export default function Passcode({
   deleteKeyValue,
   testID,
   rowStyle,
-}: PasscodeProps) {
+}: DialerProps) {
   const timeoutRef = useRef<NodeJS.Timeout>();
   const valueRef = useRef(value);
   if (valueRef.current !== value) valueRef.current = value;

@@ -3,8 +3,8 @@ import { ImageBackground, Pressable, SafeAreaView, View } from 'react-native';
 
 import {
   Body,
-  PasscodeKeyProps,
-  Passcode,
+  DialerKeyProps,
+  Dialer,
   TextInput,
 } from '@nomada-sh/react-native-eyecandy';
 import { Backspace } from '@nomada-sh/react-native-eyecandy-icons';
@@ -15,7 +15,7 @@ const LettersKey = ({
   onPressIn,
   onPressOut,
   isDeleteKey,
-}: PasscodeKeyProps) => {
+}: DialerKeyProps) => {
   let letters = '';
   switch (keyValue) {
     case '2':
@@ -71,7 +71,7 @@ const SquaredKey = ({
   onPressIn,
   onPressOut,
   col,
-}: PasscodeKeyProps) => {
+}: DialerKeyProps) => {
   const { colors } = useTheme();
 
   return (
@@ -99,7 +99,7 @@ const TransparentKey = ({
   isEmptyKey,
   onPressIn,
   onPressOut,
-}: PasscodeKeyProps) => {
+}: DialerKeyProps) => {
   return (
     <View
       style={{
@@ -133,7 +133,7 @@ const TransparentKey = ({
   );
 };
 
-export default function Passcodes() {
+export function DialerScreen() {
   const [value, setValue] = React.useState('');
 
   return (
@@ -165,13 +165,13 @@ export default function Passcodes() {
           />
         </View>
         {/* <ImageBackground source={require('./Background.jpg')}> */}
-        <Passcode
+        <Dialer
           style={{
             // marginBottom: 20,
             // width: '50%',
             marginHorizontal: 20,
           }}
-          testID="passcode"
+          testID="Dialer"
           value={value}
           onChange={setValue}
           // KeyComponent={LettersKey}

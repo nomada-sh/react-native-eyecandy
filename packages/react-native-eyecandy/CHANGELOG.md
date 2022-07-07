@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.4
+
+### Patch Changes
+
+- Renamed component Passcode to Dialer
+
 ## 0.0.3
 
 ### Patch Changes

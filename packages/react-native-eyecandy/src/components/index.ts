@@ -114,8 +114,7 @@ export type { WrappedPanProps } from './WrappedPan';
 export { default as ActionSheet } from './ActionSheet';
 export type { ActionSheetProps, ActionSheetOption } from './ActionSheet';
 
-export { default as Passcode } from './Passcode';
-export type { PasscodeProps, KeyProps as PasscodeKeyProps } from './Passcode';
+export { Dialer, DialerProps, KeyProps as DialerKeyProps } from './Dialer';
 
 export { Rating, RatingProps } from './Rating';
 

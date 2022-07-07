@@ -1,23 +1,25 @@
 ---
-id: passcode
-title: Passcode
+id: dailer
+title: Dialer
 ---
+
+Dialers are used to display a keypad that allows the user to enter a number.
 
 ## Import
 
 ```jsx
-import { Passcode } from '@nomada-sh/react-native-eyecandy';
+import { Dialer } from '@nomada-sh/react-native-eyecandy';
 ```
 
 ## Example
 
-```SnackPlayer name=RN%20Eyecandy%20Passcode
+```SnackPlayer name=RN%20Eyecandy%20Dialer
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 
 import {
   TextInput,
-  Passcode
+  Dialer
 } from '@nomada-sh/react-native-eyecandy';
 
 
@@ -42,7 +44,7 @@ export default function App() {
           value={value}
           onChangeText={setValue}
         />
-        <Passcode
+        <Dialer
           value={value}
           onChange={setValue}
         />
@@ -82,14 +84,14 @@ Component to use as key button. You need to pass `onPressIn` and `onPressOut` pr
 
 #### Examples
 
-```SnackPlayer name=RN%20Eyecandy%20Passcode%20SquaredKey
+```SnackPlayer name=RN%20Eyecandy%20Dialer%20SquaredKey
 import React from 'react';
 import { SafeAreaView, View, Pressable } from 'react-native';
 
 import {
   TextInput,
-  Passcode,
-  PasscodeKeyProps,
+  Dialer,
+  DialerKeyProps,
   Body
 } from '@nomada-sh/react-native-eyecandy';
 
@@ -101,7 +103,7 @@ const SquaredKey = ({
   onPressIn,
   onPressOut,
   col,
-}: PasscodeKeyProps) => (
+}: DialerKeyProps) => (
   <Pressable
     style={{
       flex: 1,
@@ -142,7 +144,7 @@ export default function App() {
           value={value}
           onChangeText={setValue}
         />
-        <Passcode
+        <Dialer
           value={value}
           onChange={setValue}
           KeyComponent={SquaredKey}
@@ -153,14 +155,14 @@ export default function App() {
 }
 ```
 
-```SnackPlayer name=RN%20Eyecandy%20Passcode%20DialKey
+```SnackPlayer name=RN%20Eyecandy%20Dialer%20DialKey
 import React from 'react';
 import { SafeAreaView, View, Pressable } from 'react-native';
 
 import {
   TextInput,
-  Passcode,
-  PasscodeKeyProps,
+  Dialer,
+  DialerKeyProps,
   Body
 } from '@nomada-sh/react-native-eyecandy';
 
@@ -171,7 +173,7 @@ const DialKey = ({
   onPressIn,
   onPressOut,
   isDeleteKey,
-}: PasscodeKeyProps) => {
+}: DialerKeyProps) => {
   let letters = '';
   switch (keyValue) {
     case '2':
@@ -238,7 +240,7 @@ export default function App() {
           value={value}
           onChangeText={setValue}
         />
-        <Passcode
+        <Dialer
           value={value}
           onChange={setValue}
           KeyComponent={DialKey}
@@ -250,14 +252,14 @@ export default function App() {
 }
 ```
 
-```SnackPlayer name=RN%20Eyecandy%20Passcode%20TransparentKey
+```SnackPlayer name=RN%20Eyecandy%20Dialer%20TransparentKey
 import React from 'react';
 import { SafeAreaView, View, Pressable, ImageBackground } from 'react-native';
 
 import {
   TextInput,
-  Passcode,
-  PasscodeKeyProps,
+  Dialer,
+  DialerKeyProps,
   Body
 } from '@nomada-sh/react-native-eyecandy';
 
@@ -269,7 +271,7 @@ const TransparentKey = ({
   isEmptyKey,
   onPressIn,
   onPressOut,
-}: PasscodeKeyProps) => {
+}: DialerKeyProps) => {
   return (
     <View
       style={{
@@ -322,7 +324,7 @@ export default function App() {
         value={value}
         onChangeText={setValue}
       />
-      <Passcode
+      <Dialer
         value={value}
         onChange={setValue}
         KeyComponent={TransparentKey}

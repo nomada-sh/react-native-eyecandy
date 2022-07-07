@@ -12,4 +12,4 @@ yarn add @nomada-sh/react-native-eyecandy
 
 ## Documentation
 
-Check out our dedicated [documentation](https://eyecandy.nomada.cloud/docs/components/actionsheet) page for info about this library, API reference and more.
+Check out our dedicated [documentation](https://eyecandy.nomada.cloud/docs/category/components) page for info about this library, API reference and more.
