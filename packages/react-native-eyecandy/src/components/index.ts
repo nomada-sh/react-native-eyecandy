@@ -81,8 +81,8 @@ export type { SwipeConfirmationProps } from './SwipeConfirmation';
 export { default as BottomSheet } from './BottomSheet';
 export type { BottomSheetProps } from './BottomSheet';
 
-export { default as DatePicker } from './DatePicker';
-export type { DatePickerProps } from './DatePicker';
+// export { default as DatePicker } from './DatePicker';
+// export type { DatePickerProps } from './DatePicker';
 
 export { default as RefreshControl } from './RefreshControl';
 export type { RefreshControlProps } from './RefreshControl';
@@ -93,11 +93,10 @@ export type { RadioGroupProps } from './RadioGroup';
 export { default as RadioGroupItem } from './RadioGroupItem';
 export type { RadioGroupItemProps } from './RadioGroupItem';
 
-export { default as Badge } from './Badge';
-export type { BadgeProps } from './Badge';
+export { Badge, BadgeProps } from './Badge';
 
-export { default as LineValueSelector } from './LineValueSelector';
-export type { LineValueSelectorProps } from './LineValueSelector';
+// export { default as LineValueSelector } from './LineValueSelector';
+// export type { LineValueSelectorProps } from './LineValueSelector';
 
 export { default as CheckList } from './CheckList';
 export type { CheckListProps } from './CheckList';
@@ -105,11 +104,11 @@ export type { CheckListProps } from './CheckList';
 export { default as CheckListOption } from './CheckListOption';
 export type { CheckListOptionProps } from './CheckListOption';
 
-export { default as CalendarStrip } from './CalendarStrip';
-export type { CalendarStripProps, CalendarStripHandle } from './CalendarStrip';
+// export { default as CalendarStrip } from './CalendarStrip';
+// export type { CalendarStripProps, CalendarStripHandle } from './CalendarStrip';
 
-export { default as WrappedPan } from './WrappedPan';
-export type { WrappedPanProps } from './WrappedPan';
+// export { default as WrappedPan } from './WrappedPan';
+// export type { WrappedPanProps } from './WrappedPan';
 
 export { default as ActionSheet } from './ActionSheet';
 export type { ActionSheetProps, ActionSheetOption } from './ActionSheet';
@@ -121,3 +120,7 @@ export { Rating, RatingProps } from './Rating';
 export { TextArea } from './TextArea';
 
 export { NPS, NPSProps } from './NPS';
+
+export { Row, RowProps } from './Row';
+
+export { Col, ColProps } from './Col';

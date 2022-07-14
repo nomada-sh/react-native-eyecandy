@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy-icons",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React Native Eyecandy Icons",
   "license": "MIT",
   "main": "lib/commonjs/index.js",

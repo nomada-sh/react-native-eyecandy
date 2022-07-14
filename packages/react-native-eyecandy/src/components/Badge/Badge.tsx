@@ -17,6 +17,7 @@ export interface BadgeProps extends ViewProps {
   badgeStyle?: ViewProps['style'];
   size?: number;
   anchorOrigin?: AnchorOrigin;
+  hidden?: boolean;
 }
 
 const DEFAULT_BADGE_PROPS: ViewProps = {};
@@ -26,7 +27,7 @@ const defaultAnchorOrigin: AnchorOrigin = {
   vertical: 'bottom',
 };
 
-function Badge({
+export function Badge({
   color = 'default',
   size = 18,
   style,
@@ -34,6 +35,7 @@ function Badge({
   badgeProps: initialBadgeProps = DEFAULT_BADGE_PROPS,
   badgeStyle,
   anchorOrigin = defaultAnchorOrigin,
+  hidden,
   ...props
 }: BadgeProps) {
   const colors = useColors(c => c.badge[color]);
@@ -65,7 +67,7 @@ function Badge({
   return (
     <View style={[styles.root, style]} {...props}>
       {children}
-      <View {...badgeProps} />
+      {hidden ? null : <View {...badgeProps} />}
     </View>
   );
 }
@@ -79,5 +81,3 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 });
-
-export default Badge;

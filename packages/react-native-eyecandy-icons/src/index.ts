@@ -39,3 +39,4 @@ export { default as Photo } from './Photo';
 export { default as Menu } from './Menu';
 export { default as Backspace } from './Backspace';
 export { default as StarFill } from './StarFill';
+export { default as Trash } from './Trash';

@@ -14,14 +14,12 @@ import BottomSheetSwipeConfirmation from '../BottomSheetSwipeConfirmation';
 import BottomSheets from '../BottomSheets';
 import ButtonBase from '../ButtonBase';
 import Buttons from '../Buttons';
-import Calendars from '../CalendarStrips';
 import Cards from '../Cards';
 import CheckLists from '../CheckLists';
 import CodeInputs from '../CodeInputs';
 import Forms from '../Forms';
 import Headings from '../Headings';
 import IconButtons from '../IconButtons';
-import LineValueSelectors from '../LineValueSelectors';
 import LinkButtons from '../LinkButtons';
 import Menus from '../Menus';
 import RadioButtons from '../RadioButtons';
@@ -38,7 +36,7 @@ import { useTheme } from '../shared/hooks';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
-const initialRouteName = 'Select';
+const initialRouteName = 'CalendarList';
 
 function HeaderLeft(props: any) {
   const toggleDrawer = () => {
@@ -79,7 +77,6 @@ export default function Drawer() {
             onValueChange={setDark}
           />
         ),
-        // headerShown: false,
         swipeEnabled: false,
       })}
     >
@@ -110,8 +107,6 @@ export default function Drawer() {
       <Screen name="ActionSheet" component={ActionSheets} />
       <Screen name="Menu" component={Menus} />
       <Screen name="CheckList" component={CheckLists} />
-      <Screen name="LineValueSelector" component={LineValueSelectors} />
-      <Screen name="CalendarStrip" component={Calendars} />
       <Screen name="Dialer" component={DialerScreen} />
       <Screen name="NPS" component={RatingScreen} />
       <Screen name="ThemeSwitch" component={ThemeSwitch} />

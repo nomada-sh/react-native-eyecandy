@@ -46,20 +46,27 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     const dayWidth = 60;
     const dayHorizontalMargin = 6;
 
+    /**
+     * How many days fit in width.
+     */
     const l = Math.round(width / dayWidth);
+    // Width of a single day.
     const wrappedDayWidth = dayWidth + 2 * dayHorizontalMargin;
+    // Width of a child.
     const wrappedDaysWidth = l * wrappedDayWidth;
 
     const offsetX = -2 * wrappedDaysWidth;
     const x = useSharedValue(0);
+    /**
+     * Number of current wraps.
+     */
     const [w, setW] = useState(0);
     const currentDateRef = useRef(startDate);
 
-    // !!C needs to be an odd number.
+    /**
+     * Children count (It needs to be an odd number).
+     */
     const C = 5;
-    // const L = C * l;
-
-    // const H = (w: number) => Math.floor(w / C);
 
     const calculateExactX = (x: number) => {
       'worklet';
@@ -123,14 +130,6 @@ const WrappedDays = React.forwardRef<WrappedDaysHandle, WrappedDaysProps>(
     };
 
     for (let f = 0; f < C; f++) {
-      // const calculateIndex = (index: number) => {
-      //   const li = f * l;
-      //   const wi = wraps - f;
-      //   const j = li + L * Math.floor((wi - H(wi)) / (C - 1));
-      //   const k = j + (index % l) - indexOffset;
-      //   return k;
-      // };
-
       const calculateIndex = (index: number) => {
         const fi = f - 2;
         const j = l * (W(w - fi) + fi);
