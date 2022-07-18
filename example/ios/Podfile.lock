@@ -74,7 +74,7 @@ PODS:
   - glog (0.3.5)
   - hermes-engine (0.9.0)
   - libevent (2.1.12)
-  - nomada-sh-react-native-eyecandy (2.1.18):
+  - nomada-sh-react-native-eyecandy (0.0.5):
     - React-Core
   - OpenSSL-Universal (1.1.180)
   - RCT-Folly (2021.06.28.00-v2):
@@ -292,9 +292,9 @@ PODS:
   - React-jsinspector (0.67.4)
   - React-logger (0.67.4):
     - glog
-  - react-native-image-picker (4.7.3):
+  - react-native-image-picker (4.8.3):
     - React-Core
-  - react-native-safe-area-context (4.2.2):
+  - react-native-safe-area-context (4.2.5):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
@@ -365,9 +365,7 @@ PODS:
     - React-jsi (= 0.67.4)
     - React-logger (= 0.67.4)
     - React-perflogger (= 0.67.4)
-  - RNCPicker (2.4.1):
-    - React-Core
-  - RNGestureHandler (2.3.2):
+  - RNGestureHandler (2.4.2):
     - React-Core
   - RNReactNativeHapticFeedback (1.13.1):
     - React-Core
@@ -402,8 +400,8 @@ PODS:
   - RNScreens (3.13.1):
     - React-Core
     - React-RCTImage
-  - RNSVG (12.3.0):
-    - React-Core
+  - RNSVG (12.1.1):
+    - React
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -437,7 +435,7 @@ DEPENDENCIES:
   - glog (from `../../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (~> 0.9.0)
   - libevent (~> 2.1.12)
-  - "nomada-sh-react-native-eyecandy (from `../node_modules/@nomada-sh/react-native-eyecandy`)"
+  - nomada-sh-react-native-eyecandy (from `../../packages/react-native-eyecandy`)
   - OpenSSL-Universal (= 1.1.180)
   - RCT-Folly (from `../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../../node_modules/react-native/Libraries/RCTRequired`)
@@ -468,7 +466,6 @@ DEPENDENCIES:
   - React-RCTVibration (from `../../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../../node_modules/react-native/ReactCommon`)
-  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - RNGestureHandler (from `../../node_modules/react-native-gesture-handler`)
   - RNReactNativeHapticFeedback (from `../../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../../node_modules/react-native-reanimated`)
@@ -506,7 +503,7 @@ EXTERNAL SOURCES:
   glog:
     :podspec: "../../node_modules/react-native/third-party-podspecs/glog.podspec"
   nomada-sh-react-native-eyecandy:
-    :path: "../node_modules/@nomada-sh/react-native-eyecandy"
+    :path: "../../packages/react-native-eyecandy"
   RCT-Folly:
     :podspec: "../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -561,8 +558,6 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../../node_modules/react-native/ReactCommon"
-  RNCPicker:
-    :path: "../node_modules/@react-native-picker/picker"
   RNGestureHandler:
     :path: "../../node_modules/react-native-gesture-handler"
   RNReactNativeHapticFeedback:
@@ -595,7 +590,7 @@ SPEC CHECKSUMS:
   glog: 85ecdd10ee8d8ec362ef519a6a45ff9aa27b2e85
   hermes-engine: bf7577d12ac6ccf53ab8b5af3c6ccf0dd8458c5c
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  nomada-sh-react-native-eyecandy: af3edba0a4107a58b2ba79c00fd774e2fb1517ad
+  nomada-sh-react-native-eyecandy: 1acaed36b336fbda7e4ff48c8591c4e5c26f4b34
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   RCT-Folly: 803a9cfd78114b2ec0f140cfa6fa2a6bafb2d685
   RCTRequired: 0aa6c1c27e1d65920df35ceea5341a5fe76bdb79
@@ -610,8 +605,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: cbdf37cebdc4f5d8b3d0bf5ccaa6147fd9de9f3d
   React-jsinspector: f4775ea9118cbe1f72b834f0f842baa7a99508d8
   React-logger: a1f028f6d8639a3f364ef80419e5e862e1115250
-  react-native-image-picker: 4e6008ad8c2321622affa2c85432a5ebd02d480c
-  react-native-safe-area-context: da2d11bd7df9bf7779e9bdc85081c141cfa544f4
+  react-native-image-picker: e95b4785b685cfc06609bc50ed6fb55b59990c99
+  react-native-safe-area-context: ebf8c413eb8b5f7c392a036a315eb7b46b96845f
   React-perflogger: 0afaf2f01a47fd0fc368a93bfbb5bd3b26db6e7f
   React-RCTActionSheet: 59f35c4029e0b532fc42114241a06e170b7431a2
   React-RCTAnimation: aae4f4bed122e78bdab72f7118d291d70a932ce2
@@ -624,12 +619,11 @@ SPEC CHECKSUMS:
   React-RCTVibration: 3b52a7dced19cdb025b4f88ab26ceb2d85f30ba2
   React-runtimeexecutor: a9d3c82ddf7ffdad9fbe6a81c6d6f8c06385464d
   ReactCommon: 07d0c460b9ba9af3eaf1b8f5abe7daaad28c9c4e
-  RNCPicker: abc646b53a3d28ccfa3232c927a0ca52e0cf024d
-  RNGestureHandler: 6e757e487a4834e7280e98e9bac66d2d9c575e9c
+  RNGestureHandler: 61628a2c859172551aa2100d3e73d1e57878392f
   RNReactNativeHapticFeedback: 4085973f5a38b40d3c6793a3ee5724773eae045e
   RNReanimated: 1326679461fa5d2399d54c18ca1432ba3e816b9e
   RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
-  RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
+  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   Yoga: d6b6a80659aa3e91aaba01d0012e7edcbedcbecd
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
