@@ -17,7 +17,7 @@ export default function useStyles({
   color = 'default',
   inputDefaultHorizontalPadding = 16,
   height = 56,
-  fullWidth = true,
+  fullWidth,
   error,
   focused,
   inputPaddingLeft,
@@ -54,6 +54,7 @@ export default function useStyles({
 
   return StyleSheet.create({
     container: {
+      flex: 1,
       width: fullWidth ? '100%' : undefined,
       backgroundColor,
       borderColor,

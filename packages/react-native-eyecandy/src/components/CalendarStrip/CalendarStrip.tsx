@@ -3,7 +3,7 @@ import { useWindowDimensions, View } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
-import Button from '../Button';
+import { Button } from '../Button';
 
 import WrappedDays, { WrappedDaysHandle } from './WrappedDays';
 import WrappedMonths, { WrappedMonthsHandle } from './WrappedMonths';

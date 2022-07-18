@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Search, Filter } from '@nomada-sh/react-native-eyecandy-icons';
 
-import Button from '../Button';
+import { Button } from '../Button';
 import TextInput, { TextInputProps } from '../TextInput';
 
 export interface SearchBarProps

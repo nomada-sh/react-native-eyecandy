@@ -14,7 +14,7 @@ export default function useStyles({
   variant = 'default',
   height = 56,
   disabled,
-  fullwidth = true,
+  fullwidth = false,
   transparent = false,
   outlined = false,
 }: {
@@ -61,8 +61,10 @@ export default function useStyles({
     pressable: {
       flex: 1,
       borderRadius,
+      flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
+      paddingHorizontal: 16,
     },
     ripple: {
       color: rippleColor,

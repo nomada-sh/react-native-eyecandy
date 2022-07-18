@@ -1,10 +1,10 @@
 import React from 'react';
 import { ScrollView, SafeAreaView, View } from 'react-native';
 
-import { Body, TextInput } from '@nomada-sh/react-native-eyecandy';
+import { Body, Row, TextInput } from '@nomada-sh/react-native-eyecandy';
 import { Lock, Mail, User } from '@nomada-sh/react-native-eyecandy-icons';
 
-export default function TextInputs() {
+export function TextInputScreen() {
   const [name, setName] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -22,6 +22,10 @@ export default function TextInputs() {
         }}
         keyboardShouldPersistTaps="always"
       >
+        <Row marginBottom={20}>
+          <TextInput />
+          <TextInput />
+        </Row>
         <TextInput
           required
           iconLeft={User}

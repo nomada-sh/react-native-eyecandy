@@ -52,7 +52,7 @@ export interface ButtonBaseProps extends PressableProps {
   marginBottom?: number;
 }
 
-function ButtonBase({
+export function ButtonBase({
   children,
   style,
   pressableStyle,
@@ -167,5 +167,3 @@ function ButtonBase({
     </View>
   );
 }
-
-export default ButtonBase;
