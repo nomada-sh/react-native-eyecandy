@@ -24,6 +24,7 @@ function ContentWrapper({
   testID,
   disableAnimations,
   setModalInvisible,
+  dragOutEnabled,
 }: {
   children?: React.ReactNode;
   visible?: boolean;
@@ -35,6 +36,7 @@ function ContentWrapper({
   testID?: string;
   disableAnimations?: boolean;
   setModalInvisible: () => void;
+  dragOutEnabled?: boolean;
 }) {
   return (
     <View
@@ -62,6 +64,7 @@ function ContentWrapper({
           visible={visible}
           onDismiss={onClose}
           onClose={setModalInvisible}
+          dragOutEnabled={dragOutEnabled}
         >
           {children}
         </Content>
@@ -82,9 +85,10 @@ export interface BottomSheetProps {
   handleStyle?: StyleProp<ViewStyle>;
   testID?: string;
   disableAnimations?: boolean;
+  dragOutEnabled?: boolean;
 }
 
-function BottomSheet({
+export function BottomSheet({
   children,
   visible = false,
   height,
@@ -94,6 +98,7 @@ function BottomSheet({
   handleStyle,
   testID,
   disableAnimations,
+  dragOutEnabled,
 }: BottomSheetProps) {
   const [modalVisible, setModalVisible] = useState<boolean | undefined>(
     visible,
@@ -126,6 +131,7 @@ function BottomSheet({
         testID={testID}
         disableAnimations={disableAnimations}
         setModalInvisible={setModalInvisible}
+        dragOutEnabled={dragOutEnabled}
       >
         {children}
       </ContentWrapperWithHoc>
@@ -143,5 +149,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-export default BottomSheet;

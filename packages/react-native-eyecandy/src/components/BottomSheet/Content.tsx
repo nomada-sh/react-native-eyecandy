@@ -28,6 +28,7 @@ export interface ContentProps {
   handleStyle?: StyleProp<ViewStyle>;
   testID?: string;
   disableAnimations?: boolean;
+  dragOutEnabled?: boolean;
 }
 
 const clamp = (value: number, lowerBound: number, upperBound: number) => {
@@ -51,6 +52,7 @@ export default function Content({
   handleStyle,
   testID,
   disableAnimations,
+  dragOutEnabled,
 }: ContentProps) {
   const { background, divider } = useColors(c => ({
     background: c.background.default,
@@ -59,7 +61,8 @@ export default function Content({
 
   const fullHeight = 2 * height + handleHeight;
 
-  const topY = -height;
+  // const topY = -height;
+  const topY = dragOutEnabled ? -height : 0;
   const bottomY = height + handleHeight;
 
   const y = useSharedValue(bottomY);

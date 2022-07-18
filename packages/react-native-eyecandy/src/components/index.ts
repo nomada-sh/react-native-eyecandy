@@ -76,8 +76,7 @@ export {
 export { default as SwipeConfirmation } from './SwipeConfirmation';
 export type { SwipeConfirmationProps } from './SwipeConfirmation';
 
-export { default as BottomSheet } from './BottomSheet';
-export type { BottomSheetProps } from './BottomSheet';
+export { BottomSheet, BottomSheetProps } from './BottomSheet';
 
 // export { default as DatePicker } from './DatePicker';
 // export type { DatePickerProps } from './DatePicker';
