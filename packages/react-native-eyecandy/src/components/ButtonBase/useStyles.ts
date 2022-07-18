@@ -57,6 +57,7 @@ export default function useStyles({
       borderWidth,
       borderColor,
       backgroundColor: backgroundColor.string(),
+      flex: 1,
     },
     pressable: {
       flex: 1,

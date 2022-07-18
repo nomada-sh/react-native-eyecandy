@@ -49,6 +49,7 @@ function IconButton({
         {
           width: size,
           height: size,
+          flex: 0,
         },
         style,
       ]}
