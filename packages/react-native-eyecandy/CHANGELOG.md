@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.8
+
+### Patch Changes
+
+- Fixed IconButton not appearing on web.
+
 ## 0.0.7
 
 ### Patch Changes
