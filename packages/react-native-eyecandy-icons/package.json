@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy-icons",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "React Native Eyecandy Icons",
   "license": "MIT",
   "main": "lib/commonjs/index.js",
@@ -49,6 +49,6 @@
     "react-native-svg": "12.1.1"
   },
   "dependencies": {
-    "@nomada-sh/react-native-eyecandy-theme": "^0.0.2"
+    "@nomada-sh/react-native-eyecandy-theme": "^0.0.3"
   }
 }

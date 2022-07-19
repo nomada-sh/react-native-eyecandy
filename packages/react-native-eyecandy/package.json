@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "React Native Eyecandy",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -88,8 +88,8 @@
     "@react-native-masked-view/masked-view": "^0.2.7"
   },
   "dependencies": {
-    "@nomada-sh/react-native-eyecandy-icons": "^0.0.4",
-    "@nomada-sh/react-native-eyecandy-theme": "^0.0.2",
+    "@nomada-sh/react-native-eyecandy-icons": "^0.0.5",
+    "@nomada-sh/react-native-eyecandy-theme": "^0.0.3",
     "calendar-base": "^1.1.1",
     "color": "^4.2.0",
     "date-fns": "^2.28.0",
