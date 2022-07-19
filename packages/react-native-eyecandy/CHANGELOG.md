@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.7
+
+### Patch Changes
+
+- Added web stub for MaskedView.
+
 ## 0.0.6
 
 ### Patch Changes
