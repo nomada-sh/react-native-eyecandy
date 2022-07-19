@@ -34,7 +34,7 @@ export default function BottomSheets() {
             padding: 20,
           }}
         >
-          <Button onPress={() => setVisible(true)} text="Show Bottom Sheet" />
+          <Button onPress={() => setVisible(true)}>Show Bottom Sheet</Button>
           <BottomSheet
             visible={visible}
             height={160}

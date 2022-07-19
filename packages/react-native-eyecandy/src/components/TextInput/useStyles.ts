@@ -26,6 +26,7 @@ export default function useStyles({
   removeDefaultRightPadding,
   marginBottom,
   marginTop,
+  flex,
 }: UseStylesProps) {
   const colorChoice: ThemeInputColorChoices = error ? 'error' : color;
 
@@ -54,7 +55,7 @@ export default function useStyles({
 
   return StyleSheet.create({
     container: {
-      flex: 1,
+      flex,
       width: fullWidth ? '100%' : undefined,
       backgroundColor,
       borderColor,

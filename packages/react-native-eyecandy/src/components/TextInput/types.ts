@@ -30,6 +30,7 @@ export interface TextInputStyleProps {
   marginTop?: number;
   fullWidth?: boolean;
   height?: number;
+  flex?: number;
 }
 
 export interface TextInputSecureTextEntryProps {

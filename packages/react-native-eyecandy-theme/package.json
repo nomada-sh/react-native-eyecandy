@@ -43,8 +43,8 @@
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
-    "@types/react": "^17.0.2",
-    "@types/react-native": "^0.67.4",
+    "@types/react": "^18.0.15",
+    "@types/react-native": "^0.69.3",
     "jest": "^27.4.7",
     "react-native-builder-bob": "^0.18.2",
     "react": "^17.0.2",

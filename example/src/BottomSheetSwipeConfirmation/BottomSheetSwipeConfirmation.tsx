@@ -17,10 +17,9 @@ export default function () {
           padding: 20,
         }}
       >
-        <Button
-          onPress={() => setVisible(true)}
-          text="Show swipe confirmation"
-        />
+        <Button onPress={() => setVisible(true)}>
+          Show swipe confirmation
+        </Button>
         <SwipeConfirmation
           title="Swipe to confirm"
           visible={visible}

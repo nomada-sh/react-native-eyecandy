@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Alert, SafeAreaView, Platform } from 'react-native';
+import { ScrollView, Alert, SafeAreaView } from 'react-native';
 
 import {
   Button,
@@ -56,11 +56,9 @@ export default function ActionSheets() {
           padding: 20,
         }}
       >
-        <Button
-          marginBottom={20}
-          onPress={() => setVisibleChangePicture(true)}
-          text="Change your profile picture"
-        />
+        <Button marginBottom={20} onPress={() => setVisibleChangePicture(true)}>
+          Change your profile picture
+        </Button>
         <ActionSheet
           title="Change your profile picture"
           message="Select a new profile picture"
@@ -74,11 +72,9 @@ export default function ActionSheets() {
           }}
           showCancelIcon
         />
-        <Button
-          marginBottom={20}
-          onPress={() => setVisibleShare(true)}
-          text="Share document"
-        />
+        <Button marginBottom={20} onPress={() => setVisibleShare(true)}>
+          Share document
+        </Button>
         <ActionSheet
           options={shareDocumentOptions}
           visible={visibleShare}
@@ -90,11 +86,9 @@ export default function ActionSheets() {
           }}
           showCancelIcon
         />
-        <Button
-          marginBottom={20}
-          onPress={() => setNativeVisible(true)}
-          text="Share document (Native)"
-        />
+        <Button marginBottom={20} onPress={() => setNativeVisible(true)}>
+          Share document (Native)
+        </Button>
         <ActionSheet
           native
           title="Share document"
