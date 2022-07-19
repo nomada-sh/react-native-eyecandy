@@ -38,6 +38,7 @@ const processNode = (node, parent) => {
           'react-native-svg',
           'react-native-reanimated',
           'react-native-screens',
+          "@react-native-masked-view/masked-view"
         ].join(',');
       const platform = params.platform || 'web';
       const supportedPlatforms = params.supportedPlatforms || 'ios,android,web';

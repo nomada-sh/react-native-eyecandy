@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { StyleProp, View, StyleSheet, ViewStyle } from 'react-native';
+import React, { Suspense, useEffect, useState } from 'react';
+import { StyleProp, View, StyleSheet, ViewStyle, Platform } from 'react-native';
 
-import MaskedView from '@react-native-masked-view/masked-view';
+// import MaskedView from '@react-native-masked-view/masked-view';
 import Animated, {
   runOnJS,
   useAnimatedReaction,
@@ -10,7 +10,17 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { Body } from '../../typography';
 import { Button, ButtonProps, ButtonStyles } from '../Button';
+
+const MaskedViewWeb = (props: any) => {
+  return <View {...props} />;
+};
+
+const MaskedView =
+  Platform.OS === 'android' || Platform.OS === 'ios'
+    ? React.lazy(() => import('@react-native-masked-view/masked-view'))
+    : MaskedViewWeb;
 
 export interface ProgressButtonStyles {
   container?: StyleProp<ViewStyle>;
@@ -61,66 +71,71 @@ export function ProgressButton({
     [],
   );
 
+  const ghostButton = (
+    <Button
+      height={height}
+      style={{
+        opacity: 0.5,
+      }}
+      disabled
+      hideDisabledOverlay
+      styles={style?.ghostButton}
+      {...props}
+    />
+  );
+
+  // TODO: Define fallback for web.
   return (
-    <View
-      style={[
-        {
-          marginBottom,
-          marginTop,
-          height,
-          width: fullwidth ? '100%' : undefined,
-          flex: 1,
-        },
-        style?.container,
-      ]}
-    >
-      {ghostButtonMounted ? (
-        <Button
-          height={height}
-          style={{
-            opacity: 0.5,
-          }}
-          disabled
-          hideDisabledOverlay
-          styles={style?.ghostButton}
-          {...props}
-        />
-      ) : null}
-      <MaskedView
+    <Suspense fallback={<Body>Loading ProgressButton...</Body>}>
+      <View
         style={[
-          StyleSheet.absoluteFill,
           {
+            marginBottom,
+            marginTop,
+            height,
+            width: fullwidth ? '100%' : undefined,
             flex: 1,
           },
+          style?.container,
         ]}
-        androidRenderingMode="software"
-        maskElement={
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: 'transparent',
-            }}
-          >
-            <Animated.View
-              style={[
-                {
-                  height: '100%',
-                  backgroundColor: 'black',
-                },
-                animatedStyle,
-              ]}
-            />
-          </View>
-        }
       >
-        <Button
-          height={height}
-          hideDisabledOverlay={hideDisabledOverlay}
-          disabled={disabled}
-          styles={style?.button}
-          {...props}
-        />
-      </MaskedView>
-    </View>
+        {ghostButtonMounted ? ghostButton : null}
+        <MaskedView
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              flex: 1,
+            },
+          ]}
+          androidRenderingMode="software"
+          maskElement={
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: 'transparent',
+              }}
+            >
+              <Animated.View
+                style={[
+                  {
+                    height: '100%',
+                    backgroundColor: 'black',
+                  },
+                  animatedStyle,
+                ]}
+              />
+            </View>
+          }
+        >
+          <Button
+            height={height}
+            hideDisabledOverlay={hideDisabledOverlay}
+            disabled={disabled}
+            styles={style?.button}
+            {...props}
+          />
+        </MaskedView>
+      </View>
+    </Suspense>
   );
 }

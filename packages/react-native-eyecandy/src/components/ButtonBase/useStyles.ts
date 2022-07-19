@@ -37,6 +37,7 @@ export default function useStyles({
   const borderRadius = variant === 'rounded' ? height / 2 : 12;
 
   let backgroundColor = Color(inverse ? foreground : background).rgb();
+  let foregroundColor = Color(inverse ? background : foreground).rgb();
 
   const rippleColor = getRippleColor(backgroundColor).string();
 
@@ -48,7 +49,9 @@ export default function useStyles({
     backgroundColor = backgroundColor.alpha(0);
   }
 
-  if (transparent) backgroundColor = backgroundColor.alpha(0);
+  if (transparent) {
+    backgroundColor = backgroundColor.alpha(0);
+  }
 
   return StyleSheet.create({
     container: {
@@ -94,7 +97,7 @@ export default function useStyles({
       justifyContent: 'center',
     },
     loading: {
-      color: inverse ? background : foreground,
+      color: foregroundColor.string(),
     },
   });
 }

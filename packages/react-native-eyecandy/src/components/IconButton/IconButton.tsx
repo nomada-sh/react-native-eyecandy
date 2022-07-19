@@ -24,16 +24,17 @@ function IconButton({
   iconStyle,
   variant = 'rounded',
   inverse,
+  transparent,
   ...props
 }: IconButtonProps) {
   const { foreground, background } = useColors(c => c.button[color]);
 
   const iconSize = iconSizeProp ?? Math.round(size * 0.4);
-  const iconColor = iconColorProp
-    ? iconColorProp
-    : inverse
-    ? background
-    : foreground;
+  let iconColor = iconColorProp;
+
+  if (iconColor === undefined) {
+    iconColor = inverse ? background : foreground;
+  }
 
   const children = Icon ? (
     React.isValidElement(Icon) ? (
@@ -57,6 +58,7 @@ function IconButton({
       inverse={inverse}
       height={size}
       variant={variant}
+      transparent={transparent}
       {...props}
     >
       {children}
