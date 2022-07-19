@@ -52,6 +52,7 @@ export interface ButtonBaseProps extends PressableProps {
   disableHapticFeedback?: boolean;
   marginTop?: number;
   marginBottom?: number;
+  flex?: number;
 }
 
 export function ButtonBase({
@@ -75,6 +76,7 @@ export function ButtonBase({
   disableHapticFeedback = false,
   marginBottom,
   marginTop,
+  flex,
   ...props
 }: ButtonBaseProps) {
   const animated = useRef(new Animated.Value(0)).current;
@@ -89,6 +91,7 @@ export function ButtonBase({
     fullwidth,
     transparent,
     outlined,
+    flex,
   });
 
   const getButtonStyle = usePressableStyles([

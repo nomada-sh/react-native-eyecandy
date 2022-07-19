@@ -17,6 +17,7 @@ export default function useStyles({
   fullwidth = false,
   transparent = false,
   outlined = false,
+  flex,
 }: {
   color?: ThemeButtonColorChoices;
   inverse?: boolean;
@@ -26,6 +27,7 @@ export default function useStyles({
   fullwidth?: boolean;
   transparent?: boolean;
   outlined?: boolean;
+  flex?: number;
 }) {
   const colors = useColors(c => c.button);
   const { background, foreground } = colors[color];
@@ -50,14 +52,14 @@ export default function useStyles({
 
   return StyleSheet.create({
     container: {
+      flex,
+      width: fullwidth ? '100%' : undefined,
       height,
       borderRadius,
       overflow: 'hidden',
-      width: fullwidth ? '100%' : undefined,
       borderWidth,
       borderColor,
       backgroundColor: backgroundColor.string(),
-      flex: 1,
     },
     pressable: {
       flex: 1,
