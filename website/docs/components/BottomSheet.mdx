@@ -42,7 +42,9 @@ export default function App() {
         alignItems: 'center',
       }}
     >
-      <Button onPress={() => setVisible(true)} text="Show Bottom Sheet" />
+      <Button onPress={() => setVisible(true)}>
+        Show Bottom Sheet
+      </Button>
       <BottomSheet
         visible={visible}
         height={160}

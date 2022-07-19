@@ -74,8 +74,9 @@ export default function App() {
         <Button
           marginBottom={20}
           onPress={() => setVisibleChangePicture(true)}
-          text="Change your profile picture"
-        />
+        >
+          Change your profile picture
+        </Button>
         <ActionSheet
           title="Change your profile picture"
           message="Select a new profile picture"
@@ -93,8 +94,9 @@ export default function App() {
         <Button
           marginBottom={20}
           onPress={() => setVisibleShare(true)}
-          text="Share document"
-        />
+        >
+          Share document
+        </Button>
         <ActionSheet
           options={shareDocumentOptions}
           visible={visibleShare}
@@ -239,8 +241,9 @@ export default function App() {
         <Button
           marginBottom={20}
           onPress={() => setVisible(true)}
-          text="Share document"
-        />
+        >
+          Share document
+        </Button>
         <ActionSheet
           native
           options={options}
