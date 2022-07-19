@@ -46,6 +46,9 @@ test('createColors', () => {
     default: buttonColor,
     primary: buttonColor,
     secondary: buttonColor,
+    danger: buttonColor,
+    warning: buttonColor,
+    success: buttonColor,
   });
 
   const textColor: ThemeTextColor = {
@@ -129,6 +132,18 @@ test('createColors button', () => {
       background: expect.any(String),
       foreground: expect.any(String),
     },
+    success: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    danger: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    warning: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
   });
 });
 
@@ -159,6 +174,18 @@ test('createColors button colors function', () => {
       foreground: expect.any(String),
     },
     secondary: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    success: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    danger: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    warning: {
       background: expect.any(String),
       foreground: expect.any(String),
     },
@@ -193,6 +220,18 @@ test('createColors button dark', () => {
       foreground: expect.any(String),
     },
     secondary: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    success: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    danger: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    warning: {
       background: expect.any(String),
       foreground: expect.any(String),
     },
@@ -237,6 +276,18 @@ test('createColors button palette', () => {
       background: expect.any(String),
       foreground: expect.any(String),
     },
+    success: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    danger: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    warning: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
   });
 });
 
@@ -265,6 +316,18 @@ test('createColors button undefined use default colors', () => {
       foreground: expect.any(String),
     },
     secondary: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    success: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    danger: {
+      background: expect.any(String),
+      foreground: expect.any(String),
+    },
+    warning: {
       background: expect.any(String),
       foreground: expect.any(String),
     },
