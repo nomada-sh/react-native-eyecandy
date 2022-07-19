@@ -71,10 +71,11 @@ function SearchBar({
           fullwidth={false}
           color="primary"
           inverse
-          text={cancelButtonText}
           pressableStyle={styles.cancelButton}
           onPress={() => onPressCancel?.()}
-        />
+        >
+          {cancelButtonText}
+        </Button>
       ) : null}
     </View>
   );

@@ -132,20 +132,22 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
               height: 40,
               marginHorizontal: 5,
             }}
-            text="Today"
             fullwidth={false}
             onPress={jumpToToday}
-          />
+          >
+            Today
+          </Button>
           <Button
             variant="rounded"
             style={{
               flex: 1,
               height: 40,
             }}
-            text="Selected"
             fullwidth={false}
             onPress={jumpToSelected}
-          />
+          >
+            "Selected"
+          </Button>
         </View>
       </View>
     );

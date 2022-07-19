@@ -63,7 +63,8 @@
     "react-native-haptic-feedback": "1.x",
     "react-native-image-picker": "4.x",
     "react-native-reanimated": "2.x",
-    "react-native-svg": "12.x"
+    "react-native-svg": "12.x",
+    "@react-native-masked-view/masked-view": "0.2.x"
   },
   "devDependencies": {
     "@react-native-picker/picker": "^2.4.1",
@@ -83,7 +84,8 @@
     "react-native-image-picker": "^4.7.3",
     "react-native-reanimated": "2.3.1",
     "react-native-svg": "12.1.1",
-    "react-test-renderer": "^17.0.2"
+    "react-test-renderer": "^17.0.2",
+    "@react-native-masked-view/masked-view": "^0.2.7"
   },
   "dependencies": {
     "@nomada-sh/react-native-eyecandy-icons": "^0.0.4",

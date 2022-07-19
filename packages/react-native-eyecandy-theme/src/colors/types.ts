@@ -62,7 +62,13 @@ export type ThemeBackgroundColors = {
  * Button
  */
 
-export type ThemeButtonColorChoices = 'default' | 'primary' | 'secondary';
+export type ThemeButtonColorChoices =
+  | 'default'
+  | 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'warning'
+  | 'success';
 
 export type ThemeButtonColor = {
   background: string;

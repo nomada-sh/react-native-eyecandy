@@ -17,6 +17,18 @@ const createButtonColors: GetThemeColors<ThemeButtonColors> = options => {
       background: palette.secondary['500'],
       foreground: palette.secondary['100'],
     },
+    danger: {
+      background: palette.error['200'],
+      foreground: palette.grey[100],
+    },
+    warning: {
+      background: palette.warning['200'],
+      foreground: palette.grey[100],
+    },
+    success: {
+      background: palette.success['200'],
+      foreground: palette.grey[100],
+    },
   };
 
   return mergeColors({
