@@ -3,7 +3,7 @@ import { useWindowDimensions, View } from 'react-native';
 
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
-import Button from '../Button';
+import { Button } from '../Button';
 
 import WrappedDays, { WrappedDaysHandle } from './WrappedDays';
 import WrappedMonths, { WrappedMonthsHandle } from './WrappedMonths';
@@ -132,20 +132,22 @@ const CalendarStrip = React.forwardRef<CalendarStripHandle, CalendarStripProps>(
               height: 40,
               marginHorizontal: 5,
             }}
-            text="Today"
             fullwidth={false}
             onPress={jumpToToday}
-          />
+          >
+            Today
+          </Button>
           <Button
             variant="rounded"
             style={{
               flex: 1,
               height: 40,
             }}
-            text="Selected"
             fullwidth={false}
             onPress={jumpToSelected}
-          />
+          >
+            "Selected"
+          </Button>
         </View>
       </View>
     );

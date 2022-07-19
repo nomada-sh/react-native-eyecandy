@@ -5,7 +5,7 @@ import { Backspace } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
 import { Body } from '../../typography';
-import ButtonBase from '../ButtonBase';
+import { ButtonBase } from '../ButtonBase';
 
 // TODO: Make this work.
 // const AnimatedBackspace = Animated.createAnimatedComponent(Backspace);

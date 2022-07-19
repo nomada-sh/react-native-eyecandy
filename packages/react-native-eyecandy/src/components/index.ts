@@ -1,8 +1,8 @@
-export { default as ButtonBase } from './ButtonBase';
-export type { ButtonBaseProps } from './ButtonBase';
+export { ButtonBase, ButtonBaseProps } from './ButtonBase';
 
-export { default as Button } from './Button';
-export type { ButtonProps } from './Button';
+export { Button, ButtonProps } from './Button';
+
+export { ProgressButton, ProgressButtonProps } from './ProgressButton';
 
 export { default as LinkButton } from './LinkButton';
 export type { LinkButtonProps } from './LinkButton';
@@ -78,8 +78,7 @@ export {
 export { default as SwipeConfirmation } from './SwipeConfirmation';
 export type { SwipeConfirmationProps } from './SwipeConfirmation';
 
-export { default as BottomSheet } from './BottomSheet';
-export type { BottomSheetProps } from './BottomSheet';
+export { BottomSheet, BottomSheetProps } from './BottomSheet';
 
 // export { default as DatePicker } from './DatePicker';
 // export type { DatePickerProps } from './DatePicker';

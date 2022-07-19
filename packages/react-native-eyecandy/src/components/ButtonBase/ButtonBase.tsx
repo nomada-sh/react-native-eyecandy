@@ -18,6 +18,17 @@ import { usePressableStyles } from '../../hooks';
 
 import useStyles from './useStyles';
 
+export interface ButtonBaseStyles {
+  /**
+   * Container view style (Applied before style).
+   */
+  container?: StyleProp<ViewStyle>;
+  /**
+   * Pressable style (Applied before pressable style).
+   */
+  pressable?: PressableProps['style'];
+}
+
 export interface ButtonBaseProps extends PressableProps {
   children?: ReactNode;
   /**
@@ -30,16 +41,7 @@ export interface ButtonBaseProps extends PressableProps {
   pressableStyle?: PressableProps['style'];
   inverse?: boolean;
   color?: ThemeButtonColorChoices;
-  styles?: {
-    /**
-     * Container view style (Applied before style).
-     */
-    container?: StyleProp<ViewStyle>;
-    /**
-     * Pressable style (Applied before pressable style).
-     */
-    pressable?: PressableProps['style'];
-  };
+  styles?: ButtonBaseStyles;
   variant?: 'default' | 'rounded' | 'squared';
   height?: number;
   fullwidth?: boolean;
@@ -52,7 +54,7 @@ export interface ButtonBaseProps extends PressableProps {
   marginBottom?: number;
 }
 
-function ButtonBase({
+export function ButtonBase({
   children,
   style,
   pressableStyle,
@@ -167,5 +169,3 @@ function ButtonBase({
     </View>
   );
 }
-
-export default ButtonBase;

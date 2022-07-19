@@ -9,7 +9,7 @@ import { useTheme, useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
 import { usePressableStyles } from '../../hooks';
 import { Body } from '../../typography';
-import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
+import { ButtonBase, ButtonBaseProps } from '../ButtonBase';
 
 export interface LinkButtonProps extends ButtonBaseProps {
   icon?: React.ComponentType<IconProps> | React.ReactElement<any>;

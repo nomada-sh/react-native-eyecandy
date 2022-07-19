@@ -4,7 +4,7 @@ import type { StyleProp, ViewStyle } from 'react-native';
 import { IconProps } from '@nomada-sh/react-native-eyecandy-icons';
 import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
 
-import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
+import { ButtonBase, ButtonBaseProps } from '../ButtonBase';
 
 export interface IconButtonProps extends ButtonBaseProps {
   icon?: React.ComponentType<IconProps> | React.ReactElement<any> | null;
@@ -49,6 +49,7 @@ function IconButton({
         {
           width: size,
           height: size,
+          flex: 0,
         },
         style,
       ]}

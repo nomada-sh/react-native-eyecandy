@@ -13,7 +13,6 @@ import Body from '../Body';
 import BottomSheetSwipeConfirmation from '../BottomSheetSwipeConfirmation';
 import BottomSheets from '../BottomSheets';
 import ButtonBase from '../ButtonBase';
-import Buttons from '../Buttons';
 import Cards from '../Cards';
 import CheckLists from '../CheckLists';
 import CodeInputs from '../CodeInputs';
@@ -26,17 +25,19 @@ import RadioButtons from '../RadioButtons';
 import RadioGroups from '../RadioGroups';
 import SwipeButtons from '../SwipeButtons';
 import Switchs from '../Switchs';
-import TextInputs from '../TextInputs';
 import Texts from '../Texts';
 import ThemeSwitch from '../ThemeSwitch';
+import { ButtonScreen } from '../screens/ButtonScreen';
 import { DialerScreen } from '../screens/DialerScreen';
+import { ProgressButtonScreen } from '../screens/ProgressButtonScreen';
 import { RatingScreen } from '../screens/RatingScreen';
 import { SelectScreen } from '../screens/SelectScreen';
+import { TextInputScreen } from '../screens/TextInputScreen';
 import { useTheme } from '../shared/hooks';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
-const initialRouteName = 'CalendarList';
+const initialRouteName = 'ProgressButton';
 
 function HeaderLeft(props: any) {
   const toggleDrawer = () => {
@@ -80,8 +81,9 @@ export default function Drawer() {
         swipeEnabled: false,
       })}
     >
-      <Screen name="Button" component={Buttons} />
+      <Screen name="Button" component={ButtonScreen} />
       <Screen name="ButtonBase" component={ButtonBase} />
+      <Screen name="ProgressButton" component={ProgressButtonScreen} />
       <Screen name="IconButton" component={IconButtons} />
       <Screen name="LinkButton" component={LinkButtons} />
       <Screen name="RadioButton" component={RadioButtons} />
@@ -89,7 +91,7 @@ export default function Drawer() {
       <Screen name="Switch" component={Switchs} />
       <Screen name="SwipeButton" component={SwipeButtons} />
       <Screen name="Badge" component={Badges} />
-      <Screen name="TextInput" component={TextInputs} />
+      <Screen name="TextInput" component={TextInputScreen} />
       <Screen name="CodeInput" component={CodeInputs} />
       <Screen name="Select" component={SelectScreen} />
       <Screen name="Forms" component={Forms} />

@@ -7,7 +7,7 @@ import Color from 'color';
 
 import { ActionSheetAndroid } from '../../modules';
 import { Body } from '../../typography';
-import BottomSheet from '../BottomSheet';
+import { BottomSheet } from '../BottomSheet';
 import Menu from '../Menu';
 import MenuItemBase from '../MenuItemBase';
 
