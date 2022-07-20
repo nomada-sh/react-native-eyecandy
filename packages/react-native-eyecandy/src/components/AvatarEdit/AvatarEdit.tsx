@@ -122,7 +122,6 @@ function AvatarEdit({
         onPress={onPress}
       />
       <ActionSheet
-        native
         visible={visible}
         onClose={() => setVisible(false)}
         onPressAction={onPressAction}

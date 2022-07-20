@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy-theme",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React Native Eyecandy Theme",
   "license": "MIT",
   "main": "lib/commonjs/index.js",
@@ -46,9 +46,8 @@
     "@types/react": "^18.0.15",
     "@types/react-native": "^0.69.3",
     "jest": "^27.4.7",
-    "react-native-builder-bob": "^0.18.2",
     "react": "^17.0.2",
-    "react-native": "^0.67.4"
-  },
-  "dependencies": {}
+    "react-native": "^0.67.4",
+    "react-native-builder-bob": "^0.18.2"
+  }
 }

@@ -12,12 +12,14 @@ import {
   ThemeTextWeights,
 } from '@nomada-sh/react-native-eyecandy-theme';
 import Color from 'color';
+import { LiteralUnion } from 'type-fest/source/literal-union';
+
 export interface TextProps extends TextBaseProps {
   weight?: ThemeTextWeights;
   size?: TextStyle['fontSize'];
   align?: TextStyle['textAlign'];
   contrast?: boolean;
-  color?: ThemeTextColorsChoices | string;
+  color?: LiteralUnion<ThemeTextColorsChoices, string>;
   marginTop?: number;
   marginBottom?: number;
 }

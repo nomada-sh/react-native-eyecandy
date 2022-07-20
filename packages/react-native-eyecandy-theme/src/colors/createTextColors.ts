@@ -13,13 +13,21 @@ const createTextColors: GetThemeColors<ThemeTextColors> = options => {
       normal: palette.primary[500],
       contrast: palette.primary[100],
     },
+    greyout: {
+      normal: palette.grey[dark ? 400 : 500],
+      contrast: palette.grey[dark ? 500 : 400],
+    },
     error: {
       normal: palette.error[200],
       contrast: palette.grey[100],
     },
-    greyout: {
-      normal: palette.grey[dark ? 400 : 500],
-      contrast: palette.grey[dark ? 500 : 400],
+    warning: {
+      normal: palette.warning[200],
+      contrast: palette.grey[100],
+    },
+    success: {
+      normal: palette.success[200],
+      contrast: palette.grey[100],
     },
   };
 

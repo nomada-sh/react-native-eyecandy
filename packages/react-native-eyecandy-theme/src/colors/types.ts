@@ -123,6 +123,8 @@ export type ThemeTextColorsChoices =
   | 'default'
   | 'primary'
   | 'error'
+  | 'warning'
+  | 'success'
   | 'greyout';
 
 export type ThemeTextColor = {

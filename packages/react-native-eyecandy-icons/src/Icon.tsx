@@ -7,15 +7,16 @@ import {
   isThemeTextColorsChoices,
 } from '@nomada-sh/react-native-eyecandy-theme';
 import Svg from 'react-native-svg';
+import { LiteralUnion } from 'type-fest/source/literal-union';
 
 export interface IconProps {
-  size?: number;
-  color?: ThemeTextColorsChoices | string;
+  color?: LiteralUnion<ThemeTextColorsChoices, string>;
   filled?: boolean;
   stroke?: string;
   fill?: string;
   children?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  size?: number;
 }
 
 export default function Icon({

@@ -61,6 +61,8 @@ test('createColors', () => {
     primary: textColor,
     error: textColor,
     greyout: textColor,
+    warning: textColor,
+    success: textColor,
   });
 
   const inputColor: ThemeInputColor = {

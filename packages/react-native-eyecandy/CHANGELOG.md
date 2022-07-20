@@ -1,5 +1,14 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.9
+
+### Patch Changes
+
+- Fixed Text `color` prop literal string union autocomplete.
+- Updated dependencies
+  - @nomada-sh/react-native-eyecandy-icons@0.0.6
+  - @nomada-sh/react-native-eyecandy-theme@0.0.4
+
 ## 0.0.8
 
 ### Patch Changes
