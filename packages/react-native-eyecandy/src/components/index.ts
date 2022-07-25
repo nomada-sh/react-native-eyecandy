@@ -45,8 +45,12 @@ export type { SearchBarProps } from './SearchBar';
 export { default as Avatar } from './Avatar';
 export type { AvatarProps } from './Avatar';
 
-export { default as AvatarEdit } from './AvatarEdit';
-export type { AvatarEditProps } from './AvatarEdit';
+export {
+  AvatarEdit,
+  AvatarEditProps,
+  AvatarEditAsset,
+  AvatarEditError,
+} from './AvatarEdit';
 
 export { default as Card } from './Card';
 export type { CardProps } from './Card';

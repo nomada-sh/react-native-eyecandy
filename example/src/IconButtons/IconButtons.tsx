@@ -35,6 +35,7 @@ export default function IconButtons() {
             onPress={() => Alert.alert('Close')}
           />
           <IconButton
+            size={28}
             color="primary"
             icon={Camera}
             onPress={() => Alert.alert('Camera')}
@@ -56,6 +57,7 @@ export default function IconButtons() {
             icon={({ stroke }) => {
               return (
                 <Body
+                  size="small"
                   style={{
                     color: stroke,
                     textAlign: 'center',

@@ -1,10 +1,10 @@
 import React from 'react';
-import { ImageSourcePropType, SafeAreaView, ScrollView } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 
-import { AvatarEdit } from '@nomada-sh/react-native-eyecandy';
+import { AvatarEdit, AvatarEditAsset } from '@nomada-sh/react-native-eyecandy';
 
 export default function Avatars() {
-  const [source, setSource] = React.useState<ImageSourcePropType>({
+  const [source, setSource] = React.useState<AvatarEditAsset>({
     uri: 'https://i.pravatar.cc/300',
   });
 
@@ -21,7 +21,6 @@ export default function Avatars() {
         }}
       >
         <AvatarEdit
-          size={150}
           source={source}
           onChange={image => {
             if (image) setSource(image);

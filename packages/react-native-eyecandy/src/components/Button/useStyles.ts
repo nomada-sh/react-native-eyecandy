@@ -30,5 +30,8 @@ export default function useStyles({
       color: inverse ? background : foreground,
       fontSize: 24,
     },
+    pressable: {
+      paddingHorizontal: 16,
+    },
   });
 }

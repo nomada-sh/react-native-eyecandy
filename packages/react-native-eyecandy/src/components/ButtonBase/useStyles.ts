@@ -70,7 +70,6 @@ export default function useStyles({
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: 16,
     },
     ripple: {
       color: rippleColor,

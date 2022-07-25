@@ -3,6 +3,7 @@ import { TextStyle, StyleProp, View, ActivityIndicator } from 'react-native';
 
 import { IconProps } from '@nomada-sh/react-native-eyecandy-icons';
 
+import { usePressableStyles } from '../../hooks';
 import { Body } from '../../typography';
 import { ButtonBase, ButtonBaseProps, ButtonBaseStyles } from '../ButtonBase';
 
@@ -30,6 +31,7 @@ export function Button({
   disabled: disabledProp,
   loadingOverlay,
   styles: customStyles,
+  pressableStyle: pressableStyleProp,
   ...props
 }: ButtonProps) {
   const styles = useStyles({ color, inverse });
@@ -57,6 +59,11 @@ export function Button({
     );
   }
 
+  const pressableStyle = usePressableStyles([
+    styles.pressable,
+    pressableStyleProp,
+  ]);
+
   return (
     <ButtonBase
       color={color}
@@ -64,6 +71,7 @@ export function Button({
       disabled={disabled}
       loading={loading}
       styles={customStyles}
+      pressableStyle={pressableStyle}
       {...props}
     >
       {icon ? <View style={styles.loadingContainer}>{icon}</View> : null}

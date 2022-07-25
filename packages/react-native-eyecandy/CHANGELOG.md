@@ -5,6 +5,10 @@
 ### Patch Changes
 
 - Fixed Text `color` prop literal string union autocomplete.
+- Added `avatarStyle`, `imageStyle`, `onDelete`, `editable`, `deleteText`, `cancelText`, `fallbackComponent`, `fallback` props to AvatarEdit component.
+- Added `fallbackComponent`, `fallback` props to Avatar component.
+- Removed horizontal padding from ButtonBase component causing a problem with IconButton component.
+- Added horizontal padding to Button component.
 - Updated dependencies
   - @nomada-sh/react-native-eyecandy-icons@0.0.6
   - @nomada-sh/react-native-eyecandy-theme@0.0.4
