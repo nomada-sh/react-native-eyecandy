@@ -13,8 +13,31 @@ const DEFAULT_CUSTOM_STYLES: TextInputStyles = {};
 
 const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
   (props, ref) => {
+    const {
+      styles: customStyles = DEFAULT_CUSTOM_STYLES,
+      focusOnLeftIconPress = true,
+      placeholder,
+      style,
+      inputStyle,
+      onPressIconLeft,
+      onPressIconRight,
+      focusOnRightIconPress,
+      iconLeft,
+      iconRight,
+      inputLeft: InputLeft,
+      inputRight: InputRight,
+      showSecureTextEntryToggle,
+      required,
+      onFocus,
+      onBlur,
+      hideIconLeftUnfocused,
+      hideIconRightUnfocused,
+      autoFocus,
+      ...inputProps
+    } = props;
+
     const inputRef = useRef<RNTextInput>(null);
-    const [focused, setFocused] = useState(false);
+    const [focused, setFocused] = useState(!!autoFocus);
 
     const focus = () => {
       if (inputRef.current) inputRef.current.focus();
@@ -40,32 +63,45 @@ const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
       isFocused,
     }));
 
-    const {
-      styles: customStyles = DEFAULT_CUSTOM_STYLES,
-      focusOnLeftIconPress = true,
-      placeholder = '',
-      style,
-      onPressIconLeft,
-      onPressIconRight,
-      focusOnRightIconPress,
-      iconLeft,
-      iconRight,
-      inputLeft,
-      inputRight,
-      showSecureTextEntryToggle,
-      required,
-      onFocus,
-      onBlur,
-      ...inputProps
-    } = props;
+    let iconLeftVisible = !!iconLeft;
+    let iconRightVisible = !!iconRight;
+
+    if (iconLeftVisible && hideIconLeftUnfocused && !focused)
+      iconLeftVisible = false;
+
+    if (iconRightVisible && hideIconRightUnfocused && !focused)
+      iconRightVisible = false;
 
     const dynamicStyles = useStyles({
       ...props,
-      removeDefaultLeftPadding: iconLeft !== undefined,
-      removeDefaultRightPadding:
-        iconRight !== undefined || showSecureTextEntryToggle,
+      removeDefaultLeftPadding: iconLeftVisible,
+      removeDefaultRightPadding: iconRightVisible || showSecureTextEntryToggle,
       focused,
     });
+
+    const inputLeft = InputLeft ? (
+      React.isValidElement(InputLeft) ? (
+        InputLeft
+      ) : (
+        <InputLeft
+          focused={focused}
+          color={dynamicStyles.icon.color}
+          onPress={focus}
+        />
+      )
+    ) : null;
+
+    const inputRight = InputRight ? (
+      React.isValidElement(InputRight) ? (
+        InputRight
+      ) : (
+        <InputRight
+          focused={focused}
+          color={dynamicStyles.icon.color}
+          onPress={focus}
+        />
+      )
+    ) : null;
 
     const { secureTextEntry, onPressSecureTextEntryToggle } =
       useSecureTextEntry(props);
@@ -85,7 +121,9 @@ const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
         style={[
           styles.container,
           dynamicStyles.container,
-          customStyles.container,
+          customStyles.container instanceof Function
+            ? customStyles.container({ focused })
+            : customStyles.container,
           style,
         ]}
       >
@@ -93,9 +131,15 @@ const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
         <IconTouchable
           focused={focused}
           onPress={handlePressIconLeft}
-          style={[styles.leftIconContainer, customStyles.leftIconContainer]}
+          style={[
+            styles.leftIconContainer,
+            customStyles.leftIconContainer instanceof Function
+              ? customStyles.leftIconContainer({ focused })
+              : customStyles.leftIconContainer,
+          ]}
           icon={iconLeft}
           color={dynamicStyles.icon.color}
+          hideUnfocused={hideIconLeftUnfocused}
         />
 
         {/* Left Component */}
@@ -103,10 +147,23 @@ const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
 
         <RNTextInput
           disableFullscreenUI
-          placeholder={required ? `${placeholder} *` : placeholder}
+          placeholder={
+            placeholder && required ? `${placeholder} *` : placeholder
+          }
           selectionColor={dynamicStyles.selection.color}
           placeholderTextColor={dynamicStyles.placeholder.color}
-          style={[styles.input, dynamicStyles.input, customStyles.input]}
+          style={[
+            styles.input,
+            dynamicStyles.input,
+            customStyles.input instanceof Function
+              ? customStyles.input({
+                  focused,
+                  paddingLeft: dynamicStyles.input.paddingLeft,
+                  paddingRight: dynamicStyles.input.paddingRight,
+                })
+              : customStyles.input,
+            inputStyle,
+          ]}
           {...inputProps}
           onFocus={e => {
             setFocused(true);
@@ -127,9 +184,15 @@ const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
         <IconTouchable
           focused={focused}
           onPress={handlePressIconRight}
-          style={[styles.rightIconContainer, customStyles.rightIconContainer]}
+          style={[
+            styles.rightIconContainer,
+            customStyles.rightIconContainer instanceof Function
+              ? customStyles.rightIconContainer({ focused })
+              : customStyles.rightIconContainer,
+          ]}
           icon={iconRight}
           color={dynamicStyles.icon.color}
+          hideUnfocused={hideIconRightUnfocused}
         />
 
         {/* Secure Text Entry Toggle */}
@@ -137,7 +200,12 @@ const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
           <IconTouchable
             focused={focused}
             onPress={onPressSecureTextEntryToggle}
-            style={[styles.rightIconContainer, customStyles.rightIconContainer]}
+            style={[
+              styles.rightIconContainer,
+              customStyles.rightIconContainer instanceof Function
+                ? customStyles.rightIconContainer({ focused })
+                : customStyles.rightIconContainer,
+            ]}
             icon={secureTextEntry ? EyeOff : EyeCheck}
             color={dynamicStyles.icon.color}
           />

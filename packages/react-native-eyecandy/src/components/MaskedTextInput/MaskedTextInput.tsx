@@ -57,8 +57,8 @@ const MaskedTextInput = React.forwardRef<
     focusOnRightIconPress,
     iconLeft,
     iconRight,
-    inputLeft,
-    inputRight,
+    inputLeft: InputLeft,
+    inputRight: InputRight,
     showSecureTextEntryToggle,
     required,
     onFocus,
@@ -73,6 +73,30 @@ const MaskedTextInput = React.forwardRef<
       iconRight !== undefined || showSecureTextEntryToggle,
     focused,
   });
+
+  const inputLeft = InputLeft ? (
+    React.isValidElement(InputLeft) ? (
+      InputLeft
+    ) : (
+      <InputLeft
+        focused={focused}
+        color={dynamicStyles.icon.color}
+        onPress={focus}
+      />
+    )
+  ) : null;
+
+  const inputRight = InputRight ? (
+    React.isValidElement(InputRight) ? (
+      InputRight
+    ) : (
+      <InputRight
+        focused={focused}
+        color={dynamicStyles.icon.color}
+        onPress={focus}
+      />
+    )
+  ) : null;
 
   const { secureTextEntry, onPressSecureTextEntryToggle } =
     useSecureTextEntry(props);
@@ -92,7 +116,9 @@ const MaskedTextInput = React.forwardRef<
       style={[
         styles.container,
         dynamicStyles.container,
-        customStyles.container,
+        customStyles.container instanceof Function
+          ? customStyles.container({ focused })
+          : customStyles.container,
         style,
       ]}
     >
@@ -100,7 +126,12 @@ const MaskedTextInput = React.forwardRef<
       <IconTouchable
         focused={focused}
         onPress={handlePressIconLeft}
-        style={[styles.leftIconContainer, customStyles.leftIconContainer]}
+        style={[
+          styles.leftIconContainer,
+          customStyles.leftIconContainer instanceof Function
+            ? customStyles.leftIconContainer({ focused })
+            : customStyles.leftIconContainer,
+        ]}
         icon={iconLeft}
         color={dynamicStyles.icon.color}
       />
@@ -113,7 +144,17 @@ const MaskedTextInput = React.forwardRef<
         placeholder={required ? `${placeholder} *` : placeholder}
         selectionColor={dynamicStyles.selection.color}
         placeholderTextColor={dynamicStyles.placeholder.color}
-        style={[styles.input, dynamicStyles.input, customStyles.input]}
+        style={[
+          styles.input,
+          dynamicStyles.input,
+          customStyles.input instanceof Function
+            ? customStyles.input({
+                focused,
+                paddingLeft: dynamicStyles.input.paddingLeft,
+                paddingRight: dynamicStyles.input.paddingRight,
+              })
+            : customStyles.input,
+        ]}
         {...inputProps}
         onFocus={e => {
           setFocused(true);
@@ -134,7 +175,12 @@ const MaskedTextInput = React.forwardRef<
       <IconTouchable
         focused={focused}
         onPress={handlePressIconRight}
-        style={[styles.rightIconContainer, customStyles.rightIconContainer]}
+        style={[
+          styles.rightIconContainer,
+          customStyles.rightIconContainer instanceof Function
+            ? customStyles.rightIconContainer({ focused })
+            : customStyles.rightIconContainer,
+        ]}
         icon={iconRight}
         color={dynamicStyles.icon.color}
       />
@@ -144,7 +190,12 @@ const MaskedTextInput = React.forwardRef<
         <IconTouchable
           focused={focused}
           onPress={onPressSecureTextEntryToggle}
-          style={[styles.rightIconContainer, customStyles.rightIconContainer]}
+          style={[
+            styles.rightIconContainer,
+            customStyles.rightIconContainer instanceof Function
+              ? customStyles.rightIconContainer({ focused })
+              : customStyles.rightIconContainer,
+          ]}
           icon={secureTextEntry ? EyeOff : EyeCheck}
           color={dynamicStyles.icon.color}
         />

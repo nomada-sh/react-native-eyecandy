@@ -11,9 +11,10 @@ import { TextInputIconProps } from './types';
 export interface IconTouchableProps {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
-  icon?: React.ComponentType<TextInputIconProps> | React.ReactElement<any>;
+  icon?: React.ComponentType<TextInputIconProps> | React.ReactElement | null;
   color: string;
   focused: boolean;
+  hideUnfocused?: boolean;
 }
 
 export default function IconTouchable({
@@ -22,7 +23,10 @@ export default function IconTouchable({
   style,
   color,
   focused,
+  hideUnfocused,
 }: IconTouchableProps) {
+  if (hideUnfocused && !focused) return null;
+
   if (!Icon) return null;
 
   const icon = React.isValidElement(Icon) ? (

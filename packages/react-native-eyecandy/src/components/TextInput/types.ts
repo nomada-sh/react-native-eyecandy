@@ -8,16 +8,47 @@ import {
 import { IconProps } from '@nomada-sh/react-native-eyecandy-icons';
 import { ThemeInputColorChoices } from '@nomada-sh/react-native-eyecandy-theme';
 
+export type TextInputStyleFnProps = {
+  focused: boolean;
+};
+
+export type TextInputStyleFnInputProps = TextInputStyleFnProps & {
+  paddingLeft: number;
+  paddingRight: number;
+};
+
 export type TextInputStyles = {
-  container?: StyleProp<ViewStyle>;
-  input?: StyleProp<TextStyle>;
-  iconContainer?: StyleProp<ViewStyle>;
-  leftIconContainer?: StyleProp<ViewStyle>;
-  rightIconContainer?: StyleProp<ViewStyle>;
+  container?:
+    | StyleProp<ViewStyle>
+    | ((props: TextInputStyleFnProps) => StyleProp<ViewStyle>);
+  input?:
+    | StyleProp<TextStyle>
+    | ((props: TextInputStyleFnInputProps) => StyleProp<TextStyle>);
+  iconContainer?:
+    | StyleProp<ViewStyle>
+    | ((props: TextInputStyleFnProps) => StyleProp<ViewStyle>);
+  leftIconContainer?:
+    | StyleProp<ViewStyle>
+    | ((props: TextInputStyleFnProps) => StyleProp<ViewStyle>);
+  rightIconContainer?:
+    | StyleProp<ViewStyle>
+    | ((props: TextInputStyleFnProps) => StyleProp<ViewStyle>);
 };
 
 export interface TextInputIconProps extends IconProps {
   focused: boolean;
+}
+
+export interface TextInputLeftProps {
+  focused: boolean;
+  color: string;
+  onPress: () => void;
+}
+
+export interface TextInputRightProps {
+  focused: boolean;
+  color: string;
+  onPress: () => void;
 }
 
 export interface TextInputStyleProps {
@@ -43,16 +74,31 @@ export interface TextInputBaseProps
   extends TextInputStyleProps,
     TextInputSecureTextEntryProps {
   style?: StyleProp<ViewStyle>;
+  inputStyle?: StyleProp<TextStyle>;
   styles?: TextInputStyles;
-  iconLeft?: React.ComponentType<TextInputIconProps> | React.ReactElement<any>;
+  iconLeft?:
+    | React.ComponentType<TextInputIconProps>
+    | React.ReactElement
+    | null;
   onPressIconLeft?: () => void;
-  iconRight?: React.ComponentType<TextInputIconProps> | React.ReactElement<any>;
+  iconRight?:
+    | React.ComponentType<TextInputIconProps>
+    | React.ReactElement
+    | null;
   onPressIconRight?: () => void;
   focusOnLeftIconPress?: boolean;
   focusOnRightIconPress?: boolean;
-  inputLeft?: React.ReactNode;
-  inputRight?: React.ReactNode;
+  inputLeft?:
+    | React.ComponentType<TextInputLeftProps>
+    | React.ReactElement
+    | null;
+  inputRight?:
+    | React.ComponentType<TextInputRightProps>
+    | React.ReactElement
+    | null;
   required?: boolean;
+  hideIconLeftUnfocused?: boolean;
+  hideIconRightUnfocused?: boolean;
 }
 
 export interface TextInputHandle {
