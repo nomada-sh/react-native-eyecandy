@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.10
+
+### Patch Changes
+
+- Added `hideIconLeftUnfocused` and `hideIconRightUnfocused` props to TextInput component.
+
 ## 0.0.9
 
 ### Patch Changes
