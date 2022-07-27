@@ -10,10 +10,11 @@ import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
 
 import { ms } from '../../utils';
 
-export interface AvatarProps extends ImageBackgroundProps {
+export interface AvatarProps extends Omit<ImageBackgroundProps, 'source'> {
   size?: number;
   fallbackComponent?: React.ReactNode;
   fallback?: boolean;
+  source?: ImageBackgroundProps['source'];
 }
 
 function Avatar({
@@ -21,6 +22,7 @@ function Avatar({
   style,
   fallbackComponent,
   fallback,
+  source,
   ...props
 }: AvatarProps) {
   const { dark, palette } = useTheme();
@@ -34,7 +36,15 @@ function Avatar({
     },
   });
 
+  // TODO: Remove fallback.
   if (fallback && fallbackComponent)
+    return (
+      <View style={[dynamicStyles.container, styles.container, style]}>
+        {fallbackComponent}
+      </View>
+    );
+
+  if (!source)
     return (
       <View style={[dynamicStyles.container, styles.container, style]}>
         {fallbackComponent}
@@ -43,6 +53,7 @@ function Avatar({
 
   return (
     <ImageBackground
+      source={source}
       style={[dynamicStyles.container, styles.container, style]}
       {...props}
     />
@@ -52,6 +63,8 @@ function Avatar({
 const styles = StyleSheet.create({
   container: {
     overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

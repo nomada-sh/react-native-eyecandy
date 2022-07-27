@@ -25,12 +25,11 @@ export type AvatarEditAsset = Asset;
 
 export interface AvatarEditProps {
   size?: number;
-  source: AvatarProps['source'];
+  source?: AvatarEditAsset;
   avatarStyle?: StyleProp<ViewStyle>;
   imageStyle?: AvatarProps['imageStyle'];
   style?: StyleProp<ViewStyle>;
   onChange?: (image?: AvatarEditAsset, error?: AvatarEditError) => void;
-  onDelete?: () => void;
   editable?: boolean;
   onPress?: () => void;
   fromGalleryText?: string;
@@ -40,6 +39,7 @@ export interface AvatarEditProps {
   title?: string;
   fallbackComponent?: React.ReactNode;
   fallback?: boolean;
+  deleteEnabled?: boolean;
 }
 
 // TODO: Improve props.
@@ -50,7 +50,6 @@ export function AvatarEdit({
   source,
   onPress: onPressProp,
   onChange,
-  onDelete,
   fromGalleryText = 'From Gallery',
   fromCameraText = 'From Camera',
   deleteText = 'Delete Avatar',
@@ -61,6 +60,7 @@ export function AvatarEdit({
   avatarStyle,
   fallback,
   fallbackComponent,
+  deleteEnabled,
 }: AvatarEditProps) {
   const colors = useColors(c => c.background.default);
   const [visible, setVisible] = React.useState(false);
@@ -85,7 +85,7 @@ export function AvatarEdit({
     };
 
     if (index === 2) {
-      onDelete?.();
+      onChange?.();
       return;
     }
 
@@ -104,11 +104,13 @@ export function AvatarEdit({
       label: fromCameraText,
       icon: Camera,
     },
-    {
+  ];
+
+  if (deleteEnabled)
+    options.push({
       label: deleteText,
       icon: Trash,
-    },
-  ];
+    });
 
   const onPress = () => {
     ReactNativeHapticFeedback.trigger('impactLight');

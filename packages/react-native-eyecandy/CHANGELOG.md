@@ -1,5 +1,12 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.11
+
+### Patch Changes
+
+- Made `source` prop optional un Avatar and AvatarEdit components.
+- Added `deleteEnabled` prop to AvatarEdit component.
+
 ## 0.0.10
 
 ### Patch Changes
