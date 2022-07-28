@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy-theme
 
+## 0.0.6
+
+### Patch Changes
+
+- Added missing color choices to isThemeTextColorChoices function.
+
 ## 0.0.5
 
 ### Patch Changes

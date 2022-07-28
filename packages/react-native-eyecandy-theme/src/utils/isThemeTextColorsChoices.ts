@@ -8,6 +8,8 @@ export default function isThemeTextColorsChoices(
     case 'primary':
     case 'error':
     case 'greyout':
+    case 'success':
+    case 'warning':
       return true;
   }
 

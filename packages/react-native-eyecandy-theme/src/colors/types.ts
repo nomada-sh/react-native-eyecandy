@@ -119,6 +119,8 @@ export type ThemeSwitchColors = {
 /**
  * Text
  */
+
+// !! Keep in sync with utils/isThemeTextColorsChoices.ts
 export type ThemeTextColorsChoices =
   | 'default'
   | 'primary'
