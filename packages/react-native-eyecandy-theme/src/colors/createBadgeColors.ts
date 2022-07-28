@@ -17,6 +17,10 @@ const createBadgeColors: GetThemeColors<ThemeBadgeColors> = options => {
       border,
       background: palette.primary[500],
     },
+    danger: {
+      border,
+      background: palette.error[200],
+    },
     error: {
       border,
       background: palette.error[200],

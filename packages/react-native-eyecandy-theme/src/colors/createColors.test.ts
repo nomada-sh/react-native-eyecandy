@@ -103,6 +103,7 @@ test('createColors', () => {
     primary: badgeColor,
     success: badgeColor,
     warning: badgeColor,
+    danger: badgeColor,
   });
 });
 

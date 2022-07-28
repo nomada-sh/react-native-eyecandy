@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Mail } from '@nomada-sh/react-native-eyecandy-icons';
 
-import TextInput, { TextInputProps } from '../TextInput';
+import { TextInput, TextInputProps } from '../TextInput';
 
 function TextInputEmail(props: TextInputProps) {
   return (

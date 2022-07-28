@@ -57,7 +57,7 @@ export default function Badges() {
             />
           </Badge>
           <Badge
-            color="error"
+            color="danger"
             anchorOrigin={{
               horizontal: 'left',
               vertical: 'top',
@@ -98,7 +98,7 @@ export default function Badges() {
             <IconButton icon={Photo} />
           </Badge>
           <Badge
-            color="error"
+            color="danger"
             anchorOrigin={{
               horizontal: 'left',
               vertical: 'top',

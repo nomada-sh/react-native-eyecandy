@@ -11,7 +11,7 @@ import useStyles from './useStyles';
 
 const DEFAULT_CUSTOM_STYLES: TextInputStyles = {};
 
-const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
+export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
   (props, ref) => {
     const {
       styles: customStyles = DEFAULT_CUSTOM_STYLES,
@@ -214,5 +214,3 @@ const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
     );
   },
 );
-
-export default TextInput;

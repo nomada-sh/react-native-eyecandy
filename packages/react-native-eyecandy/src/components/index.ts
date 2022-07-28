@@ -22,8 +22,12 @@ export type { RadioButtonProps as CheckProps } from './RadioButton';
 export { default as TextInputErrors } from './TextInputErrors';
 export type { TextInputErrorsProps } from './TextInputErrors';
 
-export { default as TextInput } from './TextInput';
-export type { TextInputProps, TextInputIconProps } from './TextInput';
+export {
+  TextInput,
+  TextInputProps,
+  TextInputIconProps,
+  TextInputHandle,
+} from './TextInput';
 
 export { default as TextInputEmail } from './TextInputEmail';
 export { default as TextInputPassword } from './TextInputPassword';

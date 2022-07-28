@@ -1,4 +1,4 @@
-export { default } from './TextInput';
+export * from './TextInput';
 export * from './types';
 
 export { default as IconTouchable } from './IconTouchable';

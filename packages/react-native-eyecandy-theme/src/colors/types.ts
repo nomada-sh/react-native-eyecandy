@@ -153,6 +153,7 @@ export type ThemeDividerColors = {
 export type ThemeBadgeColorChoices =
   | 'default'
   | 'primary'
+  | 'danger'
   | 'error'
   | 'warning'
   | 'success'

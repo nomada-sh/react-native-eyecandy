@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy-theme
 
+## 0.0.5
+
+### Patch Changes
+
+- Added `danger` color choice to Badge component.
+
 ## 0.0.4
 
 ### Patch Changes

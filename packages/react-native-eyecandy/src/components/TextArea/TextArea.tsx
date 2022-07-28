@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TextInput, { TextInputProps } from '../TextInput';
+import { TextInput, TextInputProps } from '../TextInput';
 
 export function TextArea({ ...props }: TextInputProps) {
   return (
