@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.15
+
+### Patch Changes
+
+- 31ade47: Added `loadingIndicatorSize` prop to ButtonBase component.
+
 ## 0.0.14
 
 ### Patch Changes
