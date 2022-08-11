@@ -48,6 +48,7 @@ const processNode = (node, parent) => {
 
       // Generate Node for SnackPlayer
       // See https://github.com/expo/snack/blob/main/docs/embedding-snacks.md
+      // TODO: Remove sdkVersion
       const snackPlayerDiv = u('html', {
         value: dedent`
           <div
@@ -61,6 +62,7 @@ const processNode = (node, parent) => {
             data-snack-theme="${theme}"
             data-snack-preview="${preview}"
             data-snack-loading="${loading}"
+            data-snack-sdkversion="44.0.0"
           ></div>
           `,
       });
