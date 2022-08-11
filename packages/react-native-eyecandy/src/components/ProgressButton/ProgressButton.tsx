@@ -47,7 +47,7 @@ export function ProgressButton({
   marginTop,
   style,
   fullwidth,
-  animationDuration = 200,
+  animationDuration = 300,
   ...props
 }: ProgressButtonProps) {
   const [ghostButtonMounted, setGhostButtonMounted] = useState(true);
