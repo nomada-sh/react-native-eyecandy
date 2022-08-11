@@ -35,6 +35,7 @@ export interface ProgressButtonProps
   > {
   progress?: number;
   style?: ProgressButtonStyles;
+  animationDuration?: number;
 }
 
 export function ProgressButton({
@@ -46,6 +47,7 @@ export function ProgressButton({
   marginTop,
   style,
   fullwidth,
+  animationDuration = 200,
   ...props
 }: ProgressButtonProps) {
   const [ghostButtonMounted, setGhostButtonMounted] = useState(true);
@@ -53,8 +55,10 @@ export function ProgressButton({
   const p = useSharedValue(progress);
 
   useEffect(() => {
-    p.value = withTiming(progress);
-  }, [p, progress]);
+    p.value = withTiming(progress, {
+      duration: animationDuration,
+    });
+  }, [animationDuration, p, progress]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
