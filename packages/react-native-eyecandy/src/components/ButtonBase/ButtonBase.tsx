@@ -1,6 +1,7 @@
 import React, { ReactNode, useRef } from 'react';
 import {
   ActivityIndicator,
+  ActivityIndicatorProps,
   Animated,
   GestureResponderEvent,
   Platform,
@@ -53,6 +54,7 @@ export interface ButtonBaseProps extends PressableProps {
   marginTop?: number;
   marginBottom?: number;
   flex?: number;
+  loadingIndicatorSize?: ActivityIndicatorProps['size'];
 }
 
 export function ButtonBase({
@@ -77,6 +79,7 @@ export function ButtonBase({
   marginBottom,
   marginTop,
   flex,
+  loadingIndicatorSize = 'large',
   ...props
 }: ButtonBaseProps) {
   const animated = useRef(new Animated.Value(0)).current;
@@ -166,7 +169,10 @@ export function ButtonBase({
       ) : null}
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={styles.loading.color} />
+          <ActivityIndicator
+            size={loadingIndicatorSize}
+            color={styles.loading.color}
+          />
         </View>
       ) : null}
     </View>

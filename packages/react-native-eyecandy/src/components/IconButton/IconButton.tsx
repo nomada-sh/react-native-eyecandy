@@ -58,6 +58,7 @@ function IconButton({
       height={size}
       variant={variant}
       transparent={transparent}
+      loadingIndicatorSize={size}
       {...props}
     >
       {children}
