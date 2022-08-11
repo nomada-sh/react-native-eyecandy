@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.14
+
+### Patch Changes
+
+- 1f75caf: Added `progressButton` prop to ProgressButton component.
+
 ## 0.0.13
 
 ### Patch Changes
