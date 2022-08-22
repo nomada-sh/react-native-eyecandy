@@ -41,8 +41,8 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@nomada-sh/react-native-eyecandy": "^0.0.15",
-    "@nomada-sh/react-native-eyecandy-icons": "^0.0.8",
+    "@nomada-sh/react-native-eyecandy": "^0.0.16",
+    "@nomada-sh/react-native-eyecandy-icons": "^0.0.9",
     "@nomada-sh/react-native-eyecandy-theme": "^0.0.6",
     "@react-native-masked-view/masked-view": "^0.2.7",
     "@react-navigation/drawer": "^6.3.3",

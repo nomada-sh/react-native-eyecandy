@@ -1,5 +1,12 @@
 # @nomada-sh/react-native-eyecandy-icons
 
+## 0.0.9
+
+### Patch Changes
+
+- cd0e21f: Removed unnecessary props from IconProps.
+- cd0e21f: Removed unnecessary props from IconProps.
+
 ## 0.0.8
 
 ### Patch Changes
