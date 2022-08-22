@@ -4,9 +4,6 @@
 
 ### Patch Changes
 
-- cd0e21f: Removed unnecessary props from IconProps.
-- cd0e21f: Removed unnecessary props from IconProps.
-- Updated dependencies [cd0e21f]
 - Updated dependencies [cd0e21f]
   - @nomada-sh/react-native-eyecandy-icons@0.0.9
 
