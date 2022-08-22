@@ -58,7 +58,7 @@ export function useStyles({
     },
     icon: {
       fontSize: 20,
-      color: focused ? colors.focused.indicator : undefined,
+      color: focused ? colors.focused.indicator : colors.foreground
     },
   });
 }

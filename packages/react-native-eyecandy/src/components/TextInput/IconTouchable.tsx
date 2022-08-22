@@ -32,7 +32,7 @@ export default function IconTouchable({
   const icon = React.isValidElement(Icon) ? (
     Icon
   ) : (
-    <Icon focused={focused} size={20} stroke={color} />
+    <Icon focused={focused} size={20} color={color} />
   );
 
   return (

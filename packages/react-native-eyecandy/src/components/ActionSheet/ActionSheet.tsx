@@ -45,7 +45,7 @@ export default function ActionSheet({
   showCancelIcon,
   dark: darkProp,
 }: ActionSheetProps) {
-  const { dark: darkTheme, palette } = useTheme();
+  const { dark: darkTheme, palette, colors } = useTheme();
   const dark = darkProp !== undefined ? darkProp : darkTheme;
 
   const cancelButtonIndex = options.length;
@@ -161,7 +161,7 @@ export default function ActionSheet({
             React.isValidElement(Icon) ? (
               Icon
             ) : (
-              <Icon size={20} />
+              <Icon size={20} color={colors.text.default.normal} />
             )
           ) : null;
 

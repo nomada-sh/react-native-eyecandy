@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextStyle } from 'react-native';
+import { StyleSheet, TextStyle, View } from 'react-native';
 
 import {
   ChevronRight,
@@ -52,16 +52,15 @@ function LinkButton({
       Icon
     ) : (
       <Icon
-        style={styles.icon}
         size={20}
-        stroke={focused ? palette.primary[500] : (textStyle.color as string)}
+        color={focused ? palette.primary[500] : (textStyle.color as string)}
       />
     )
   ) : null;
 
   return (
     <ButtonBase color={color} pressableStyle={buttonStyles} {...props}>
-      {icon}
+      {icon ? <View style={styles.iconContainer}>{icon}</View> : null}
       <Body style={[textStyle, styles.text]}>{children ?? text}</Body>
       {showChevronRight ? <ChevronRight color="greyout" size={20} /> : null}
     </ButtonBase>
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginEnd: 16,
   },
-  icon: {
+  iconContainer: {
     marginEnd: 16,
   },
 });

@@ -34,10 +34,11 @@ import { RatingScreen } from '../screens/RatingScreen';
 import { SelectScreen } from '../screens/SelectScreen';
 import { TextInputScreen } from '../screens/TextInputScreen';
 import { useTheme } from '../shared/hooks';
+import { IconsScreens } from '../screens/IconsScreen';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
-const initialRouteName = 'ProgressButton';
+const initialRouteName = 'Icons';
 
 function HeaderLeft(props: any) {
   const toggleDrawer = () => {
@@ -84,6 +85,7 @@ export default function Drawer() {
       <Screen name="Button" component={ButtonScreen} />
       <Screen name="ButtonBase" component={ButtonBase} />
       <Screen name="ProgressButton" component={ProgressButtonScreen} />
+      <Screen name="Icons" component={IconsScreens} />
       <Screen name="IconButton" component={IconButtons} />
       <Screen name="LinkButton" component={LinkButtons} />
       <Screen name="RadioButton" component={RadioButtons} />

@@ -23,8 +23,8 @@ export function TextInputScreen() {
         keyboardShouldPersistTaps="always"
       >
         <Row marginBottom={20}>
-          <TextInput />
-          <TextInput />
+          <TextInput flex={1} />
+          <TextInput flex={1} />
         </Row>
         <TextInput
           required
