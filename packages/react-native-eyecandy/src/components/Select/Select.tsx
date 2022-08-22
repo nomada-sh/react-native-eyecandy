@@ -78,7 +78,7 @@ function SelectBase<V>(
       <Icon
         focused={visible}
         size={styles.icon.fontSize}
-        stroke={styles.icon.color}
+        color={styles.icon.color}
       />
     )
   ) : null;
@@ -140,7 +140,7 @@ function SelectBase<V>(
                   transform: [{ rotate: '45deg' }],
                 }}
                 size={styles.icon.fontSize}
-                stroke={visible ? styles.icon.color : styles.placeholder.color}
+                color={visible ? styles.icon.color : styles.placeholder.color}
               />
             </View>
           </TouchableWithoutFeedback>
@@ -149,7 +149,7 @@ function SelectBase<V>(
           <View style={styles.iconContainer}>
             <ChevronDown
               size={styles.icon.fontSize}
-              stroke={visible ? styles.icon.color : styles.placeholder.color}
+              color={visible ? styles.icon.color : styles.placeholder.color}
             />
           </View>
         </TouchableWithoutFeedback>

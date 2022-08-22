@@ -54,12 +54,12 @@ export default function IconButtons() {
         >
           <IconButton
             inverse
-            icon={({ stroke }) => {
+            icon={({ color }) => {
               return (
                 <Body
                   size="small"
                   style={{
-                    color: stroke,
+                    color,
                     textAlign: 'center',
                   }}
                 >

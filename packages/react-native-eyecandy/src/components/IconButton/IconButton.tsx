@@ -1,5 +1,4 @@
 import React from 'react';
-import type { StyleProp, ViewStyle } from 'react-native';
 
 import { IconProps } from '@nomada-sh/react-native-eyecandy-icons';
 import { useColors } from '@nomada-sh/react-native-eyecandy-theme';
@@ -11,7 +10,6 @@ export interface IconButtonProps extends ButtonBaseProps {
   size?: number;
   iconSize?: number;
   iconColor?: string;
-  iconStyle?: StyleProp<ViewStyle>;
 }
 
 function IconButton({
@@ -21,7 +19,6 @@ function IconButton({
   iconSize: iconSizeProp,
   color = 'default',
   iconColor: iconColorProp,
-  iconStyle,
   variant = 'rounded',
   inverse,
   transparent,
@@ -40,7 +37,7 @@ function IconButton({
     React.isValidElement(Icon) ? (
       Icon
     ) : (
-      <Icon size={iconSize} stroke={iconColor} style={iconStyle} />
+      <Icon size={iconSize} color={iconColor} />
     )
   ) : null;
 

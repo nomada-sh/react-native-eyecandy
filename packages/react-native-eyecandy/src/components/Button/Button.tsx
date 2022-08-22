@@ -40,7 +40,7 @@ export function Button({
     React.isValidElement(Icon) ? (
       Icon
     ) : (
-      <Icon size={styles.icon.fontSize} stroke={styles.icon.color} />
+      <Icon size={styles.icon.fontSize} color={styles.icon.color} />
     )
   ) : null;
 
