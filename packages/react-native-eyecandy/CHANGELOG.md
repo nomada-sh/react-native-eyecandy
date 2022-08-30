@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.18
+
+### Patch Changes
+
+- 337114a: Added `itemStyle` and `itemHeight` props to ActionSheet component.
+
 ## 0.0.17
 
 ### Patch Changes

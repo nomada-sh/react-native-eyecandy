@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react';
-import { Platform, ActionSheetIOS, View } from 'react-native';
+import {
+  Platform,
+  ActionSheetIOS,
+  View,
+  ViewStyle,
+  StyleProp,
+} from 'react-native';
 
 import { IconProps, Close } from '@nomada-sh/react-native-eyecandy-icons';
 import { useTheme } from '@nomada-sh/react-native-eyecandy-theme';
@@ -30,6 +36,8 @@ export interface ActionSheetProps {
   cancelText?: string;
   showCancelIcon?: boolean;
   dark?: boolean;
+  itemStyle?: StyleProp<ViewStyle>;
+  itemHeight?: number;
 }
 
 export default function ActionSheet({
@@ -44,6 +52,8 @@ export default function ActionSheet({
   cancelText = 'Cancel',
   showCancelIcon,
   dark: darkProp,
+  itemStyle,
+  itemHeight = 45,
 }: ActionSheetProps) {
   const { dark: darkTheme, palette, colors } = useTheme();
   const dark = darkProp !== undefined ? darkProp : darkTheme;
@@ -116,7 +126,7 @@ export default function ActionSheet({
   const titleHeight = title ? 24 : 0;
   const messageHeight = message ? 20 : 0;
   let height =
-    (options.length + 1) * 45 +
+    (options.length + 1) * itemHeight +
     heightAddedSeparation +
     titleHeight +
     messageHeight;
@@ -171,10 +181,13 @@ export default function ActionSheet({
                 onPressAction && onPressAction(index);
                 onClose && onClose();
               }}
-              style={{
-                height: 45,
-                justifyContent: 'center',
-              }}
+              style={[
+                {
+                  height: itemHeight,
+                  justifyContent: 'center',
+                },
+                itemStyle,
+              ]}
               key={index}
             >
               {icon}
@@ -190,6 +203,8 @@ export default function ActionSheet({
         })}
         <MenuItemBase
           style={{
+            height: itemHeight,
+            justifyContent: 'center',
             backgroundColor: Color(palette.error[200]).alpha(0.1).string(),
             marginTop: 10,
           }}
