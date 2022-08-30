@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import {
   ThemeButtonColorChoices,
-  useColors,
+  useTheme,
 } from '@nomada-sh/react-native-eyecandy-theme';
 import Color from 'color';
 
@@ -29,19 +29,30 @@ export default function useStyles({
   outlined?: boolean;
   flex?: number;
 }) {
-  const colors = useColors(c => c.button);
-  const { background, foreground } = colors[color];
+  const { colors } = useTheme();
+  const { background, foreground } = colors.button[color];
 
   let borderWidth = 0;
   let borderColor = undefined;
-  const borderRadius = variant === 'rounded' ? height / 2 : 12;
+  let borderRadius = 0;
+
+  switch (variant) {
+    case 'default':
+      borderRadius = 12;
+      break;
+    case 'rounded':
+      borderRadius = height / 2;
+      break;
+    default:
+      borderRadius = 0;
+  }
 
   let backgroundColor = Color(inverse ? foreground : background).rgb();
   let foregroundColor = Color(inverse ? background : foreground).rgb();
 
-  const rippleColor = getRippleColor(backgroundColor).string();
-
   let disabledColor = backgroundColor.fade(0.4);
+
+  let rippleColor = getRippleColor(backgroundColor).string();
 
   if (outlined) {
     borderWidth = 1;
@@ -51,6 +62,7 @@ export default function useStyles({
 
   if (transparent) {
     backgroundColor = backgroundColor.alpha(0);
+    rippleColor = getRippleColor(colors.background.default.container).string();
   }
 
   return StyleSheet.create({

@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.17
+
+### Patch Changes
+
+- 9b49551: Fixed ButtonBase inverse transparent ripple and activeOpacity color.
+
 ## 0.0.16
 
 ### Patch Changes

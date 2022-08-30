@@ -1,7 +1,7 @@
 import Color from 'color';
 
-const DARK_RIPPLE_COLOR = Color('rgba(255, 255, 255, 0.1)'),
-  LIGHT_RIPPLE_COLOR = Color('rgba(0, 0, 0, 0.1)');
+export const DARK_RIPPLE_COLOR = Color('rgba(255, 255, 255, 0.1)');
+export const LIGHT_RIPPLE_COLOR = Color('rgba(0, 0, 0, 0.1)');
 
 type ColorType = string | Color;
 
