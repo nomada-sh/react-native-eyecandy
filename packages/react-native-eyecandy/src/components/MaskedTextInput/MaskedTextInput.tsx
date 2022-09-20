@@ -94,6 +94,10 @@ const MaskedTextInput = React.forwardRef<
         focused={focused}
         color={dynamicStyles.icon.color}
         onPress={focus}
+        // TODO
+        paddingLeft={0}
+        paddingRight={0}
+        iconRightVisible={false}
       />
     )
   ) : null;

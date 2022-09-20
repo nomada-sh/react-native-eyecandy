@@ -1,7 +1,14 @@
 import React, { useImperativeHandle, useRef, useState } from 'react';
-import { View, TextInput as RNTextInput } from 'react-native';
+import {
+  View,
+  TextInput as RNTextInput,
+  StyleProp,
+  TextStyle,
+} from 'react-native';
 
 import { EyeCheck, EyeOff } from '@nomada-sh/react-native-eyecandy-icons';
+
+import { Body } from '../../typography';
 
 import IconTouchable from './IconTouchable';
 import styles from './styles';
@@ -16,7 +23,7 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
     const {
       styles: customStyles = DEFAULT_CUSTOM_STYLES,
       focusOnLeftIconPress = true,
-      placeholder,
+      placeholder: placeholderProp,
       style,
       inputStyle,
       onPressIconLeft,
@@ -30,9 +37,12 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
       required,
       onFocus,
       onBlur,
+      autoFocus,
       hideIconLeftUnfocused,
       hideIconRightUnfocused,
-      autoFocus,
+      renderValueAsTextUnfocused,
+      value,
+      editable = true,
       ...inputProps
     } = props;
 
@@ -99,6 +109,9 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
           focused={focused}
           color={dynamicStyles.icon.color}
           onPress={focus}
+          paddingLeft={dynamicStyles.inputRight.paddingLeft}
+          paddingRight={dynamicStyles.inputRight.paddingRight}
+          iconRightVisible={iconRightVisible}
         />
       )
     ) : null;
@@ -115,6 +128,22 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
       if (onPressIconRight) onPressIconRight();
       if (focusOnRightIconPress) focus();
     };
+
+    const inputStyles: StyleProp<TextStyle> = [
+      styles.input,
+      dynamicStyles.input,
+      customStyles.input instanceof Function
+        ? customStyles.input({
+            focused,
+            paddingLeft: dynamicStyles.input.paddingLeft,
+            paddingRight: dynamicStyles.input.paddingRight,
+          })
+        : customStyles.input,
+      inputStyle,
+    ];
+
+    const placeholder =
+      placeholderProp && required ? `${placeholderProp} *` : placeholderProp;
 
     return (
       <View
@@ -145,26 +174,38 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
         {/* Left Component */}
         {inputLeft}
 
+        {renderValueAsTextUnfocused && !focused ? (
+          <Body
+            style={[
+              {
+                textAlignVertical: 'center',
+              },
+              inputStyles,
+            ]}
+            onPress={focus}
+          >
+            {value ? value : placeholder}
+          </Body>
+        ) : null}
+
         <RNTextInput
           disableFullscreenUI
-          placeholder={
-            placeholder && required ? `${placeholder} *` : placeholder
-          }
+          placeholder={placeholder}
           selectionColor={dynamicStyles.selection.color}
           placeholderTextColor={dynamicStyles.placeholder.color}
           style={[
-            styles.input,
-            dynamicStyles.input,
-            customStyles.input instanceof Function
-              ? customStyles.input({
-                  focused,
-                  paddingLeft: dynamicStyles.input.paddingLeft,
-                  paddingRight: dynamicStyles.input.paddingRight,
-                })
-              : customStyles.input,
-            inputStyle,
+            inputStyles,
+            renderValueAsTextUnfocused && !focused
+              ? {
+                  position: 'absolute',
+                  bottom: 0,
+                  width: 0,
+                }
+              : undefined,
           ]}
-          {...inputProps}
+          autoFocus={autoFocus}
+          value={value}
+          editable={editable}
           onFocus={e => {
             setFocused(true);
             if (onFocus) onFocus(e);
@@ -175,6 +216,7 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
           }}
           secureTextEntry={secureTextEntry}
           ref={inputRef}
+          {...inputProps}
         />
 
         {/* Right Component */}
@@ -209,6 +251,10 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
             icon={secureTextEntry ? EyeOff : EyeCheck}
             color={dynamicStyles.icon.color}
           />
+        ) : null}
+
+        {!editable ? (
+          <View style={[styles.disabled, dynamicStyles.disabled]} />
         ) : null}
       </View>
     );

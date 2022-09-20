@@ -49,6 +49,9 @@ export interface TextInputRightProps {
   focused: boolean;
   color: string;
   onPress: () => void;
+  paddingLeft: number;
+  paddingRight: number;
+  iconRightVisible: boolean;
 }
 
 export interface TextInputStyleProps {
@@ -99,6 +102,7 @@ export interface TextInputBaseProps
   required?: boolean;
   hideIconLeftUnfocused?: boolean;
   hideIconRightUnfocused?: boolean;
+  renderValueAsTextUnfocused?: boolean;
 }
 
 export interface TextInputHandle {

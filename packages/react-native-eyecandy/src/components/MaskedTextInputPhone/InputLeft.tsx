@@ -38,7 +38,7 @@ const InputLeft = ({ onChange, countryCode, callingCode }: InputLeftProps) => {
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 16,
-        paddingRight: 5,
+        marginRight: 5,
       }}
     >
       <CountryPicker
