@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.19
+
+### Patch Changes
+
+- 48b7ed5: Added `renderValueTextUnfocused` prop to TextInput component.
+
 ## 0.0.18
 
 ### Patch Changes

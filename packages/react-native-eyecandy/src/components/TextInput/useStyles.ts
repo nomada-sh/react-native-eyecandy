@@ -4,6 +4,7 @@ import {
   ThemeInputColorChoices,
   useTheme,
 } from '@nomada-sh/react-native-eyecandy-theme';
+import Color from 'color';
 
 import { TextInputStyleProps } from './types';
 
@@ -11,6 +12,7 @@ interface UseStylesProps extends TextInputStyleProps {
   focused?: boolean;
   removeDefaultLeftPadding?: boolean;
   removeDefaultRightPadding?: boolean;
+  editable?: boolean;
 }
 
 export default function useStyles({
@@ -27,6 +29,7 @@ export default function useStyles({
   marginBottom,
   marginTop,
   flex,
+  editable,
 }: UseStylesProps) {
   const colorChoice: ThemeInputColorChoices = error ? 'error' : color;
 
@@ -44,6 +47,7 @@ export default function useStyles({
   const borderColor = focused ? colors.focused.indicator : colors.border;
   const iconColor = focused ? borderColor : textColor;
   const selectionColor = colors.focused.indicator;
+  const notEditableColor = Color(backgroundColor).fade(0.4).string();
 
   let paddingLeft = inputDefaultHorizontalPadding;
   if (removeDefaultLeftPadding) paddingLeft = 0;
@@ -69,6 +73,12 @@ export default function useStyles({
       paddingLeft,
       paddingRight,
     },
+    inputRight: {
+      paddingLeft: removeDefaultRightPadding
+        ? inputDefaultHorizontalPadding
+        : 0,
+      paddingRight: inputDefaultHorizontalPadding,
+    },
     selection: {
       color: selectionColor,
     },
@@ -77,6 +87,9 @@ export default function useStyles({
     },
     placeholder: {
       color: placeholderTextColor,
+    },
+    disabled: {
+      backgroundColor: !editable ? notEditableColor : undefined,
     },
   });
 }
