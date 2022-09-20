@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 48b7ed5: Added `renderValuesTextUnfocused` prop to TextInput component.
+- 48b7ed5: Added `renderValueTextUnfocused` prop to TextInput component.
 
 ## 0.0.18
 
