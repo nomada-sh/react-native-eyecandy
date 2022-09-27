@@ -41,9 +41,9 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
       onFocus,
       onBlur,
       autoFocus,
-      hideIconLeftUnfocused,
-      hideIconRightUnfocused,
-      renderValueAsTextUnfocused,
+      hideIconLeftWhenUnfocused,
+      hideIconRightWhenUnfocused,
+      renderInputAsTextWhenUnfocused,
       value,
       editable = true,
       secureTextEntry,
@@ -82,10 +82,10 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
     let iconLeftVisible = !!iconLeft;
     let iconRightVisible = !!iconRight;
 
-    if (iconLeftVisible && hideIconLeftUnfocused && !focused)
+    if (iconLeftVisible && hideIconLeftWhenUnfocused && !focused)
       iconLeftVisible = false;
 
-    if (iconRightVisible && hideIconRightUnfocused && !focused)
+    if (iconRightVisible && hideIconRightWhenUnfocused && !focused)
       iconRightVisible = false;
 
     const dynamicStyles = useStyles({
@@ -145,7 +145,7 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
       inputStyle,
     ];
 
-    const flattenInputStyles = renderValueAsTextUnfocused
+    const flattenInputStyles = renderInputAsTextWhenUnfocused
       ? StyleSheet.flatten(inputStyles)
       : undefined;
 
@@ -195,14 +195,14 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
           ]}
           icon={iconLeft}
           color={dynamicStyles.icon.color}
-          hideUnfocused={hideIconLeftUnfocused}
+          hideUnfocused={hideIconLeftWhenUnfocused}
         />
 
         {/* Left Component */}
         {inputLeft}
 
         {/* Workaround for android can't scroll when textAlign is 'center' or 'right': https://github.com/facebook/react-native/issues/25594 */}
-        {renderValueAsTextUnfocused && !focused ? (
+        {renderInputAsTextWhenUnfocused && !focused ? (
           <TouchableWithoutFeedback onPress={focus}>
             <View style={[{ justifyContent }, inputStyles]}>
               <Body
@@ -234,7 +234,7 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
           placeholderTextColor={dynamicStyles.placeholder.color}
           style={[
             inputStyles,
-            renderValueAsTextUnfocused && !focused
+            renderInputAsTextWhenUnfocused && !focused
               ? {
                   position: 'absolute',
                   bottom: 0,
@@ -275,7 +275,7 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
           ]}
           icon={iconRight}
           color={dynamicStyles.icon.color}
-          hideUnfocused={hideIconRightUnfocused}
+          hideUnfocused={hideIconRightWhenUnfocused}
         />
 
         {/* Secure Text Entry Toggle */}

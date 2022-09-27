@@ -12,7 +12,7 @@ export const TEXT_INPUT_EMAIL_DEFAULT_PROPS: Partial<TextInputProps> = {
   autoCorrect: false,
   iconLeft: Mail,
   required: true,
-  renderValueAsTextUnfocused: false,
+  renderInputAsTextWhenUnfocused: false,
 };
 
 export function TextInputEmail(props: TextInputProps) {

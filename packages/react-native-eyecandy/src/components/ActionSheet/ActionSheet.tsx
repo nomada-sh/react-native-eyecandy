@@ -29,6 +29,7 @@ export interface ActionSheetProps {
   visible?: boolean;
   options: ActionSheetOption[];
   loading?: any[];
+  hidden?: any[];
   title?: string;
   message?: string;
   native?: boolean;
@@ -58,6 +59,7 @@ export default function ActionSheet({
   itemStyle,
   itemHeight = 45,
   loading,
+  hidden = [],
   closeOnPressActionDisabled,
 }: ActionSheetProps) {
   const { dark: darkTheme, palette, colors } = useTheme();
@@ -130,8 +132,10 @@ export default function ActionSheet({
     2 * paddingVertical + cancelItemBottomMargin + (showHeader ? 20 : 0);
   const titleHeight = title ? 24 : 0;
   const messageHeight = message ? 20 : 0;
+
+  const hiddenCount = Math.min(options.length, hidden.filter(e => !!e).length);
   let height =
-    (options.length + 1) * itemHeight +
+    (options.length - hiddenCount + 1) * itemHeight +
     heightAddedSeparation +
     titleHeight +
     messageHeight;
@@ -172,6 +176,7 @@ export default function ActionSheet({
           const Icon = typeof option === 'string' ? null : option.icon;
           const label = typeof option === 'string' ? option : option.label;
           const isLoading = loading ? Boolean(loading[index]) : false;
+          const isHidden = hidden ? Boolean(hidden[index]) : false;
 
           let icon = Icon ? (
             React.isValidElement(Icon) ? (
@@ -180,6 +185,8 @@ export default function ActionSheet({
               <Icon size={20} color={colors.text.default.normal} />
             )
           ) : null;
+
+          if (isHidden) return null;
 
           if (isLoading)
             icon = (
