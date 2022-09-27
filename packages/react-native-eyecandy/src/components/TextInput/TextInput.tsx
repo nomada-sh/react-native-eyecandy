@@ -4,11 +4,15 @@ import {
   TextInput as RNTextInput,
   StyleProp,
   TextStyle,
+  StyleSheet,
+  ViewStyle,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import { EyeCheck, EyeOff } from '@nomada-sh/react-native-eyecandy-icons';
 
 import { Body } from '../../typography';
+import { extractOnlyTextStyles } from '../../utils/extractOnlyTextStyles';
 
 import IconTouchable from './IconTouchable';
 import styles from './styles';
@@ -141,6 +145,30 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
       inputStyle,
     ];
 
+    const flattenInputStyles = renderValueAsTextUnfocused
+      ? StyleSheet.flatten(inputStyles)
+      : undefined;
+
+    const inputTextStyles = flattenInputStyles
+      ? extractOnlyTextStyles(flattenInputStyles)
+      : undefined;
+
+    let justifyContent: ViewStyle['justifyContent'] = undefined;
+
+    if (inputTextStyles) {
+      switch (inputTextStyles.textAlignVertical) {
+        case 'bottom':
+          justifyContent = 'flex-end';
+          break;
+        case 'top':
+          justifyContent = 'flex-start';
+          break;
+        default:
+          justifyContent = 'center';
+          break;
+      }
+    }
+
     const placeholder =
       placeholderProp && required ? `${placeholderProp} *` : placeholderProp;
 
@@ -175,28 +203,28 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
 
         {/* Workaround for android can't scroll when textAlign is 'center' or 'right': https://github.com/facebook/react-native/issues/25594 */}
         {renderValueAsTextUnfocused && !focused ? (
-          <Body
-            style={[
-              {
-                textAlignVertical: 'center',
-              },
-              inputStyles,
-              {
-                color: value
-                  ? dynamicStyles.input.color
-                  : dynamicStyles.placeholder.color,
-                paddingBottom: 1.5,
-              },
-            ]}
-            onPress={focus}
-            numberOfLines={numberOfLines}
-          >
-            {value
-              ? secureTextEntry
-                ? new Array(value.length).fill('*').join('')
-                : value
-              : placeholder}
-          </Body>
+          <TouchableWithoutFeedback onPress={focus}>
+            <View style={[{ justifyContent }, inputStyles]}>
+              <Body
+                style={[
+                  {
+                    color: value
+                      ? dynamicStyles.input.color
+                      : dynamicStyles.placeholder.color,
+                    paddingBottom: 1.5,
+                  },
+                  inputTextStyles,
+                ]}
+                numberOfLines={numberOfLines}
+              >
+                {value
+                  ? secureTextEntry
+                    ? new Array(value.length).fill('*').join('')
+                    : value
+                  : placeholder}
+              </Body>
+            </View>
+          </TouchableWithoutFeedback>
         ) : null}
 
         <RNTextInput
