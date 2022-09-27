@@ -22,6 +22,7 @@ export interface TextProps extends TextBaseProps {
   color?: LiteralUnion<ThemeTextColorsChoices, string>;
   marginTop?: number;
   marginBottom?: number;
+  bold?: boolean;
 }
 
 function Text({
@@ -33,6 +34,7 @@ function Text({
   align,
   marginBottom,
   marginTop,
+  bold,
   ...props
 }: TextProps) {
   const { colors } = useTheme();
@@ -61,6 +63,8 @@ function Text({
     default:
       fontWeight = weight;
   }
+
+  if (bold !== undefined) fontWeight = bold ? 'bold' : fontWeight;
 
   return (
     <TextBase

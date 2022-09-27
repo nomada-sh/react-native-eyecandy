@@ -13,7 +13,6 @@ import { Body } from '../../typography';
 import IconTouchable from './IconTouchable';
 import styles from './styles';
 import { TextInputStyles, TextInputProps, TextInputHandle } from './types';
-import useSecureTextEntry from './useSecureTextEntry';
 import useStyles from './useStyles';
 
 const DEFAULT_CUSTOM_STYLES: TextInputStyles = {};
@@ -43,6 +42,9 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
       renderValueAsTextUnfocused,
       value,
       editable = true,
+      secureTextEntry,
+      onSecureTextEntryChange,
+      numberOfLines,
       ...inputProps
     } = props;
 
@@ -116,9 +118,6 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
       )
     ) : null;
 
-    const { secureTextEntry, onPressSecureTextEntryToggle } =
-      useSecureTextEntry(props);
-
     const handlePressIconLeft = () => {
       if (onPressIconLeft) onPressIconLeft();
       if (focusOnLeftIconPress) focus();
@@ -174,6 +173,7 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
         {/* Left Component */}
         {inputLeft}
 
+        {/* Workaround for android can't scroll when textAlign is 'center' or 'right': https://github.com/facebook/react-native/issues/25594 */}
         {renderValueAsTextUnfocused && !focused ? (
           <Body
             style={[
@@ -181,10 +181,21 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
                 textAlignVertical: 'center',
               },
               inputStyles,
+              {
+                color: value
+                  ? dynamicStyles.input.color
+                  : dynamicStyles.placeholder.color,
+                paddingBottom: 1.5,
+              },
             ]}
             onPress={focus}
+            numberOfLines={numberOfLines}
           >
-            {value ? value : placeholder}
+            {value
+              ? secureTextEntry
+                ? new Array(value.length).fill('*').join('')
+                : value
+              : placeholder}
           </Body>
         ) : null}
 
@@ -200,6 +211,7 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
                   position: 'absolute',
                   bottom: 0,
                   width: 0,
+                  height: 0,
                 }
               : undefined,
           ]}
@@ -216,6 +228,7 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
           }}
           secureTextEntry={secureTextEntry}
           ref={inputRef}
+          numberOfLines={numberOfLines}
           {...inputProps}
         />
 
@@ -241,7 +254,10 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
         {showSecureTextEntryToggle ? (
           <IconTouchable
             focused={focused}
-            onPress={onPressSecureTextEntryToggle}
+            onPress={() =>
+              onSecureTextEntryChange &&
+              onSecureTextEntryChange(!secureTextEntry)
+            }
             style={[
               styles.rightIconContainer,
               customStyles.rightIconContainer instanceof Function

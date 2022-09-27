@@ -5,6 +5,7 @@ import {
   View,
   ViewStyle,
   StyleProp,
+  ActivityIndicator,
 } from 'react-native';
 
 import { IconProps, Close } from '@nomada-sh/react-native-eyecandy-icons';
@@ -27,6 +28,7 @@ export type ActionSheetOption =
 export interface ActionSheetProps {
   visible?: boolean;
   options: ActionSheetOption[];
+  loading?: any[];
   title?: string;
   message?: string;
   native?: boolean;
@@ -38,6 +40,7 @@ export interface ActionSheetProps {
   dark?: boolean;
   itemStyle?: StyleProp<ViewStyle>;
   itemHeight?: number;
+  closeOnPressActionDisabled?: boolean;
 }
 
 export default function ActionSheet({
@@ -54,6 +57,8 @@ export default function ActionSheet({
   dark: darkProp,
   itemStyle,
   itemHeight = 45,
+  loading,
+  closeOnPressActionDisabled,
 }: ActionSheetProps) {
   const { dark: darkTheme, palette, colors } = useTheme();
   const dark = darkProp !== undefined ? darkProp : darkTheme;
@@ -166,8 +171,9 @@ export default function ActionSheet({
         {options.map((option, index) => {
           const Icon = typeof option === 'string' ? null : option.icon;
           const label = typeof option === 'string' ? option : option.label;
+          const isLoading = loading ? Boolean(loading[index]) : false;
 
-          const icon = Icon ? (
+          let icon = Icon ? (
             React.isValidElement(Icon) ? (
               Icon
             ) : (
@@ -175,11 +181,17 @@ export default function ActionSheet({
             )
           ) : null;
 
+          if (isLoading)
+            icon = (
+              <ActivityIndicator color={colors.text.default.normal} size={20} />
+            );
+
           return (
             <MenuItemBase
               onPress={() => {
                 onPressAction && onPressAction(index);
-                onClose && onClose();
+
+                if (!closeOnPressActionDisabled && onClose) onClose();
               }}
               style={[
                 {

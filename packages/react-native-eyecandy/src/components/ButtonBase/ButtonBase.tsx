@@ -155,6 +155,7 @@ export function ButtonBase({
         style={getButtonStyle}
         android_ripple={{
           color: styles.ripple.color,
+          borderless: true,
         }}
         disabled={disabled}
         onPress={onPress}

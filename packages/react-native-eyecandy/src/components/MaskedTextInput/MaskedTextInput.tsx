@@ -8,7 +8,6 @@ import {
   TextInputStyles,
   styles,
   IconTouchable,
-  useSecureTextEntry,
   useStyles,
 } from '../TextInput';
 
@@ -60,6 +59,8 @@ const MaskedTextInput = React.forwardRef<
     inputLeft: InputLeft,
     inputRight: InputRight,
     showSecureTextEntryToggle,
+    secureTextEntry,
+    onSecureTextEntryChange,
     required,
     onFocus,
     onBlur,
@@ -101,9 +102,6 @@ const MaskedTextInput = React.forwardRef<
       />
     )
   ) : null;
-
-  const { secureTextEntry, onPressSecureTextEntryToggle } =
-    useSecureTextEntry(props);
 
   const handlePressIconLeft = () => {
     if (onPressIconLeft) onPressIconLeft();
@@ -193,7 +191,9 @@ const MaskedTextInput = React.forwardRef<
       {showSecureTextEntryToggle ? (
         <IconTouchable
           focused={focused}
-          onPress={onPressSecureTextEntryToggle}
+          onPress={() =>
+            onSecureTextEntryChange && onSecureTextEntryChange(!secureTextEntry)
+          }
           style={[
             styles.rightIconContainer,
             customStyles.rightIconContainer instanceof Function

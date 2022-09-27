@@ -29,8 +29,14 @@ export {
   TextInputHandle,
 } from './TextInput';
 
-export { default as TextInputEmail } from './TextInputEmail';
-export { default as TextInputPassword } from './TextInputPassword';
+export {
+  TextInputEmail,
+  TEXT_INPUT_EMAIL_DEFAULT_PROPS,
+} from './TextInputEmail';
+export {
+  TextInputPassword,
+  TEXT_INPUT_PASSWORD_DEFAULT_PROPS,
+} from './TextInputPassword';
 export { default as TextInputName } from './TextInputName';
 export { default as TextInputUsername } from './TextInputUsername';
 
