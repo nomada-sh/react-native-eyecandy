@@ -207,13 +207,13 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
             <View style={[{ justifyContent }, inputStyles]}>
               <Body
                 style={[
+                  inputTextStyles,
                   {
                     color: value
                       ? dynamicStyles.input.color
                       : dynamicStyles.placeholder.color,
                     paddingBottom: 1.5,
                   },
-                  inputTextStyles,
                 ]}
                 numberOfLines={numberOfLines}
               >
