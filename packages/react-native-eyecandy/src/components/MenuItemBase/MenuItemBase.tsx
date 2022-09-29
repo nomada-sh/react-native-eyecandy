@@ -27,6 +27,7 @@ export interface MenuItemBaseProps {
   children?: React.ReactNode;
   testID?: string;
   loading?: boolean;
+  disabled?: boolean;
 }
 
 function MenuItemBase({
@@ -40,6 +41,7 @@ function MenuItemBase({
   children,
   testID,
   loading,
+  disabled,
 }: MenuItemBaseProps) {
   const animated = useRef(new Animated.Value(0)).current;
   const { background, divider } = useColors(c => ({
@@ -74,6 +76,7 @@ function MenuItemBase({
 
   return (
     <Pressable
+      disabled={disabled}
       android_ripple={{
         color: rippleColor,
       }}

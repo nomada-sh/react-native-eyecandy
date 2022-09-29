@@ -23,13 +23,16 @@ export type ActionSheetOption =
   | {
       label: string;
       icon?: React.ComponentType<IconProps> | React.ReactElement;
+      hidden?: boolean;
+      loading?: boolean;
+      disabled?: boolean;
     };
 
 export interface ActionSheetProps {
   visible?: boolean;
   options: ActionSheetOption[];
-  loading?: any[];
-  hidden?: any[];
+  // loading?: any[];
+  // hidden?: any[];
   title?: string;
   message?: string;
   native?: boolean;
@@ -46,7 +49,7 @@ export interface ActionSheetProps {
 
 export default function ActionSheet({
   visible,
-  options,
+  options: optionsProp,
   title,
   message,
   native,
@@ -58,10 +61,11 @@ export default function ActionSheet({
   dark: darkProp,
   itemStyle,
   itemHeight = 45,
-  loading,
-  hidden = [],
   closeOnPressActionDisabled,
 }: ActionSheetProps) {
+  const options = optionsProp.filter(o =>
+    typeof o === 'string' ? true : !o.hidden,
+  );
   const { dark: darkTheme, palette, colors } = useTheme();
   const dark = darkProp !== undefined ? darkProp : darkTheme;
 
@@ -133,9 +137,8 @@ export default function ActionSheet({
   const titleHeight = title ? 24 : 0;
   const messageHeight = message ? 20 : 0;
 
-  const hiddenCount = Math.min(options.length, hidden.filter(e => !!e).length);
   let height =
-    (options.length - hiddenCount + 1) * itemHeight +
+    (options.length + 1) * itemHeight +
     heightAddedSeparation +
     titleHeight +
     messageHeight;
@@ -175,8 +178,8 @@ export default function ActionSheet({
         {options.map((option, index) => {
           const Icon = typeof option === 'string' ? null : option.icon;
           const label = typeof option === 'string' ? option : option.label;
-          const isLoading = loading ? Boolean(loading[index]) : false;
-          const isHidden = hidden ? Boolean(hidden[index]) : false;
+          const loading = typeof option === 'string' ? false : option.loading;
+          const disabled = typeof option === 'string' ? false : option.disabled;
 
           let icon = Icon ? (
             React.isValidElement(Icon) ? (
@@ -186,15 +189,14 @@ export default function ActionSheet({
             )
           ) : null;
 
-          if (isHidden) return null;
-
-          if (isLoading)
+          if (loading)
             icon = (
               <ActivityIndicator color={colors.text.default.normal} size={20} />
             );
 
           return (
             <MenuItemBase
+              disabled={disabled || loading}
               onPress={() => {
                 onPressAction && onPressAction(index);
 
