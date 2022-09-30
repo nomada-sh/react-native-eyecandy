@@ -38,3 +38,4 @@ export * from './Backspace';
 export * from './StarFill';
 export * from './Trash';
 export * from './Share';
+export * from './Copy';
