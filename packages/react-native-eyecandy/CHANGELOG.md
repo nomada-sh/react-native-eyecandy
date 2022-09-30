@@ -1,5 +1,14 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.20
+
+### Patch Changes
+
+- 2c0c517: Improved TextInput `renderInputAsTextWhenUnfocused` prop.
+- 2c0c517: Made `secureTextEntry` a controlled prop.
+- Updated dependencies [2c0c517]
+  - @nomada-sh/react-native-eyecandy-icons@0.0.10
+
 ## 0.0.19
 
 ### Patch Changes

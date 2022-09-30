@@ -1,1 +1,1 @@
-export { default } from './TextInputEmail';
+export * from './TextInputEmail';

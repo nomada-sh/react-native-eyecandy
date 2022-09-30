@@ -5,6 +5,7 @@ import {
   View,
   ViewStyle,
   StyleProp,
+  ActivityIndicator,
 } from 'react-native';
 
 import { IconProps, Close } from '@nomada-sh/react-native-eyecandy-icons';
@@ -22,11 +23,16 @@ export type ActionSheetOption =
   | {
       label: string;
       icon?: React.ComponentType<IconProps> | React.ReactElement;
+      hidden?: boolean;
+      loading?: boolean;
+      disabled?: boolean;
     };
 
 export interface ActionSheetProps {
   visible?: boolean;
   options: ActionSheetOption[];
+  // loading?: any[];
+  // hidden?: any[];
   title?: string;
   message?: string;
   native?: boolean;
@@ -38,11 +44,12 @@ export interface ActionSheetProps {
   dark?: boolean;
   itemStyle?: StyleProp<ViewStyle>;
   itemHeight?: number;
+  closeOnPressActionDisabled?: boolean;
 }
 
 export default function ActionSheet({
   visible,
-  options,
+  options: optionsProp,
   title,
   message,
   native,
@@ -54,7 +61,11 @@ export default function ActionSheet({
   dark: darkProp,
   itemStyle,
   itemHeight = 45,
+  closeOnPressActionDisabled,
 }: ActionSheetProps) {
+  const options = optionsProp.filter(o =>
+    typeof o === 'string' ? true : !o.hidden,
+  );
   const { dark: darkTheme, palette, colors } = useTheme();
   const dark = darkProp !== undefined ? darkProp : darkTheme;
 
@@ -125,6 +136,7 @@ export default function ActionSheet({
     2 * paddingVertical + cancelItemBottomMargin + (showHeader ? 20 : 0);
   const titleHeight = title ? 24 : 0;
   const messageHeight = message ? 20 : 0;
+
   let height =
     (options.length + 1) * itemHeight +
     heightAddedSeparation +
@@ -166,8 +178,10 @@ export default function ActionSheet({
         {options.map((option, index) => {
           const Icon = typeof option === 'string' ? null : option.icon;
           const label = typeof option === 'string' ? option : option.label;
+          const loading = typeof option === 'string' ? false : option.loading;
+          const disabled = typeof option === 'string' ? false : option.disabled;
 
-          const icon = Icon ? (
+          let icon = Icon ? (
             React.isValidElement(Icon) ? (
               Icon
             ) : (
@@ -175,11 +189,18 @@ export default function ActionSheet({
             )
           ) : null;
 
+          if (loading)
+            icon = (
+              <ActivityIndicator color={colors.text.default.normal} size={20} />
+            );
+
           return (
             <MenuItemBase
+              disabled={disabled || loading}
               onPress={() => {
                 onPressAction && onPressAction(index);
-                onClose && onClose();
+
+                if (!closeOnPressActionDisabled && onClose) onClose();
               }}
               style={[
                 {

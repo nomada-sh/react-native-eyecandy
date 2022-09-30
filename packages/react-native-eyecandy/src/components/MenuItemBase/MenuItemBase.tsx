@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import {
+  ActivityIndicator,
   Animated,
   Platform,
   Pressable,
@@ -25,6 +26,8 @@ export interface MenuItemBaseProps {
   onPress?: () => void;
   children?: React.ReactNode;
   testID?: string;
+  loading?: boolean;
+  disabled?: boolean;
 }
 
 function MenuItemBase({
@@ -37,6 +40,8 @@ function MenuItemBase({
   onPress: onPressProp,
   children,
   testID,
+  loading,
+  disabled,
 }: MenuItemBaseProps) {
   const animated = useRef(new Animated.Value(0)).current;
   const { background, divider } = useColors(c => ({
@@ -71,6 +76,7 @@ function MenuItemBase({
 
   return (
     <Pressable
+      disabled={disabled}
       android_ripple={{
         color: rippleColor,
       }}
@@ -95,7 +101,7 @@ function MenuItemBase({
         />
       ) : null}
       <View style={[styles.contentContainer, contentContainerStyle]}>
-        {icon && (
+        {icon || loading ? (
           <IconButton
             variant="rounded"
             transparent
@@ -103,14 +109,14 @@ function MenuItemBase({
             pressableStyle={{
               backgroundColor: iconBackgroundColor,
             }}
-            icon={icon}
+            icon={loading ? props => <ActivityIndicator {...props} /> : icon}
             iconColor={iconColor}
             size={40}
             iconSize={22}
             disabled
             hideDisabledOverlay
           />
-        )}
+        ) : null}
         {children}
       </View>
       {separator ? (

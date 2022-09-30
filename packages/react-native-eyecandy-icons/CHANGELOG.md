@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy-icons
 
+## 0.0.10
+
+### Patch Changes
+
+- 2c0c517: Created Share icon.
+
 ## 0.0.9
 
 ### Patch Changes

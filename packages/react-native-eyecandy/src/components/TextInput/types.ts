@@ -100,9 +100,9 @@ export interface TextInputBaseProps
     | React.ReactElement
     | null;
   required?: boolean;
-  hideIconLeftUnfocused?: boolean;
-  hideIconRightUnfocused?: boolean;
-  renderValueAsTextUnfocused?: boolean;
+  hideIconLeftWhenUnfocused?: boolean;
+  hideIconRightWhenUnfocused?: boolean;
+  renderInputAsTextWhenUnfocused?: boolean;
 }
 
 export interface TextInputHandle {
