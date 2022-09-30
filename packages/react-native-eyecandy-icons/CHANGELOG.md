@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy-icons
 
+## 0.0.11
+
+### Patch Changes
+
+- 3ed5dde: Created Copy icon.
+
 ## 0.0.10
 
 ### Patch Changes
