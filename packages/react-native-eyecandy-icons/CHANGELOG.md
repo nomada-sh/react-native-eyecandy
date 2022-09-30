@@ -1,5 +1,13 @@
 # @nomada-sh/react-native-eyecandy-icons
 
+## 0.0.10
+
+### Patch Changes
+
+- 2c0c517: Improved TextInput `renderInputAsTextWhenUnfocused` prop.
+  Made `secureTextEntry` a controlled prop.
+  Created Share icon.
+
 ## 0.0.9
 
 ### Patch Changes

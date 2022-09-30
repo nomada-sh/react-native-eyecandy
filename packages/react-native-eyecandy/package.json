@@ -1,6 +1,6 @@
 {
   "name": "@nomada-sh/react-native-eyecandy",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "React Native Eyecandy",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -88,7 +88,7 @@
     "react-test-renderer": "^17.0.2"
   },
   "dependencies": {
-    "@nomada-sh/react-native-eyecandy-icons": "^0.0.9",
+    "@nomada-sh/react-native-eyecandy-icons": "^0.0.10",
     "@nomada-sh/react-native-eyecandy-theme": "^0.0.6",
     "calendar-base": "^1.1.1",
     "color": "^4.2.0",
