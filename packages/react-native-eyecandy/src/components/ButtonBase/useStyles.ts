@@ -63,6 +63,7 @@ export default function useStyles({
   if (transparent) {
     backgroundColor = backgroundColor.alpha(0);
     rippleColor = getRippleColor(colors.background.default.container).string();
+    disabledColor = Color(colors.background.default.container).fade(0.4);
   }
 
   return StyleSheet.create({

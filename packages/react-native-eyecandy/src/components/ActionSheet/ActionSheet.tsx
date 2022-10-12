@@ -23,16 +23,14 @@ export type ActionSheetOption =
   | {
       label: string;
       icon?: React.ComponentType<IconProps> | React.ReactElement;
-      hidden?: boolean;
-      loading?: boolean;
-      disabled?: boolean;
+      hidden?: any;
+      loading?: any;
+      disabled?: any;
     };
 
 export interface ActionSheetProps {
   visible?: boolean;
   options: ActionSheetOption[];
-  // loading?: any[];
-  // hidden?: any[];
   title?: string;
   message?: string;
   native?: boolean;
