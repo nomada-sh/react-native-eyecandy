@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.22
+
+### Patch Changes
+
+- 74c5d6a: Fixed Button component disabled overlay when trasparent prop is true.
+
 ## 0.0.21
 
 ### Patch Changes
