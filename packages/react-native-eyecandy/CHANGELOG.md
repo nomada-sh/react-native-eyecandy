@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.23
+
+### Patch Changes
+
+- c51505c: Fix ActionSheet triggering hidden actions.
+
 ## 0.0.22
 
 ### Patch Changes
