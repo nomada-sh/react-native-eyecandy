@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.24
+
+### Patch Changes
+
+- cf3a11d: Added `label` prop to TextInput component
+
 ## 0.0.23
 
 ### Patch Changes
