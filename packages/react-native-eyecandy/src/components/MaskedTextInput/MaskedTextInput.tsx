@@ -73,6 +73,7 @@ const MaskedTextInput = React.forwardRef<
     removeDefaultRightPadding:
       iconRight !== undefined || showSecureTextEntryToggle,
     focused,
+    hasLabel: false
   });
 
   const inputLeft = InputLeft ? (
@@ -116,11 +117,11 @@ const MaskedTextInput = React.forwardRef<
   return (
     <View
       style={[
-        styles.container,
-        dynamicStyles.container,
-        customStyles.container instanceof Function
-          ? customStyles.container({ focused })
-          : customStyles.container,
+        styles.rootContainer,
+        dynamicStyles.rootContainer,
+        customStyles.rootContainer instanceof Function
+          ? customStyles.rootContainer({ focused })
+          : customStyles.rootContainer,
         style,
       ]}
     >

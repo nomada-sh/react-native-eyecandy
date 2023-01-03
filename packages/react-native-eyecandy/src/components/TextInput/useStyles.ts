@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 import {
   ThemeInputColorChoices,
@@ -13,12 +13,14 @@ interface UseStylesProps extends TextInputStyleProps {
   removeDefaultLeftPadding?: boolean;
   removeDefaultRightPadding?: boolean;
   editable?: boolean;
+  hasLabel: boolean;
+  multiline?: boolean;
 }
 
 export default function useStyles({
   color = 'default',
   inputDefaultHorizontalPadding = 16,
-  height = 56,
+  height: minHeight,
   fullWidth,
   error,
   focused,
@@ -30,6 +32,7 @@ export default function useStyles({
   marginTop,
   flex,
   editable,
+  multiline,
 }: UseStylesProps) {
   const colorChoice: ThemeInputColorChoices = error ? 'error' : color;
 
@@ -58,20 +61,31 @@ export default function useStyles({
   if (inputPaddingRight !== undefined) paddingRight = inputPaddingRight;
 
   return StyleSheet.create({
-    container: {
+    rootContainer: {
       flex,
       width: fullWidth ? '100%' : undefined,
       backgroundColor,
       borderColor,
       marginTop,
       marginBottom,
-      height,
+      minHeight,
+    },
+    inputContainer: {},
+    labelContainer: {
+      paddingLeft,
+      paddingRight,
+    },
+    label: {
+      color: textColor,
+      fontSize: fontSize.small,
     },
     input: {
       color: textColor,
       fontSize: fontSize.medium,
       paddingLeft,
       paddingRight,
+      paddingTop: Platform.OS === 'ios' && multiline ? 8 : 0,
+      paddingBottom: multiline ? 8 : 0,
     },
     inputRight: {
       paddingLeft: removeDefaultRightPadding
