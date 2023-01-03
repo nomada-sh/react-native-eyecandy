@@ -18,7 +18,10 @@ export type TextInputStyleFnInputProps = TextInputStyleFnProps & {
 };
 
 export type TextInputStyles = {
-  container?:
+  rootContainer?:
+    | StyleProp<ViewStyle>
+    | ((props: TextInputStyleFnProps) => StyleProp<ViewStyle>);
+  inputContainer?:
     | StyleProp<ViewStyle>
     | ((props: TextInputStyleFnProps) => StyleProp<ViewStyle>);
   input?:
@@ -102,7 +105,7 @@ export interface TextInputBaseProps
   required?: boolean;
   hideIconLeftWhenUnfocused?: boolean;
   hideIconRightWhenUnfocused?: boolean;
-  renderInputAsTextWhenUnfocused?: boolean;
+  label?: string;
 }
 
 export interface TextInputHandle {

@@ -8,16 +8,24 @@ const inputWebStyle =
     : {};
 
 const styles = StyleSheet.create({
-  container: {
+  rootContainer: {
     borderWidth: 1,
     borderRadius: 12,
     overflow: 'hidden',
-    flexDirection: 'row',
     borderStyle: 'solid',
+    flexDirection: 'row',
+  },
+  inputContainer: {
+    flex: 1,
+  },
+  labelContainer: {
+    paddingTop: 8,
+  },
+  label: {
+    fontWeight: 'bold',
   },
   input: {
     flex: 1,
-    height: '100%',
     ...inputWebStyle,
   },
   iconContainer: {

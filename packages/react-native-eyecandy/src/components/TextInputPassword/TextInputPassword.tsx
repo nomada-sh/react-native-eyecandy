@@ -12,7 +12,6 @@ export const TEXT_INPUT_PASSWORD_DEFAULT_PROPS: Partial<TextInputProps> = {
   autoComplete: 'password',
   placeholder: 'Password',
   showSecureTextEntryToggle: true,
-  renderInputAsTextWhenUnfocused: false,
 };
 
 export function TextInputPassword(props: TextInputProps) {
