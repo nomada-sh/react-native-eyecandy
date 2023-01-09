@@ -79,6 +79,7 @@ test('createColors', () => {
   expect(colors.input).toEqual<ThemeInputColors>({
     default: inputColor,
     error: inputColor,
+    success: inputColor
   });
 
   const swithColor: ThemeSwitchColor = {

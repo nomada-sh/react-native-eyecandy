@@ -48,6 +48,7 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
       label: labelProp,
       height: heightProp,
       multiline,
+      color,
       ...inputProps
     } = props;
 
@@ -94,6 +95,7 @@ export const TextInput = React.forwardRef<TextInputHandle, TextInputProps>(
 
     const dynamicStyles = useStyles({
       ...props,
+      color,
       height: minHeight,
       removeDefaultLeftPadding: iconLeftVisible,
       removeDefaultRightPadding: iconRightVisible || showSecureTextEntryToggle,
