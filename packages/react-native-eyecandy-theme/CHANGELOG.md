@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy-theme
 
+## 0.0.7
+
+### Patch Changes
+
+- dbc2437: Fix TextInput `color` prop overriding text color
+
 ## 0.0.6
 
 ### Patch Changes

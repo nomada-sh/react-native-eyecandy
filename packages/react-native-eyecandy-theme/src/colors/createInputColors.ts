@@ -28,6 +28,15 @@ const createInputColors: GetThemeColors<ThemeInputColors> = options => {
         indicator: palette.error[200],
       },
     },
+    success: {
+      ...defaultColor,
+      foreground: palette.success[200],
+      border: palette.success[200],
+      focused: {
+        ...defaultColor.focused,
+        indicator: palette.success[200],
+      },
+    },
   };
 
   return mergeColors({
