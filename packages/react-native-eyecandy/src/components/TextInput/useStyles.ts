@@ -36,10 +36,11 @@ export default function useStyles({
 }: UseStylesProps) {
   const colorChoice: ThemeInputColorChoices = error ? 'error' : color;
 
-  const { colors, fontSize } = useTheme(t => ({
+  const { colors, fontSize, dark } = useTheme(t => ({
     palette: t.palette,
     colors: t.colors.input[colorChoice],
     fontSize: t.typography.body.fontSize,
+    dark: t.dark,
   }));
 
   const backgroundColor = focused
