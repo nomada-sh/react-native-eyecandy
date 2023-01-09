@@ -1,5 +1,15 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.24
+
+### Patch Changes
+
+- dbc2437: Fix TextInput `color` prop overriding text color
+- cf3a11d: Added `label` prop to TextInput component
+- Updated dependencies [dbc2437]
+  - @nomada-sh/react-native-eyecandy-theme@0.0.7
+  - @nomada-sh/react-native-eyecandy-icons@0.0.12
+
 ## 0.0.23
 
 ### Patch Changes

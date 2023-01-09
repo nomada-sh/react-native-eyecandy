@@ -1,5 +1,12 @@
 # @nomada-sh/react-native-eyecandy-icons
 
+## 0.0.12
+
+### Patch Changes
+
+- Updated dependencies [dbc2437]
+  - @nomada-sh/react-native-eyecandy-theme@0.0.7
+
 ## 0.0.11
 
 ### Patch Changes
