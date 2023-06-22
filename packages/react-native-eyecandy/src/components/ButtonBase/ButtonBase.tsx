@@ -120,7 +120,7 @@ export function ButtonBase({
 
   const onPress = (e: GestureResponderEvent) => {
     if (!disableHapticFeedback)
-      ReactNativeHapticFeedback.trigger('impactMedium');
+      ReactNativeHapticFeedback.trigger('impactLight');
     onPressProp?.(e);
   };
 
