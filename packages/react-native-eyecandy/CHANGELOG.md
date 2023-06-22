@@ -1,5 +1,11 @@
 # @nomada-sh/react-native-eyecandy
 
+## 0.0.26
+
+### Patch Changes
+
+- c10f752: Change ButtonBase haptic feedback to impactLight
+
 ## 0.0.25
 
 ### Patch Changes
